@@ -99,51 +99,51 @@ export interface AddOnInputArgs {
 /**
  * 
  * @export
- * @interface BillingSpec
+ * @interface BillingSettings
  */
-export interface BillingSpec {
-    /**
-     * Time period that defines the billing cycle. One of `day`, `week`, `month`, `quarter`, or `year`.
-     * @type {string}
-     * @memberof BillingSpec
-     */
-    period: string;
-    /**
-     * Strategy for determining when a billing cycle starts and ends. One of `calendar` or `subscription_date`
-     * @type {string}
-     * @memberof BillingSpec
-     */
-    cycleEnd?: string;
+export interface BillingSettings {
     /**
      * Time length of the grace period between the end of a billing cycle and invoice generation. *NOTE*: The specified length is unitless. Unit is designated with the `invoice_grace_period_unit` field.
      * @type {number}
-     * @memberof BillingSpec
+     * @memberof BillingSettings
      */
     invoiceGracePeriodLength?: number;
     /**
-     * Time length unit of the grace period between the end of a billing cycle and invoice generation. One of `minute`, `hour`, `day`. Maximum grace period is 2 days.
+     * Time length unit of the grace period between the end of a billing cycle and invoice generation. One of `minute`, `hour`, `day`.
      * @type {string}
-     * @memberof BillingSpec
+     * @memberof BillingSettings
      */
     invoiceGracePeriodUnit?: string;
     /**
+     * Time length of the grace period between the end of invoice generation and the actual charge. *NOTE*: The specified length is unitless. Unit is designated with the `payment_grace_period_unit` field.
+     * @type {number}
+     * @memberof BillingSettings
+     */
+    paymentGracePeriodLength?: number;
+    /**
+     * Time length unit of the grace period between the end of invoice generation and actual charge. One of `minute`, `hour`, `day`.
+     * @type {string}
+     * @memberof BillingSettings
+     */
+    paymentGracePeriodUnit?: string;
+    /**
      * Flag that controls whether or not invoices should be sent to customers.
      * @type {boolean}
-     * @memberof BillingSpec
+     * @memberof BillingSettings
      */
     shouldSendInvoiceToCustomers?: boolean;
     /**
-     * Defines the detail level of the invoice sent to customers. One of `basic` or `usage`.
-     * @type {string}
-     * @memberof BillingSpec
+     * 
+     * @type {Object}
+     * @memberof BillingSettings
      */
-    customerInvoiceDetailLevel?: string;
+    customerInvoiceDetailLevel?: Object;
     /**
-     * An amount threshold at which to automatically bill and charge customers. In place to minimize risk of inflated bills being unpaid.
-     * @type {number}
-     * @memberof BillingSpec
+     * Flag that controls whether or not to charge the customer based on the invoice.
+     * @type {boolean}
+     * @memberof BillingSettings
      */
-    chargeThreshold?: number;
+    chargesEnabled?: boolean;
 }
 /**
  * 
@@ -217,7 +217,25 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
+    city?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
     phone?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    addressLine2?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    zipcode?: string;
     /**
      * 
      * @type {string}
@@ -229,19 +247,7 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    city?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
     email?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    zipcode?: string;
     /**
      * 
      * @type {string}
@@ -260,12 +266,6 @@ export interface ContactInfoInputArgs {
      * @memberof ContactInfoInputArgs
      */
     state?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    addressLine2?: string;
 }
 /**
  * 
@@ -283,9 +283,82 @@ export interface Coupon {
 /**
  * 
  * @export
+ * @interface CreateBillingSettingsInputArgs
+ */
+export interface CreateBillingSettingsInputArgs {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    invoiceGracePeriodUnit?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    invoiceGracePeriodLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    paymentGracePeriodUnit?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    shouldSendInvoiceToCustomers?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    paymentGracePeriodLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    customerInvoiceDetailLevel?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    customerId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    chargesEnabled?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface CreateCustomerArgs
  */
 export interface CreateCustomerArgs {
+    /**
+     * 
+     * @type {Array<CustomerMeasurementMappingInputArgs>}
+     * @memberof CreateCustomerArgs
+     */
+    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateCustomerArgs
+     */
+    tags?: Array<string>;
     /**
      * 
      * @type {string}
@@ -300,28 +373,16 @@ export interface CreateCustomerArgs {
     name?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {ContactInfoInputArgs}
      * @memberof CreateCustomerArgs
      */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {Array<CustomerMeasurementMappingInputArgs>}
-     * @memberof CreateCustomerArgs
-     */
-    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    contactInfo?: ContactInfoInputArgs;
     /**
      * 
      * @type {number}
      * @memberof CreateCustomerArgs
      */
     vendorId?: number;
-    /**
-     * 
-     * @type {ContactInfoInputArgs}
-     * @memberof CreateCustomerArgs
-     */
-    contactInfo?: ContactInfoInputArgs;
 }
 /**
  * 
@@ -337,58 +398,10 @@ export interface CreatePricePlanArgs {
     discount?: DiscountInputArgs;
     /**
      * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<AddOnInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
-     * @type {TrialInputArgs}
-     * @memberof CreatePricePlanArgs
-     */
-    trial?: TrialInputArgs;
-    /**
-     * 
      * @type {Array<MeteredComponentInputArgs>}
      * @memberof CreatePricePlanArgs
      */
     meteredComponents?: Array<MeteredComponentInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    couponName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    period?: string;
-    /**
-     * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    features?: Array<FeatureInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    name?: string;
     /**
      * 
      * @type {Array<string>}
@@ -397,10 +410,34 @@ export interface CreatePricePlanArgs {
     tags?: Array<string>;
     /**
      * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    displayName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof CreatePricePlanArgs
      */
-    vendorId?: number;
+    basePrice?: number;
+    /**
+     * 
+     * @type {TrialInputArgs}
+     * @memberof CreatePricePlanArgs
+     */
+    trial?: TrialInputArgs;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    period?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    name?: string;
     /**
      * 
      * @type {Array<LimitInputArgs>}
@@ -409,10 +446,34 @@ export interface CreatePricePlanArgs {
     limits?: Array<LimitInputArgs>;
     /**
      * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    couponName?: string;
+    /**
+     * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
+    /**
+     * 
      * @type {number}
      * @memberof CreatePricePlanArgs
      */
-    basePrice?: number;
+    vendorId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    features?: Array<FeatureInputArgs>;
 }
 /**
  * 
@@ -428,6 +489,18 @@ export interface CreateSubscriptionArgs {
     pricePlanName?: string;
     /**
      * 
+     * @type {Date}
+     * @memberof CreateSubscriptionArgs
+     */
+    effectiveAt?: Date;
+    /**
+     * 
+     * @type {DiscountInputArgs}
+     * @memberof CreateSubscriptionArgs
+     */
+    discountOverride?: DiscountInputArgs;
+    /**
+     * 
      * @type {number}
      * @memberof CreateSubscriptionArgs
      */
@@ -440,22 +513,10 @@ export interface CreateSubscriptionArgs {
     customerId?: number;
     /**
      * 
-     * @type {DiscountInputArgs}
-     * @memberof CreateSubscriptionArgs
-     */
-    discountOverride?: DiscountInputArgs;
-    /**
-     * 
      * @type {number}
      * @memberof CreateSubscriptionArgs
      */
     vendorId?: number;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateSubscriptionArgs
-     */
-    effectiveAt?: Date;
 }
 /**
  * 
@@ -518,13 +579,13 @@ export interface CustomerMeasurementMappingInputArgs {
      * @type {string}
      * @memberof CustomerMeasurementMappingInputArgs
      */
-    label?: string;
+    valueRegex?: string;
     /**
      * 
      * @type {string}
      * @memberof CustomerMeasurementMappingInputArgs
      */
-    valueRegex?: string;
+    label?: string;
 }
 /**
  * 
@@ -560,10 +621,10 @@ export interface CustomerStatus {
 export interface DeleteSubscriptionArgs {
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof DeleteSubscriptionArgs
      */
-    vendorId?: number;
+    expireAt?: Date;
     /**
      * 
      * @type {number}
@@ -572,10 +633,10 @@ export interface DeleteSubscriptionArgs {
     customerId?: number;
     /**
      * 
-     * @type {Date}
+     * @type {number}
      * @memberof DeleteSubscriptionArgs
      */
-    expireAt?: Date;
+    vendorId?: number;
 }
 /**
  * 
@@ -604,16 +665,16 @@ export interface Discount {
 export interface DiscountInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof DiscountInputArgs
-     */
-    discountType?: string;
-    /**
-     * 
      * @type {number}
      * @memberof DiscountInputArgs
      */
     amount?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    discountType?: string;
 }
 /**
  * 
@@ -697,12 +758,6 @@ export interface Measurement {
      */
     meterName: string;
     /**
-     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
-     * @type {Date}
-     * @memberof Measurement
-     */
-    time?: Date;
-    /**
      * The raw value of the measurement
      * @type {number}
      * @memberof Measurement
@@ -714,6 +769,12 @@ export interface Measurement {
      * @memberof Measurement
      */
     labels?: { [key: string]: string; };
+    /**
+     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
+     * @type {Date}
+     * @memberof Measurement
+     */
+    time?: Date;
 }
 /**
  * 
@@ -781,19 +842,7 @@ export interface MeterInputArgs {
      * @type {string}
      * @memberof MeterInputArgs
      */
-    unitName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MeterInputArgs
-     */
-    primaryLabels?: Array<string>;
+    meterType?: string;
     /**
      * 
      * @type {string}
@@ -802,10 +851,10 @@ export interface MeterInputArgs {
     displayName?: string;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof MeterInputArgs
      */
-    meterType?: string;
+    primaryLabels?: Array<string>;
     /**
      * 
      * @type {Array<string>}
@@ -820,6 +869,12 @@ export interface MeterInputArgs {
     name?: string;
     /**
      * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    unitName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof MeterInputArgs
      */
@@ -830,6 +885,12 @@ export interface MeterInputArgs {
      * @memberof MeterInputArgs
      */
     isIncremental?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    description?: string;
 }
 /**
  * 
@@ -919,16 +980,16 @@ export interface MeteredComponentInputArgs {
     meterName?: string;
     /**
      * 
-     * @type {number}
-     * @memberof MeteredComponentInputArgs
-     */
-    meterId?: number;
-    /**
-     * 
      * @type {PriceSchemeInputArgs}
      * @memberof MeteredComponentInputArgs
      */
     priceScheme?: PriceSchemeInputArgs;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeteredComponentInputArgs
+     */
+    meterId?: number;
 }
 /**
  * 
@@ -937,17 +998,11 @@ export interface MeteredComponentInputArgs {
  */
 export interface ModelError {
     /**
-     * Error name
+     * Error message
      * @type {string}
      * @memberof ModelError
      */
-    status?: string;
-    /**
-     * Errors
-     * @type {any}
-     * @memberof ModelError
-     */
-    errors?: any;
+    message?: string;
     /**
      * Error code
      * @type {number}
@@ -955,11 +1010,17 @@ export interface ModelError {
      */
     code?: number;
     /**
-     * Error message
+     * Errors
+     * @type {any}
+     * @memberof ModelError
+     */
+    errors?: any;
+    /**
+     * Error name
      * @type {string}
      * @memberof ModelError
      */
-    message?: string;
+    status?: string;
 }
 /**
  * 
@@ -997,12 +1058,6 @@ export interface PaymentGatewayCredentialInputArgs {
      * @type {string}
      * @memberof PaymentGatewayCredentialInputArgs
      */
-    paymentGateway?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentGatewayCredentialInputArgs
-     */
     authToken?: string;
     /**
      * 
@@ -1010,6 +1065,12 @@ export interface PaymentGatewayCredentialInputArgs {
      * @memberof PaymentGatewayCredentialInputArgs
      */
     accountId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentGatewayCredentialInputArgs
+     */
+    paymentGateway?: string;
 }
 /**
  * 
@@ -1170,18 +1231,6 @@ export interface PriceSchemeInputArgs {
      * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    unitName?: string;
-    /**
-     * 
-     * @type {Array<PriceInputArgs>}
-     * @memberof PriceSchemeInputArgs
-     */
-    prices?: Array<PriceInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof PriceSchemeInputArgs
-     */
     timeUnitName?: string;
     /**
      * 
@@ -1189,6 +1238,18 @@ export interface PriceSchemeInputArgs {
      * @memberof PriceSchemeInputArgs
      */
     schemeType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PriceSchemeInputArgs
+     */
+    unitName?: string;
+    /**
+     * 
+     * @type {Array<PriceInputArgs>}
+     * @memberof PriceSchemeInputArgs
+     */
+    prices?: Array<PriceInputArgs>;
 }
 /**
  * 
@@ -1240,12 +1301,6 @@ export interface Subscription {
      * @memberof Subscription
      */
     pricePlanName: Object;
-    /**
-     * 
-     * @type {BillingSpec}
-     * @memberof Subscription
-     */
-    billingSpec?: BillingSpec;
     /**
      * Optional discount override for the associated subscription.
      * @type {Discount}
@@ -1304,6 +1359,12 @@ export interface Trial {
 export interface TrialInputArgs {
     /**
      * 
+     * @type {string}
+     * @memberof TrialInputArgs
+     */
+    timeUnitName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof TrialInputArgs
      */
@@ -1314,12 +1375,67 @@ export interface TrialInputArgs {
      * @memberof TrialInputArgs
      */
     credit?: number;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateBillingSettingsInputArgs
+ */
+export interface UpdateBillingSettingsInputArgs {
     /**
      * 
      * @type {string}
-     * @memberof TrialInputArgs
+     * @memberof UpdateBillingSettingsInputArgs
      */
-    timeUnitName?: string;
+    invoiceGracePeriodUnit?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    invoiceGracePeriodLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    paymentGracePeriodUnit?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    shouldSendInvoiceToCustomers?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    paymentGracePeriodLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    customerInvoiceDetailLevel?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    customerId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    chargesEnabled?: boolean;
 }
 /**
  * 
@@ -1327,6 +1443,18 @@ export interface TrialInputArgs {
  * @interface UpdateCustomerArgs
  */
 export interface UpdateCustomerArgs {
+    /**
+     * 
+     * @type {Array<CustomerMeasurementMappingInputArgs>}
+     * @memberof UpdateCustomerArgs
+     */
+    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateCustomerArgs
+     */
+    tags?: Array<string>;
     /**
      * 
      * @type {string}
@@ -1341,28 +1469,16 @@ export interface UpdateCustomerArgs {
     name?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {ContactInfoInputArgs}
      * @memberof UpdateCustomerArgs
      */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {Array<CustomerMeasurementMappingInputArgs>}
-     * @memberof UpdateCustomerArgs
-     */
-    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    contactInfo?: ContactInfoInputArgs;
     /**
      * 
      * @type {number}
      * @memberof UpdateCustomerArgs
      */
     vendorId?: number;
-    /**
-     * 
-     * @type {ContactInfoInputArgs}
-     * @memberof UpdateCustomerArgs
-     */
-    contactInfo?: ContactInfoInputArgs;
 }
 /**
  * 
@@ -1378,58 +1494,10 @@ export interface UpdatePricePlanArgs {
     discount?: DiscountInputArgs;
     /**
      * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<AddOnInputArgs>}
-     * @memberof UpdatePricePlanArgs
-     */
-    addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
-     * @type {TrialInputArgs}
-     * @memberof UpdatePricePlanArgs
-     */
-    trial?: TrialInputArgs;
-    /**
-     * 
      * @type {Array<MeteredComponentInputArgs>}
      * @memberof UpdatePricePlanArgs
      */
     meteredComponents?: Array<MeteredComponentInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    couponName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    period?: string;
-    /**
-     * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof UpdatePricePlanArgs
-     */
-    features?: Array<FeatureInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    name?: string;
     /**
      * 
      * @type {Array<string>}
@@ -1438,10 +1506,34 @@ export interface UpdatePricePlanArgs {
     tags?: Array<string>;
     /**
      * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    displayName?: string;
+    /**
+     * 
      * @type {number}
      * @memberof UpdatePricePlanArgs
      */
-    vendorId?: number;
+    basePrice?: number;
+    /**
+     * 
+     * @type {TrialInputArgs}
+     * @memberof UpdatePricePlanArgs
+     */
+    trial?: TrialInputArgs;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    period?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    name?: string;
     /**
      * 
      * @type {Array<LimitInputArgs>}
@@ -1450,10 +1542,34 @@ export interface UpdatePricePlanArgs {
     limits?: Array<LimitInputArgs>;
     /**
      * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    couponName?: string;
+    /**
+     * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
+    /**
+     * 
      * @type {number}
      * @memberof UpdatePricePlanArgs
      */
-    basePrice?: number;
+    vendorId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    features?: Array<FeatureInputArgs>;
 }
 /**
  * 
@@ -1469,6 +1585,18 @@ export interface UpdateSubscriptionArgs {
     pricePlanName?: string;
     /**
      * 
+     * @type {Date}
+     * @memberof UpdateSubscriptionArgs
+     */
+    effectiveAt?: Date;
+    /**
+     * 
+     * @type {DiscountInputArgs}
+     * @memberof UpdateSubscriptionArgs
+     */
+    discountOverride?: DiscountInputArgs;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateSubscriptionArgs
      */
@@ -1481,22 +1609,10 @@ export interface UpdateSubscriptionArgs {
     customerId?: number;
     /**
      * 
-     * @type {DiscountInputArgs}
-     * @memberof UpdateSubscriptionArgs
-     */
-    discountOverride?: DiscountInputArgs;
-    /**
-     * 
      * @type {number}
      * @memberof UpdateSubscriptionArgs
      */
     vendorId?: number;
-    /**
-     * 
-     * @type {Date}
-     * @memberof UpdateSubscriptionArgs
-     */
-    effectiveAt?: Date;
 }
 /**
  * 
@@ -1580,11 +1696,464 @@ export interface VendorUpdateInputArgs {
     displayName?: string;
 }
 /**
+ * BillingSettingsApi - fetch parameter creator
+ * @export
+ */
+export const BillingSettingsApiFetchParamCreator = function (_configuration?: Configuration) {
+    return {
+        /**
+         * Delete billing settings for a vendor.
+         * @summary Delete Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsDelete(options: any = {}): FetchArgs {
+            const localVarPath = `/billing_settings/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetch the billing settings for a vendor.
+         * @summary Get Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsGet(options: any = {}): FetchArgs {
+            const localVarPath = `/billing_settings/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPost(body: CreateBillingSettingsInputArgs, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling billingSettingsPost.');
+            }
+            const localVarPath = `/billing_settings/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateBillingSettingsInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update billing settings for a vendor.
+         * @summary Update Billing Settings
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPut(body: UpdateBillingSettingsInputArgs, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling billingSettingsPut.');
+            }
+            const localVarPath = `/billing_settings/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateBillingSettingsInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BillingSettingsApi - functional programming interface
+ * @export
+ */
+export const BillingSettingsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * Delete billing settings for a vendor.
+         * @summary Delete Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsDelete(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = BillingSettingsApiFetchParamCreator(configuration).billingSettingsDelete(options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Fetch the billing settings for a vendor.
+         * @summary Get Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = BillingSettingsApiFetchParamCreator(configuration).billingSettingsGet(options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPost(body: CreateBillingSettingsInputArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = BillingSettingsApiFetchParamCreator(configuration).billingSettingsPost(body, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Update billing settings for a vendor.
+         * @summary Update Billing Settings
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPut(body: UpdateBillingSettingsInputArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = BillingSettingsApiFetchParamCreator(configuration).billingSettingsPut(body, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * BillingSettingsApi - factory interface
+ * @export
+ */
+export const BillingSettingsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * Delete billing settings for a vendor.
+         * @summary Delete Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsDelete(options?: any) {
+            return BillingSettingsApiFp(configuration).billingSettingsDelete(options)(fetch, basePath);
+        },
+        /**
+         * Fetch the billing settings for a vendor.
+         * @summary Get Billing Settings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsGet(options?: any) {
+            return BillingSettingsApiFp(configuration).billingSettingsGet(options)(fetch, basePath);
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPost(body: CreateBillingSettingsInputArgs, options?: any) {
+            return BillingSettingsApiFp(configuration).billingSettingsPost(body, options)(fetch, basePath);
+        },
+        /**
+         * Update billing settings for a vendor.
+         * @summary Update Billing Settings
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        billingSettingsPut(body: UpdateBillingSettingsInputArgs, options?: any) {
+            return BillingSettingsApiFp(configuration).billingSettingsPut(body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * BillingSettingsApi - object-oriented interface
+ * @export
+ * @class BillingSettingsApi
+ * @extends {BaseAPI}
+ */
+export class BillingSettingsApi extends BaseAPI {
+    /**
+     * Delete billing settings for a vendor.
+     * @summary Delete Billing Settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingSettingsApi
+     */
+    public billingSettingsDelete(options?: any) {
+        return BillingSettingsApiFp(this.configuration).billingSettingsDelete(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Fetch the billing settings for a vendor.
+     * @summary Get Billing Settings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingSettingsApi
+     */
+    public billingSettingsGet(options?: any) {
+        return BillingSettingsApiFp(this.configuration).billingSettingsGet(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Create billing settings for a vendor.
+     * @summary Create billing settings.
+     * @param {CreateBillingSettingsInputArgs} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingSettingsApi
+     */
+    public billingSettingsPost(body: CreateBillingSettingsInputArgs, options?: any) {
+        return BillingSettingsApiFp(this.configuration).billingSettingsPost(body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Update billing settings for a vendor.
+     * @summary Update Billing Settings
+     * @param {UpdateBillingSettingsInputArgs} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BillingSettingsApi
+     */
+    public billingSettingsPut(body: UpdateBillingSettingsInputArgs, options?: any) {
+        return BillingSettingsApiFp(this.configuration).billingSettingsPut(body, options)(this.fetch, this.basePath);
+    }
+
+}
+/**
  * CustomersApi - fetch parameter creator
  * @export
  */
 export const CustomersApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
+        /**
+         * Delete billing settings for a customer.
+         * @summary Delete Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsDelete(customerName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'customerName' is not null or undefined
+            if (customerName === null || customerName === undefined) {
+                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameBillingSettingsDelete.');
+            }
+            const localVarPath = `/customers/{customer_name}/billing_settings`
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetch the billing settings for a customer.
+         * @summary Get Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsGet(customerName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'customerName' is not null or undefined
+            if (customerName === null || customerName === undefined) {
+                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameBillingSettingsGet.');
+            }
+            const localVarPath = `/customers/{customer_name}/billing_settings`
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPost(body: CreateBillingSettingsInputArgs, customerName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling customersCustomerNameBillingSettingsPost.');
+            }
+            // verify required parameter 'customerName' is not null or undefined
+            if (customerName === null || customerName === undefined) {
+                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameBillingSettingsPost.');
+            }
+            const localVarPath = `/customers/{customer_name}/billing_settings`
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateBillingSettingsInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update billing settings for a customer.
+         * @summary Update Billing Settings.
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPut(body: UpdateBillingSettingsInputArgs, customerName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling customersCustomerNameBillingSettingsPut.');
+            }
+            // verify required parameter 'customerName' is not null or undefined
+            if (customerName === null || customerName === undefined) {
+                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameBillingSettingsPut.');
+            }
+            const localVarPath = `/customers/{customer_name}/billing_settings`
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateBillingSettingsInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Delete a customer by their unique name.
          * @summary Delete Customer
@@ -1650,13 +2219,17 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
+         * @param {string} customerName 
          * @param {number} invoiceId 
          * @param {string} token 
-         * @param {string} customerName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId: number, token: string, customerName: string, options: any = {}): FetchArgs {
+        customersCustomerNameInvoiceInvoiceIdTokenGet(customerName: string, invoiceId: number, token: string, options: any = {}): FetchArgs {
+            // verify required parameter 'customerName' is not null or undefined
+            if (customerName === null || customerName === undefined) {
+                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
+            }
             // verify required parameter 'invoiceId' is not null or undefined
             if (invoiceId === null || invoiceId === undefined) {
                 throw new RequiredError('invoiceId','Required parameter invoiceId was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
@@ -1665,14 +2238,10 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
             if (token === null || token === undefined) {
                 throw new RequiredError('token','Required parameter token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
             }
-            // verify required parameter 'customerName' is not null or undefined
-            if (customerName === null || customerName === undefined) {
-                throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
-            }
             const localVarPath = `/customers/{customer_name}/invoice/{invoice_id}/{token}`
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)))
                 .replace(`{${"invoice_id"}}`, encodeURIComponent(String(invoiceId)))
-                .replace(`{${"token"}}`, encodeURIComponent(String(token)))
-                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -1845,12 +2414,12 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
          * Fetch revenue of a customer from start_time and end_time.
          * @summary Get Customer Revenue
          * @param {string} customerName 
-         * @param {Date} [startTime] 
          * @param {Date} [endTime] 
+         * @param {Date} [startTime] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameRevenueGet(customerName: string, startTime?: Date, endTime?: Date, options: any = {}): FetchArgs {
+        customersCustomerNameRevenueGet(customerName: string, endTime?: Date, startTime?: Date, options: any = {}): FetchArgs {
             // verify required parameter 'customerName' is not null or undefined
             if (customerName === null || customerName === undefined) {
                 throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameRevenueGet.');
@@ -1864,12 +2433,12 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
 
             // authentication BearerApiKeyAuth required
 
-            if (startTime !== undefined) {
-                localVarQueryParameter['start_time'] = (startTime as any).toISOString();
-            }
-
             if (endTime !== undefined) {
                 localVarQueryParameter['end_time'] = (endTime as any).toISOString();
+            }
+
+            if (startTime !== undefined) {
+                localVarQueryParameter['start_time'] = (startTime as any).toISOString();
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1885,23 +2454,23 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
-         * @param {string} token 
          * @param {string} customerName 
+         * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameSampleInvoiceTokenGet(token: string, customerName: string, options: any = {}): FetchArgs {
-            // verify required parameter 'token' is not null or undefined
-            if (token === null || token === undefined) {
-                throw new RequiredError('token','Required parameter token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
-            }
+        customersCustomerNameSampleInvoiceTokenGet(customerName: string, token: string, options: any = {}): FetchArgs {
             // verify required parameter 'customerName' is not null or undefined
             if (customerName === null || customerName === undefined) {
                 throw new RequiredError('customerName','Required parameter customerName was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
             }
+            // verify required parameter 'token' is not null or undefined
+            if (token === null || token === undefined) {
+                throw new RequiredError('token','Required parameter token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
+            }
             const localVarPath = `/customers/{customer_name}/sample_invoice/{token}`
-                .replace(`{${"token"}}`, encodeURIComponent(String(token)))
-                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)));
+                .replace(`{${"customer_name"}}`, encodeURIComponent(String(customerName)))
+                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -2170,6 +2739,84 @@ export const CustomersApiFetchParamCreator = function (_configuration?: Configur
 export const CustomersApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * Delete billing settings for a customer.
+         * @summary Delete Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsDelete(customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameBillingSettingsDelete(customerName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Fetch the billing settings for a customer.
+         * @summary Get Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsGet(customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameBillingSettingsGet(customerName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPost(body: CreateBillingSettingsInputArgs, customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameBillingSettingsPost(body, customerName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Update billing settings for a customer.
+         * @summary Update Billing Settings.
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPut(body: UpdateBillingSettingsInputArgs, customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<BillingSettings> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameBillingSettingsPut(body, customerName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Delete a customer by their unique name.
          * @summary Delete Customer
          * @param {string} customerName 
@@ -2210,14 +2857,14 @@ export const CustomersApiFp = function(configuration?: Configuration) {
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
+         * @param {string} customerName 
          * @param {number} invoiceId 
          * @param {string} token 
-         * @param {string} customerName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId: number, token: string, customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
-            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId, token, customerName, options);
+        customersCustomerNameInvoiceInvoiceIdTokenGet(customerName: string, invoiceId: number, token: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(customerName, invoiceId, token, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2311,13 +2958,13 @@ export const CustomersApiFp = function(configuration?: Configuration) {
          * Fetch revenue of a customer from start_time and end_time.
          * @summary Get Customer Revenue
          * @param {string} customerName 
-         * @param {Date} [startTime] 
          * @param {Date} [endTime] 
+         * @param {Date} [startTime] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameRevenueGet(customerName: string, startTime?: Date, endTime?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RevenueResponse> {
-            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameRevenueGet(customerName, startTime, endTime, options);
+        customersCustomerNameRevenueGet(customerName: string, endTime?: Date, startTime?: Date, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RevenueResponse> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameRevenueGet(customerName, endTime, startTime, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2331,13 +2978,13 @@ export const CustomersApiFp = function(configuration?: Configuration) {
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
-         * @param {string} token 
          * @param {string} customerName 
+         * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameSampleInvoiceTokenGet(token: string, customerName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
-            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameSampleInvoiceTokenGet(token, customerName, options);
+        customersCustomerNameSampleInvoiceTokenGet(customerName: string, token: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
+            const localVarFetchArgs = CustomersApiFetchParamCreator(configuration).customersCustomerNameSampleInvoiceTokenGet(customerName, token, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2493,6 +3140,48 @@ export const CustomersApiFp = function(configuration?: Configuration) {
 export const CustomersApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
+         * Delete billing settings for a customer.
+         * @summary Delete Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsDelete(customerName: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameBillingSettingsDelete(customerName, options)(fetch, basePath);
+        },
+        /**
+         * Fetch the billing settings for a customer.
+         * @summary Get Billing Settings
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsGet(customerName: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameBillingSettingsGet(customerName, options)(fetch, basePath);
+        },
+        /**
+         * Create billing settings for a vendor.
+         * @summary Create billing settings.
+         * @param {CreateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPost(body: CreateBillingSettingsInputArgs, customerName: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameBillingSettingsPost(body, customerName, options)(fetch, basePath);
+        },
+        /**
+         * Update billing settings for a customer.
+         * @summary Update Billing Settings.
+         * @param {UpdateBillingSettingsInputArgs} body 
+         * @param {string} customerName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        customersCustomerNameBillingSettingsPut(body: UpdateBillingSettingsInputArgs, customerName: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameBillingSettingsPut(body, customerName, options)(fetch, basePath);
+        },
+        /**
          * Delete a customer by their unique name.
          * @summary Delete Customer
          * @param {string} customerName 
@@ -2515,14 +3204,14 @@ export const CustomersApiFactory = function (configuration?: Configuration, fetc
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
+         * @param {string} customerName 
          * @param {number} invoiceId 
          * @param {string} token 
-         * @param {string} customerName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId: number, token: string, customerName: string, options?: any) {
-            return CustomersApiFp(configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId, token, customerName, options)(fetch, basePath);
+        customersCustomerNameInvoiceInvoiceIdTokenGet(customerName: string, invoiceId: number, token: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(customerName, invoiceId, token, options)(fetch, basePath);
         },
         /**
          * Fetch all measurement mappings for a specific customer (by unique customer name).
@@ -2571,24 +3260,24 @@ export const CustomersApiFactory = function (configuration?: Configuration, fetc
          * Fetch revenue of a customer from start_time and end_time.
          * @summary Get Customer Revenue
          * @param {string} customerName 
-         * @param {Date} [startTime] 
          * @param {Date} [endTime] 
+         * @param {Date} [startTime] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameRevenueGet(customerName: string, startTime?: Date, endTime?: Date, options?: any) {
-            return CustomersApiFp(configuration).customersCustomerNameRevenueGet(customerName, startTime, endTime, options)(fetch, basePath);
+        customersCustomerNameRevenueGet(customerName: string, endTime?: Date, startTime?: Date, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameRevenueGet(customerName, endTime, startTime, options)(fetch, basePath);
         },
         /**
          * Fetch current cycle revenue for a customer and generate an invoice.
          * @summary Generate Current Invoice
-         * @param {string} token 
          * @param {string} customerName 
+         * @param {string} token 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        customersCustomerNameSampleInvoiceTokenGet(token: string, customerName: string, options?: any) {
-            return CustomersApiFp(configuration).customersCustomerNameSampleInvoiceTokenGet(token, customerName, options)(fetch, basePath);
+        customersCustomerNameSampleInvoiceTokenGet(customerName: string, token: string, options?: any) {
+            return CustomersApiFp(configuration).customersCustomerNameSampleInvoiceTokenGet(customerName, token, options)(fetch, basePath);
         },
         /**
          * 
@@ -2673,6 +3362,56 @@ export const CustomersApiFactory = function (configuration?: Configuration, fetc
  */
 export class CustomersApi extends BaseAPI {
     /**
+     * Delete billing settings for a customer.
+     * @summary Delete Billing Settings
+     * @param {string} customerName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomersApi
+     */
+    public customersCustomerNameBillingSettingsDelete(customerName: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameBillingSettingsDelete(customerName, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Fetch the billing settings for a customer.
+     * @summary Get Billing Settings
+     * @param {string} customerName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomersApi
+     */
+    public customersCustomerNameBillingSettingsGet(customerName: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameBillingSettingsGet(customerName, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Create billing settings for a vendor.
+     * @summary Create billing settings.
+     * @param {CreateBillingSettingsInputArgs} body 
+     * @param {string} customerName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomersApi
+     */
+    public customersCustomerNameBillingSettingsPost(body: CreateBillingSettingsInputArgs, customerName: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameBillingSettingsPost(body, customerName, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Update billing settings for a customer.
+     * @summary Update Billing Settings.
+     * @param {UpdateBillingSettingsInputArgs} body 
+     * @param {string} customerName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomersApi
+     */
+    public customersCustomerNameBillingSettingsPut(body: UpdateBillingSettingsInputArgs, customerName: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameBillingSettingsPut(body, customerName, options)(this.fetch, this.basePath);
+    }
+
+    /**
      * Delete a customer by their unique name.
      * @summary Delete Customer
      * @param {string} customerName 
@@ -2699,15 +3438,15 @@ export class CustomersApi extends BaseAPI {
     /**
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
+     * @param {string} customerName 
      * @param {number} invoiceId 
      * @param {string} token 
-     * @param {string} customerName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CustomersApi
      */
-    public customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId: number, token: string, customerName: string, options?: any) {
-        return CustomersApiFp(this.configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(invoiceId, token, customerName, options)(this.fetch, this.basePath);
+    public customersCustomerNameInvoiceInvoiceIdTokenGet(customerName: string, invoiceId: number, token: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameInvoiceInvoiceIdTokenGet(customerName, invoiceId, token, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2765,27 +3504,27 @@ export class CustomersApi extends BaseAPI {
      * Fetch revenue of a customer from start_time and end_time.
      * @summary Get Customer Revenue
      * @param {string} customerName 
-     * @param {Date} [startTime] 
      * @param {Date} [endTime] 
+     * @param {Date} [startTime] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CustomersApi
      */
-    public customersCustomerNameRevenueGet(customerName: string, startTime?: Date, endTime?: Date, options?: any) {
-        return CustomersApiFp(this.configuration).customersCustomerNameRevenueGet(customerName, startTime, endTime, options)(this.fetch, this.basePath);
+    public customersCustomerNameRevenueGet(customerName: string, endTime?: Date, startTime?: Date, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameRevenueGet(customerName, endTime, startTime, options)(this.fetch, this.basePath);
     }
 
     /**
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
-     * @param {string} token 
      * @param {string} customerName 
+     * @param {string} token 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CustomersApi
      */
-    public customersCustomerNameSampleInvoiceTokenGet(token: string, customerName: string, options?: any) {
-        return CustomersApiFp(this.configuration).customersCustomerNameSampleInvoiceTokenGet(token, customerName, options)(this.fetch, this.basePath);
+    public customersCustomerNameSampleInvoiceTokenGet(customerName: string, token: string, options?: any) {
+        return CustomersApiFp(this.configuration).customersCustomerNameSampleInvoiceTokenGet(customerName, token, options)(this.fetch, this.basePath);
     }
 
     /**
