@@ -1,11 +1,11 @@
 {
-  "name": "simple-client",
+  "name": "simple-client-js",
   "version": "0.1.0",
   "description": "Example of how to use the Octane npm module",
   "scripts": {
-    "create-customer": "./create-customer.js"
+    "create-customer": "./bin/create-customer.js",
+    "list-customers": "./bin/list-customers.js"
   },
   "author": "",
-  "type": "module",
   "license": "MIT"
 }

@@ -62,7 +62,9 @@ cat mount/api.ts | sed 's/return fetch(/localVarFetchArgs.options.headers["Autho
 mv mount/api.ts.tmp mount/api.ts
 
 # Take the files we care about
-mv mount/*.ts src/lib/
+mv mount/api.ts src/lib/
+mv mount/configuration.ts src/lib/
+mv mount/custom.d.ts src/lib/
 
 # This file causes issues on build.. comment this out to see the tests
-rm -f src/lib/api_test.spec.ts
+# mv mount/api_test.spec.ts src/lib/
