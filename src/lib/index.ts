@@ -20,6 +20,12 @@ class Customer {
     public list(options?: any) {
         return this._api.customersGet(options)
     }
+    public retrieve(customerName: string, options?: any) {
+        return this._api.customersCustomerNameGet(customerName, options)
+    }
+    public delete(customerName: string, options?: any) {
+        return this._api.customersCustomerNameDelete(customerName, options)
+    }
 }
 
 class Octane {

@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "description": "Example of how to use the Octane npm module",
   "scripts": {
-    "create-customer": "ts-node ./bin/create-customer.ts",
-    "list-customers": "ts-node ./bin/list-customers.ts"
+    "create-customer": "./bin/create-customer.ts",
+    "delete-customer": "./bin/delete-customer.ts",
+    "list-customers": "./bin/list-customers.ts",
+    "retrieve-customer": "./bin/retrieve-customer.ts"
   },
   "dependencies": {
     "ts-node": "^9.0.0"

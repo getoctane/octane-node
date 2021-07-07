@@ -1,3 +1,5 @@
+#!/usr/bin/env ts-node
+
 import {Customer} from "../../../src/lib/api"
 const octane = require('../lib/require-octane-local')
 
