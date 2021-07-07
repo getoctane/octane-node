@@ -9,3 +9,4 @@ coverage
 yarn.lock
 testbin/
 mount/
+src/lib/*.js

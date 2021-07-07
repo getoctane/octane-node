@@ -1,0 +1,6 @@
+import {Customer} from "../../../src/lib/api"
+const octane = require('../lib/require-octane-local')
+
+octane.Customer.list()
+    .then((customers: Array<Customer>) => console.log(customers))
+    .catch((error: Error) => console.error(error))
