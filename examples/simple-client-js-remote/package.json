@@ -1,5 +1,5 @@
 {
-  "name": "simple-client-js",
+  "name": "simple-client-js-remote",
   "version": "0.1.0",
   "description": "Example of how to use the Octane npm module",
   "scripts": {
@@ -10,5 +10,8 @@
     "update-customer": "./bin/update-customer.js"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "octane-node": "^0.1.3"
+  }
 }

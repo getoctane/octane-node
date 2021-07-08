@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-const octane = require("../lib/require-octane-local.js");
+const octane = require("octane-node")(process.env.OCTANE_API_KEY, {
+    host: process.env.OCTANE_API_HOST,
+    port: process.env.OCTANE_API_PORT,
+    protocol: process.env.OCTANE_API_PROTOCOL,
+});
 
 if (process.argv.length < 3) {
     console.log("Usage: ./create-customer.js [customer_name]");
