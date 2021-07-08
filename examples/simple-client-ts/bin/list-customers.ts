@@ -3,6 +3,6 @@
 import {Customer} from "../../../src/lib/api"
 const octane = require("../lib/require-octane-local")
 
-octane.Customer.list()
+octane.customers.list()
     .then((customers: Array<Customer>) => console.log(customers))
     .catch((error: Error) => console.error(error))

@@ -9,6 +9,6 @@ if (process.argv.length < 3) {
 }
 const n = process.argv[2]
 
-octane.Customer.retrieve(n)
+octane.customers.retrieve(n)
     .then((customer: Customer) => console.log(customer))
     .catch((error: Error) => console.error(error))

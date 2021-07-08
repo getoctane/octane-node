@@ -8,6 +8,6 @@ if (process.argv.length < 3) {
 }
 const n = process.argv[2]
 
-octane.Customer.delete(n)
+octane.customers.del(n)
     .then(() => console.log("Delete success"))
     .catch((error: Error) => console.error(error))

@@ -9,7 +9,7 @@ export interface Configuration {
     protocol?: string;
 }
 
-class Customer {
+class Customers {
     private _api: octaneApi.CustomersApi
     constructor(config: octaneConfig.Configuration) {
         this._api = new octaneApi.CustomersApi(config)
@@ -17,20 +17,24 @@ class Customer {
     public create(body: octaneApi.CreateCustomerArgs, options?: any) {
         return this._api.customersPost(body, options)
     }
-    public list(options?: any) {
-        return this._api.customersGet(options)
-    }
     public retrieve(customerName: string, options?: any) {
         return this._api.customersCustomerNameGet(customerName, options)
     }
-    public delete(customerName: string, options?: any) {
+    public update(customerName: string, body: octaneApi.UpdateCustomerArgs, options?: any) {
+        // NOTE: order or arguments switched here
+        return this._api.customersCustomerNamePut(body, customerName, options)
+    }
+    public list(options?: any) {
+        return this._api.customersGet(options)
+    }
+    public del(customerName: string, options?: any) {
         // TODO: void the response as it is inconsistent with others
         return this._api.customersCustomerNameDelete(customerName, options)
     }
 }
 
 class Octane {
-    Customer: Customer;
+    customers: Customers;
     constructor(key: string, overrides?: Configuration) {
         const host = overrides?.host || octaneDefaultHost
         const port = overrides?.port || 443
@@ -39,7 +43,7 @@ class Octane {
             apiKey: key,
             basePath: `${protocol}://${host}:${port}`,
         }
-        this.Customer = new Customer(config)
+        this.customers = new Customers(config)
     }
 }
 
