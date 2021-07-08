@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import {Customer} from "../../../src/lib/api"
-const octane = require('../lib/require-octane-local')
+const octane = require("../lib/require-octane-local")
 
 if (process.argv.length < 3) {
     console.log("Usage: ./retrieve-customer.ts [customer_name]")

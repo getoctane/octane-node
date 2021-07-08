@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 
-const octane = require('../lib/require-octane-local')
+const octane = require("../lib/require-octane-local")
 
 if (process.argv.length < 3) {
     console.log("Usage: ./retrieve-customer.ts [customer_name]")
@@ -9,5 +9,5 @@ if (process.argv.length < 3) {
 const n = process.argv[2]
 
 octane.Customer.delete(n)
-    .then((response: Response) => console.log(response.status))
+    .then(() => console.log("Delete success"))
     .catch((error: Error) => console.error(error))

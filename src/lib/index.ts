@@ -24,6 +24,7 @@ class Customer {
         return this._api.customersCustomerNameGet(customerName, options)
     }
     public delete(customerName: string, options?: any) {
+        // TODO: void the response as it is inconsistent with others
         return this._api.customersCustomerNameDelete(customerName, options)
     }
 }
