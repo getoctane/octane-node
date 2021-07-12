@@ -1,0 +1,118 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module",
+        "ecmaVersion": 2020
+    },
+    "parser": "@typescript-eslint/parser",
+    "overrides": [
+        {
+            "files": [
+                "*.js",
+                "*.ts",
+                "*.tsx"
+            ],
+            "plugins": [
+                "unused-imports",
+                "you-dont-need-lodash-underscore"
+            ],
+            "extends": [
+                "airbnb-typescript",
+                "plugin:@typescript-eslint/recommended",
+                "airbnb/hooks",
+                "plugin:react/recommended",
+                "plugin:@next/next/recommended",
+                "plugin:you-dont-need-lodash-underscore/compatible-warn",
+                "plugin:prettier/recommended"
+            ],
+            "rules": {
+                "react/jsx-props-no-spreading": "off",
+                "jsx-a11y/anchor-has-content": "warn",
+                "prettier/prettier": [
+                    "error"
+                ],
+                "consistent-return": "warn",
+                "react-hooks/rules-of-hooks": "error",
+                "react-hooks/exhaustive-deps": [
+                    "error",
+                    {
+                        "additionalHooks": "useRecoilCallback"
+                    }
+                ],
+                "no-param-reassign": [
+                    "error",
+                    {
+                        "ignorePropertyModificationsFor": [
+                            "draft"
+                        ]
+                    }
+                ],
+                "react/require-default-props": "off",
+                "import/prefer-default-export": "off",
+                "react/display-name": "warn"
+            }
+        },
+        {
+            "files": [
+                "*.graphql"
+            ],
+            "parser": "@graphql-eslint/eslint-plugin",
+            "plugins": [
+                "@graphql-eslint"
+            ],
+            "rules": {
+                "@graphql-eslint/avoid-duplicate-fields": "error",
+                "@graphql-eslint/fields-on-correct-type": "error",
+                "@graphql-eslint/known-argument-names": "error",
+                "@graphql-eslint/known-type-names": "error",
+                "@graphql-eslint/no-anonymous-operations": "error",
+                "@graphql-eslint/no-case-insensitive-enum-values-duplicates": "error",
+                "@graphql-eslint/no-deprecated": "warn",
+                "@graphql-eslint/no-fragment-cycles": "error",
+                "@graphql-eslint/no-hashtag-description": "error",
+                "@graphql-eslint/no-undefined-variables": "error",
+                "@graphql-eslint/no-unreachable-types": "error",
+                "@graphql-eslint/no-unused-variables": "error",
+                "@graphql-eslint/one-field-subscriptions": "error",
+                "@graphql-eslint/overlapping-fields-can-be-merged": "error",
+                "@graphql-eslint/possible-fragment-spread": "error",
+                "@graphql-eslint/possible-type-extension": "error",
+                "@graphql-eslint/prettier": "error",
+                "@graphql-eslint/provided-required-arguments": "error",
+                "@graphql-eslint/require-deprecation-reason": "warn",
+                "@graphql-eslint/require-id-when-available": "error",
+                "@graphql-eslint/scalar-leafs": "error",
+                "@graphql-eslint/unique-argument-names": "error",
+                "@graphql-eslint/unique-enum-value-names": "error",
+                "@graphql-eslint/unique-field-definition-names": "error",
+                "@graphql-eslint/unique-input-field-names": "error",
+                "@graphql-eslint/unique-operation-name": "error",
+                "@graphql-eslint/unique-operation-types": "error",
+                "@graphql-eslint/unique-type-names": "error",
+                "@graphql-eslint/unique-variable-names": "error",
+                "@graphql-eslint/value-literals-of-correct-type": "error",
+                "@graphql-eslint/variables-are-input-types": "error",
+                "@graphql-eslint/variables-in-allowed-position": "error",
+                "@graphql-eslint/input-name": [
+                    "error",
+                    {
+                        "checkInputType": true
+                    }
+                ],
+                "@graphql-eslint/avoid-operation-name-prefix": [
+                    "error",
+                    {
+                        "keywords": [
+                            "get"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
