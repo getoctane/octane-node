@@ -99,6 +99,43 @@ export interface AddOnInputArgs {
 /**
  * 
  * @export
+ * @interface ApplyCouponInputArgs
+ */
+export interface ApplyCouponInputArgs {
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplyCouponInputArgs
+     */
+    code?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplyCouponInputArgs
+     */
+    customerName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplyCouponInputArgs
+     */
+    customerId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplyCouponInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplyCouponInputArgs
+     */
+    name?: string;
+}
+/**
+ * 
+ * @export
  * @interface BillingSettings
  */
 export interface BillingSettings {
@@ -223,13 +260,7 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    phone?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    addressLine2?: string;
+    state?: string;
     /**
      * 
      * @type {string}
@@ -247,7 +278,7 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    email?: string;
+    phone?: string;
     /**
      * 
      * @type {string}
@@ -259,13 +290,19 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    addressLine1?: string;
+    email?: string;
     /**
      * 
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    state?: string;
+    addressLine2?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    addressLine1?: string;
 }
 /**
  * 
@@ -283,27 +320,191 @@ export interface Coupon {
 /**
  * 
  * @export
+ * @interface Coupon1
+ */
+export interface Coupon1 {
+    /**
+     * Unique name identifier.
+     * @type {string}
+     * @memberof Coupon1
+     */
+    name: string;
+    /**
+     * The time when the coupon will stop being effective one its applied.
+     * @type {number}
+     * @memberof Coupon1
+     */
+    durationLength?: number;
+    /**
+     * The unit time unit to apply to the specified duration length.
+     * @type {string}
+     * @memberof Coupon1
+     */
+    durationUnit?: string;
+    /**
+     * ISO-8601 formatted timestamp that defines after what timestamp this coupon cannot be applied.
+     * @type {Date}
+     * @memberof Coupon1
+     */
+    expirationTime?: Date;
+    /**
+     * One of RECURRRING or ONCE.
+     * @type {string}
+     * @memberof Coupon1
+     */
+    frequency?: string;
+    /**
+     * The maximum number of times this coupon can be used.
+     * @type {number}
+     * @memberof Coupon1
+     */
+    maxUses?: number;
+    /**
+     * Customer facing code that can be used to apply coupon.
+     * @type {string}
+     * @memberof Coupon1
+     */
+    code?: string;
+    /**
+     * True if prorate at application date, false otherwise
+     * @type {boolean}
+     * @memberof Coupon1
+     */
+    isStartProrated?: boolean;
+    /**
+     * True if prorate at end of duration, false otherwise
+     * @type {boolean}
+     * @memberof Coupon1
+     */
+    isEndProrated?: boolean;
+    /**
+     * One of FLAT or PERCENT.
+     * @type {string}
+     * @memberof Coupon1
+     */
+    discountType: string;
+    /**
+     * The amount of discount to give based on discount_type
+     * @type {number}
+     * @memberof Coupon1
+     */
+    discountAmount: number;
+    /**
+     * 
+     * @type {Array<Customer1>}
+     * @memberof Coupon1
+     */
+    excludedCustomers?: Array<Customer1>;
+    /**
+     * 
+     * @type {Array<PricePlan1>}
+     * @memberof Coupon1
+     */
+    excludedPricePlans?: Array<PricePlan1>;
+}
+/**
+ * 
+ * @export
+ * @interface CouponInputArgs
+ */
+export interface CouponInputArgs {
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponInputArgs
+     */
+    code?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CouponInputArgs
+     */
+    isEndProrated?: boolean;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CouponInputArgs
+     */
+    expirationTime?: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponInputArgs
+     */
+    discountAmount: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponInputArgs
+     */
+    discountType: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CouponInputArgs
+     */
+    excludedPricePlans?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponInputArgs
+     */
+    frequency: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CouponInputArgs
+     */
+    isStartProrated?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponInputArgs
+     */
+    durationUnit?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponInputArgs
+     */
+    durationLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CouponInputArgs
+     */
+    name: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CouponInputArgs
+     */
+    excludedCustomers?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CouponInputArgs
+     */
+    maxUses?: number;
+}
+/**
+ * 
+ * @export
  * @interface CreateBillingSettingsInputArgs
  */
 export interface CreateBillingSettingsInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof CreateBillingSettingsInputArgs
-     */
-    invoiceGracePeriodUnit?: string;
-    /**
-     * 
      * @type {number}
      * @memberof CreateBillingSettingsInputArgs
      */
-    invoiceGracePeriodLength?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateBillingSettingsInputArgs
-     */
-    paymentGracePeriodUnit?: string;
+    paymentGracePeriodLength?: number;
     /**
      * 
      * @type {boolean}
@@ -315,19 +516,19 @@ export interface CreateBillingSettingsInputArgs {
      * @type {number}
      * @memberof CreateBillingSettingsInputArgs
      */
-    paymentGracePeriodLength?: number;
+    customerId?: number;
     /**
      * 
      * @type {string}
      * @memberof CreateBillingSettingsInputArgs
      */
-    customerInvoiceDetailLevel?: string;
+    invoiceGracePeriodUnit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreateBillingSettingsInputArgs
      */
-    customerId?: number;
+    paymentGracePeriodUnit?: string;
     /**
      * 
      * @type {number}
@@ -340,6 +541,18 @@ export interface CreateBillingSettingsInputArgs {
      * @memberof CreateBillingSettingsInputArgs
      */
     chargesEnabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    customerInvoiceDetailLevel?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateBillingSettingsInputArgs
+     */
+    invoiceGracePeriodLength?: number;
 }
 /**
  * 
@@ -349,10 +562,10 @@ export interface CreateBillingSettingsInputArgs {
 export interface CreateCustomerArgs {
     /**
      * 
-     * @type {Array<CustomerMeasurementMappingInputArgs>}
+     * @type {ContactInfoInputArgs}
      * @memberof CreateCustomerArgs
      */
-    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    contactInfo?: ContactInfoInputArgs;
     /**
      * 
      * @type {Array<string>}
@@ -361,10 +574,10 @@ export interface CreateCustomerArgs {
     tags?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof CreateCustomerArgs
      */
-    displayName?: string;
+    vendorId?: number;
     /**
      * 
      * @type {string}
@@ -373,16 +586,16 @@ export interface CreateCustomerArgs {
     name?: string;
     /**
      * 
-     * @type {ContactInfoInputArgs}
+     * @type {string}
      * @memberof CreateCustomerArgs
      */
-    contactInfo?: ContactInfoInputArgs;
+    displayName?: string;
     /**
      * 
-     * @type {number}
+     * @type {Array<CustomerMeasurementMappingInputArgs>}
      * @memberof CreateCustomerArgs
      */
-    vendorId?: number;
+    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
 }
 /**
  * 
@@ -392,16 +605,22 @@ export interface CreateCustomerArgs {
 export interface CreatePricePlanArgs {
     /**
      * 
-     * @type {DiscountInputArgs}
+     * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    discount?: DiscountInputArgs;
+    description?: string;
     /**
      * 
-     * @type {Array<MeteredComponentInputArgs>}
+     * @type {TrialInputArgs}
      * @memberof CreatePricePlanArgs
      */
-    meteredComponents?: Array<MeteredComponentInputArgs>;
+    trial?: TrialInputArgs;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    features?: Array<FeatureInputArgs>;
     /**
      * 
      * @type {Array<string>}
@@ -410,10 +629,10 @@ export interface CreatePricePlanArgs {
     tags?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {Array<LimitInputArgs>}
      * @memberof CreatePricePlanArgs
      */
-    displayName?: string;
+    limits?: Array<LimitInputArgs>;
     /**
      * 
      * @type {number}
@@ -422,10 +641,34 @@ export interface CreatePricePlanArgs {
     basePrice?: number;
     /**
      * 
-     * @type {TrialInputArgs}
+     * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    trial?: TrialInputArgs;
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreatePricePlanArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
+    /**
+     * 
+     * @type {Array<MeteredComponentInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    meteredComponents?: Array<MeteredComponentInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    couponName?: string;
     /**
      * 
      * @type {string}
@@ -437,43 +680,13 @@ export interface CreatePricePlanArgs {
      * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    name?: string;
+    displayName?: string;
     /**
      * 
-     * @type {Array<LimitInputArgs>}
+     * @type {DiscountInputArgs}
      * @memberof CreatePricePlanArgs
      */
-    limits?: Array<LimitInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    couponName?: string;
-    /**
-     * 
-     * @type {Array<AddOnInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
-     * @type {number}
-     * @memberof CreatePricePlanArgs
-     */
-    vendorId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    features?: Array<FeatureInputArgs>;
+    discount?: DiscountInputArgs;
 }
 /**
  * 
@@ -483,16 +696,22 @@ export interface CreatePricePlanArgs {
 export interface CreateSubscriptionArgs {
     /**
      * 
+     * @type {number}
+     * @memberof CreateSubscriptionArgs
+     */
+    customerId?: number;
+    /**
+     * 
      * @type {string}
      * @memberof CreateSubscriptionArgs
      */
     pricePlanName?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof CreateSubscriptionArgs
      */
-    effectiveAt?: Date;
+    couponOverrideName?: string;
     /**
      * 
      * @type {DiscountInputArgs}
@@ -504,19 +723,68 @@ export interface CreateSubscriptionArgs {
      * @type {number}
      * @memberof CreateSubscriptionArgs
      */
+    vendorId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateSubscriptionArgs
+     */
+    couponOverrideId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateSubscriptionArgs
+     */
     pricePlanId?: number;
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof CreateSubscriptionArgs
      */
-    customerId?: number;
+    effectiveAt?: Date;
+}
+/**
+ * 
+ * @export
+ * @interface CreateVendorArgs
+ */
+export interface CreateVendorArgs {
     /**
      * 
-     * @type {number}
-     * @memberof CreateSubscriptionArgs
+     * @type {ContactInfoInputArgs}
+     * @memberof CreateVendorArgs
      */
-    vendorId?: number;
+    contactInfo?: ContactInfoInputArgs;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVendorArgs
+     */
+    apiKey?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVendorArgs
+     */
+    vendorName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVendorArgs
+     */
+    vendorDisplayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVendorArgs
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateVendorArgs
+     */
+    displayName?: string;
 }
 /**
  * 
@@ -548,6 +816,19 @@ export interface Customer {
      * @memberof Customer
      */
     measurementMappings?: Array<Object>;
+}
+/**
+ * 
+ * @export
+ * @interface Customer1
+ */
+export interface Customer1 {
+    /**
+     * Unique name identifier of a customer
+     * @type {string}
+     * @memberof Customer1
+     */
+    name: string;
 }
 /**
  * 
@@ -621,10 +902,10 @@ export interface CustomerStatus {
 export interface DeleteSubscriptionArgs {
     /**
      * 
-     * @type {Date}
+     * @type {number}
      * @memberof DeleteSubscriptionArgs
      */
-    expireAt?: Date;
+    vendorId?: number;
     /**
      * 
      * @type {number}
@@ -633,10 +914,10 @@ export interface DeleteSubscriptionArgs {
     customerId?: number;
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof DeleteSubscriptionArgs
      */
-    vendorId?: number;
+    expireAt?: Date;
 }
 /**
  * 
@@ -645,17 +926,35 @@ export interface DeleteSubscriptionArgs {
  */
 export interface Discount {
     /**
-     * Type of the discount. One of 'FLAT' or 'PERCENT'
-     * @type {string}
+     * 
+     * @type {Object}
      * @memberof Discount
      */
-    discountType: string;
+    discountType?: Object;
     /**
      * 
      * @type {number}
      * @memberof Discount
      */
     amount?: number;
+    /**
+     * The date when the discount is applied from.
+     * @type {Date}
+     * @memberof Discount
+     */
+    startDate?: Date;
+    /**
+     * The date when the discount ends.
+     * @type {Date}
+     * @memberof Discount
+     */
+    endDate?: Date;
+    /**
+     * The id of coupon associated with this discount, none if discount does not originate from coupon
+     * @type {number}
+     * @memberof Discount
+     */
+    couponId?: number;
 }
 /**
  * 
@@ -665,16 +964,16 @@ export interface Discount {
 export interface DiscountInputArgs {
     /**
      * 
-     * @type {number}
-     * @memberof DiscountInputArgs
-     */
-    amount?: number;
-    /**
-     * 
      * @type {string}
      * @memberof DiscountInputArgs
      */
     discountType?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DiscountInputArgs
+     */
+    amount?: number;
 }
 /**
  * 
@@ -718,13 +1017,13 @@ export interface FeatureInputArgs {
      * @type {string}
      * @memberof FeatureInputArgs
      */
-    name?: string;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof FeatureInputArgs
      */
-    description?: string;
+    name?: string;
 }
 /**
  * 
@@ -752,11 +1051,11 @@ export interface LimitInputArgs {
  */
 export interface Measurement {
     /**
-     * The unique name of the meter associated with this measurement
-     * @type {string}
+     * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
+     * @type {{ [key: string]: string; }}
      * @memberof Measurement
      */
-    meterName: string;
+    labels?: { [key: string]: string; };
     /**
      * The raw value of the measurement
      * @type {number}
@@ -764,17 +1063,17 @@ export interface Measurement {
      */
     value: number;
     /**
-     * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
-     * @type {{ [key: string]: string; }}
-     * @memberof Measurement
-     */
-    labels?: { [key: string]: string; };
-    /**
      * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
      * @type {Date}
      * @memberof Measurement
      */
     time?: Date;
+    /**
+     * The unique name of the meter associated with this measurement
+     * @type {string}
+     * @memberof Measurement
+     */
+    meterName: string;
 }
 /**
  * 
@@ -807,11 +1106,11 @@ export interface Meter {
      */
     isIncremental?: boolean;
     /**
-     * One of `COUNTER` or `GAUGE`
-     * @type {string}
+     * 
+     * @type {Object}
      * @memberof Meter
      */
-    meterType?: string;
+    meterType?: Object;
     /**
      * The expected unit for the measurement values associated with this meter.
      * @type {Object}
@@ -842,19 +1141,7 @@ export interface MeterInputArgs {
      * @type {string}
      * @memberof MeterInputArgs
      */
-    meterType?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MeterInputArgs
-     */
-    primaryLabels?: Array<string>;
+    description?: string;
     /**
      * 
      * @type {Array<string>}
@@ -866,7 +1153,13 @@ export interface MeterInputArgs {
      * @type {string}
      * @memberof MeterInputArgs
      */
-    name?: string;
+    meterType?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof MeterInputArgs
+     */
+    isIncremental?: boolean;
     /**
      * 
      * @type {string}
@@ -881,71 +1174,22 @@ export interface MeterInputArgs {
     vendorId?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<string>}
      * @memberof MeterInputArgs
      */
-    isIncremental?: boolean;
+    primaryLabels?: Array<string>;
     /**
      * 
      * @type {string}
      * @memberof MeterInputArgs
      */
-    description?: string;
-}
-/**
- * 
- * @export
- * @interface MeterUpdateInputArgs
- */
-export interface MeterUpdateInputArgs {
-    /**
-     * The expected unit for the measurement values associated with this meter.
-     * @type {Object}
-     * @memberof MeterUpdateInputArgs
-     */
-    unitName?: Object;
+    name?: string;
     /**
      * 
-     * @type {Array<Object>}
-     * @memberof MeterUpdateInputArgs
-     */
-    expectedLabels?: Array<Object>;
-    /**
-     * 
-     * @type {Array<Object>}
-     * @memberof MeterUpdateInputArgs
-     */
-    primaryLabels?: Array<Object>;
-    /**
-     * Unique name identifier
      * @type {string}
-     * @memberof MeterUpdateInputArgs
-     */
-    name: string;
-    /**
-     * Name used for display in UI
-     * @type {string}
-     * @memberof MeterUpdateInputArgs
+     * @memberof MeterInputArgs
      */
     displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterUpdateInputArgs
-     */
-    description?: string;
-    /**
-     * Whether measurement values are to be considered incremental (versus a running total)
-     * @type {boolean}
-     * @memberof MeterUpdateInputArgs
-     */
-    isIncremental?: boolean;
-    /**
-     * One of `COUNTER` or `GAUGE`
-     * @type {string}
-     * @memberof MeterUpdateInputArgs
-     */
-    meterType?: string;
 }
 /**
  * 
@@ -974,10 +1218,10 @@ export interface MeteredComponent {
 export interface MeteredComponentInputArgs {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof MeteredComponentInputArgs
      */
-    meterName?: string;
+    meterId?: number;
     /**
      * 
      * @type {PriceSchemeInputArgs}
@@ -986,10 +1230,10 @@ export interface MeteredComponentInputArgs {
     priceScheme?: PriceSchemeInputArgs;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof MeteredComponentInputArgs
      */
-    meterId?: number;
+    meterName?: string;
 }
 /**
  * 
@@ -997,12 +1241,6 @@ export interface MeteredComponentInputArgs {
  * @interface ModelError
  */
 export interface ModelError {
-    /**
-     * Error message
-     * @type {string}
-     * @memberof ModelError
-     */
-    message?: string;
     /**
      * Error code
      * @type {number}
@@ -1021,6 +1259,12 @@ export interface ModelError {
      * @memberof ModelError
      */
     status?: string;
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ModelError
+     */
+    message?: string;
 }
 /**
  * 
@@ -1058,13 +1302,13 @@ export interface PaymentGatewayCredentialInputArgs {
      * @type {string}
      * @memberof PaymentGatewayCredentialInputArgs
      */
-    authToken?: string;
+    accountId?: string;
     /**
      * 
      * @type {string}
      * @memberof PaymentGatewayCredentialInputArgs
      */
-    accountId?: string;
+    authToken?: string;
     /**
      * 
      * @type {string}
@@ -1083,13 +1327,13 @@ export interface PriceInputArgs {
      * @type {number}
      * @memberof PriceInputArgs
      */
-    price?: number;
+    cap?: number;
     /**
      * 
      * @type {number}
      * @memberof PriceInputArgs
      */
-    cap?: number;
+    price?: number;
 }
 /**
  * 
@@ -1167,6 +1411,19 @@ export interface PricePlan {
 /**
  * 
  * @export
+ * @interface PricePlan1
+ */
+export interface PricePlan1 {
+    /**
+     * Unique name indentifier of a price plan
+     * @type {string}
+     * @memberof PricePlan1
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
  * @interface PricePlanTag
  */
 export interface PricePlanTag {
@@ -1196,11 +1453,11 @@ export interface PriceScheme {
      */
     name?: string;
     /**
-     * One of 'flat', 'volume', or 'stairstep'
-     * @type {string}
+     * 
+     * @type {Object}
      * @memberof PriceScheme
      */
-    schemeType?: string;
+    schemeType?: Object;
     /**
      * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
      * @type {Array<PriceTier>}
@@ -1228,10 +1485,10 @@ export interface PriceScheme {
 export interface PriceSchemeInputArgs {
     /**
      * 
-     * @type {string}
+     * @type {Array<PriceInputArgs>}
      * @memberof PriceSchemeInputArgs
      */
-    timeUnitName?: string;
+    prices?: Array<PriceInputArgs>;
     /**
      * 
      * @type {string}
@@ -1243,13 +1500,13 @@ export interface PriceSchemeInputArgs {
      * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    unitName?: string;
+    timeUnitName?: string;
     /**
      * 
-     * @type {Array<PriceInputArgs>}
+     * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    prices?: Array<PriceInputArgs>;
+    unitName?: string;
 }
 /**
  * 
@@ -1258,17 +1515,17 @@ export interface PriceSchemeInputArgs {
  */
 export interface PriceTier {
     /**
-     * The price (in lowest currency denomination by which to charge, given that the usage is within the cap range.
-     * @type {number}
-     * @memberof PriceTier
-     */
-    price: number;
-    /**
      * Cap of the tier, meaning that any subsequent usage will be bucketed into the following tier. If cap is undefined, it is effectively treated as Infinity.
      * @type {number}
      * @memberof PriceTier
      */
     cap?: number;
+    /**
+     * The price (in lowest currency denomination by which to charge, given that the usage is within the cap range.
+     * @type {number}
+     * @memberof PriceTier
+     */
+    price: number;
 }
 /**
  * 
@@ -1359,12 +1616,6 @@ export interface Trial {
 export interface TrialInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof TrialInputArgs
-     */
-    timeUnitName?: string;
-    /**
-     * 
      * @type {number}
      * @memberof TrialInputArgs
      */
@@ -1375,6 +1626,12 @@ export interface TrialInputArgs {
      * @memberof TrialInputArgs
      */
     credit?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrialInputArgs
+     */
+    timeUnitName?: string;
 }
 /**
  * 
@@ -1384,22 +1641,10 @@ export interface TrialInputArgs {
 export interface UpdateBillingSettingsInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof UpdateBillingSettingsInputArgs
-     */
-    invoiceGracePeriodUnit?: string;
-    /**
-     * 
      * @type {number}
      * @memberof UpdateBillingSettingsInputArgs
      */
-    invoiceGracePeriodLength?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateBillingSettingsInputArgs
-     */
-    paymentGracePeriodUnit?: string;
+    paymentGracePeriodLength?: number;
     /**
      * 
      * @type {boolean}
@@ -1411,19 +1656,19 @@ export interface UpdateBillingSettingsInputArgs {
      * @type {number}
      * @memberof UpdateBillingSettingsInputArgs
      */
-    paymentGracePeriodLength?: number;
+    customerId?: number;
     /**
      * 
      * @type {string}
      * @memberof UpdateBillingSettingsInputArgs
      */
-    customerInvoiceDetailLevel?: string;
+    invoiceGracePeriodUnit?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof UpdateBillingSettingsInputArgs
      */
-    customerId?: number;
+    paymentGracePeriodUnit?: string;
     /**
      * 
      * @type {number}
@@ -1436,6 +1681,18 @@ export interface UpdateBillingSettingsInputArgs {
      * @memberof UpdateBillingSettingsInputArgs
      */
     chargesEnabled?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    customerInvoiceDetailLevel?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateBillingSettingsInputArgs
+     */
+    invoiceGracePeriodLength?: number;
 }
 /**
  * 
@@ -1445,10 +1702,10 @@ export interface UpdateBillingSettingsInputArgs {
 export interface UpdateCustomerArgs {
     /**
      * 
-     * @type {Array<CustomerMeasurementMappingInputArgs>}
+     * @type {ContactInfoInputArgs}
      * @memberof UpdateCustomerArgs
      */
-    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    contactInfo?: ContactInfoInputArgs;
     /**
      * 
      * @type {Array<string>}
@@ -1457,10 +1714,10 @@ export interface UpdateCustomerArgs {
     tags?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof UpdateCustomerArgs
      */
-    displayName?: string;
+    vendorId?: number;
     /**
      * 
      * @type {string}
@@ -1469,16 +1726,77 @@ export interface UpdateCustomerArgs {
     name?: string;
     /**
      * 
-     * @type {ContactInfoInputArgs}
+     * @type {string}
      * @memberof UpdateCustomerArgs
      */
-    contactInfo?: ContactInfoInputArgs;
+    displayName?: string;
+    /**
+     * 
+     * @type {Array<CustomerMeasurementMappingInputArgs>}
+     * @memberof UpdateCustomerArgs
+     */
+    measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateMeterArgs
+ */
+export interface UpdateMeterArgs {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeterArgs
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateMeterArgs
+     */
+    expectedLabels?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeterArgs
+     */
+    meterType?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateMeterArgs
+     */
+    isIncremental?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeterArgs
+     */
+    unitName?: string;
     /**
      * 
      * @type {number}
-     * @memberof UpdateCustomerArgs
+     * @memberof UpdateMeterArgs
      */
     vendorId?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateMeterArgs
+     */
+    primaryLabels?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeterArgs
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateMeterArgs
+     */
+    displayName?: string;
 }
 /**
  * 
@@ -1488,16 +1806,22 @@ export interface UpdateCustomerArgs {
 export interface UpdatePricePlanArgs {
     /**
      * 
-     * @type {DiscountInputArgs}
+     * @type {string}
      * @memberof UpdatePricePlanArgs
      */
-    discount?: DiscountInputArgs;
+    description?: string;
     /**
      * 
-     * @type {Array<MeteredComponentInputArgs>}
+     * @type {TrialInputArgs}
      * @memberof UpdatePricePlanArgs
      */
-    meteredComponents?: Array<MeteredComponentInputArgs>;
+    trial?: TrialInputArgs;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    features?: Array<FeatureInputArgs>;
     /**
      * 
      * @type {Array<string>}
@@ -1506,10 +1830,10 @@ export interface UpdatePricePlanArgs {
     tags?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {Array<LimitInputArgs>}
      * @memberof UpdatePricePlanArgs
      */
-    displayName?: string;
+    limits?: Array<LimitInputArgs>;
     /**
      * 
      * @type {number}
@@ -1518,10 +1842,34 @@ export interface UpdatePricePlanArgs {
     basePrice?: number;
     /**
      * 
-     * @type {TrialInputArgs}
+     * @type {string}
      * @memberof UpdatePricePlanArgs
      */
-    trial?: TrialInputArgs;
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdatePricePlanArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
+    /**
+     * 
+     * @type {Array<MeteredComponentInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    meteredComponents?: Array<MeteredComponentInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    couponName?: string;
     /**
      * 
      * @type {string}
@@ -1533,43 +1881,13 @@ export interface UpdatePricePlanArgs {
      * @type {string}
      * @memberof UpdatePricePlanArgs
      */
-    name?: string;
+    displayName?: string;
     /**
      * 
-     * @type {Array<LimitInputArgs>}
+     * @type {DiscountInputArgs}
      * @memberof UpdatePricePlanArgs
      */
-    limits?: Array<LimitInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    couponName?: string;
-    /**
-     * 
-     * @type {Array<AddOnInputArgs>}
-     * @memberof UpdatePricePlanArgs
-     */
-    addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdatePricePlanArgs
-     */
-    vendorId?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof UpdatePricePlanArgs
-     */
-    features?: Array<FeatureInputArgs>;
+    discount?: DiscountInputArgs;
 }
 /**
  * 
@@ -1579,16 +1897,22 @@ export interface UpdatePricePlanArgs {
 export interface UpdateSubscriptionArgs {
     /**
      * 
+     * @type {number}
+     * @memberof UpdateSubscriptionArgs
+     */
+    customerId?: number;
+    /**
+     * 
      * @type {string}
      * @memberof UpdateSubscriptionArgs
      */
     pricePlanName?: string;
     /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof UpdateSubscriptionArgs
      */
-    effectiveAt?: Date;
+    couponOverrideName?: string;
     /**
      * 
      * @type {DiscountInputArgs}
@@ -1600,19 +1924,50 @@ export interface UpdateSubscriptionArgs {
      * @type {number}
      * @memberof UpdateSubscriptionArgs
      */
+    vendorId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateSubscriptionArgs
+     */
+    couponOverrideId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateSubscriptionArgs
+     */
     pricePlanId?: number;
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof UpdateSubscriptionArgs
      */
-    customerId?: number;
+    effectiveAt?: Date;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateVendorArgs
+ */
+export interface UpdateVendorArgs {
     /**
      * 
      * @type {number}
-     * @memberof UpdateSubscriptionArgs
+     * @memberof UpdateVendorArgs
      */
     vendorId?: number;
+    /**
+     * 
+     * @type {ContactInfoInputArgs}
+     * @memberof UpdateVendorArgs
+     */
+    contactInfo?: ContactInfoInputArgs;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateVendorArgs
+     */
+    displayName?: string;
 }
 /**
  * 
@@ -1634,66 +1989,16 @@ export interface Vendor {
     displayName?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Vendor
+     */
+    apiKey?: string;
+    /**
+     * 
      * @type {ContactInfo}
      * @memberof Vendor
      */
     contactInfo?: ContactInfo;
-}
-/**
- * 
- * @export
- * @interface VendorCreateArgs
- */
-export interface VendorCreateArgs {
-    /**
-     * 
-     * @type {ContactInfo}
-     * @memberof VendorCreateArgs
-     */
-    contactInfo?: ContactInfo;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorCreateArgs
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorCreateArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorCreateArgs
-     */
-    apiKey?: string;
-}
-/**
- * 
- * @export
- * @interface VendorUpdateInputArgs
- */
-export interface VendorUpdateInputArgs {
-    /**
-     * 
-     * @type {ContactInfo}
-     * @memberof VendorUpdateInputArgs
-     */
-    contactInfo?: ContactInfo;
-    /**
-     * Unique name identifier of a Vendor
-     * @type {string}
-     * @memberof VendorUpdateInputArgs
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorUpdateInputArgs
-     */
-    displayName?: string;
 }
 /**
  * BillingSettingsApi - fetch parameter creator
@@ -2003,6 +2308,394 @@ export class BillingSettingsApi extends BaseAPI {
      */
     public billingSettingsPut(body: UpdateBillingSettingsInputArgs, options?: any) {
         return BillingSettingsApiFp(this.configuration).billingSettingsPut(body, options)(this.fetch, this.basePath);
+    }
+
+}
+/**
+ * CouponsApi - fetch parameter creator
+ * @export
+ */
+export const CouponsApiFetchParamCreator = function (_configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {ApplyCouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsApplyCouponPost(body: ApplyCouponInputArgs, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling couponsApplyCouponPost.');
+            }
+            const localVarPath = `/coupons/apply_coupon`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ApplyCouponInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a coupon by its unique name.
+         * @summary Delete Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameDelete(couponName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'couponName' is not null or undefined
+            if (couponName === null || couponName === undefined) {
+                throw new RequiredError('couponName','Required parameter couponName was null or undefined when calling couponsCouponNameDelete.');
+            }
+            const localVarPath = `/coupons/{coupon_name}`
+                .replace(`{${"coupon_name"}}`, encodeURIComponent(String(couponName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Fetch a Coupon by its unique name.
+         * @summary Get Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameGet(couponName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'couponName' is not null or undefined
+            if (couponName === null || couponName === undefined) {
+                throw new RequiredError('couponName','Required parameter couponName was null or undefined when calling couponsCouponNameGet.');
+            }
+            const localVarPath = `/coupons/{coupon_name}`
+                .replace(`{${"coupon_name"}}`, encodeURIComponent(String(couponName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets all the coupons for a vendor.
+         * @summary Get Coupons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsGet(options: any = {}): FetchArgs {
+            const localVarPath = `/coupons/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create a new coupon.
+         * @summary Create coupon
+         * @param {CouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsPost(body: CouponInputArgs, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling couponsPost.');
+            }
+            const localVarPath = `/coupons/`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerApiKeyAuth required
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CouponInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CouponsApi - functional programming interface
+ * @export
+ */
+export const CouponsApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {ApplyCouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsApplyCouponPost(body: ApplyCouponInputArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = CouponsApiFetchParamCreator(configuration).couponsApplyCouponPost(body, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Delete a coupon by its unique name.
+         * @summary Delete Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameDelete(couponName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = CouponsApiFetchParamCreator(configuration).couponsCouponNameDelete(couponName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Fetch a Coupon by its unique name.
+         * @summary Get Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameGet(couponName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Coupon1> {
+            const localVarFetchArgs = CouponsApiFetchParamCreator(configuration).couponsCouponNameGet(couponName, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Gets all the coupons for a vendor.
+         * @summary Get Coupons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<Coupon1>> {
+            const localVarFetchArgs = CouponsApiFetchParamCreator(configuration).couponsGet(options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Create a new coupon.
+         * @summary Create coupon
+         * @param {CouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsPost(body: CouponInputArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Coupon1> {
+            const localVarFetchArgs = CouponsApiFetchParamCreator(configuration).couponsPost(body, options);
+            return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
+                localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * CouponsApi - factory interface
+ * @export
+ */
+export const CouponsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @param {ApplyCouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsApplyCouponPost(body: ApplyCouponInputArgs, options?: any) {
+            return CouponsApiFp(configuration).couponsApplyCouponPost(body, options)(fetch, basePath);
+        },
+        /**
+         * Delete a coupon by its unique name.
+         * @summary Delete Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameDelete(couponName: string, options?: any) {
+            return CouponsApiFp(configuration).couponsCouponNameDelete(couponName, options)(fetch, basePath);
+        },
+        /**
+         * Fetch a Coupon by its unique name.
+         * @summary Get Coupon
+         * @param {string} couponName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsCouponNameGet(couponName: string, options?: any) {
+            return CouponsApiFp(configuration).couponsCouponNameGet(couponName, options)(fetch, basePath);
+        },
+        /**
+         * Gets all the coupons for a vendor.
+         * @summary Get Coupons
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsGet(options?: any) {
+            return CouponsApiFp(configuration).couponsGet(options)(fetch, basePath);
+        },
+        /**
+         * Create a new coupon.
+         * @summary Create coupon
+         * @param {CouponInputArgs} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        couponsPost(body: CouponInputArgs, options?: any) {
+            return CouponsApiFp(configuration).couponsPost(body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * CouponsApi - object-oriented interface
+ * @export
+ * @class CouponsApi
+ * @extends {BaseAPI}
+ */
+export class CouponsApi extends BaseAPI {
+    /**
+     * 
+     * @param {ApplyCouponInputArgs} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponsApi
+     */
+    public couponsApplyCouponPost(body: ApplyCouponInputArgs, options?: any) {
+        return CouponsApiFp(this.configuration).couponsApplyCouponPost(body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Delete a coupon by its unique name.
+     * @summary Delete Coupon
+     * @param {string} couponName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponsApi
+     */
+    public couponsCouponNameDelete(couponName: string, options?: any) {
+        return CouponsApiFp(this.configuration).couponsCouponNameDelete(couponName, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Fetch a Coupon by its unique name.
+     * @summary Get Coupon
+     * @param {string} couponName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponsApi
+     */
+    public couponsCouponNameGet(couponName: string, options?: any) {
+        return CouponsApiFp(this.configuration).couponsCouponNameGet(couponName, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Gets all the coupons for a vendor.
+     * @summary Get Coupons
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponsApi
+     */
+    public couponsGet(options?: any) {
+        return CouponsApiFp(this.configuration).couponsGet(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Create a new coupon.
+     * @summary Create coupon
+     * @param {CouponInputArgs} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CouponsApi
+     */
+    public couponsPost(body: CouponInputArgs, options?: any) {
+        return CouponsApiFp(this.configuration).couponsPost(body, options)(this.fetch, this.basePath);
     }
 
 }
@@ -3806,7 +4499,7 @@ export class MeasurementsApi extends BaseAPI {
 export const MetersApiFetchParamCreator = function (_configuration?: Configuration) {
     return {
         /**
-         * Get a set of meters. If no meter names are provided, all meters will be fetched
+         * Retrieve all meters for a given vendor.
          * @summary Get Meters
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3831,7 +4524,7 @@ export const MetersApiFetchParamCreator = function (_configuration?: Configurati
             };
         },
         /**
-         * Delete a meter by its unique name. Meters can only be deleted if they have no active usage.
+         * Delete a meter by its unique name. Meters can only be deleted if not in-use by a price plan.
          * @summary Delete Meter
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
@@ -3895,12 +4588,12 @@ export const MetersApiFetchParamCreator = function (_configuration?: Configurati
         /**
          * Update a meter by its unique name
          * @summary Update Meter
-         * @param {MeterUpdateInputArgs} body 
+         * @param {UpdateMeterArgs} body 
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        metersMeterNamePut(body: MeterUpdateInputArgs, meterName: string, options: any = {}): FetchArgs {
+        metersMeterNamePut(body: UpdateMeterArgs, meterName: string, options: any = {}): FetchArgs {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling metersMeterNamePut.');
@@ -3924,7 +4617,7 @@ export const MetersApiFetchParamCreator = function (_configuration?: Configurati
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"MeterUpdateInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"UpdateMeterArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3976,7 +4669,7 @@ export const MetersApiFetchParamCreator = function (_configuration?: Configurati
 export const MetersApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Get a set of meters. If no meter names are provided, all meters will be fetched
+         * Retrieve all meters for a given vendor.
          * @summary Get Meters
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3994,7 +4687,7 @@ export const MetersApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Delete a meter by its unique name. Meters can only be deleted if they have no active usage.
+         * Delete a meter by its unique name. Meters can only be deleted if not in-use by a price plan.
          * @summary Delete Meter
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
@@ -4034,12 +4727,12 @@ export const MetersApiFp = function(configuration?: Configuration) {
         /**
          * Update a meter by its unique name
          * @summary Update Meter
-         * @param {MeterUpdateInputArgs} body 
+         * @param {UpdateMeterArgs} body 
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        metersMeterNamePut(body: MeterUpdateInputArgs, meterName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Meter> {
+        metersMeterNamePut(body: UpdateMeterArgs, meterName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Meter> {
             const localVarFetchArgs = MetersApiFetchParamCreator(configuration).metersMeterNamePut(body, meterName, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4080,7 +4773,7 @@ export const MetersApiFp = function(configuration?: Configuration) {
 export const MetersApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * Get a set of meters. If no meter names are provided, all meters will be fetched
+         * Retrieve all meters for a given vendor.
          * @summary Get Meters
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4089,7 +4782,7 @@ export const MetersApiFactory = function (configuration?: Configuration, fetch?:
             return MetersApiFp(configuration).metersGet(options)(fetch, basePath);
         },
         /**
-         * Delete a meter by its unique name. Meters can only be deleted if they have no active usage.
+         * Delete a meter by its unique name. Meters can only be deleted if not in-use by a price plan.
          * @summary Delete Meter
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
@@ -4111,12 +4804,12 @@ export const MetersApiFactory = function (configuration?: Configuration, fetch?:
         /**
          * Update a meter by its unique name
          * @summary Update Meter
-         * @param {MeterUpdateInputArgs} body 
+         * @param {UpdateMeterArgs} body 
          * @param {string} meterName 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        metersMeterNamePut(body: MeterUpdateInputArgs, meterName: string, options?: any) {
+        metersMeterNamePut(body: UpdateMeterArgs, meterName: string, options?: any) {
             return MetersApiFp(configuration).metersMeterNamePut(body, meterName, options)(fetch, basePath);
         },
         /**
@@ -4140,7 +4833,7 @@ export const MetersApiFactory = function (configuration?: Configuration, fetch?:
  */
 export class MetersApi extends BaseAPI {
     /**
-     * Get a set of meters. If no meter names are provided, all meters will be fetched
+     * Retrieve all meters for a given vendor.
      * @summary Get Meters
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4151,7 +4844,7 @@ export class MetersApi extends BaseAPI {
     }
 
     /**
-     * Delete a meter by its unique name. Meters can only be deleted if they have no active usage.
+     * Delete a meter by its unique name. Meters can only be deleted if not in-use by a price plan.
      * @summary Delete Meter
      * @param {string} meterName 
      * @param {*} [options] Override http request option.
@@ -4177,13 +4870,13 @@ export class MetersApi extends BaseAPI {
     /**
      * Update a meter by its unique name
      * @summary Update Meter
-     * @param {MeterUpdateInputArgs} body 
+     * @param {UpdateMeterArgs} body 
      * @param {string} meterName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetersApi
      */
-    public metersMeterNamePut(body: MeterUpdateInputArgs, meterName: string, options?: any) {
+    public metersMeterNamePut(body: UpdateMeterArgs, meterName: string, options?: any) {
         return MetersApiFp(this.configuration).metersMeterNamePut(body, meterName, options)(this.fetch, this.basePath);
     }
 
@@ -4770,11 +5463,11 @@ export const VendorsApiFetchParamCreator = function (_configuration?: Configurat
         /**
          * **[ADMIN ONLY]** Create a new vendor.
          * @summary Create Vendor
-         * @param {VendorCreateArgs} body 
+         * @param {CreateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPost(body: VendorCreateArgs, options: any = {}): FetchArgs {
+        vendorsPost(body: CreateVendorArgs, options: any = {}): FetchArgs {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling vendorsPost.');
@@ -4793,7 +5486,7 @@ export const VendorsApiFetchParamCreator = function (_configuration?: Configurat
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"VendorCreateArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"CreateVendorArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -4804,11 +5497,11 @@ export const VendorsApiFetchParamCreator = function (_configuration?: Configurat
         /**
          * Update vendor metadata.
          * @summary Update Vendor
-         * @param {VendorUpdateInputArgs} body 
+         * @param {UpdateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPut(body: VendorUpdateInputArgs, options: any = {}): FetchArgs {
+        vendorsPut(body: UpdateVendorArgs, options: any = {}): FetchArgs {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling vendorsPut.');
@@ -4827,7 +5520,7 @@ export const VendorsApiFetchParamCreator = function (_configuration?: Configurat
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"VendorUpdateInputArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"UpdateVendorArgs" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -4883,11 +5576,11 @@ export const VendorsApiFp = function(configuration?: Configuration) {
         /**
          * **[ADMIN ONLY]** Create a new vendor.
          * @summary Create Vendor
-         * @param {VendorCreateArgs} body 
+         * @param {CreateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPost(body: VendorCreateArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<VendorCreateArgs> {
+        vendorsPost(body: CreateVendorArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Vendor> {
             const localVarFetchArgs = VendorsApiFetchParamCreator(configuration).vendorsPost(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4902,11 +5595,11 @@ export const VendorsApiFp = function(configuration?: Configuration) {
         /**
          * Update vendor metadata.
          * @summary Update Vendor
-         * @param {VendorUpdateInputArgs} body 
+         * @param {UpdateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPut(body: VendorUpdateInputArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Vendor> {
+        vendorsPut(body: UpdateVendorArgs, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Vendor> {
             const localVarFetchArgs = VendorsApiFetchParamCreator(configuration).vendorsPut(body, options);
             return (fetch: FetchAPI = isomorphicFetch, basePath: string = BASE_PATH) => {
                 localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4948,21 +5641,21 @@ export const VendorsApiFactory = function (configuration?: Configuration, fetch?
         /**
          * **[ADMIN ONLY]** Create a new vendor.
          * @summary Create Vendor
-         * @param {VendorCreateArgs} body 
+         * @param {CreateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPost(body: VendorCreateArgs, options?: any) {
+        vendorsPost(body: CreateVendorArgs, options?: any) {
             return VendorsApiFp(configuration).vendorsPost(body, options)(fetch, basePath);
         },
         /**
          * Update vendor metadata.
          * @summary Update Vendor
-         * @param {VendorUpdateInputArgs} body 
+         * @param {UpdateVendorArgs} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        vendorsPut(body: VendorUpdateInputArgs, options?: any) {
+        vendorsPut(body: UpdateVendorArgs, options?: any) {
             return VendorsApiFp(configuration).vendorsPut(body, options)(fetch, basePath);
         },
     };
@@ -5000,24 +5693,24 @@ export class VendorsApi extends BaseAPI {
     /**
      * **[ADMIN ONLY]** Create a new vendor.
      * @summary Create Vendor
-     * @param {VendorCreateArgs} body 
+     * @param {CreateVendorArgs} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VendorsApi
      */
-    public vendorsPost(body: VendorCreateArgs, options?: any) {
+    public vendorsPost(body: CreateVendorArgs, options?: any) {
         return VendorsApiFp(this.configuration).vendorsPost(body, options)(this.fetch, this.basePath);
     }
 
     /**
      * Update vendor metadata.
      * @summary Update Vendor
-     * @param {VendorUpdateInputArgs} body 
+     * @param {UpdateVendorArgs} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VendorsApi
      */
-    public vendorsPut(body: VendorUpdateInputArgs, options?: any) {
+    public vendorsPut(body: UpdateVendorArgs, options?: any) {
         return VendorsApiFp(this.configuration).vendorsPut(body, options)(this.fetch, this.basePath);
     }
 
