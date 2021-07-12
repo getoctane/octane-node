@@ -1,4 +1,4 @@
-import * as octaneApi from "./api"
+import * as octaneApi from "./types"
 import * as octaneConfig from "./configuration"
 
 const octaneDefaultHost = "api.cloud.getoctane.io"

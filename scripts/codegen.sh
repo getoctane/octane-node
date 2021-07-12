@@ -5,7 +5,7 @@ set -ex
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
 
-OPEN_API_URL="https://api.dev.getoctane.io/docs/openapi.json"
+OPEN_API_URL="https://api.cloud.getoctane.io/docs/openapi.json"
 
 CODEGEN_VERSION="3.0.27"
 CODEGEN_SHA="66e956839d84bfff44be2ac269761f755404dfea34c7e4903821fedbc3c06043"
@@ -61,8 +61,8 @@ mv mount/api.ts.tmp mount/api.ts
 cat mount/api.ts | sed 's/return fetch(/localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(/g' > mount/api.ts.tmp
 mv mount/api.ts.tmp mount/api.ts
 
-# Take the files we care about
-mv mount/api.ts src/
+# Take the files we care about (rename "api" to "types")
+mv mount/api.ts src/types.ts
 mv mount/configuration.ts src/
 mv mount/custom.d.ts src/
 
