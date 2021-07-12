@@ -9,6 +9,22 @@ export interface Configuration {
     protocol?: string;
 }
 
+/* TODO
+
+Models:
+
+- Vendors (do not implement)
+
+- Meters
+- Measurements
+- Customers
+- Priceplans
+- PaymentGatewayCredential
+- Billings
+- Coupons
+
+ */
+
 class Customers {
     private _api: octaneApi.CustomersApi
     constructor(config: octaneConfig.Configuration) {
