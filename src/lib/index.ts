@@ -33,7 +33,7 @@ class Customers {
     }
 }
 
-class Octane {
+export default class Octane {
     customers: Customers;
     constructor(key: string, overrides?: Configuration) {
         const host = overrides?.host || octaneDefaultHost
@@ -47,9 +47,10 @@ class Octane {
     }
 }
 
-const octane = function(key: string, overrides?: Configuration):Octane {
-    return new Octane(key, overrides)
-}
+// TODO: without these, is support there for people using "require" ?
+//const octane = function(key: string, overrides?: Configuration):Octane {
+//    return new Octane(key, overrides)
+//}
 
-module.exports = octane
-module.exports.default = octane
+//module.exports = octane
+//module.exports.default = octane
