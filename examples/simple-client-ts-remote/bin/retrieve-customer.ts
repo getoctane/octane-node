@@ -6,7 +6,7 @@ const octane = new Octane(process.env.OCTANE_API_KEY || "", {
     port: parseInt(process.env.OCTANE_API_PORT || ""),
     protocol: process.env.OCTANE_API_PROTOCOL,
 });
-import {Customer} from "octane-node/build/main/lib/api"
+import {Customer} from "octane-node/api"
 
 if (process.argv.length < 3) {
     console.log("Usage: ./retrieve-customer.ts [customer_name]")

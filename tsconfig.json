@@ -2,8 +2,8 @@
   "compilerOptions": {
     "incremental": true,
     "target": "es2017",
-    "outDir": "build/main",
-    "rootDir": "src",
+    "outDir": "build/",
+    "rootDir": "src/",
     "moduleResolution": "node",
     "module": "commonjs",
     "declaration": true,
@@ -41,7 +41,7 @@
     "types": ["node"],
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/*.ts"],
   "exclude": ["node_modules/**"],
   "compileOnSave": false
 }

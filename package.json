@@ -1,9 +1,9 @@
 {
   "name": "octane-node",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Node bindings for the Octane API",
-  "main": "build/main/lib/index.js",
-  "typings": "build/main/lib/index.d.ts",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "repository": "https://github.com/getoctane/octane-node",
   "license": "MIT",
   "keywords": [
@@ -11,8 +11,9 @@
     "api"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "codegen": "scripts/codegen.sh"
+    "codegen": "scripts/codegen.sh",
+    "build": "scripts/build.sh",
+    "publish": "scripts/publish.sh"
   },
   "devDependencies": {
     "@types/node": "^16.3.1",
