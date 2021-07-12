@@ -1,6 +1,6 @@
 {
   "name": "octane-node",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Node bindings for the Octane API",
   "main": "build/main/lib/index.js",
   "typings": "build/main/lib/index.d.ts",

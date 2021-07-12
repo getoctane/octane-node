@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-const octane = require("octane-node")(process.env.OCTANE_API_KEY, {
+import Octane from "octane-node";
+const octane = new Octane.default(process.env.OCTANE_API_KEY, {
     host: process.env.OCTANE_API_HOST,
-    port: process.env.OCTANE_API_PORT,
+    port: parseInt(process.env.OCTANE_API_PORT || ""),
     protocol: process.env.OCTANE_API_PROTOCOL,
 });
 
@@ -14,19 +15,19 @@ const n = process.argv[2];
 
 octane.customers.create({
     name: n,
-    display_name: n,
-    contact_info: {
-        "address_line_1": "21 Jump Street",
+    displayName: n,
+    contactInfo: {
+        "addressLine1": "21 Jump Street",
         "city": "San Flandisco",
         "state": "California",
         "zipcode": "12345",
         "email": "support@example.com",
         "phone": "123-555-5555",
     },
-    measurement_mappings: [
+    measurementMappings: [
         {
             "label": "customer_id",
-            "value_regex": n,
+            "valueRegex": n,
         },
     ],
 })

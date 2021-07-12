@@ -9,9 +9,10 @@
     "retrieve-customer": "./bin/retrieve-customer.js",
     "update-customer": "./bin/update-customer.js"
   },
+  "type": "module",
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "octane-node": "^0.1.3"
+    "octane-node": "^0.1.5"
   }
 }

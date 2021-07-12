@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
-const octane = require("octane-node")(process.env.OCTANE_API_KEY, {
+import Octane from "octane-node";
+const octane = new Octane.default(process.env.OCTANE_API_KEY, {
     host: process.env.OCTANE_API_HOST,
-    port: process.env.OCTANE_API_PORT,
+    port: parseInt(process.env.OCTANE_API_PORT || ""),
     protocol: process.env.OCTANE_API_PROTOCOL,
 });
 
@@ -13,8 +14,8 @@ if (process.argv.length < 3) {
 const n = process.argv[2];
 
 octane.customers.update(n,{
-    contact_info: { // updating contact info only
-        "address_line_1": "22 Jump Street",
+    contactInfo: { // updating contact info only
+        "addressLine1": "22 Jump Street",
         "city": "San Flandisco",
         "state": "California",
         "zipcode": "12345",
