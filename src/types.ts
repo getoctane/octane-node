@@ -2,6 +2,7 @@ import {
   Customer,
   CreateCustomerArgs,
   UpdateCustomerArgs,
+  Measurement,
 } from './codegen/api';
 
 interface Configuration {
@@ -10,4 +11,10 @@ interface Configuration {
   protocol?: string;
 }
 
-export { Configuration, Customer, CreateCustomerArgs, UpdateCustomerArgs };
+export {
+  Configuration,
+  Customer,
+  CreateCustomerArgs,
+  UpdateCustomerArgs,
+  Measurement,
+};

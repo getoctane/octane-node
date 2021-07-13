@@ -1,6 +1,6 @@
 {
   "name": "octane-node",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Node bindings for the Octane API",
   "main": "index.js",
   "repository": "https://github.com/getoctane/octane-node",

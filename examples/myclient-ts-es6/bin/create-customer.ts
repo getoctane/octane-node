@@ -34,3 +34,5 @@ octane.customers.create({
 })
     .then((customer: Customer) => console.log(customer))
     .catch((error: Error) => console.error(error))
+
+octane.measurements.create()

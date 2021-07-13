@@ -10,8 +10,11 @@ trap "rm -f ${PWD}/tsconfig.tsbuildinfo" EXIT
 tsc -p tsconfig.json
 cp LICENSE build/
 
-# TODO: do we want a README specific for distribution?
-# cp README.md build/
+cat > build/README.md <<EOF
+# octane-node
+
+Node bindings for the Octane API
+EOF
 
 # Remove dev-related fields from package.json
 node -e "

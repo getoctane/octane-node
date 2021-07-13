@@ -1,6 +1,7 @@
 import { Configuration } from './types';
 
 import { Customers } from './resources/customers';
+import { Measurements } from './resources/measurements';
 
 import { Configuration as APIConfiguration } from './codegen/configuration';
 
@@ -25,6 +26,8 @@ Models:
 class Octane {
   customers: Customers;
 
+  measurements: Measurements;
+
   constructor(key: string, overrides?: Configuration) {
     const host = overrides?.host || octaneDefaultHost;
     const port = overrides?.port || 443;
@@ -34,6 +37,7 @@ class Octane {
       basePath: `${protocol}://${host}:${port}`,
     };
     this.customers = new Customers(apiConfig);
+    this.measurements = new Measurements(apiConfig);
   }
 }
 
