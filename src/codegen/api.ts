@@ -76,7 +76,6 @@ export class BaseAPI {
  */
 export class RequiredError extends Error {
   name!: 'RequiredError';
-
   constructor(public field: string, msg?: string) {
     super(msg);
   }
@@ -2022,26 +2021,28 @@ export const BillingSettingsApiFetchParamCreator = function (
     billingSettingsDelete(options: any = {}): FetchArgs {
       const localVarPath = `/billing_settings/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -2057,23 +2058,25 @@ export const BillingSettingsApiFetchParamCreator = function (
     billingSettingsGet(options: any = {}): FetchArgs {
       const localVarPath = `/billing_settings/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -2100,7 +2103,7 @@ export const BillingSettingsApiFetchParamCreator = function (
       }
       const localVarPath = `/billing_settings/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -2108,17 +2111,19 @@ export const BillingSettingsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreateBillingSettingsInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -2151,7 +2156,7 @@ export const BillingSettingsApiFetchParamCreator = function (
       }
       const localVarPath = `/billing_settings/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -2159,17 +2164,19 @@ export const BillingSettingsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateBillingSettingsInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -2208,17 +2215,17 @@ export const BillingSettingsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2239,17 +2246,17 @@ export const BillingSettingsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2271,17 +2278,17 @@ export const BillingSettingsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2303,17 +2310,17 @@ export const BillingSettingsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2480,7 +2487,7 @@ export const CouponsApiFetchParamCreator = function (
       }
       const localVarPath = `/coupons/apply_coupon`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -2488,17 +2495,19 @@ export const CouponsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'ApplyCouponInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -2531,26 +2540,28 @@ export const CouponsApiFetchParamCreator = function (
         encodeURIComponent(String(couponName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -2577,23 +2588,25 @@ export const CouponsApiFetchParamCreator = function (
         encodeURIComponent(String(couponName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -2609,23 +2622,25 @@ export const CouponsApiFetchParamCreator = function (
     couponsGet(options: any = {}): FetchArgs {
       const localVarPath = `/coupons/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -2649,7 +2664,7 @@ export const CouponsApiFetchParamCreator = function (
       }
       const localVarPath = `/coupons/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -2657,17 +2672,19 @@ export const CouponsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CouponInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -2706,17 +2723,17 @@ export const CouponsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2738,17 +2755,17 @@ export const CouponsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2770,17 +2787,17 @@ export const CouponsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2799,17 +2816,17 @@ export const CouponsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -2831,17 +2848,17 @@ export const CouponsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -3033,26 +3050,28 @@ export const CustomersApiFetchParamCreator = function (
           encodeURIComponent(String(customerName)),
         );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3083,23 +3102,25 @@ export const CustomersApiFetchParamCreator = function (
           encodeURIComponent(String(customerName)),
         );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3139,7 +3160,7 @@ export const CustomersApiFetchParamCreator = function (
           encodeURIComponent(String(customerName)),
         );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3147,17 +3168,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreateBillingSettingsInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3203,7 +3226,7 @@ export const CustomersApiFetchParamCreator = function (
           encodeURIComponent(String(customerName)),
         );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3211,17 +3234,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateBillingSettingsInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3257,26 +3282,28 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3306,23 +3333,25 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3374,23 +3403,25 @@ export const CustomersApiFetchParamCreator = function (
           .replace(`{${'invoice_id'}}`, encodeURIComponent(String(invoiceId)))
           .replace(`{${'token'}}`, encodeURIComponent(String(token)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3420,23 +3451,25 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3475,7 +3508,7 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3483,17 +3516,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CustomerMeasurementMappingInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3539,7 +3574,7 @@ export const CustomersApiFetchParamCreator = function (
           encodeURIComponent(String(customerName)),
         );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3547,17 +3582,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CustomerPaymentGatewayCredentialInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3602,7 +3639,7 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3610,17 +3647,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateCustomerArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3660,31 +3699,33 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
       if (endTime !== undefined) {
-        localVarQueryParameter.end_time = (endTime as any).toISOString();
+        localVarQueryParameter['end_time'] = (endTime as any).toISOString();
       }
 
       if (startTime !== undefined) {
-        localVarQueryParameter.start_time = (startTime as any).toISOString();
+        localVarQueryParameter['start_time'] = (startTime as any).toISOString();
       }
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3725,23 +3766,25 @@ export const CustomersApiFetchParamCreator = function (
         )
         .replace(`{${'token'}}`, encodeURIComponent(String(token)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3771,23 +3814,25 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -3826,10 +3871,10 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3837,17 +3882,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'DeleteSubscriptionArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3892,7 +3939,7 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3900,17 +3947,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateSubscriptionArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -3946,23 +3995,25 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -4001,7 +4052,7 @@ export const CustomersApiFetchParamCreator = function (
         encodeURIComponent(String(customerName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -4009,17 +4060,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreateSubscriptionArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -4041,23 +4094,25 @@ export const CustomersApiFetchParamCreator = function (
     customersGet(options: any = {}): FetchArgs {
       const localVarPath = `/customers/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -4081,7 +4136,7 @@ export const CustomersApiFetchParamCreator = function (
       }
       const localVarPath = `/customers/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -4089,17 +4144,19 @@ export const CustomersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreateCustomerArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -4139,17 +4196,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4171,17 +4228,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4205,17 +4262,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4239,17 +4296,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4271,17 +4328,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4303,17 +4360,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4344,17 +4401,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4379,17 +4436,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4416,17 +4473,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4457,17 +4514,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4491,17 +4548,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4532,17 +4589,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4570,17 +4627,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4602,17 +4659,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4636,17 +4693,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4670,17 +4727,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4702,17 +4759,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4736,17 +4793,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4765,17 +4822,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -4797,17 +4854,17 @@ export const CustomersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -5621,7 +5678,7 @@ export const MeasurementsApiFetchParamCreator = function (
       }
       const localVarPath = `/measurements/multi`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5629,17 +5686,19 @@ export const MeasurementsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'Array&lt;Measurement&gt;' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -5669,7 +5728,7 @@ export const MeasurementsApiFetchParamCreator = function (
       }
       const localVarPath = `/measurements/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5677,17 +5736,19 @@ export const MeasurementsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'Measurement' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -5727,17 +5788,17 @@ export const MeasurementsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -5759,17 +5820,17 @@ export const MeasurementsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -5869,23 +5930,25 @@ export const MetersApiFetchParamCreator = function (
     metersGet(options: any = {}): FetchArgs {
       const localVarPath = `/meters/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -5912,26 +5975,28 @@ export const MetersApiFetchParamCreator = function (
         encodeURIComponent(String(meterName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -5958,23 +6023,25 @@ export const MetersApiFetchParamCreator = function (
         encodeURIComponent(String(meterName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -6013,7 +6080,7 @@ export const MetersApiFetchParamCreator = function (
         encodeURIComponent(String(meterName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6021,17 +6088,19 @@ export const MetersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateMeterArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -6061,7 +6130,7 @@ export const MetersApiFetchParamCreator = function (
       }
       const localVarPath = `/meters/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6069,17 +6138,19 @@ export const MetersApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'MeterInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -6116,17 +6187,17 @@ export const MetersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6148,17 +6219,17 @@ export const MetersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6180,17 +6251,17 @@ export const MetersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6214,17 +6285,17 @@ export const MetersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6246,17 +6317,17 @@ export const MetersApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6458,7 +6529,7 @@ export const PaymentGatewayCredentialApiFetchParamCreator = function (
       }
       const localVarPath = `/payment_gateway_credentials/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6466,17 +6537,19 @@ export const PaymentGatewayCredentialApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'PaymentGatewayCredentialInputArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -6521,17 +6594,17 @@ export const PaymentGatewayCredentialApiFp = function (
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6607,23 +6680,25 @@ export const PricePlansApiFetchParamCreator = function (
     pricePlansGet(options: any = {}): FetchArgs {
       const localVarPath = `/price_plans/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -6647,7 +6722,7 @@ export const PricePlansApiFetchParamCreator = function (
       }
       const localVarPath = `/price_plans/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6655,17 +6730,19 @@ export const PricePlansApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreatePricePlanArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -6701,26 +6778,28 @@ export const PricePlansApiFetchParamCreator = function (
         encodeURIComponent(String(pricePlanName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -6750,23 +6829,25 @@ export const PricePlansApiFetchParamCreator = function (
         encodeURIComponent(String(pricePlanName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -6805,7 +6886,7 @@ export const PricePlansApiFetchParamCreator = function (
         encodeURIComponent(String(pricePlanName)),
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6813,17 +6894,19 @@ export const PricePlansApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdatePricePlanArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -6860,17 +6943,17 @@ export const PricePlansApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6892,17 +6975,17 @@ export const PricePlansApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6924,17 +7007,17 @@ export const PricePlansApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6956,17 +7039,17 @@ export const PricePlansApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -6990,17 +7073,17 @@ export const PricePlansApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -7194,26 +7277,28 @@ export const VendorsApiFetchParamCreator = function (
     vendorsDelete(options: any = {}): FetchArgs {
       const localVarPath = `/vendors/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = {
-        method: 'DELETE',
-        ...options,
-      };
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options,
+      );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -7229,23 +7314,25 @@ export const VendorsApiFetchParamCreator = function (
     vendorsGet(options: any = {}): FetchArgs {
       const localVarPath = `/vendors/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'GET', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
       // authentication BearerApiKeyAuth required
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
 
       return {
         url: url.format(localVarUrlObj),
@@ -7269,7 +7356,7 @@ export const VendorsApiFetchParamCreator = function (
       }
       const localVarPath = `/vendors/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'POST', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -7277,17 +7364,19 @@ export const VendorsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'CreateVendorArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -7317,7 +7406,7 @@ export const VendorsApiFetchParamCreator = function (
       }
       const localVarPath = `/vendors/`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = { method: 'PUT', ...options };
+      const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -7325,17 +7414,19 @@ export const VendorsApiFetchParamCreator = function (
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
-      localVarUrlObj.query = {
-        ...localVarUrlObj.query,
-        ...localVarQueryParameter,
-        ...options.query,
-      };
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query,
+      );
       // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
       delete localVarUrlObj.search;
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers,
+      );
       const needsSerialization =
         <any>'UpdateVendorArgs' !== 'string' ||
         localVarRequestOptions.headers['Content-Type'] === 'application/json';
@@ -7372,17 +7463,17 @@ export const VendorsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response;
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -7401,17 +7492,17 @@ export const VendorsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -7433,17 +7524,17 @@ export const VendorsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },
@@ -7465,17 +7556,17 @@ export const VendorsApiFp = function (configuration?: Configuration) {
         fetch: FetchAPI = isomorphicFetch,
         basePath: string = BASE_PATH,
       ) => {
-        localVarFetchArgs.options.headers.Authorization = `Bearer ${
-          configuration?.apiKey || 'UNSET'
-        }`;
+        localVarFetchArgs.options.headers['Authorization'] =
+          'Bearer ' + (configuration?.apiKey || 'UNSET');
         return fetch(
           basePath + localVarFetchArgs.url,
           localVarFetchArgs.options,
         ).then((response) => {
           if (response.status >= 200 && response.status < 300) {
             return response.json();
+          } else {
+            throw response;
           }
-          throw response;
         });
       };
     },

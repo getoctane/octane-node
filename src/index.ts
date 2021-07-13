@@ -37,11 +37,11 @@ class Octane {
   }
 }
 
-export default Octane
+export default Octane;
 
-const octane = function(key: string, overrides?: Configuration):Octane {
-   return new Octane(key, overrides)
-}
+const octane = function (key: string, overrides?: Configuration): Octane {
+  return new Octane(key, overrides);
+};
 
-module.exports = octane
-module.exports.default = octane
+module.exports = octane;
+module.exports.default = octane;
