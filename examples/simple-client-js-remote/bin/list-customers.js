@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import Octane from "octane-node";
+import Octane from 'octane-node';
 const octane = new Octane(process.env.OCTANE_API_KEY, {
     host: process.env.OCTANE_API_HOST,
-    port: parseInt(process.env.OCTANE_API_PORT || ""),
+    port: parseInt(process.env.OCTANE_API_PORT || ''),
     protocol: process.env.OCTANE_API_PROTOCOL,
 });
 

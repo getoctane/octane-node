@@ -13,6 +13,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "octane-node": "^0.1.13"
+    "octane-node": "^0.1.14"
   }
 }
