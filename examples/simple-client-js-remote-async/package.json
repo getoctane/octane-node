@@ -1,0 +1,14 @@
+{
+  "name": "simple-client-ts-remote-async",
+  "version": "0.1.0",
+  "description": "Example of how to use the Octane npm module",
+  "scripts": {
+    "create-customer": "./bin/create-customer.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "octane-node": "^0.1.14"
+  }
+}
