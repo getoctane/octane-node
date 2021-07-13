@@ -5,6 +5,4 @@
 **/*.generated*
 schema.graphql
 **/generated/*
-src/configuration.ts
-src/types.ts
-src/custom.d.ts
+src/codegen/*

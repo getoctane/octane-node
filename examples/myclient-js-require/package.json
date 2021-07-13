@@ -1,18 +1,18 @@
 {
-  "name": "simple-client-js-remote",
+  "name": "myclient-js-require",
   "version": "0.1.0",
   "description": "Example of how to use the Octane npm module",
   "scripts": {
+    "copy-build": "mkdir -p node_modules/ && rm -rf node_modules/octane-node/ && cp -r ../../build node_modules/octane-node",
     "create-customer": "./bin/create-customer.js",
     "delete-customer": "./bin/delete-customer.js",
     "list-customers": "./bin/list-customers.js",
     "retrieve-customer": "./bin/retrieve-customer.js",
     "update-customer": "./bin/update-customer.js"
   },
-  "type": "module",
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "octane-node": "^0.1.13"
+    "isomorphic-fetch": "^3.0.0"
   }
 }

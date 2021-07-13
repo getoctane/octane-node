@@ -61,10 +61,11 @@ mv mount/api.ts.tmp mount/api.ts
 cat mount/api.ts | sed 's/return fetch(/localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(/g' > mount/api.ts.tmp
 mv mount/api.ts.tmp mount/api.ts
 
-# Take the files we care about (rename "api" to "types")
-mv mount/api.ts src/types.ts
-mv mount/configuration.ts src/
-mv mount/custom.d.ts src/
+# Take the files we care about
+mkdir -p src/codegen/
+mv mount/api.ts src/codegen/
+mv mount/configuration.ts src/codegen/
+mv mount/custom.d.ts src/codegen/
 
 # This file causes issues on build.. comment this out to see the tests
-# mv mount/api_test.spec.ts src/
+# mv mount/api_test.spec.ts src/codegen/
