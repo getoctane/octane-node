@@ -58,6 +58,7 @@ h2 {
 
 #new-customer-submit {
     font-size: 1.5em;
+    vertical-align: top;
 }
 
 .hidden-on-load {
