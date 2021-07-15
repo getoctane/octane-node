@@ -8,7 +8,13 @@ class Measurements {
     this.api = new MeasurementsApi(apiConfig);
   }
 
-  public create(body: Measurement, options?: any) {
+  /**
+   * Send Measurement (one or multiple).
+   */
+  public create(body: Measurement | Array<Measurement>, options?: any) {
+    if (body instanceof Array) {
+      return this.api.measurementsMultiPost(body, options);
+    }
     return this.api.measurementsPost(body, options);
   }
 }

@@ -7,22 +7,6 @@ import { Configuration as APIConfiguration } from './codegen/configuration';
 
 const octaneDefaultHost = 'api.cloud.getoctane.io';
 
-/* TODO
-
-Models:
-
-- Vendors (do not implement)
-
-- Meters
-- Measurements
-- Customers
-- Priceplans
-- PaymentGatewayCredential
-- Billings
-- Coupons
-
- */
-
 class Octane {
   customers: Customers;
 

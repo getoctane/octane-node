@@ -2,6 +2,12 @@ import {
   Customer,
   CreateCustomerArgs,
   UpdateCustomerArgs,
+  CustomerPaymentGatewayCredentialInputArgs,
+  PaymentGatewayCredential,
+  CreateSubscriptionArgs,
+  UpdateSubscriptionArgs,
+  DeleteSubscriptionArgs,
+  Subscription,
   Measurement,
 } from './codegen/api';
 
@@ -16,5 +22,11 @@ export {
   Customer,
   CreateCustomerArgs,
   UpdateCustomerArgs,
+  CustomerPaymentGatewayCredentialInputArgs,
+  PaymentGatewayCredential,
+  CreateSubscriptionArgs,
+  UpdateSubscriptionArgs,
+  DeleteSubscriptionArgs,
+  Subscription,
   Measurement,
 };
