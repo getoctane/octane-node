@@ -3,14 +3,14 @@
 import express from 'express'
 import Octane from 'octane-node'
 
-// Instantiate the Octane API Client
+// Instantiate the Octane API client
 const octane = Octane(process.env.OCTANE_API_KEY)
 
 // Application settings and defaults
 const port          = process.env.APP_PORT               || 3000
 const bind          = process.env.APP_BIND               || '127.0.0.1'
-const meterName     = process.env.OCTANE_METER_NAME      || 'customer-hours'
-const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'customer-hours-basic'
+const meterName     = process.env.OCTANE_METER_NAME      || 'customerhours'
+const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'customerhoursbasic'
 const pricePlanRate = process.env.OCTANE_PRICE_PLAN_RATE || 30
 
 const app = express()
