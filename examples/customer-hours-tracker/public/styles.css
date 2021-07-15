@@ -28,7 +28,7 @@ th, td {
 table {
     text-align: left;
     margin: 0 auto;
-    min-width: 500px;
+    min-width: 400px;
     border-radius: 6px;
     border: 1px solid #9c9c9c;
     background: #f3f0f0;
@@ -62,6 +62,19 @@ h2 {
 
 .hidden-on-load {
     display: none;
+}
+
+#name-header {
+    width: 40%;
+}
+
+.hours {
+    display: inline;
+    padding-left: 30px;
+}
+
+.hours-input {
+    max-width: 30px;
 }
 
 #copyright {

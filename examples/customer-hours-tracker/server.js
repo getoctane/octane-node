@@ -8,6 +8,7 @@ if (!process.env.OCTANE_API_KEY) {
     process.exit(1)
 }
 const octane = Octane(process.env.OCTANE_API_KEY)
+const meterName = process.env.OCTANE_METER || 'customer-hours'
 
 const app = express()
 app.use(express.static('public'))
@@ -29,7 +30,7 @@ app.get('/api/customers', (req, res) => {
 })
 
 app.post('/api/customers', (req, res) => {
-    const name = req.body.name
+    const name = req.body['name']
     console.log(`[octane] Attempting to create new customer "${name}"`)
     const customer = {
         name: name,
@@ -49,7 +50,7 @@ app.post('/api/customers', (req, res) => {
 })
 
 app.delete('/api/customers/:name', (req, res) => {
-    const name = req.params.name
+    const name = req.params['name']
     console.log(`[octane] Attempting to delete customer "${name}"`)
     octane.customers.delete(name)
         .then(_ => {
@@ -65,6 +66,32 @@ app.delete('/api/customers/:name', (req, res) => {
         })
 })
 
+app.post('/api/hours', (req, res) => {
+    const name = req.body['name']
+    const hours = parseInt(req.body['hours'])
+    console.log(`[octane] Attempting to create measurement for customer "${name}"`)
+    const measurement = {
+        meterName: meterName,
+        value: hours,
+        labels: {
+            'customer_name': name,
+        },
+        //time: (new Date()).toISOString(),
+    };
+    octane.measurements.create(measurement)
+        .then(_ => {
+            console.log(`[octane] Measurement for customer "${name}" successfully created`)
+            res.status(201)
+            res.send()
+        })
+        .catch(error => {
+            console.error(`[octane] Error creating measurement for customer "${name}"`)
+            console.error(error)
+            res.status(500)
+            res.send('Internal server error')
+        })
+})
+
 const startServer = () => {
     const port = process.env.APP_PORT || 3000
     const bind = process.env.APP_BIND || '127.0.0.1'
@@ -73,9 +100,7 @@ const startServer = () => {
     })
 }
 
-const meterName = process.env.OCTANE_METER || 'customer-hours'
 console.log(`[octane] Checking if meter "${meterName} exists`)
-
 octane.meters.retrieve(meterName)
     .then(_ => {
         console.log(`[octane] Meter "${meterName}" already exists`)
