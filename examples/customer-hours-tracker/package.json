@@ -1,12 +1,12 @@
 {
-  "name": "customer-portal",
+  "name": "customer-hours-tracker",
   "version": "1.0.0",
-  "description": "Demo of using the Octane Node.js module",
+  "description": "Track the hours spent working on customer projects",
   "author": "support@getoctane.io",
   "license": "MIT",
   "type": "module",
   "dependencies": {
     "express": "^4.17.1",
-    "octane-node": "^0.2.0"
+    "octane-node": "^0.3.0"
   }
 }
