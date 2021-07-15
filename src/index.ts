@@ -2,6 +2,7 @@ import { Configuration } from './types';
 
 import { Customers } from './resources/customers';
 import { Measurements } from './resources/measurements';
+import { Meters } from './resources/meters';
 
 import { Configuration as APIConfiguration } from './codegen/configuration';
 
@@ -11,6 +12,8 @@ class Octane {
   customers: Customers;
 
   measurements: Measurements;
+
+  meters: Meters;
 
   constructor(key: string, overrides?: Configuration) {
     const host = overrides?.host || octaneDefaultHost;
@@ -22,6 +25,7 @@ class Octane {
     };
     this.customers = new Customers(apiConfig);
     this.measurements = new Measurements(apiConfig);
+    this.meters = new Meters(apiConfig);
   }
 }
 

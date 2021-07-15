@@ -9,6 +9,9 @@ import {
   DeleteSubscriptionArgs,
   Subscription,
   Measurement,
+  MeterInputArgs,
+  UpdateMeterArgs,
+  Meter,
 } from './codegen/api';
 
 interface Configuration {
@@ -29,4 +32,7 @@ export {
   DeleteSubscriptionArgs,
   Subscription,
   Measurement,
+  MeterInputArgs,
+  UpdateMeterArgs,
+  Meter,
 };

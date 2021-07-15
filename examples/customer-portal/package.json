@@ -1,0 +1,12 @@
+{
+  "name": "customer-portal",
+  "version": "1.0.0",
+  "description": "Demo of using the Octane Node.js module",
+  "author": "support@getoctane.io",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "express": "^4.17.1",
+    "octane-node": "^0.2.0"
+  }
+}
