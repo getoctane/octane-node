@@ -3,12 +3,15 @@
 import express from 'express'
 import Octane from 'octane-node'
 
-if (!process.env.OCTANE_API_KEY) {
-    console.error('Must set OCTANE_API_KEY.')
-    process.exit(1)
-}
+// Instantiate the Octane API Client
 const octane = Octane(process.env.OCTANE_API_KEY)
-const meterName = process.env.OCTANE_METER || 'customer-hours'
+
+// Application settings and defaults
+const port          = process.env.APP_PORT               || 3000
+const bind          = process.env.APP_BIND               || '127.0.0.1'
+const meterName     = process.env.OCTANE_METER_NAME      || 'customer-hours'
+const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'customer-hours-basic'
+const pricePlanRate = process.env.OCTANE_PRICE_PLAN_RATE || 30
 
 const app = express()
 app.use(express.static('public'))
@@ -68,7 +71,7 @@ app.delete('/api/customers/:name', (req, res) => {
 
 app.post('/api/hours', (req, res) => {
     const name = req.body['name']
-    const hours = parseInt(req.body['hours'])
+    const hours = req.body['hours']
     console.log(`[octane] Attempting to create measurement for customer "${name}"`)
     const measurement = {
         meterName: meterName,
@@ -76,8 +79,7 @@ app.post('/api/hours', (req, res) => {
         labels: {
             'customer_name': name,
         },
-        //time: (new Date()).toISOString(),
-    };
+    }
     octane.measurements.create(measurement)
         .then(_ => {
             console.log(`[octane] Measurement for customer "${name}" successfully created`)
@@ -92,40 +94,86 @@ app.post('/api/hours', (req, res) => {
         })
 })
 
-const startServer = () => {
-    const port = process.env.APP_PORT || 3000
-    const bind = process.env.APP_BIND || '127.0.0.1'
+const checkOctaneResourceMeter = () => {
+    return new Promise((resolve, reject) => {
+        console.log(`[octane] Checking if meter "${meterName}" exists`)
+        octane.meters.retrieve(meterName)
+            .then(_ => {
+                console.log(`[octane] Meter "${meterName}" already exists`)
+                resolve()
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    reject(new Error('Unauthorized, please check your OCTANE_API_KEY.'))
+                }
+                console.log(`[octane] Meter "${meterName}" does not exist, creating`)
+                const meter = {
+                    name: meterName,
+                    displayName: 'Number of hours worked',
+                    meterType: 'COUNTER',
+                    isIncremental: true,
+                    expectedLabels: ['customer_name'],
+                }
+                octane.meters.create(meter)
+                    .then(_ => {
+                        console.log(`[octane] Meter "${meterName}" successfully created`)
+                        resolve()
+                    })
+                    .catch(reject)
+            })
+    })
+}
+
+const checkOctaneResourcePricePlan = () => {
+    return new Promise((resolve, reject) => {
+        // TODO: check for price plan
+        console.log(`[octane] Checking if price plan "${pricePlanName}" exists`)
+        console.log(`[octane] Price plan "${pricePlanName}" already exists`)
+        resolve()
+    })
+}
+
+const checkOctaneResources = () => {
+    return new Promise((resolve, reject) => {
+        console.log('[octane] Ensuring all required resources exist')
+        checkOctaneResourceMeter()
+            .then(checkOctaneResourcePricePlan)
+            .then(resolve)
+            .catch(reject)
+    })
+}
+
+const checkOctaneApiKey = () => {
+    return new Promise((resolve, reject) => {
+        console.log('[octane] Checking if OCTANE_API_KEY is present in environment')
+        if (!process.env.OCTANE_API_KEY) {
+            reject(new Error('Must set OCTANE_API_KEY.'))
+        } else {
+            console.log('[octane] OCTANE_API_KEY is present in environment')
+            resolve()
+        }
+    })
+}
+
+const check = () => {
+    return new Promise((resolve, reject) => {
+        checkOctaneApiKey()
+            .then(checkOctaneResources)
+            .then(resolve)
+            .catch(reject)
+    })
+}
+
+const start = () => {
     app.listen(port, bind, () => {
         console.log(`[server] Listening at http://${bind}:${port}/`)
     })
 }
 
-console.log(`[octane] Checking if meter "${meterName} exists`)
-octane.meters.retrieve(meterName)
-    .then(_ => {
-        console.log(`[octane] Meter "${meterName}" already exists`)
-        startServer()
-    })
-    .catch(error => {
-        if (error.status === 401) {
-            console.error('Unauthorized, please check your OCTANE_API_KEY.')
-            process.exit(1)
-        }
-        console.log(`[octane] Meter "${meterName}" does not exist, creating`)
-        const meter = {
-            name: meterName,
-            displayName: 'Number of hours worked',
-            meterType: 'COUNTER',
-            isIncremental: true,
-            expectedLabels: ['customer_name'],
-        };
-        octane.meters.create(meter)
-            .then(_ => {
-                console.log(`[octane] Meter "${meterName}" successfully created`)
-                startServer()
-            })
-            .catch(error => {
-                console.error(error)
-                process.exit(1)
-            })
-    })
+const crash = (error) => {
+    console.error(error)
+    process.exit(1)
+}
+
+// Ensure proper environment then start the server
+check().then(start).catch(crash)
