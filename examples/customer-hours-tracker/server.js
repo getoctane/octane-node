@@ -21,6 +21,7 @@ app.get('/api/customers', (req, res) => {
             res.send(customers)
         })
         .catch(error => {
+            console.error(`[octane] Error listing customers in account`)
             console.error(error)
             res.status(500)
             res.send('Internal server error')
@@ -30,13 +31,34 @@ app.get('/api/customers', (req, res) => {
 app.post('/api/customers', (req, res) => {
     const name = req.body.name
     console.log(`[octane] Attempting to create new customer "${name}"`)
-    octane.customers.create({name})
+    const customer = {
+        name: name,
+    }
+    octane.customers.create(customer)
         .then(_ => {
             console.log(`[octane] Customer "${name}" successfully created`)
             res.status(201)
             res.send()
         })
         .catch(error => {
+            console.error(`[octane] Error creating customer "${name}"`)
+            console.error(error)
+            res.status(500)
+            res.send('Internal server error')
+        })
+})
+
+app.delete('/api/customers/:name', (req, res) => {
+    const name = req.params.name
+    console.log(`[octane] Attempting to delete customer "${name}"`)
+    octane.customers.delete(name)
+        .then(_ => {
+            console.log(`[octane] Customer "${name}" successfully deleted`)
+            res.status(200)
+            res.send()
+        })
+        .catch(error => {
+            console.error(`[octane] Error deleting customer "${name}"`)
             console.error(error)
             res.status(500)
             res.send('Internal server error')
