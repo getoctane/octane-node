@@ -30,6 +30,14 @@ body {
     border-radius: 16px;
 }
 
+#new-customer-input {
+    font-size: 1.5em;
+}
+
+#new-customer-submit {
+    font-size: 1.5em;
+}
+
 .hidden-on-load {
     display: none;
 }
