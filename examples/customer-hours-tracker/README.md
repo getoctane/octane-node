@@ -18,8 +18,8 @@ Octane can track that for you!
 ## How it works
 
 Upon startup, the server will ensure that you have an
-Octane meter called `customerhours`, and an Octane
-price plan called `customerhoursbasic`. If they do not
+Octane meter called `hours`, and an Octane
+price plan called `standard`. If they do not
 already exist, they will be created for you.
 
 When you add a customer in the browser, this will add an
@@ -66,7 +66,7 @@ to modify server settings, use a custom hourly rate, etc:
 ```
 export APP_PORT=3000
 export APP_BIND=127.0.0.1
-export OCTANE_METER_NAME=customerhours
-export OCTANE_PRICE_PLAN_NAME=customerhoursbasic
+export OCTANE_METER_NAME=hours
+export OCTANE_PRICE_PLAN_NAME=standard
 export OCTANE_PRICE_PLAN_RATE=30
 ```
