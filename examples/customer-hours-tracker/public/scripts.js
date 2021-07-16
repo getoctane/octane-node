@@ -69,11 +69,13 @@ var deleteCustomer = function(name) {
     }
     fetch('/api/customers/' + name, options)
         .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
             deleteCustomerInProgress = false;
-            if (response.status !== 200) {
-                console.log(response);
+            if (data.code !== 200) {
                 alert('Error deleting customer: ' +
-                    response.status + ': ' + response.statusText);
+                    data.code + ': ' + data.message);
                 return;
             }
             loadCustomers();
@@ -112,12 +114,15 @@ var sendCustomerHours = function(name, negative) {
     }
     fetch('/api/hours', options)
         .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
             sendCustomerHoursInProgress = false;
             set(id, 1);
-            if (response.status !== 201) {
-                console.log(response);
+            if (data.code !== 201) {
                 alert('Error adding hours: ' +
-                    response.status + ': ' + response.statusText);
+                    data.code + ': ' + data.message);
+                return;
             }
         })
         .catch(function(error) {
@@ -144,11 +149,13 @@ var createCustomer = function(name) {
     }
     fetch('/api/customers', options)
         .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
             createCustomerInProgress = false;
-            if (response.status !== 201) {
-                console.log(response);
+            if (data.code !== 201) {
                 alert('Error creating new customer: ' +
-                    response.status + ': ' + response.statusText);
+                    data.code + ': ' + data.message);
                 return;
             }
             loadCustomers();

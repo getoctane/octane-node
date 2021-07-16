@@ -26,9 +26,12 @@ app.get('/api/customers', (req, res) => {
         })
         .catch(error => {
             console.error(`[octane] Error listing customers in account`)
-            console.error(error)
-            res.status(500)
-            res.send('Internal server error')
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
         })
 })
 
@@ -48,47 +51,79 @@ app.post('/api/customers', (req, res) => {
         .then(_ => {
             console.log(`[octane] Customer "${name}" successfully created`)
             console.log(`[octane] Attempting to subscribe customer "${name}" `+
-                        `to price plan "${pricePlanName}`)
+                        `to price plan "${pricePlanName}"`)
             const subscription = {
                 pricePlanName: pricePlanName,
             }
             octane.customers.createSubscription(name, subscription)
                 .then(_ => {
                     console.log(`[octane] Successfully subscribed customer "${name}" `+
-                                `to price plan "${pricePlanName}`)
+                                `to price plan "${pricePlanName}"`)
                     res.status(201)
-                    res.send()
+                    res.send({
+                        code: 201,
+                        message: 'success',
+                    })
                 })
                 .catch(error => {
                     console.error(`[octane] Error subscribing customer "${name}" `+
-                                  `to price plan "${pricePlanName}`)
-                    console.error(error)
-                    res.status(500)
-                    res.send('Internal server error')
+                                  `to price plan "${pricePlanName}"`)
+                    error.json()
+                        .then(data => {
+                            console.error(data)
+                            res.status(error.status)
+                            res.send(data)
+                        })
                 })
         })
         .catch(error => {
             console.error(`[octane] Error creating customer "${name}"`)
-            console.error(error)
-            res.status(500)
-            res.send('Internal server error')
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
         })
 })
 
 app.delete('/api/customers/:name', (req, res) => {
     const name = req.params['name']
-    console.log(`[octane] Attempting to delete customer "${name}"`)
-    octane.customers.delete(name)
+    console.log(`[octane] Attempting to unsubscribe customer "${name}" `+
+                `from price plan "${pricePlanName}"`)
+    octane.customers.deleteSubscription(name, {})
         .then(_ => {
-            console.log(`[octane] Customer "${name}" successfully deleted`)
-            res.status(200)
-            res.send()
+            console.log(`[octane] Customer "${name}" successfully unsubscribed`+
+                        `from price plan "${pricePlanName}"`)
+            console.log(`[octane] Attempting to delete customer "${name}"`)
+            octane.customers.delete(name)
+                .then(_ => {
+                    console.log(`[octane] Customer "${name}" successfully deleted`)
+                    res.status(200)
+                    res.send({
+                        code: 200,
+                        message: 'success',
+                    })
+                })
+                .catch(error => {
+                    console.error(`[octane] Error deleting customer "${name}"`)
+                    error.json()
+                        .then(data => {
+                            console.error(data)
+                            res.status(error.status)
+                            res.send(data)
+                        })
+                })
         })
         .catch(error => {
-            console.error(`[octane] Error deleting customer "${name}"`)
-            console.error(error)
-            res.status(500)
-            res.send('Internal server error')
+            console.error(`[octane] Error unsubscribing customer "${name}"` +
+                          `from price plan "${pricePlanName}"`)
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
         })
 })
 
@@ -107,13 +142,19 @@ app.post('/api/hours', (req, res) => {
         .then(_ => {
             console.log(`[octane] Measurement for customer "${name}" successfully created`)
             res.status(201)
-            res.send()
+            res.send({
+                code: 201,
+                message: 'success',
+            })
         })
         .catch(error => {
             console.error(`[octane] Error creating measurement for customer "${name}"`)
-            console.error(error)
-            res.status(500)
-            res.send('Internal server error')
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
         })
 })
 
@@ -134,6 +175,7 @@ const checkOctaneResourceMeter = () => {
                     name: meterName,
                     displayName: 'Number of hours worked',
                     meterType: 'COUNTER',
+                    unitName: 'hour',
                     isIncremental: true,
                     expectedLabels: ['customer_name'],
                 }
@@ -142,7 +184,13 @@ const checkOctaneResourceMeter = () => {
                         console.log(`[octane] Meter "${meterName}" successfully created`)
                         resolve()
                     })
-                    .catch(reject)
+                    .catch(error => {
+                        error.json()
+                            .then(data => {
+                                console.error(data)
+                                reject(new Error('Unable to create meter'))
+                            })
+                    })
             })
     })
 }
@@ -174,6 +222,7 @@ const checkOctaneResourcePricePlan = () => {
                                     },
                                 ],
                                 schemeType: 'FLAT',
+                                unitName: 'hour',
                             },
                         },
                     ],
@@ -183,7 +232,13 @@ const checkOctaneResourcePricePlan = () => {
                         console.log(`[octane] Price plan "${pricePlanName}" successfully created`)
                         resolve()
                     })
-                    .catch(reject)
+                    .catch(error => {
+                        error.json()
+                            .then(data => {
+                                console.error(data)
+                                reject(new Error('Unable to create price plan'))
+                            })
+                    })
             })
     })
 }
