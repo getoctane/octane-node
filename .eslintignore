@@ -6,3 +6,4 @@
 schema.graphql
 **/generated/*
 src/codegen/*
+src/utils.ts

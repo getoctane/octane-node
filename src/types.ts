@@ -12,6 +12,9 @@ import {
   MeterInputArgs,
   UpdateMeterArgs,
   Meter,
+  CreatePricePlanArgs,
+  UpdatePricePlanArgs,
+  PricePlan,
 } from './codegen/api';
 
 interface Configuration {
@@ -35,4 +38,7 @@ export {
   MeterInputArgs,
   UpdateMeterArgs,
   Meter,
+  CreatePricePlanArgs,
+  UpdatePricePlanArgs,
+  PricePlan,
 };

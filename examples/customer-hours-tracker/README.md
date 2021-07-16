@@ -49,10 +49,10 @@ Export your Octane API key:
  export OCTANE_API_KEY="<api_key_here>"
 ```
 
-Run the server:
+Run the server (source: [server.js](./server.js)):
 
 ```
-./server.js
+npm start
 ```
 
 The app will be available

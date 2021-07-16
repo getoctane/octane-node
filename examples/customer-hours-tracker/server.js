@@ -10,7 +10,7 @@ const octane = Octane(process.env.OCTANE_API_KEY)
 const port          = process.env.APP_PORT               || 3000
 const bind          = process.env.APP_BIND               || '127.0.0.1'
 const meterName     = process.env.OCTANE_METER_NAME      || 'customerhours'
-const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'customerhoursbasic'
+const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'basic'
 const pricePlanRate = process.env.OCTANE_PRICE_PLAN_RATE || 30
 
 const app = express()
@@ -37,6 +37,12 @@ app.post('/api/customers', (req, res) => {
     console.log(`[octane] Attempting to create new customer "${name}"`)
     const customer = {
         name: name,
+        measurementMappings: [
+            {
+                label: 'customer_name',
+                valueRegex: name,
+            },
+        ],
     }
     octane.customers.create(customer)
         .then(_ => {
@@ -74,7 +80,7 @@ app.post('/api/hours', (req, res) => {
     const hours = req.body['hours']
     console.log(`[octane] Attempting to create measurement for customer "${name}"`)
     const measurement = {
-        meterName: meterName,
+        meter_name: meterName, // TODO: allow for meterName field
         value: hours,
         labels: {
             'customer_name': name,
