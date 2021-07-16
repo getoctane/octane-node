@@ -9,8 +9,8 @@ const octane = Octane(process.env.OCTANE_API_KEY)
 // Application settings and defaults
 const port          = process.env.APP_PORT               || 3000
 const bind          = process.env.APP_BIND               || '127.0.0.1'
-const meterName     = process.env.OCTANE_METER_NAME      || 'customerhours'
-const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'basic'
+const meterName     = process.env.OCTANE_METER_NAME      || 'hours'
+const pricePlanName = process.env.OCTANE_PRICE_PLAN_NAME || 'standard'
 const pricePlanRate = process.env.OCTANE_PRICE_PLAN_RATE || 30
 
 const app = express()
@@ -47,8 +47,25 @@ app.post('/api/customers', (req, res) => {
     octane.customers.create(customer)
         .then(_ => {
             console.log(`[octane] Customer "${name}" successfully created`)
-            res.status(201)
-            res.send()
+            console.log(`[octane] Attempting to subscribe customer "${name}" `+
+                        `to price plan "${pricePlanName}`)
+            const subscription = {
+                pricePlanName: pricePlanName,
+            }
+            octane.customers.createSubscription(name, subscription)
+                .then(_ => {
+                    console.log(`[octane] Successfully subscribed customer "${name}" `+
+                                `to price plan "${pricePlanName}`)
+                    res.status(201)
+                    res.send()
+                })
+                .catch(error => {
+                    console.error(`[octane] Error subscribing customer "${name}" `+
+                                  `to price plan "${pricePlanName}`)
+                    console.error(error)
+                    res.status(500)
+                    res.send('Internal server error')
+                })
         })
         .catch(error => {
             console.error(`[octane] Error creating customer "${name}"`)
@@ -80,8 +97,8 @@ app.post('/api/hours', (req, res) => {
     const hours = req.body['hours']
     console.log(`[octane] Attempting to create measurement for customer "${name}"`)
     const measurement = {
-        meter_name: meterName, // TODO: allow for meterName field
-        value: hours,
+        meterName: meterName,
+        value: parseInt(hours),
         labels: {
             'customer_name': name,
         },
@@ -132,10 +149,42 @@ const checkOctaneResourceMeter = () => {
 
 const checkOctaneResourcePricePlan = () => {
     return new Promise((resolve, reject) => {
-        // TODO: check for price plan
         console.log(`[octane] Checking if price plan "${pricePlanName}" exists`)
-        console.log(`[octane] Price plan "${pricePlanName}" already exists`)
-        resolve()
+        octane.pricePlans.retrieve(pricePlanName)
+            .then(_ => {
+                console.log(`[octane] Price plan "${pricePlanName}" already exists`)
+                resolve()
+            })
+            .catch(error => {
+                if (error.status === 401) {
+                    reject(new Error('Unauthorized, please check your OCTANE_API_KEY.'))
+                }
+                console.log(`[octane] Price plan "${pricePlanName}" does not exist, creating`)
+                const rate = parseInt(pricePlanRate) * 100 // convert dollars to cents
+                const pricePlan = {
+                    name: pricePlanName,
+                    period: 'month',
+                    meteredComponents: [
+                        {
+                            meterName: meterName,
+                            priceScheme: {
+                                prices: [
+                                    {
+                                        price: rate,
+                                    },
+                                ],
+                                schemeType: 'FLAT',
+                            },
+                        },
+                    ],
+                }
+                octane.pricePlans.create(pricePlan)
+                    .then(_ => {
+                        console.log(`[octane] Price plan "${pricePlanName}" successfully created`)
+                        resolve()
+                    })
+                    .catch(reject)
+            })
     })
 }
 

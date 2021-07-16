@@ -29,7 +29,8 @@ var loadCustomers = function() {
                     var customer = customers[i];
                     var name = customer['name'];
                     var jsInvokeDelete = 'javascript:deleteCustomer(\'' + name + '\')';
-                    var jsInvokeAddHours = 'javascript:addCustomerHours(\'' + name + '\')';
+                    var jsInvokeAddHours = 'javascript:sendCustomerHours(\'' + name + '\', false)';
+                    var jsInvokeRemoveHours = 'javascript:sendCustomerHours(\'' + name + '\', true)';
                     html += '<tr>';
                     html += '<td>' + name + '</td>';
                     html += '<td>';
@@ -38,6 +39,7 @@ var loadCustomers = function() {
                     html += '<div class="hours">';
                     html += '<input class="hours-input" id="hours-' + name + '" value="1"/>';
                     html += '<button onclick="' + jsInvokeAddHours + '">Add hours</button>';
+                    html += '<button onclick="' + jsInvokeRemoveHours + '">Remove hours</button>';
                     html += '</form>';
                     html += '</td>';
                     html += '</tr>';
@@ -82,17 +84,20 @@ var deleteCustomer = function(name) {
         })
 };
 
-var addCustomerHoursInProgress = false;
-var addCustomerHours = function(name) {
-    if (addCustomerHoursInProgress) {
+var sendCustomerHoursInProgress = false;
+var sendCustomerHours = function(name, negative) {
+    if (sendCustomerHoursInProgress) {
         return;
     }
     var id = 'hours-' + name;
     var hours = get(id).value;
     if (!isInt(hours) || hours <= 0) {
         alert('Number of hours must be a positive integer!');
-        addCustomerHoursInProgress = false;
+        sendCustomerHoursInProgress = false;
         return;
+    }
+    if (negative) {
+        hours = hours * -1;
     }
     reset(id);
     var options = {
@@ -107,18 +112,17 @@ var addCustomerHours = function(name) {
     }
     fetch('/api/hours', options)
         .then(function(response) {
-            addCustomerHoursInProgress = false;
+            sendCustomerHoursInProgress = false;
             set(id, 1);
             if (response.status !== 201) {
                 console.log(response);
                 alert('Error adding hours: ' +
                     response.status + ': ' + response.statusText);
-                return;
             }
         })
         .catch(function(error) {
             alert(error)
-            addCustomerHoursInProgress = false;
+            sendCustomerHoursInProgress = false;
             set(id, 1);
         });
 };

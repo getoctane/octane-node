@@ -1,10 +1,15 @@
 import { Measurement } from './codegen/api';
 
-// API expects "meter_name", while the type is meterName.
-// This helper augments the body with "meter_name" based on meterName
+// TODO: API expects "meter_name", while the type is meterName.
+// This helper augments the body with "meter_name" based
+// on the meterName field.
 const fixMeasurementFields = (m: Measurement) => {
-  // @ts-ignore
-  m.meter_name = m.meterName;
+  if (m.meterName) {
+    // @ts-ignore
+    m.meter_name = m.meterName;
+    // @ts-ignore
+    delete m.meterName;
+  }
 };
 
 export { fixMeasurementFields };

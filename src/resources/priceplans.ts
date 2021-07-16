@@ -23,7 +23,19 @@ class PricePlans {
    * Fetch an existing price plan.
    */
   public retrieve(pricePlanName: string, options?: any) {
-    return this.api.pricePlansPricePlanNameGet(pricePlanName, options);
+    return new Promise((resolve, reject) => {
+      this.api
+        .pricePlansPricePlanNameGet(pricePlanName, options)
+        .then((pricePlan) => {
+          if (!pricePlan.name) {
+            throw new Error('Price plan does not exist');
+          }
+          resolve(pricePlan);
+        })
+        .catch(reject);
+    });
+    // TODO: when price plan does not exist, no 404, just empty response body
+    // return this.api.pricePlansPricePlanNameGet(pricePlanName, options);
   }
 
   /**

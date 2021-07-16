@@ -7,6 +7,6 @@
   "type": "module",
   "dependencies": {
     "express": "^4.17.1",
-    "octane-node": "^0.3.0"
+    "octane-node": "^0.4.3"
   }
 }
