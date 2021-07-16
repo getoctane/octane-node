@@ -26,7 +26,7 @@ When you add a customer in the browser, this will add an
 associated Octane customer, and subscribe them to the
 price plan.
 
-When you click the "Add hours" or "Remove hours" button in the
+When you click either the "Add hours" or "Remove hours" button in the
 browser next to a customer, this will send a measurement to the
 Octane API for the meter, with a value based on the number of hours
 provided in the input box.
