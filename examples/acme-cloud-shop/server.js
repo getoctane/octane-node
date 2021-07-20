@@ -19,6 +19,14 @@ const meterRateStorage   = process.env.OCTANE_METER_RATE_STORAGE   || 2
 const meterRateBandwidth = process.env.OCTANE_METER_RATE_BANDWIDTH || 5
 const meterRateMachines  = process.env.OCTANE_METER_RATE_MACHINES  || 10
 
+// The frontend sends us generic resource names,
+// which we convert to meter names
+const resourceMeterMap = {
+    'storage': meterNameStorage,
+    'bandwidth': meterNameBandwidth,
+    'machines': meterNameMachines,
+}
+
 const app = express()
 app.use(express.static('public'))
 app.use(express.json())
@@ -81,6 +89,59 @@ app.get('/api/whoami', (req, res) => {
         })
         .catch(error => {
             console.error(`[octane] Error creating customer "${name}"`)
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
+        })
+})
+
+app.post('/api/resources', (req, res) => {
+    if (!req.session.username) {
+        return res.send({
+            code: 403,
+            message: 'No session, please refresh'
+        })
+    }
+
+    const resource = req.body['resource']
+    if (!resource in Object.keys(resourceMeterMap)) {
+        return res.send({
+            code: 400,
+            message: 'Invalid resource provided'
+        })
+    }
+    const meterName = resourceMeterMap[resource]
+
+    const value = req.body['value']
+    console.log('[octane] Attempting to create measurement ' +
+        `for customer "${req.session.username}" ` +
+        `for meter ${meterName}`)
+
+    const measurement = {
+        meterName: meterName,
+        value: parseInt(value),
+        labels: {
+            'customer_name': req.session.username,
+        },
+    }
+
+    octane.measurements.create(measurement)
+        .then(_ => {
+            console.log(`[octane] Measurement for customer "${req.session.username}" ` +
+                        `for meter "${meterName}" successfully created`)
+            res.status(201)
+            res.send({
+                code: 201,
+                message: 'success',
+            })
+        })
+        .catch(error => {
+            console.error('[octane] Error creating measurement ' +
+                          `for customer "${req.session.username}" ` +
+                          `for meter "${meterName}"`)
             error.json()
                 .then(data => {
                     console.error(data)

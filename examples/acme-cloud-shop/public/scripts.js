@@ -37,6 +37,53 @@ var whoami = function() {
         });
 };
 
+
+var adjustResourceInProgress = false;
+var adjustResource = function(name, negative) {
+    if (adjustResourceInProgress) {
+        return;
+    }
+    var id = 'unit-' + name;
+    var value = get(id).value;
+    if (!isInt(value) || value <= 0) {
+        alert('Value must be a positive integer!');
+        adjustResourceInProgress = false;
+        return;
+    }
+    if (negative) {
+        value = value * -1;
+    }
+    reset(id);
+    var options = {
+        method: 'POST',
+        body: JSON.stringify({
+            resource: name,
+            value: value,
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }
+    fetch('/api/resources', options)
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
+            adjustResourceInProgress = false;
+            set(id, 1);
+            if (data.code !== 201) {
+                alert('Error adjusting resource: ' +
+                    data.code + ': ' + data.message);
+                return;
+            }
+        })
+        .catch(function(error) {
+            alert(error)
+            adjustResourceInProgress = false;
+            set(id, 1);
+        });
+};
+
 window.onload = function() {
     whoami();
 };
