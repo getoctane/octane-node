@@ -4,7 +4,7 @@ import express from 'express'
 import Octane from 'octane-node'
 
 // Instantiate the Octane API client
-const octane = Octane(process.env.OCTANE_API_KEY)
+const octane = new Octane(process.env.OCTANE_API_KEY)
 
 // Application settings and defaults
 const port          = process.env.APP_PORT               || 3000

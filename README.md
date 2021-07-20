@@ -51,7 +51,7 @@ or using the newer `import` (ES6) syntax:
 
 ```js
 import Octane from 'octane-node';
-const octane = Octane(process.env.OCTANE_API_KEY);
+const octane = new Octane(process.env.OCTANE_API_KEY);
 ```
 
 ## Example apps
