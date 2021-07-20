@@ -7,7 +7,7 @@ of `octane-node`.
 
 ## Background
 
-Imagine you are a fledgling cloud computing company ("Acme Cloud Shop")
+Imagine you are a fledgling cloud-computing company ("Acme Cloud Shop")
 selling servers and other cloud resources, changing your customers for the following:
 
 - Storage ($2/gb/month)
