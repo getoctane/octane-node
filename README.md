@@ -192,21 +192,25 @@ various method arguments and return values when making API requests, etc.
 
 ### Types example
 
-Here is a full example of using types while listing customers:
+Here is a full example of using types while creating a customer:
 
 ```typescript
 import Octane from 'octane-node';
-import {Customer} from 'octane-node/types';
+import {CreateCustomerArgs} from 'octane-node/types';
 
 const octane = new Octane(process.env.OCTANE_API_KEY!);
 
-octane.customers.list()
-    .then((customers: Array<Customer>) => {
-        console.log('All customers:')
-        customers.map(customer => {
-            console.log(' - ' + customer.name);
-        })
-    })
+const customerName = 'r2d2';
+
+const customer: CreateCustomerArgs = {
+    name: customerName,
+    measurementMappings: [{
+        label: 'customer_name',
+        valueRegex: customerName
+    }]
+};
+
+octane.customers.create(customer)
     .catch((errorResponse: Response) => {
         console.error(errorResponse.status);
         process.exit(1);
