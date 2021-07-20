@@ -6,7 +6,9 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "cookie-session": "^1.4.0",
     "express": "^4.17.1",
-    "octane-node": "^0.5.0"
+    "octane-node": "^0.5.0",
+    "project-name-generator": "^2.1.9"
   }
 }

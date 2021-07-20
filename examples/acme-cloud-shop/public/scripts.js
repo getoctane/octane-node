@@ -12,6 +12,30 @@ function isInt(value) {
         !isNaN(parseInt(value, 10));
 }
 
+var whoami = function() {
+    hide('user');
+    show('loading-user');
+    fetch('/api/whoami')
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            if (data.code !== 201 && data.code !== 200) {
+                alert('Error creating new customer: ' +
+                    data.code + ': ' + data.message);
+                return;
+            }
+            console.log(data);
+            hide('loading-user');
+            var html = '<h2>Welcome, <span id="username">' + data['name'] + '</span></h2>';
+            html += '<br/><i>View this customer in ';
+            html += '<a target="_blank" href="https://cloud.getoctane.io/">';
+            html += 'Octane</a></i>'
+            inject('user', html);
+            show('user');
+        });
+};
+
 window.onload = function() {
-    console.log('Ready');
+    whoami();
 };

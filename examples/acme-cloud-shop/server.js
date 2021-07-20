@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import express from 'express'
+import cookieSession from 'cookie-session'
+import generate from 'project-name-generator'
 import Octane from 'octane-node'
 
 // Instantiate the Octane API client
@@ -20,6 +22,73 @@ const meterRateMachines  = process.env.OCTANE_METER_RATE_MACHINES  || 10
 const app = express()
 app.use(express.static('public'))
 app.use(express.json())
+app.use(cookieSession({
+    name: 'acme-cloud-shop',
+    keys: ['username'],
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
+app.get('/api/whoami', (req, res) => {
+    if (req.session.username) {
+        return res.send({
+            code: 200,
+            name: req.session.username
+        })
+    }
+
+    // If no cookie, then generate a name and create the customer in Octane
+    const name = generate().dashed
+    console.log(`[octane] Attempting to create new customer "${name}"`)
+
+    const customer = {
+        name: name,
+        measurementMappings: [
+            {
+                label: 'customer_name',
+                valueRegex: name,
+            },
+        ],
+    }
+    octane.customers.create(customer)
+        .then(_ => {
+            console.log(`[octane] Customer "${name}" successfully created`)
+            console.log(`[octane] Attempting to subscribe customer "${name}" `+
+                `to price plan "${pricePlanName}"`)
+            const subscription = {
+                pricePlanName: pricePlanName,
+            }
+            octane.customers.createSubscription(name, subscription)
+                .then(_ => {
+                    console.log(`[octane] Successfully subscribed customer "${name}" `+
+                        `to price plan "${pricePlanName}"`)
+                    req.session.username = name // set the cookie
+                    res.status(201)
+                    res.send({
+                        code: 201,
+                        name: name,
+                    })
+                })
+                .catch(error => {
+                    console.error(`[octane] Error subscribing customer "${name}" `+
+                        `to price plan "${pricePlanName}"`)
+                    error.json()
+                        .then(data => {
+                            console.error(data)
+                            res.status(error.status)
+                            res.send(data)
+                        })
+                })
+        })
+        .catch(error => {
+            console.error(`[octane] Error creating customer "${name}"`)
+            error.json()
+                .then(data => {
+                    console.error(data)
+                    res.status(error.status)
+                    res.send(data)
+                })
+        })
+})
 
 const checkOctaneResourceMeter = (meter) => {
     return new Promise((resolve, reject) => {
