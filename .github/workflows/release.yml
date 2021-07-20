@@ -1,0 +1,24 @@
+name: release
+on:
+  push:
+    tags: ['*']
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Build octane-node
+        run: |
+          npm install
+          npm run-script build
+      - name: Release package to npmjs
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > "${HOME}/.npmrc"
+          npm run-script publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Clear
+        if: always()
+        run: |
+          rm -f "${HOME}/.npmrc"

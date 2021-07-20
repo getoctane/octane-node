@@ -1,0 +1,16 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+      - name: Test and build octane-node
+        run: |
+          npm install
+          npm run-script test
+          npm run-script build

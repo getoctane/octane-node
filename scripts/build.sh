@@ -9,12 +9,7 @@ rm -rf build/
 trap "rm -f ${PWD}/tsconfig.tsbuildinfo" EXIT
 tsc -p tsconfig.json
 cp LICENSE build/
-
-cat > build/README.md <<EOF
-# octane-node
-
-Node bindings for the Octane API
-EOF
+cp README.md build/
 
 # Remove dev-related fields from package.json
 node -e "
