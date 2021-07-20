@@ -40,7 +40,7 @@ var loadCustomers = function() {
                     html += '<input class="hours-input" id="hours-' + name + '" value="1"/>';
                     html += '<button onclick="' + jsInvokeAddHours + '">Add hours</button>';
                     html += '<button onclick="' + jsInvokeRemoveHours + '">Remove hours</button>';
-                    html += '</form>';
+                    html += '</div>';
                     html += '</td>';
                     html += '</tr>';
                 }
