@@ -2,6 +2,7 @@
   "name": "octane-node",
   "version": "0.5.0",
   "description": "Node bindings for the Octane API",
+  "author": "support@getoctane.io",
   "main": "index.js",
   "repository": "https://github.com/getoctane/octane-node",
   "license": "MIT",
