@@ -28,11 +28,12 @@ var whoami = function() {
             console.log(data);
             hide('loading-user');
             var html = '<h2>Welcome, <span id="username">' + data['name'] + '</span></h2>';
-            html += '<br/><i>View this customer in ';
+            html += '<i>View this customer in ';
             html += '<a target="_blank" href="https://cloud.getoctane.io/">';
             html += 'Octane</a></i>'
             inject('user', html);
             show('user');
+            show('resources');
         });
 };
 

@@ -11,6 +11,45 @@
         <br/>
         <div class="hidden-on-load" id="loading-user">Loading/creating user...</div>
         <div class="hidden-on-load" id="user"></div>
+        <br/><br/>
+        <div class="hidden-on-load" id="resources">
+            <table>
+                <tr>
+                    <th id="name-header">Resource</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <td>Storage (gb)</td>
+                    <td>
+                        <div>
+                            <input class="unit-input" id="unit-storage" value="1"/>
+                            <button onclick="">Add</button>
+                            <button onclick="">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bandwidth (gb)</td>
+                    <td>
+                        <div>
+                            <input class="unit-input" id="unit-bandwidth" value="1"/>
+                            <button onclick="">Add</button>
+                            <button onclick="">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Number of machines</td>
+                    <td>
+                        <div>
+                            <input class="unit-input" id="unit-machines" value="1"/>
+                            <button onclick="">Add</button>
+                            <button onclick="">Remove</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <br/><br/>
     <div id="copyright">Copyright © 2021 <a href="https://getoctane.io/">Octane</a></div>

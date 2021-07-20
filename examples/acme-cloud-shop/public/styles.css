@@ -28,7 +28,7 @@ th, td {
 table {
     text-align: left;
     margin: 0 auto;
-    min-width: 550px;
+    min-width: 450px;
     border-radius: 6px;
     border: 1px solid #9c9c9c;
     background: #f3f0f0;
@@ -45,20 +45,12 @@ h2 {
 #webapp {
     margin: 0 auto;
     background: #d3b3fd8c;
-    max-width: 80%;
+    width: 90%;
+    max-width: 700px;
     padding-top: 10px;
     padding-bottom: 50px;
     border: 3px solid #daafaf;
     border-radius: 16px;
-}
-
-#new-customer-input {
-    font-size: 1.5em;
-}
-
-#new-customer-submit {
-    font-size: 1.5em;
-    vertical-align: top;
 }
 
 .hidden-on-load {
@@ -66,15 +58,10 @@ h2 {
 }
 
 #name-header {
-    width: 40%;
+    width: 50%;
 }
 
-.hours {
-    display: inline;
-    padding-left: 30px;
-}
-
-.hours-input {
+.unit-input {
     max-width: 30px;
 }
 
