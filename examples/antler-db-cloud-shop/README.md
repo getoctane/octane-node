@@ -68,6 +68,7 @@ to modify server settings, change resource rates, etc:
 ```
 export APP_PORT=3000
 export APP_BIND=127.0.0.1
+export OCTANE_REDIRECT_URL=https://cloud.getoctane.io
 export OCTANE_PRICE_PLAN_NAME=antlerdb
 export OCTANE_METER_NAME_STORAGE=storage
 export OCTANE_METER_NAME_BANDWIDTH=bandwidth

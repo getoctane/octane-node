@@ -11,6 +11,7 @@ const octane = new Octane(process.env.OCTANE_API_KEY)
 // Application settings and defaults
 const port               = process.env.APP_PORT                    || 3000
 const bind               = process.env.APP_BIND                    || '127.0.0.1'
+const octaneRedirectUrl  = process.env.OCTANE_REDIRECT_URL         || 'https://cloud.getoctane.io'
 const pricePlanName      = process.env.OCTANE_PRICE_PLAN_NAME      || 'antlerdb'
 const meterNameStorage   = process.env.OCTANE_METER_NAME_STORAGE   || 'storage'
 const meterNameBandwidth = process.env.OCTANE_METER_NAME_BANDWIDTH || 'bandwidth'
@@ -33,14 +34,15 @@ app.use(express.json())
 app.use(cookieSession({
     name: 'antler-db-cloud-shop',
     keys: ['username'],
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
 }))
 
 app.get('/api/whoami', (req, res) => {
     if (req.session.username) {
         return res.send({
             code: 200,
-            name: req.session.username
+            name: req.session.username,
+            url: octaneRedirectUrl,
         })
     }
 
@@ -74,6 +76,7 @@ app.get('/api/whoami', (req, res) => {
                     res.send({
                         code: 201,
                         name: name,
+                        url: octaneRedirectUrl,
                     })
                 })
                 .catch(error => {

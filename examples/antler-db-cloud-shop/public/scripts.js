@@ -29,7 +29,7 @@ var whoami = function() {
             hide('loading-user');
             var html = '<h2>Welcome, <span id="username">' + data['name'] + '</span></h2>';
             html += '<i>View this customer in ';
-            html += '<a target="_blank" href="https://cloud.getoctane.io/">';
+            html += '<a target="_blank" href="' + data['url'] + '">';
             html += 'Octane</a></i>'
             inject('user', html);
             show('user');
