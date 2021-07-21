@@ -22,7 +22,7 @@ var whoami = function() {
         .then(function(data) {
             if (data.code !== 201 && data.code !== 200) {
                 alert('Error creating new customer: ' +
-                    data.code + ': ' + data.message);
+                    data.code + ': ' + (data.message || JSON.stringify(data.errors)));
                 return;
             }
             console.log(data);
@@ -73,7 +73,7 @@ var adjustResource = function(name, negative) {
             set(id, 1);
             if (data.code !== 201) {
                 alert('Error adjusting resource: ' +
-                    data.code + ': ' + data.message);
+                    data.code + ': ' + (data.message || JSON.stringify(data.errors)));
                 return;
             }
         })
