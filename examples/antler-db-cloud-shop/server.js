@@ -11,7 +11,7 @@ const octane = new Octane(process.env.OCTANE_API_KEY)
 // Application settings and defaults
 const port               = process.env.APP_PORT                    || 3000
 const bind               = process.env.APP_BIND                    || '127.0.0.1'
-const pricePlanName      = process.env.OCTANE_PRICE_PLAN_NAME      || 'acmecloud'
+const pricePlanName      = process.env.OCTANE_PRICE_PLAN_NAME      || 'antlerdb'
 const meterNameStorage   = process.env.OCTANE_METER_NAME_STORAGE   || 'storage'
 const meterNameBandwidth = process.env.OCTANE_METER_NAME_BANDWIDTH || 'bandwidth'
 const meterNameMachines  = process.env.OCTANE_METER_NAME_MACHINES  || 'machines'
@@ -31,7 +31,7 @@ const app = express()
 app.use(express.static('public'))
 app.use(express.json())
 app.use(cookieSession({
-    name: 'acme-cloud-shop',
+    name: 'antler-db-cloud-shop',
     keys: ['username'],
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }))

@@ -59,7 +59,7 @@ const octane = new Octane(process.env.OCTANE_API_KEY);
 The following demo applications found in the [examples/](./examples/) directory display
 how to use the Octane Node.js library in real-world settings:
 
-- [acme-cloud-shop](./examples/acme-cloud-shop/) - Enable your customers to self-service various cloud resources
+- [antler-db-cloud-shop](examples/antler-db-cloud-shop/) - Enable your customers to self-service various cloud resources
 - [customer-hours-tracker](./examples/customer-hours-tracker/) - Track hours spent working on freelance projects
 
 ## Making API calls

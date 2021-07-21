@@ -1,13 +1,13 @@
-# Example: Acme Cloud Shop
+# Example: Antler DB Cloud Shop
 
 This is a simple Node.js webapp that makes use
 of `octane-node`.
 
-![acme-cloud-shop](./screenshot.png)
+![antler-db-cloud-shop](./screenshot.png)
 
 ## Background
 
-Imagine you are a fledgling cloud-computing company ("Acme Cloud Shop")
+Imagine you are a fledgling cloud-computing company ("Antler DB")
 selling servers and other cloud resources, changing your customers for the following:
 
 - Storage ($2/gb/month)
@@ -24,7 +24,7 @@ Octane can help with that!
 
 Upon startup, the server will ensure that you have various
 Octane meters setup (`storage`, `bandwidth`, and `machines`), and
-an Octane price plan called `acmecloud`. If they do not
+an Octane price plan called `antlerdb`. If they do not
 already exist, they will be created for you.
 
 When a user first visits the site, a random customer name
@@ -68,7 +68,7 @@ to modify server settings, change resource rates, etc:
 ```
 export APP_PORT=3000
 export APP_BIND=127.0.0.1
-export OCTANE_PRICE_PLAN_NAME=acmecloud
+export OCTANE_PRICE_PLAN_NAME=antlerdb
 export OCTANE_METER_NAME_STORAGE=storage
 export OCTANE_METER_NAME_BANDWIDTH=bandwidth
 export OCTANE_METER_NAME_MACHINES=machines
