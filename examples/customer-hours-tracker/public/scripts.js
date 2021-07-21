@@ -75,7 +75,7 @@ var deleteCustomer = function(name) {
             deleteCustomerInProgress = false;
             if (data.code !== 200) {
                 alert('Error deleting customer: ' +
-                    data.code + ': ' + data.message);
+                    data.code + ': ' + (data.message || JSON.stringify(data.errors)));
                 return;
             }
             loadCustomers();
@@ -121,7 +121,7 @@ var sendCustomerHours = function(name, negative) {
             set(id, 1);
             if (data.code !== 201) {
                 alert('Error adding hours: ' +
-                    data.code + ': ' + data.message);
+                    data.code + ': ' + (data.message || JSON.stringify(data.errors)));
                 return;
             }
         })
@@ -155,7 +155,7 @@ var createCustomer = function(name) {
             createCustomerInProgress = false;
             if (data.code !== 201) {
                 alert('Error creating new customer: ' +
-                    data.code + ': ' + data.message);
+                    data.code + ': ' + (data.message || JSON.stringify(data.errors)));
                 return;
             }
             loadCustomers();
