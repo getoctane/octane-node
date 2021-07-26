@@ -1,6 +1,7 @@
 import {
   CreateCustomerArgs,
   CreateSubscriptionArgs,
+  CustomerMeasurementMappingInputArgs,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
   DeleteSubscriptionArgs,
@@ -126,6 +127,47 @@ class Customers {
       customerName,
       options,
     );
+  }
+
+  /**
+   * Fetch revenue of a customer from start_time and end_time.
+   */
+  public retrieveRevenue(
+    customerName: string,
+    endTime: Date,
+    startTime: Date,
+    options?: any,
+  ) {
+    return this.api.customersCustomerNameRevenueGet(
+      customerName,
+      endTime,
+      startTime,
+      options,
+    );
+  }
+
+  /**
+   * Create a new measurement mapping for a customer.
+   */
+  public createMapping(
+    customerName: string,
+    body: CustomerMeasurementMappingInputArgs,
+    options?: any,
+  ) {
+    // NOTE: order or arguments switched here
+    return this.api.customersCustomerNameMappingsPost(
+      body,
+      customerName,
+      options,
+    );
+  }
+
+  /**
+   * Fetch all measurement mappings for a specific customer (by unique customer name).
+   */
+  public listMappings(customerName: string, options?: any) {
+    // NOTE: order or arguments switched here
+    return this.api.customersCustomerNameMappingsGet(customerName, options);
   }
 }
 

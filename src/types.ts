@@ -15,6 +15,9 @@ import {
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
   PricePlan,
+  RevenueResponse,
+  CustomerMeasurementMappingInputArgs,
+  CustomerMeasurementMapping,
 } from './codegen/api';
 
 interface Configuration {
@@ -41,4 +44,7 @@ export {
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
   PricePlan,
+  RevenueResponse,
+  CustomerMeasurementMappingInputArgs,
+  CustomerMeasurementMapping,
 };
