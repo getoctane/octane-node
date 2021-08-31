@@ -3,8 +3,8 @@
   "version": "0.5.1",
   "description": "Node bindings for the Octane API",
   "author": "team@getoctane.io",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "repository": "https://github.com/getoctane/octane-node",
   "license": "MIT",
   "keywords": [
