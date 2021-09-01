@@ -8,7 +8,13 @@ cd $DIR/../
 rm -rf build/
 trap "rm -f ${PWD}/tsconfig.tsbuildinfo" EXIT
 tsc -p tsconfig.json
-cp src/codegen/custom.d.ts build/codegen/ # Fix for bug in v0.5.0
+
+# Fix for bug in v0.5.0
+cp src/codegen/custom.d.ts build/codegen/
+cat build/codegen/api.d.ts | sed 's/\.\.\/\.\.\/src\/codegen\/custom\.d\.ts/\.\/custom\.d\.ts/g' \
+  > build/codegen/api.d.ts.tmp
+mv build/codegen/api.d.ts.tmp build/codegen/api.d.ts
+
 cp LICENSE build/
 cp README.md build/
 
