@@ -1,10 +1,9 @@
 {
   "name": "octane-node",
-  "version": "0.5.1",
+  "version": "0.5.3",
   "description": "Node bindings for the Octane API",
   "author": "team@getoctane.io",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "index.js",
   "repository": "https://github.com/getoctane/octane-node",
   "license": "MIT",
   "keywords": [
@@ -15,7 +14,6 @@
     "codegen": "scripts/codegen.sh",
     "build": "scripts/build.sh",
     "publish": "scripts/publish.sh",
-    "prepublish": "tsc",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
@@ -25,7 +23,6 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^11.0.1",
-    "@types/isomorphic-fetch": "^0.0.35",
     "@types/node": "^16.3.1",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "eslint": "^7.30.0",

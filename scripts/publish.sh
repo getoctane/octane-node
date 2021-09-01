@@ -2,7 +2,7 @@
 
 set -ex
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
 
-npm publish --access=public .
+npm publish --access=public build/
