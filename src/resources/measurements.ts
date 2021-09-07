@@ -1,6 +1,7 @@
 import { Measurement, MeasurementsApi } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
-import { fixMeasurementFields } from '../utils';
+import { fixMeasurementFields, normalizeMeasurementInput } from '../utils';
+import type { MeasurementInput } from '../utils';
 
 class Measurements {
   private api: MeasurementsApi;
@@ -14,16 +15,22 @@ class Measurements {
    */
   public create(body: Measurement): Promise<Measurement>;
   public create(body: Measurement[]): Promise<Measurement[]>;
+  public create(body: MeasurementInput): Promise<Measurement>;
+  public create(body: MeasurementInput[]): Promise<Measurement[]>;
   public create(
-    body: Measurement | Measurement[],
+    body: MeasurementInput | MeasurementInput[],
     options?: any,
   ): Promise<Measurement> | Promise<Measurement[]> {
     if (body instanceof Array) {
-      body.map((b) => fixMeasurementFields(b));
-      return this.api.measurementsMultiPost(body, options);
+      const normalizedBody = body
+        .map(normalizeMeasurementInput)
+        .map(fixMeasurementFields);
+      return this.api.measurementsMultiPost(normalizedBody, options);
     }
-    fixMeasurementFields(body);
-    return this.api.measurementsPost(body, options);
+    const normalizedBody = fixMeasurementFields(
+      normalizeMeasurementInput(body),
+    );
+    return this.api.measurementsPost(normalizedBody, options);
   }
 }
 
