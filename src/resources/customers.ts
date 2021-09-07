@@ -1,9 +1,12 @@
 import {
   CreateCustomerArgs,
   CreateSubscriptionArgs,
+  Customer,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
   DeleteSubscriptionArgs,
+  PaymentGatewayCredential,
+  Subscription,
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
 } from '../codegen/api';
@@ -19,21 +22,25 @@ class Customers {
   /**
    * Create a new customer.
    */
-  public create(body: CreateCustomerArgs, options?: any) {
+  public create(body: CreateCustomerArgs, options?: any): Promise<Customer> {
     return this.api.customersPost(body, options);
   }
 
   /**
    * Fetch a customer by their unique name.
    */
-  public retrieve(customerName: string, options?: any) {
+  public retrieve(customerName: string, options?: any): Promise<Customer> {
     return this.api.customersCustomerNameGet(customerName, options);
   }
 
   /**
    * Update a single customer.
    */
-  public update(customerName: string, body: UpdateCustomerArgs, options?: any) {
+  public update(
+    customerName: string,
+    body: UpdateCustomerArgs,
+    options?: any,
+  ): Promise<Customer> {
     // NOTE: order or arguments switched here
     return this.api.customersCustomerNamePut(body, customerName, options);
   }
@@ -41,14 +48,14 @@ class Customers {
   /**
    * Retrieve all customers for a given vendor.
    */
-  public list(options?: any) {
+  public list(options?: any): Promise<Customer[]> {
     return this.api.customersGet(options);
   }
 
   /**
    * Delete a customer by their unique name.
    */
-  public delete(customerName: string, options?: any) {
+  public delete(customerName: string, options?: any): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
     return this.api.customersCustomerNameDelete(customerName, options);
   }
@@ -60,7 +67,7 @@ class Customers {
     customerName: string,
     body: CustomerPaymentGatewayCredentialInputArgs,
     options?: any,
-  ) {
+  ): Promise<PaymentGatewayCredential> {
     // NOTE: order or arguments switched here
     return this.api.customersCustomerNamePaymentGatewayCredentialsPost(
       body,
@@ -76,7 +83,7 @@ class Customers {
     customerName: string,
     body: CreateSubscriptionArgs,
     options?: any,
-  ) {
+  ): Promise<Subscription> {
     // NOTE: order or arguments switched here
     return this.api.customersCustomerNameSubscriptionsPost(
       body,
@@ -88,7 +95,10 @@ class Customers {
   /**
    * Get all subscriptions for the customer.
    */
-  public listSubscriptions(customerName: string, options?: any) {
+  public listSubscriptions(
+    customerName: string,
+    options?: any,
+  ): Promise<Subscription[]> {
     return this.api.customersCustomerNameSubscriptionsGet(
       customerName,
       options,
@@ -102,7 +112,7 @@ class Customers {
     customerName: string,
     body: UpdateSubscriptionArgs,
     options?: any,
-  ) {
+  ): Promise<Subscription> {
     // NOTE: order or arguments switched here
     return this.api.customersCustomerNameSubscriptionPut(
       body,
@@ -118,7 +128,7 @@ class Customers {
     customerName: string,
     body: DeleteSubscriptionArgs,
     options?: any,
-  ) {
+  ): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
     // NOTE: order or arguments switched here
     return this.api.customersCustomerNameSubscriptionDelete(
