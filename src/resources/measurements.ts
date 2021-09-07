@@ -12,7 +12,12 @@ class Measurements {
   /**
    * Send Measurement (one or multiple).
    */
-  public create(body: Measurement | Array<Measurement>, options?: any) {
+  public create(body: Measurement): Promise<Measurement>;
+  public create(body: Measurement[]): Promise<Measurement[]>;
+  public create(
+    body: Measurement | Measurement[],
+    options?: any,
+  ): Promise<Measurement> | Promise<Measurement[]> {
     if (body instanceof Array) {
       body.map((b) => fixMeasurementFields(b));
       return this.api.measurementsMultiPost(body, options);
