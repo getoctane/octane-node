@@ -2,6 +2,7 @@ import {
   PricePlansApi,
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
+  PricePlan,
 } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
 
@@ -15,14 +16,14 @@ class PricePlans {
   /**
    * Create Price Plan.
    */
-  public create(body: CreatePricePlanArgs, options?: any) {
+  public create(body: CreatePricePlanArgs, options?: any): Promise<PricePlan> {
     return this.api.pricePlansPost(body, options);
   }
 
   /**
    * Fetch an existing price plan.
    */
-  public retrieve(pricePlanName: string, options?: any) {
+  public retrieve(pricePlanName: string, options?: any): Promise<PricePlan> {
     return new Promise((resolve, reject) => {
       this.api
         .pricePlansPricePlanNameGet(pricePlanName, options)
@@ -45,22 +46,22 @@ class PricePlans {
     pricePlanName: string,
     body: UpdatePricePlanArgs,
     options?: any,
-  ) {
-    // NOTE: order or arguments switched here
+  ): Promise<PricePlan> {
+    // NOTE: order of arguments switched here
     return this.api.pricePlansPricePlanNamePut(body, pricePlanName, options);
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
-  public list(options?: any) {
+  public list(options?: any): Promise<PricePlan[]> {
     return this.api.pricePlansGet(options);
   }
 
   /**
    * Delete a meter by its unique name.
    */
-  public delete(pricePlanName: string, options?: any) {
+  public delete(pricePlanName: string, options?: any): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
     return this.api.pricePlansPricePlanNameDelete(pricePlanName, options);
   }
