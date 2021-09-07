@@ -89,16 +89,16 @@ export class RequiredError extends Error {
 export interface AddOnInputArgs {
   /**
    *
-   * @type {number}
-   * @memberof AddOnInputArgs
-   */
-  price?: number;
-  /**
-   *
    * @type {FeatureInputArgs}
    * @memberof AddOnInputArgs
    */
   feature?: FeatureInputArgs;
+  /**
+   *
+   * @type {number}
+   * @memberof AddOnInputArgs
+   */
+  price?: number;
 }
 /**
  *
@@ -111,13 +111,19 @@ export interface ApplyCouponInputArgs {
    * @type {string}
    * @memberof ApplyCouponInputArgs
    */
-  code?: string;
+  name?: string;
   /**
    *
    * @type {number}
    * @memberof ApplyCouponInputArgs
    */
-  vendorId?: number;
+  customerId?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof ApplyCouponInputArgs
+   */
+  code?: string;
   /**
    *
    * @type {string}
@@ -126,16 +132,10 @@ export interface ApplyCouponInputArgs {
   customerName?: string;
   /**
    *
-   * @type {string}
-   * @memberof ApplyCouponInputArgs
-   */
-  name?: string;
-  /**
-   *
    * @type {number}
    * @memberof ApplyCouponInputArgs
    */
-  customerId?: number;
+  vendorId?: number;
 }
 /**
  *
@@ -270,7 +270,43 @@ export interface ContactInfoInputArgs {
    * @type {string}
    * @memberof ContactInfoInputArgs
    */
+  email?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
   addressLine2?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
+  phone?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
+  url?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
+  addressLine1?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
+  country?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContactInfoInputArgs
+   */
+  state?: string;
   /**
    *
    * @type {string}
@@ -283,42 +319,6 @@ export interface ContactInfoInputArgs {
    * @memberof ContactInfoInputArgs
    */
   zipcode?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  url?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  email?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  phone?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  country?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  addressLine1?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof ContactInfoInputArgs
-   */
-  state?: string;
 }
 /**
  *
@@ -432,6 +432,18 @@ export interface Coupon1 {
 export interface CouponInputArgs {
   /**
    *
+   * @type {number}
+   * @memberof CouponInputArgs
+   */
+  vendorId?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CouponInputArgs
+   */
+  maxUses?: number;
+  /**
+   *
    * @type {boolean}
    * @memberof CouponInputArgs
    */
@@ -441,7 +453,7 @@ export interface CouponInputArgs {
    * @type {string}
    * @memberof CouponInputArgs
    */
-  discountType: string;
+  name: string;
   /**
    *
    * @type {string}
@@ -450,16 +462,28 @@ export interface CouponInputArgs {
   durationUnit?: string;
   /**
    *
+   * @type {string}
+   * @memberof CouponInputArgs
+   */
+  discountType: string;
+  /**
+   *
    * @type {boolean}
    * @memberof CouponInputArgs
    */
   isStartProrated?: boolean;
   /**
    *
+   * @type {Array<string>}
+   * @memberof CouponInputArgs
+   */
+  excludedPricePlans?: Array<string>;
+  /**
+   *
    * @type {string}
    * @memberof CouponInputArgs
    */
-  displayName?: string;
+  code?: string;
   /**
    *
    * @type {Date}
@@ -471,19 +495,13 @@ export interface CouponInputArgs {
    * @type {number}
    * @memberof CouponInputArgs
    */
-  maxUses?: number;
+  discountAmount: number;
   /**
    *
    * @type {number}
    * @memberof CouponInputArgs
    */
-  vendorId?: number;
-  /**
-   *
-   * @type {string}
-   * @memberof CouponInputArgs
-   */
-  code?: string;
+  durationLength?: number;
   /**
    *
    * @type {string}
@@ -495,31 +513,13 @@ export interface CouponInputArgs {
    * @type {string}
    * @memberof CouponInputArgs
    */
-  name: string;
-  /**
-   *
-   * @type {number}
-   * @memberof CouponInputArgs
-   */
-  durationLength?: number;
+  displayName?: string;
   /**
    *
    * @type {Array<string>}
    * @memberof CouponInputArgs
    */
   excludedCustomers?: Array<string>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof CouponInputArgs
-   */
-  excludedPricePlans?: Array<string>;
-  /**
-   *
-   * @type {number}
-   * @memberof CouponInputArgs
-   */
-  discountAmount: number;
 }
 /**
  *
@@ -529,22 +529,16 @@ export interface CouponInputArgs {
 export interface CreateBillingSettingsInputArgs {
   /**
    *
-   * @type {boolean}
+   * @type {number}
    * @memberof CreateBillingSettingsInputArgs
    */
-  chargesEnabled?: boolean;
+  invoiceGracePeriodLength?: number;
   /**
    *
    * @type {boolean}
    * @memberof CreateBillingSettingsInputArgs
    */
-  invoiceViaOctane?: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateBillingSettingsInputArgs
-   */
-  invoiceGracePeriodUnit?: string;
+  autoApproveInvoices?: boolean;
   /**
    *
    * @type {string}
@@ -553,16 +547,28 @@ export interface CreateBillingSettingsInputArgs {
   paymentGracePeriodUnit?: string;
   /**
    *
-   * @type {number}
+   * @type {boolean}
    * @memberof CreateBillingSettingsInputArgs
    */
-  vendorId?: number;
+  invoiceViaOctane?: boolean;
   /**
    *
    * @type {number}
    * @memberof CreateBillingSettingsInputArgs
    */
-  paymentGracePeriodLength?: number;
+  customerId?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateBillingSettingsInputArgs
+   */
+  invoiceGracePeriodUnit?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof CreateBillingSettingsInputArgs
+   */
+  chargesEnabled?: boolean;
   /**
    *
    * @type {string}
@@ -574,25 +580,19 @@ export interface CreateBillingSettingsInputArgs {
    * @type {boolean}
    * @memberof CreateBillingSettingsInputArgs
    */
-  autoApproveInvoices?: boolean;
-  /**
-   *
-   * @type {number}
-   * @memberof CreateBillingSettingsInputArgs
-   */
-  customerId?: number;
-  /**
-   *
-   * @type {boolean}
-   * @memberof CreateBillingSettingsInputArgs
-   */
   shouldSendInvoiceToCustomers?: boolean;
   /**
    *
    * @type {number}
    * @memberof CreateBillingSettingsInputArgs
    */
-  invoiceGracePeriodLength?: number;
+  paymentGracePeriodLength?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CreateBillingSettingsInputArgs
+   */
+  vendorId?: number;
 }
 /**
  *
@@ -600,6 +600,30 @@ export interface CreateBillingSettingsInputArgs {
  * @interface CreateCustomerArgs
  */
 export interface CreateCustomerArgs {
+  /**
+   *
+   * @type {number}
+   * @memberof CreateCustomerArgs
+   */
+  vendorId?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateCustomerArgs
+   */
+  name?: string;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof CreateCustomerArgs
+   */
+  tags?: Array<string>;
+  /**
+   *
+   * @type {Array<CustomerMeasurementMappingInputArgs>}
+   * @memberof CreateCustomerArgs
+   */
+  measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
   /**
    *
    * @type {ContactInfoInputArgs}
@@ -612,30 +636,6 @@ export interface CreateCustomerArgs {
    * @memberof CreateCustomerArgs
    */
   displayName?: string;
-  /**
-   *
-   * @type {number}
-   * @memberof CreateCustomerArgs
-   */
-  vendorId?: number;
-  /**
-   *
-   * @type {Array<CustomerMeasurementMappingInputArgs>}
-   * @memberof CreateCustomerArgs
-   */
-  measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof CreateCustomerArgs
-   */
-  tags?: Array<string>;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateCustomerArgs
-   */
-  name?: string;
 }
 /**
  *
@@ -645,34 +645,10 @@ export interface CreateCustomerArgs {
 export interface CreatePricePlanArgs {
   /**
    *
-   * @type {Array<FeatureInputArgs>}
-   * @memberof CreatePricePlanArgs
-   */
-  features?: Array<FeatureInputArgs>;
-  /**
-   *
-   * @type {Array<LimitInputArgs>}
-   * @memberof CreatePricePlanArgs
-   */
-  limits?: Array<LimitInputArgs>;
-  /**
-   *
-   * @type {string}
-   * @memberof CreatePricePlanArgs
-   */
-  displayName?: string;
-  /**
-   *
    * @type {number}
    * @memberof CreatePricePlanArgs
    */
   vendorId?: number;
-  /**
-   *
-   * @type {string}
-   * @memberof CreatePricePlanArgs
-   */
-  description?: string;
   /**
    *
    * @type {TrialInputArgs}
@@ -681,34 +657,16 @@ export interface CreatePricePlanArgs {
   trial?: TrialInputArgs;
   /**
    *
-   * @type {number}
+   * @type {Array<FeatureInputArgs>}
    * @memberof CreatePricePlanArgs
    */
-  basePrice?: number;
-  /**
-   *
-   * @type {Array<AddOnInputArgs>}
-   * @memberof CreatePricePlanArgs
-   */
-  addOns?: Array<AddOnInputArgs>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof CreatePricePlanArgs
-   */
-  tags?: Array<string>;
+  features?: Array<FeatureInputArgs>;
   /**
    *
    * @type {string}
    * @memberof CreatePricePlanArgs
    */
-  couponName?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreatePricePlanArgs
-   */
-  period?: string;
+  description?: string;
   /**
    *
    * @type {string}
@@ -727,6 +685,48 @@ export interface CreatePricePlanArgs {
    * @memberof CreatePricePlanArgs
    */
   meteredComponents?: Array<MeteredComponentInputArgs>;
+  /**
+   *
+   * @type {Array<AddOnInputArgs>}
+   * @memberof CreatePricePlanArgs
+   */
+  addOns?: Array<AddOnInputArgs>;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof CreatePricePlanArgs
+   */
+  tags?: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof CreatePricePlanArgs
+   */
+  period?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreatePricePlanArgs
+   */
+  couponName?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof CreatePricePlanArgs
+   */
+  basePrice?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof CreatePricePlanArgs
+   */
+  displayName?: string;
+  /**
+   *
+   * @type {Array<LimitInputArgs>}
+   * @memberof CreatePricePlanArgs
+   */
+  limits?: Array<LimitInputArgs>;
 }
 /**
  *
@@ -745,19 +745,7 @@ export interface CreateSubscriptionArgs {
    * @type {number}
    * @memberof CreateSubscriptionArgs
    */
-  vendorId?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof CreateSubscriptionArgs
-   */
   pricePlanId?: number;
-  /**
-   *
-   * @type {Date}
-   * @memberof CreateSubscriptionArgs
-   */
-  effectiveAt?: Date;
   /**
    *
    * @type {DiscountInputArgs}
@@ -766,10 +754,22 @@ export interface CreateSubscriptionArgs {
   discountOverride?: DiscountInputArgs;
   /**
    *
+   * @type {Date}
+   * @memberof CreateSubscriptionArgs
+   */
+  effectiveAt?: Date;
+  /**
+   *
    * @type {number}
    * @memberof CreateSubscriptionArgs
    */
   customerId?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof CreateSubscriptionArgs
+   */
+  couponOverrideId?: number;
   /**
    *
    * @type {string}
@@ -781,7 +781,7 @@ export interface CreateSubscriptionArgs {
    * @type {number}
    * @memberof CreateSubscriptionArgs
    */
-  couponOverrideId?: number;
+  vendorId?: number;
 }
 /**
  *
@@ -789,6 +789,30 @@ export interface CreateSubscriptionArgs {
  * @interface CreateVendorArgs
  */
 export interface CreateVendorArgs {
+  /**
+   *
+   * @type {string}
+   * @memberof CreateVendorArgs
+   */
+  apiKey?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateVendorArgs
+   */
+  name?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateVendorArgs
+   */
+  vendorName?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateVendorArgs
+   */
+  vendorDisplayName?: string;
   /**
    *
    * @type {ContactInfoInputArgs}
@@ -801,30 +825,6 @@ export interface CreateVendorArgs {
    * @memberof CreateVendorArgs
    */
   displayName?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateVendorArgs
-   */
-  vendorDisplayName?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateVendorArgs
-   */
-  name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateVendorArgs
-   */
-  apiKey?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof CreateVendorArgs
-   */
-  vendorName?: string;
 }
 /**
  *
@@ -942,12 +942,6 @@ export interface CustomerStatus {
 export interface DeleteSubscriptionArgs {
   /**
    *
-   * @type {number}
-   * @memberof DeleteSubscriptionArgs
-   */
-  vendorId?: number;
-  /**
-   *
    * @type {Date}
    * @memberof DeleteSubscriptionArgs
    */
@@ -958,6 +952,12 @@ export interface DeleteSubscriptionArgs {
    * @memberof DeleteSubscriptionArgs
    */
   customerId?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof DeleteSubscriptionArgs
+   */
+  vendorId?: number;
 }
 /**
  *
@@ -1057,13 +1057,13 @@ export interface FeatureInputArgs {
    * @type {string}
    * @memberof FeatureInputArgs
    */
-  name?: string;
+  displayName?: string;
   /**
    *
    * @type {string}
    * @memberof FeatureInputArgs
    */
-  displayName?: string;
+  name?: string;
 }
 /**
  *
@@ -1097,17 +1097,17 @@ export interface Measurement {
    */
   resetTotal?: boolean;
   /**
+   * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
+   * @type {Date}
+   * @memberof Measurement
+   */
+  time?: Date;
+  /**
    * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
    * @type {{ [key: string]: string; }}
    * @memberof Measurement
    */
   labels?: { [key: string]: string };
-  /**
-   * The raw value of the measurement
-   * @type {number}
-   * @memberof Measurement
-   */
-  value: number;
   /**
    * The unique name of the meter associated with this measurement
    * @type {string}
@@ -1115,11 +1115,11 @@ export interface Measurement {
    */
   meterName: string;
   /**
-   * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
-   * @type {Date}
+   * The raw value of the measurement
+   * @type {number}
    * @memberof Measurement
    */
-  time?: Date;
+  value: number;
 }
 /**
  *
@@ -1184,18 +1184,6 @@ export interface Meter {
 export interface MeterInputArgs {
   /**
    *
-   * @type {string}
-   * @memberof MeterInputArgs
-   */
-  displayName?: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof MeterInputArgs
-   */
-  isIncremental?: boolean;
-  /**
-   *
    * @type {number}
    * @memberof MeterInputArgs
    */
@@ -1211,19 +1199,19 @@ export interface MeterInputArgs {
    * @type {string}
    * @memberof MeterInputArgs
    */
-  name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof MeterInputArgs
-   */
   meterType?: string;
   /**
    *
    * @type {string}
    * @memberof MeterInputArgs
    */
-  unitName?: string;
+  name?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof MeterInputArgs
+   */
+  isIncremental?: boolean;
   /**
    *
    * @type {Array<string>}
@@ -1236,6 +1224,18 @@ export interface MeterInputArgs {
    * @memberof MeterInputArgs
    */
   expectedLabels?: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof MeterInputArgs
+   */
+  unitName?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof MeterInputArgs
+   */
+  displayName?: string;
 }
 /**
  *
@@ -1270,16 +1270,16 @@ export interface MeteredComponentInputArgs {
   priceScheme?: PriceSchemeInputArgs;
   /**
    *
-   * @type {number}
-   * @memberof MeteredComponentInputArgs
-   */
-  meterId?: number;
-  /**
-   *
    * @type {string}
    * @memberof MeteredComponentInputArgs
    */
   meterName?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof MeteredComponentInputArgs
+   */
+  meterId?: number;
 }
 /**
  *
@@ -1288,29 +1288,29 @@ export interface MeteredComponentInputArgs {
  */
 export interface ModelError {
   /**
-   * Error name
-   * @type {string}
-   * @memberof ModelError
-   */
-  status?: string;
-  /**
    * Error message
    * @type {string}
    * @memberof ModelError
    */
   message?: string;
   /**
-   * Errors
-   * @type {any}
-   * @memberof ModelError
-   */
-  errors?: any;
-  /**
    * Error code
    * @type {number}
    * @memberof ModelError
    */
   code?: number;
+  /**
+   * Error name
+   * @type {string}
+   * @memberof ModelError
+   */
+  status?: string;
+  /**
+   * Errors
+   * @type {any}
+   * @memberof ModelError
+   */
+  errors?: any;
 }
 /**
  *
@@ -1348,12 +1348,6 @@ export interface PaymentGatewayCredentialInputArgs {
    * @type {string}
    * @memberof PaymentGatewayCredentialInputArgs
    */
-  paymentGateway?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof PaymentGatewayCredentialInputArgs
-   */
   accountId?: string;
   /**
    *
@@ -1361,6 +1355,12 @@ export interface PaymentGatewayCredentialInputArgs {
    * @memberof PaymentGatewayCredentialInputArgs
    */
   authToken?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof PaymentGatewayCredentialInputArgs
+   */
+  paymentGateway?: string;
 }
 /**
  *
@@ -1373,13 +1373,13 @@ export interface PriceInputArgs {
    * @type {number}
    * @memberof PriceInputArgs
    */
-  price?: number;
+  cap?: number;
   /**
    *
    * @type {number}
    * @memberof PriceInputArgs
    */
-  cap?: number;
+  price?: number;
 }
 /**
  *
@@ -1531,12 +1531,6 @@ export interface PriceScheme {
 export interface PriceSchemeInputArgs {
   /**
    *
-   * @type {Array<PriceInputArgs>}
-   * @memberof PriceSchemeInputArgs
-   */
-  prices?: Array<PriceInputArgs>;
-  /**
-   *
    * @type {string}
    * @memberof PriceSchemeInputArgs
    */
@@ -1546,13 +1540,19 @@ export interface PriceSchemeInputArgs {
    * @type {string}
    * @memberof PriceSchemeInputArgs
    */
-  unitName?: string;
+  timeUnitName?: string;
+  /**
+   *
+   * @type {Array<PriceInputArgs>}
+   * @memberof PriceSchemeInputArgs
+   */
+  prices?: Array<PriceInputArgs>;
   /**
    *
    * @type {string}
    * @memberof PriceSchemeInputArgs
    */
-  timeUnitName?: string;
+  unitName?: string;
 }
 /**
  *
@@ -1662,12 +1662,6 @@ export interface Trial {
 export interface TrialInputArgs {
   /**
    *
-   * @type {number}
-   * @memberof TrialInputArgs
-   */
-  credit?: number;
-  /**
-   *
    * @type {string}
    * @memberof TrialInputArgs
    */
@@ -1678,6 +1672,12 @@ export interface TrialInputArgs {
    * @memberof TrialInputArgs
    */
   timeLength?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof TrialInputArgs
+   */
+  credit?: number;
 }
 /**
  *
@@ -1687,22 +1687,16 @@ export interface TrialInputArgs {
 export interface UpdateBillingSettingsInputArgs {
   /**
    *
-   * @type {boolean}
+   * @type {number}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  chargesEnabled?: boolean;
+  invoiceGracePeriodLength?: number;
   /**
    *
    * @type {boolean}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  invoiceViaOctane?: boolean;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateBillingSettingsInputArgs
-   */
-  invoiceGracePeriodUnit?: string;
+  autoApproveInvoices?: boolean;
   /**
    *
    * @type {string}
@@ -1711,16 +1705,28 @@ export interface UpdateBillingSettingsInputArgs {
   paymentGracePeriodUnit?: string;
   /**
    *
-   * @type {number}
+   * @type {boolean}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  vendorId?: number;
+  invoiceViaOctane?: boolean;
   /**
    *
    * @type {number}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  paymentGracePeriodLength?: number;
+  customerId?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateBillingSettingsInputArgs
+   */
+  invoiceGracePeriodUnit?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof UpdateBillingSettingsInputArgs
+   */
+  chargesEnabled?: boolean;
   /**
    *
    * @type {string}
@@ -1732,25 +1738,19 @@ export interface UpdateBillingSettingsInputArgs {
    * @type {boolean}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  autoApproveInvoices?: boolean;
-  /**
-   *
-   * @type {number}
-   * @memberof UpdateBillingSettingsInputArgs
-   */
-  customerId?: number;
-  /**
-   *
-   * @type {boolean}
-   * @memberof UpdateBillingSettingsInputArgs
-   */
   shouldSendInvoiceToCustomers?: boolean;
   /**
    *
    * @type {number}
    * @memberof UpdateBillingSettingsInputArgs
    */
-  invoiceGracePeriodLength?: number;
+  paymentGracePeriodLength?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof UpdateBillingSettingsInputArgs
+   */
+  vendorId?: number;
 }
 /**
  *
@@ -1758,6 +1758,30 @@ export interface UpdateBillingSettingsInputArgs {
  * @interface UpdateCustomerArgs
  */
 export interface UpdateCustomerArgs {
+  /**
+   *
+   * @type {number}
+   * @memberof UpdateCustomerArgs
+   */
+  vendorId?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateCustomerArgs
+   */
+  name?: string;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof UpdateCustomerArgs
+   */
+  tags?: Array<string>;
+  /**
+   *
+   * @type {Array<CustomerMeasurementMappingInputArgs>}
+   * @memberof UpdateCustomerArgs
+   */
+  measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
   /**
    *
    * @type {ContactInfoInputArgs}
@@ -1770,30 +1794,6 @@ export interface UpdateCustomerArgs {
    * @memberof UpdateCustomerArgs
    */
   displayName?: string;
-  /**
-   *
-   * @type {number}
-   * @memberof UpdateCustomerArgs
-   */
-  vendorId?: number;
-  /**
-   *
-   * @type {Array<CustomerMeasurementMappingInputArgs>}
-   * @memberof UpdateCustomerArgs
-   */
-  measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof UpdateCustomerArgs
-   */
-  tags?: Array<string>;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateCustomerArgs
-   */
-  name?: string;
 }
 /**
  *
@@ -1801,18 +1801,6 @@ export interface UpdateCustomerArgs {
  * @interface UpdateMeterArgs
  */
 export interface UpdateMeterArgs {
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateMeterArgs
-   */
-  displayName?: string;
-  /**
-   *
-   * @type {boolean}
-   * @memberof UpdateMeterArgs
-   */
-  isIncremental?: boolean;
   /**
    *
    * @type {number}
@@ -1830,19 +1818,19 @@ export interface UpdateMeterArgs {
    * @type {string}
    * @memberof UpdateMeterArgs
    */
-  name?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdateMeterArgs
-   */
   meterType?: string;
   /**
    *
    * @type {string}
    * @memberof UpdateMeterArgs
    */
-  unitName?: string;
+  name?: string;
+  /**
+   *
+   * @type {boolean}
+   * @memberof UpdateMeterArgs
+   */
+  isIncremental?: boolean;
   /**
    *
    * @type {Array<string>}
@@ -1855,6 +1843,18 @@ export interface UpdateMeterArgs {
    * @memberof UpdateMeterArgs
    */
   expectedLabels?: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateMeterArgs
+   */
+  unitName?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateMeterArgs
+   */
+  displayName?: string;
 }
 /**
  *
@@ -1864,34 +1864,10 @@ export interface UpdateMeterArgs {
 export interface UpdatePricePlanArgs {
   /**
    *
-   * @type {Array<FeatureInputArgs>}
-   * @memberof UpdatePricePlanArgs
-   */
-  features?: Array<FeatureInputArgs>;
-  /**
-   *
-   * @type {Array<LimitInputArgs>}
-   * @memberof UpdatePricePlanArgs
-   */
-  limits?: Array<LimitInputArgs>;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdatePricePlanArgs
-   */
-  displayName?: string;
-  /**
-   *
    * @type {number}
    * @memberof UpdatePricePlanArgs
    */
   vendorId?: number;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdatePricePlanArgs
-   */
-  description?: string;
   /**
    *
    * @type {TrialInputArgs}
@@ -1900,34 +1876,16 @@ export interface UpdatePricePlanArgs {
   trial?: TrialInputArgs;
   /**
    *
-   * @type {number}
+   * @type {Array<FeatureInputArgs>}
    * @memberof UpdatePricePlanArgs
    */
-  basePrice?: number;
-  /**
-   *
-   * @type {Array<AddOnInputArgs>}
-   * @memberof UpdatePricePlanArgs
-   */
-  addOns?: Array<AddOnInputArgs>;
-  /**
-   *
-   * @type {Array<string>}
-   * @memberof UpdatePricePlanArgs
-   */
-  tags?: Array<string>;
+  features?: Array<FeatureInputArgs>;
   /**
    *
    * @type {string}
    * @memberof UpdatePricePlanArgs
    */
-  couponName?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof UpdatePricePlanArgs
-   */
-  period?: string;
+  description?: string;
   /**
    *
    * @type {string}
@@ -1946,6 +1904,48 @@ export interface UpdatePricePlanArgs {
    * @memberof UpdatePricePlanArgs
    */
   meteredComponents?: Array<MeteredComponentInputArgs>;
+  /**
+   *
+   * @type {Array<AddOnInputArgs>}
+   * @memberof UpdatePricePlanArgs
+   */
+  addOns?: Array<AddOnInputArgs>;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof UpdatePricePlanArgs
+   */
+  tags?: Array<string>;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdatePricePlanArgs
+   */
+  period?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdatePricePlanArgs
+   */
+  couponName?: string;
+  /**
+   *
+   * @type {number}
+   * @memberof UpdatePricePlanArgs
+   */
+  basePrice?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdatePricePlanArgs
+   */
+  displayName?: string;
+  /**
+   *
+   * @type {Array<LimitInputArgs>}
+   * @memberof UpdatePricePlanArgs
+   */
+  limits?: Array<LimitInputArgs>;
 }
 /**
  *
@@ -1964,19 +1964,7 @@ export interface UpdateSubscriptionArgs {
    * @type {number}
    * @memberof UpdateSubscriptionArgs
    */
-  vendorId?: number;
-  /**
-   *
-   * @type {number}
-   * @memberof UpdateSubscriptionArgs
-   */
   pricePlanId?: number;
-  /**
-   *
-   * @type {Date}
-   * @memberof UpdateSubscriptionArgs
-   */
-  effectiveAt?: Date;
   /**
    *
    * @type {DiscountInputArgs}
@@ -1985,10 +1973,22 @@ export interface UpdateSubscriptionArgs {
   discountOverride?: DiscountInputArgs;
   /**
    *
+   * @type {Date}
+   * @memberof UpdateSubscriptionArgs
+   */
+  effectiveAt?: Date;
+  /**
+   *
    * @type {number}
    * @memberof UpdateSubscriptionArgs
    */
   customerId?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof UpdateSubscriptionArgs
+   */
+  couponOverrideId?: number;
   /**
    *
    * @type {string}
@@ -2000,7 +2000,7 @@ export interface UpdateSubscriptionArgs {
    * @type {number}
    * @memberof UpdateSubscriptionArgs
    */
-  couponOverrideId?: number;
+  vendorId?: number;
 }
 /**
  *
@@ -3416,15 +3416,15 @@ export const CustomersApiFetchParamCreator = function (
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
      * @param {number} invoiceId
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameInvoiceInvoiceIdTokenGet(
       invoiceId: number,
-      token: string,
       customerName: string,
+      token: string,
       options: any = {},
     ): FetchArgs {
       // verify required parameter 'invoiceId' is not null or undefined
@@ -3434,13 +3434,6 @@ export const CustomersApiFetchParamCreator = function (
           'Required parameter invoiceId was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.',
         );
       }
-      // verify required parameter 'token' is not null or undefined
-      if (token === null || token === undefined) {
-        throw new RequiredError(
-          'token',
-          'Required parameter token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.',
-        );
-      }
       // verify required parameter 'customerName' is not null or undefined
       if (customerName === null || customerName === undefined) {
         throw new RequiredError(
@@ -3448,14 +3441,21 @@ export const CustomersApiFetchParamCreator = function (
           'Required parameter customerName was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.',
         );
       }
+      // verify required parameter 'token' is not null or undefined
+      if (token === null || token === undefined) {
+        throw new RequiredError(
+          'token',
+          'Required parameter token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.',
+        );
+      }
       const localVarPath =
         `/customers/{customer_name}/invoice/{invoice_id}/{token}`
           .replace(`{${'invoice_id'}}`, encodeURIComponent(String(invoiceId)))
-          .replace(`{${'token'}}`, encodeURIComponent(String(token)))
           .replace(
             `{${'customer_name'}}`,
             encodeURIComponent(String(customerName)),
-          );
+          )
+          .replace(`{${'token'}}`, encodeURIComponent(String(token)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -3730,15 +3730,15 @@ export const CustomersApiFetchParamCreator = function (
      * Fetch revenue of a customer from start_time and end_time.
      * @summary Get Customer Revenue
      * @param {string} customerName
-     * @param {Date} [endTime]
      * @param {Date} [startTime]
+     * @param {Date} [endTime]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameRevenueGet(
       customerName: string,
-      endTime?: Date,
       startTime?: Date,
+      endTime?: Date,
       options: any = {},
     ): FetchArgs {
       // verify required parameter 'customerName' is not null or undefined
@@ -3759,12 +3759,12 @@ export const CustomersApiFetchParamCreator = function (
 
       // authentication BearerApiKeyAuth required
 
-      if (endTime !== undefined) {
-        localVarQueryParameter['end_time'] = (endTime as any).toISOString();
-      }
-
       if (startTime !== undefined) {
         localVarQueryParameter['start_time'] = (startTime as any).toISOString();
+      }
+
+      if (endTime !== undefined) {
+        localVarQueryParameter['end_time'] = (endTime as any).toISOString();
       }
 
       localVarUrlObj.query = Object.assign(
@@ -3789,23 +3789,16 @@ export const CustomersApiFetchParamCreator = function (
     /**
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameSampleInvoiceTokenGet(
-      token: string,
       customerName: string,
+      token: string,
       options: any = {},
     ): FetchArgs {
-      // verify required parameter 'token' is not null or undefined
-      if (token === null || token === undefined) {
-        throw new RequiredError(
-          'token',
-          'Required parameter token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.',
-        );
-      }
       // verify required parameter 'customerName' is not null or undefined
       if (customerName === null || customerName === undefined) {
         throw new RequiredError(
@@ -3813,12 +3806,19 @@ export const CustomersApiFetchParamCreator = function (
           'Required parameter customerName was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.',
         );
       }
+      // verify required parameter 'token' is not null or undefined
+      if (token === null || token === undefined) {
+        throw new RequiredError(
+          'token',
+          'Required parameter token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.',
+        );
+      }
       const localVarPath = `/customers/{customer_name}/sample_invoice/{token}`
-        .replace(`{${'token'}}`, encodeURIComponent(String(token)))
         .replace(
           `{${'customer_name'}}`,
           encodeURIComponent(String(customerName)),
-        );
+        )
+        .replace(`{${'token'}}`, encodeURIComponent(String(token)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -4143,17 +4143,17 @@ export const CustomersApiFetchParamCreator = function (
      *
      * @summary Get the current status for a customer.
      * @param {string} customerName
-     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
-     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
      * @param {string} [meterName]
+     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
+     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameUsageGet(
       customerName: string,
-      endTime?: Date,
-      startTime?: Date,
       meterName?: string,
+      startTime?: Date,
+      endTime?: Date,
       options: any = {},
     ): FetchArgs {
       // verify required parameter 'customerName' is not null or undefined
@@ -4174,16 +4174,16 @@ export const CustomersApiFetchParamCreator = function (
 
       // authentication BearerApiKeyAuth required
 
-      if (endTime !== undefined) {
-        localVarQueryParameter['end_time'] = (endTime as any).toISOString();
+      if (meterName !== undefined) {
+        localVarQueryParameter['meter_name'] = meterName;
       }
 
       if (startTime !== undefined) {
         localVarQueryParameter['start_time'] = (startTime as any).toISOString();
       }
 
-      if (meterName !== undefined) {
-        localVarQueryParameter['meter_name'] = meterName;
+      if (endTime !== undefined) {
+        localVarQueryParameter['end_time'] = (endTime as any).toISOString();
       }
 
       localVarUrlObj.query = Object.assign(
@@ -4498,23 +4498,23 @@ export const CustomersApiFp = function (configuration?: Configuration) {
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
      * @param {number} invoiceId
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameInvoiceInvoiceIdTokenGet(
       invoiceId: number,
-      token: string,
       customerName: string,
+      token: string,
       options?: any,
     ): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
       const localVarFetchArgs = CustomersApiFetchParamCreator(
         configuration,
       ).customersCustomerNameInvoiceInvoiceIdTokenGet(
         invoiceId,
-        token,
         customerName,
+        token,
         options,
       );
       return (
@@ -4686,23 +4686,23 @@ export const CustomersApiFp = function (configuration?: Configuration) {
      * Fetch revenue of a customer from start_time and end_time.
      * @summary Get Customer Revenue
      * @param {string} customerName
-     * @param {Date} [endTime]
      * @param {Date} [startTime]
+     * @param {Date} [endTime]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameRevenueGet(
       customerName: string,
-      endTime?: Date,
       startTime?: Date,
+      endTime?: Date,
       options?: any,
     ): (fetch?: FetchAPI, basePath?: string) => Promise<RevenueResponse> {
       const localVarFetchArgs = CustomersApiFetchParamCreator(
         configuration,
       ).customersCustomerNameRevenueGet(
         customerName,
-        endTime,
         startTime,
+        endTime,
         options,
       );
       return (
@@ -4726,21 +4726,21 @@ export const CustomersApiFp = function (configuration?: Configuration) {
     /**
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameSampleInvoiceTokenGet(
-      token: string,
       customerName: string,
+      token: string,
       options?: any,
     ): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
       const localVarFetchArgs = CustomersApiFetchParamCreator(
         configuration,
       ).customersCustomerNameSampleInvoiceTokenGet(
-        token,
         customerName,
+        token,
         options,
       );
       return (
@@ -4931,26 +4931,26 @@ export const CustomersApiFp = function (configuration?: Configuration) {
      *
      * @summary Get the current status for a customer.
      * @param {string} customerName
-     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
-     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
      * @param {string} [meterName]
+     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
+     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameUsageGet(
       customerName: string,
-      endTime?: Date,
-      startTime?: Date,
       meterName?: string,
+      startTime?: Date,
+      endTime?: Date,
       options?: any,
     ): (fetch?: FetchAPI, basePath?: string) => Promise<Error> {
       const localVarFetchArgs = CustomersApiFetchParamCreator(
         configuration,
       ).customersCustomerNameUsageGet(
         customerName,
-        endTime,
-        startTime,
         meterName,
+        startTime,
+        endTime,
         options,
       );
       return (
@@ -5153,23 +5153,23 @@ export const CustomersApiFactory = function (
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
      * @param {number} invoiceId
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameInvoiceInvoiceIdTokenGet(
       invoiceId: number,
-      token: string,
       customerName: string,
+      token: string,
       options?: any,
     ) {
       return CustomersApiFp(
         configuration,
       ).customersCustomerNameInvoiceInvoiceIdTokenGet(
         invoiceId,
-        token,
         customerName,
+        token,
         options,
       )(fetch, basePath);
     },
@@ -5249,42 +5249,42 @@ export const CustomersApiFactory = function (
      * Fetch revenue of a customer from start_time and end_time.
      * @summary Get Customer Revenue
      * @param {string} customerName
-     * @param {Date} [endTime]
      * @param {Date} [startTime]
+     * @param {Date} [endTime]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameRevenueGet(
       customerName: string,
-      endTime?: Date,
       startTime?: Date,
+      endTime?: Date,
       options?: any,
     ) {
       return CustomersApiFp(configuration).customersCustomerNameRevenueGet(
         customerName,
-        endTime,
         startTime,
+        endTime,
         options,
       )(fetch, basePath);
     },
     /**
      * Fetch current cycle revenue for a customer and generate an invoice.
      * @summary Generate Current Invoice
-     * @param {string} token
      * @param {string} customerName
+     * @param {string} token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameSampleInvoiceTokenGet(
-      token: string,
       customerName: string,
+      token: string,
       options?: any,
     ) {
       return CustomersApiFp(
         configuration,
       ).customersCustomerNameSampleInvoiceTokenGet(
-        token,
         customerName,
+        token,
         options,
       )(fetch, basePath);
     },
@@ -5381,24 +5381,24 @@ export const CustomersApiFactory = function (
      *
      * @summary Get the current status for a customer.
      * @param {string} customerName
-     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
-     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
      * @param {string} [meterName]
+     * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
+     * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     customersCustomerNameUsageGet(
       customerName: string,
-      endTime?: Date,
-      startTime?: Date,
       meterName?: string,
+      startTime?: Date,
+      endTime?: Date,
       options?: any,
     ) {
       return CustomersApiFp(configuration).customersCustomerNameUsageGet(
         customerName,
-        endTime,
-        startTime,
         meterName,
+        startTime,
+        endTime,
         options,
       )(fetch, basePath);
     },
@@ -5557,24 +5557,24 @@ export class CustomersApi extends BaseAPI {
    * Fetch current cycle revenue for a customer and generate an invoice.
    * @summary Generate Current Invoice
    * @param {number} invoiceId
-   * @param {string} token
    * @param {string} customerName
+   * @param {string} token
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CustomersApi
    */
   public customersCustomerNameInvoiceInvoiceIdTokenGet(
     invoiceId: number,
-    token: string,
     customerName: string,
+    token: string,
     options?: any,
   ) {
     return CustomersApiFp(
       this.configuration,
     ).customersCustomerNameInvoiceInvoiceIdTokenGet(
       invoiceId,
-      token,
       customerName,
+      token,
       options,
     )(this.fetch, this.basePath);
   }
@@ -5663,22 +5663,22 @@ export class CustomersApi extends BaseAPI {
    * Fetch revenue of a customer from start_time and end_time.
    * @summary Get Customer Revenue
    * @param {string} customerName
-   * @param {Date} [endTime]
    * @param {Date} [startTime]
+   * @param {Date} [endTime]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CustomersApi
    */
   public customersCustomerNameRevenueGet(
     customerName: string,
-    endTime?: Date,
     startTime?: Date,
+    endTime?: Date,
     options?: any,
   ) {
     return CustomersApiFp(this.configuration).customersCustomerNameRevenueGet(
       customerName,
-      endTime,
       startTime,
+      endTime,
       options,
     )(this.fetch, this.basePath);
   }
@@ -5686,22 +5686,22 @@ export class CustomersApi extends BaseAPI {
   /**
    * Fetch current cycle revenue for a customer and generate an invoice.
    * @summary Generate Current Invoice
-   * @param {string} token
    * @param {string} customerName
+   * @param {string} token
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CustomersApi
    */
   public customersCustomerNameSampleInvoiceTokenGet(
-    token: string,
     customerName: string,
+    token: string,
     options?: any,
   ) {
     return CustomersApiFp(
       this.configuration,
     ).customersCustomerNameSampleInvoiceTokenGet(
-      token,
       customerName,
+      token,
       options,
     )(this.fetch, this.basePath);
   }
@@ -5814,25 +5814,25 @@ export class CustomersApi extends BaseAPI {
    *
    * @summary Get the current status for a customer.
    * @param {string} customerName
-   * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
-   * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
    * @param {string} [meterName]
+   * @param {Date} [startTime] Starting timestamp to consider usage formatted as ISO-8601.
+   * @param {Date} [endTime] Ending timestamp to consider usage formatted as ISO-8601.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CustomersApi
    */
   public customersCustomerNameUsageGet(
     customerName: string,
-    endTime?: Date,
-    startTime?: Date,
     meterName?: string,
+    startTime?: Date,
+    endTime?: Date,
     options?: any,
   ) {
     return CustomersApiFp(this.configuration).customersCustomerNameUsageGet(
       customerName,
-      endTime,
-      startTime,
       meterName,
+      startTime,
+      endTime,
       options,
     )(this.fetch, this.basePath);
   }
