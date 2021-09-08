@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "codegen": "scripts/codegen.sh",
+    "codegen-beta": "openapi --input https://api.cloud.getoctane.io/docs/openapi.json --output ./dist",
     "build": "scripts/build.sh",
     "publish": "scripts/publish.sh",
     "fix": "run-s fix:*",
@@ -36,6 +37,7 @@
     "eslint-plugin-unused-imports": "^1.1.2",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.12.0",
     "npm-run-all": "^4.1.5",
+    "openapi-typescript-codegen": "^0.9.3",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5"
   },
