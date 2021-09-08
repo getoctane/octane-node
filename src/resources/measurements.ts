@@ -10,9 +10,6 @@ interface MeasurementInput extends Omit<Measurement, 'time'> {
  *
  * TODO: API expects "meter_name", while the generated type uses meterName.
  * This function should be deleted once the API
- *
- * @param param0
- * @returns
  */
 function fixMeasurementFields({
   meterName,
@@ -35,9 +32,6 @@ function fixMeasurementFields({
  * hit our API with a consistent response. This function takes this SDK's
  * accepted inputs for measurements and normalizes them into the Measurement
  * type.
- *
- * @param measurementInput - A measurementInput object
- * @returns
  */
 function normalizeMeasurementInput({
   time,
