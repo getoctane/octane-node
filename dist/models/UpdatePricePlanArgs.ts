@@ -10,18 +10,18 @@ import type { MeteredComponentInputArgs } from './MeteredComponentInputArgs';
 import type { TrialInputArgs } from './TrialInputArgs';
 
 export type UpdatePricePlanArgs = {
-    features?: Array<FeatureInputArgs>;
     add_ons?: Array<AddOnInputArgs>;
-    metered_components?: Array<MeteredComponentInputArgs>;
     coupon_name?: string;
-    limits?: Array<LimitInputArgs>;
+    vendor_id?: number;
     base_price?: number;
-    trial?: TrialInputArgs;
     name?: string;
     tags?: Array<string>;
-    discount?: DiscountInputArgs;
     period?: string;
-    display_name?: string;
-    vendor_id?: number;
+    limits?: Array<LimitInputArgs>;
+    trial?: TrialInputArgs;
+    features?: Array<FeatureInputArgs>;
     description?: string;
+    metered_components?: Array<MeteredComponentInputArgs>;
+    discount?: DiscountInputArgs;
+    display_name?: string;
 }

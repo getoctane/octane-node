@@ -3,13 +3,13 @@
 /* eslint-disable */
 
 export type UpdateMeterArgs = {
-    unit_name?: string;
-    is_incremental?: boolean;
-    meter_type?: string;
-    expected_labels?: Array<string>;
-    name?: string;
-    display_name?: string;
-    primary_labels?: Array<string>;
     vendor_id?: number;
+    name?: string;
+    meter_type?: string;
     description?: string;
+    unit_name?: string;
+    primary_labels?: Array<string>;
+    is_incremental?: boolean;
+    expected_labels?: Array<string>;
+    display_name?: string;
 }

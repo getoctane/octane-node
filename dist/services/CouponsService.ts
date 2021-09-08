@@ -27,14 +27,15 @@ export class CouponsService {
     /**
      * Create coupon
      * Create a new coupon.
-     * @param requestBody
      * @returns Coupon1 OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCouponsService(
+    public static async postCouponsService({
+        requestBody,
+    }: {
         requestBody: CouponInputArgs,
-    ): Promise<Coupon1 | Error> {
+    }): Promise<Coupon1 | Error> {
         const result = await __request({
             method: 'POST',
             path: `/coupons/`,
@@ -49,14 +50,15 @@ export class CouponsService {
     /**
      * Get Coupon
      * Fetch a Coupon by its unique name.
-     * @param couponName
      * @returns Coupon1 OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCouponsService1(
+    public static async getCouponsService1({
+        couponName,
+    }: {
         couponName: string,
-    ): Promise<Coupon1 | Error> {
+    }): Promise<Coupon1 | Error> {
         const result = await __request({
             method: 'GET',
             path: `/coupons/${couponName}`,
@@ -67,13 +69,14 @@ export class CouponsService {
     /**
      * Delete Coupon
      * Delete a coupon by its unique name.
-     * @param couponName
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deleteCouponsService(
+    public static async deleteCouponsService({
+        couponName,
+    }: {
         couponName: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/coupons/${couponName}`,
@@ -82,14 +85,15 @@ export class CouponsService {
     }
 
     /**
-     * @param requestBody
      * @returns any OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCouponsService1(
+    public static async postCouponsService1({
+        requestBody,
+    }: {
         requestBody: ApplyCouponInputArgs,
-    ): Promise<any | Error> {
+    }): Promise<any | Error> {
         const result = await __request({
             method: 'POST',
             path: `/coupons/apply_coupon`,

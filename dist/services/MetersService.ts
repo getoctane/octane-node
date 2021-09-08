@@ -27,14 +27,15 @@ export class MetersService {
     /**
      * Create Meter
      * Create a new Meter.
-     * @param requestBody
      * @returns Meter OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postMetersService(
+    public static async postMetersService({
+        requestBody,
+    }: {
         requestBody: MeterInputArgs,
-    ): Promise<Meter | Error> {
+    }): Promise<Meter | Error> {
         const result = await __request({
             method: 'POST',
             path: `/meters/`,
@@ -49,14 +50,15 @@ export class MetersService {
     /**
      * Get Meter
      * Fetch a meter by its unique name
-     * @param meterName
      * @returns Meter OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getMetersService1(
+    public static async getMetersService1({
+        meterName,
+    }: {
         meterName: string,
-    ): Promise<Meter | Error> {
+    }): Promise<Meter | Error> {
         const result = await __request({
             method: 'GET',
             path: `/meters/${meterName}`,
@@ -67,16 +69,17 @@ export class MetersService {
     /**
      * Update Meter
      * Update a meter by its unique name
-     * @param meterName
-     * @param requestBody
      * @returns Meter OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putMetersService(
+    public static async putMetersService({
+        meterName,
+        requestBody,
+    }: {
         meterName: string,
         requestBody: UpdateMeterArgs,
-    ): Promise<Meter | Error> {
+    }): Promise<Meter | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/meters/${meterName}`,
@@ -91,13 +94,14 @@ export class MetersService {
     /**
      * Delete Meter
      * Delete a meter by its unique name. Meters can only be deleted if not in-use by a price plan.
-     * @param meterName
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deleteMetersService(
+    public static async deleteMetersService({
+        meterName,
+    }: {
         meterName: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/meters/${meterName}`,

@@ -9,14 +9,15 @@ export class MeasurementsService {
 
     /**
      * Send Measurement
-     * @param requestBody
      * @returns Measurement OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postMeasurementsService(
+    public static async postMeasurementsService({
+        requestBody,
+    }: {
         requestBody: Measurement,
-    ): Promise<Measurement | Error> {
+    }): Promise<Measurement | Error> {
         const result = await __request({
             method: 'POST',
             path: `/measurements/`,
@@ -30,14 +31,15 @@ export class MeasurementsService {
 
     /**
      * Send Batched Measurements
-     * @param requestBody
      * @returns Measurement OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postMeasurementsService1(
+    public static async postMeasurementsService1({
+        requestBody,
+    }: {
         requestBody: Array<Measurement>,
-    ): Promise<Array<Measurement> | Error> {
+    }): Promise<Array<Measurement> | Error> {
         const result = await __request({
             method: 'POST',
             path: `/measurements/multi`,

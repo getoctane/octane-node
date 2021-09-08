@@ -6,7 +6,7 @@ export type PaymentGatewayCredential = {
     /**
      * One of `STRIPE` or `PADDLE`
      */
-    payment_gateway: PaymentGatewayCredential.payment_gateway;
+    payment_gateway: 'STRIPE' | 'PADDLE';
     /**
      * Payment gateway account id associated with customer
      */
@@ -15,17 +15,4 @@ export type PaymentGatewayCredential = {
      * Unique name identifier of a customer
      */
     auth_token?: string | null;
-}
-
-export namespace PaymentGatewayCredential {
-
-    /**
-     * One of `STRIPE` or `PADDLE`
-     */
-    export enum payment_gateway {
-        STRIPE = 'STRIPE',
-        PADDLE = 'PADDLE',
-    }
-
-
 }

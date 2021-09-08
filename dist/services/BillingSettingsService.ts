@@ -27,14 +27,15 @@ export class BillingSettingsService {
     /**
      * Create billing settings.
      * Create billing settings for a vendor.
-     * @param requestBody
      * @returns BillingSettings OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postBillingSettingsService(
+    public static async postBillingSettingsService({
+        requestBody,
+    }: {
         requestBody: CreateBillingSettingsInputArgs,
-    ): Promise<BillingSettings | Error> {
+    }): Promise<BillingSettings | Error> {
         const result = await __request({
             method: 'POST',
             path: `/billing_settings/`,
@@ -49,14 +50,15 @@ export class BillingSettingsService {
     /**
      * Update Billing Settings
      * Update billing settings for a vendor.
-     * @param requestBody
      * @returns BillingSettings OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putBillingSettingsService(
+    public static async putBillingSettingsService({
+        requestBody,
+    }: {
         requestBody: UpdateBillingSettingsInputArgs,
-    ): Promise<BillingSettings | Error> {
+    }): Promise<BillingSettings | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/billing_settings/`,

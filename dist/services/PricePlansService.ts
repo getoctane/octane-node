@@ -26,14 +26,15 @@ export class PricePlansService {
 
     /**
      * Create Price Plan
-     * @param requestBody
      * @returns PricePlan OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postPricePlansService(
+    public static async postPricePlansService({
+        requestBody,
+    }: {
         requestBody: CreatePricePlanArgs,
-    ): Promise<PricePlan | Error> {
+    }): Promise<PricePlan | Error> {
         const result = await __request({
             method: 'POST',
             path: `/price_plans/`,
@@ -48,14 +49,15 @@ export class PricePlansService {
     /**
      * Get a Price Plan
      * Fetch an existing price plan.
-     * @param pricePlanName
      * @returns PricePlan OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getPricePlansService1(
+    public static async getPricePlansService1({
+        pricePlanName,
+    }: {
         pricePlanName: string,
-    ): Promise<PricePlan | Error> {
+    }): Promise<PricePlan | Error> {
         const result = await __request({
             method: 'GET',
             path: `/price_plans/${pricePlanName}`,
@@ -66,16 +68,17 @@ export class PricePlansService {
     /**
      * Update a Price Plan
      * Update an existing price plan.
-     * @param pricePlanName
-     * @param requestBody
      * @returns PricePlan OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putPricePlansService(
+    public static async putPricePlansService({
+        pricePlanName,
+        requestBody,
+    }: {
         pricePlanName: string,
         requestBody: UpdatePricePlanArgs,
-    ): Promise<PricePlan | Error> {
+    }): Promise<PricePlan | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/price_plans/${pricePlanName}`,
@@ -90,13 +93,14 @@ export class PricePlansService {
     /**
      * Delete Price Plan
      * Delete an existing Price Plan. Plans which map to active Subscriptions must be replaced or removed before deletion can occur.
-     * @param pricePlanName
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deletePricePlansService(
+    public static async deletePricePlansService({
+        pricePlanName,
+    }: {
         pricePlanName: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/price_plans/${pricePlanName}`,

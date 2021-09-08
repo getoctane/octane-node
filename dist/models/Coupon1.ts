@@ -29,7 +29,7 @@ export type Coupon1 = {
     /**
      * One of RECURRRING or ONCE.
      */
-    frequency?: Coupon1.frequency | null;
+    frequency?: 'ONCE' | 'RECURRING' | null;
     /**
      * The maximum number of times this coupon can be used.
      */
@@ -49,32 +49,11 @@ export type Coupon1 = {
     /**
      * One of FLAT or PERCENT.
      */
-    discount_type: Coupon1.discount_type;
+    discount_type: 'FLAT' | 'PERCENT';
     /**
      * The amount of discount to give based on discount_type
      */
     discount_amount: number;
     excluded_customers?: Array<Customer1>;
     excluded_price_plans?: Array<PricePlan1>;
-}
-
-export namespace Coupon1 {
-
-    /**
-     * One of RECURRRING or ONCE.
-     */
-    export enum frequency {
-        ONCE = 'ONCE',
-        RECURRING = 'RECURRING',
-    }
-
-    /**
-     * One of FLAT or PERCENT.
-     */
-    export enum discount_type {
-        FLAT = 'FLAT',
-        PERCENT = 'PERCENT',
-    }
-
-
 }

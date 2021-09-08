@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type DeleteSubscriptionArgs = {
-    customer_id?: number;
     vendor_id?: number;
+    customer_id?: number;
     expire_at?: string;
 }

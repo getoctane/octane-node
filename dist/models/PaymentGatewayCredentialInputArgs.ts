@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type PaymentGatewayCredentialInputArgs = {
-    account_id?: string;
-    auth_token?: string;
     payment_gateway?: string;
+    auth_token?: string;
+    account_id?: string;
 }

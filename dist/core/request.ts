@@ -1,6 +1,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import FormData from 'form-data';
+import fetch, { BodyInit, Headers, RequestInit, Response } from 'node-fetch';
+import { types } from 'util';
+
 import { ApiError } from './ApiError';
 import type { ApiRequestOptions } from './ApiRequestOptions';
 import type { ApiResult } from './ApiResult';
@@ -18,8 +22,11 @@ function isStringWithValue(value: any): value is string {
     return isString(value) && value !== '';
 }
 
-function isBlob(value: any): value is Blob {
-    return value instanceof Blob;
+function isBinary(value: any): value is Buffer | ArrayBuffer | ArrayBufferView {
+    const isBuffer = Buffer.isBuffer(value);
+    const isArrayBuffer = types.isArrayBuffer(value);
+    const isArrayBufferView = types.isArrayBufferView(value);
+    return isBuffer || isArrayBuffer || isArrayBufferView;
 }
 
 function getQueryString(params: Record<string, any>): string {
@@ -89,13 +96,13 @@ async function getHeaders(options: ApiRequestOptions): Promise<Headers> {
     }
 
     if (isStringWithValue(username) && isStringWithValue(password)) {
-        const credentials = btoa(`${username}:${password}`);
+        const credentials = Buffer.from(`${username}:${password}`).toString('base64');
         headers.append('Authorization', `Basic ${credentials}`);
     }
 
     if (options.body) {
-        if (isBlob(options.body)) {
-            headers.append('Content-Type', options.body.type || 'application/octet-stream');
+        if (isBinary(options.body)) {
+            headers.append('Content-Type', 'application/octet-stream');
         } else if (isString(options.body)) {
             headers.append('Content-Type', 'text/plain');
         } else {
@@ -110,7 +117,7 @@ function getRequestBody(options: ApiRequestOptions): BodyInit | undefined {
         return getFormData(options.formData);
     }
     if (options.body) {
-        if (isString(options.body) || isBlob(options.body)) {
+        if (isString(options.body) || isBinary(options.body)) {
             return options.body;
         } else {
             return JSON.stringify(options.body);
@@ -125,9 +132,6 @@ async function sendRequest(options: ApiRequestOptions, url: string): Promise<Res
         headers: await getHeaders(options),
         body: getRequestBody(options),
     };
-    if (OpenAPI.WITH_CREDENTIALS) {
-        request.credentials = 'include';
-    }
     return await fetch(url, request);
 }
 
@@ -181,7 +185,7 @@ function catchErrors(options: ApiRequestOptions, result: ApiResult): void {
 }
 
 /**
- * Request using fetch client
+ * Request using node-fetch client
  * @param options The request options from the the service
  * @returns ApiResult
  * @throws ApiError

@@ -10,14 +10,15 @@ export class PaymentGatewayCredentialService {
 
     /**
      * Add PaymentGatewayCredential for Vendor
-     * @param requestBody
      * @returns PaymentGatewayCredential OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postPaymentGatewayCredentialService(
+    public static async postPaymentGatewayCredentialService({
+        requestBody,
+    }: {
         requestBody: PaymentGatewayCredentialInputArgs,
-    ): Promise<PaymentGatewayCredential | Error> {
+    }): Promise<PaymentGatewayCredential | Error> {
         const result = await __request({
             method: 'POST',
             path: `/payment_gateway_credentials/`,

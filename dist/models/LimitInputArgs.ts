@@ -5,6 +5,6 @@
 import type { FeatureInputArgs } from './FeatureInputArgs';
 
 export type LimitInputArgs = {
-    limit?: number;
     feature?: FeatureInputArgs;
+    limit?: number;
 }

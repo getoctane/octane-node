@@ -3,19 +3,19 @@
 /* eslint-disable */
 
 export type CouponInputArgs = {
-    duration_unit?: string;
     max_uses?: number;
-    is_end_prorated?: boolean;
-    code?: string;
+    discount_amount: number;
+    expiration_time?: string;
     excluded_price_plans?: Array<string>;
     is_start_prorated?: boolean;
-    discount_amount: number;
+    vendor_id?: number;
     discount_type: string;
-    expiration_time?: string;
-    duration_length?: number;
     name: string;
+    duration_unit?: string;
+    is_end_prorated?: boolean;
+    frequency: string;
+    code?: string;
+    duration_length?: number;
     excluded_customers?: Array<string>;
     display_name?: string;
-    frequency: string;
-    vendor_id?: number;
 }

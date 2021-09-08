@@ -3,13 +3,13 @@
 /* eslint-disable */
 
 export type ContactInfoInputArgs = {
-    zipcode?: string;
-    city?: string;
-    email?: string;
-    country?: string;
-    url?: string;
     address_line_1?: string;
+    address_line_2?: string;
+    zipcode?: string;
+    url?: string;
+    city?: string;
+    country?: string;
     phone?: string;
     state?: string;
-    address_line_2?: string;
+    email?: string;
 }

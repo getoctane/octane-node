@@ -4,6 +4,10 @@
 
 export type Error = {
     /**
+     * Errors
+     */
+    errors?: any;
+    /**
      * Error code
      */
     code?: number;
@@ -15,8 +19,4 @@ export type Error = {
      * Error name
      */
     status?: string;
-    /**
-     * Errors
-     */
-    errors?: any;
 }

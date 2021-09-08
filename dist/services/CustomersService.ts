@@ -40,14 +40,15 @@ export class CustomersService {
     /**
      * Create Customer
      * Create a new customer.
-     * @param requestBody
      * @returns Customer OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCustomersService(
+    public static async postCustomersService({
+        requestBody,
+    }: {
         requestBody: CreateCustomerArgs,
-    ): Promise<Customer | Error> {
+    }): Promise<Customer | Error> {
         const result = await __request({
             method: 'POST',
             path: `/customers/`,
@@ -62,14 +63,15 @@ export class CustomersService {
     /**
      * Get Customer
      * Fetch a customer by their unique name.
-     * @param customerName
      * @returns Customer OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService1(
+    public static async getCustomersService1({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<Customer | Error> {
+    }): Promise<Customer | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}`,
@@ -80,16 +82,17 @@ export class CustomersService {
     /**
      * Update Customer
      * Update a single customer. To update Customer measurement mappings, use the `customers/{customer_name}/mappings` endpoint.
-     * @param customerName
-     * @param requestBody
      * @returns Customer OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putCustomersService(
+    public static async putCustomersService({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: UpdateCustomerArgs,
-    ): Promise<Customer | Error> {
+    }): Promise<Customer | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/customers/${customerName}`,
@@ -104,13 +107,14 @@ export class CustomersService {
     /**
      * Delete Customer
      * Delete a customer by their unique name.
-     * @param customerName
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deleteCustomersService(
+    public static async deleteCustomersService({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/customers/${customerName}`,
@@ -121,14 +125,15 @@ export class CustomersService {
     /**
      * Get Measurement Mappings
      * Fetch all measurement mappings for a specific customer (by unique customer name).
-     * @param customerName
      * @returns CustomerMeasurementMapping OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService2(
+    public static async getCustomersService2({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<Array<CustomerMeasurementMapping> | Error> {
+    }): Promise<Array<CustomerMeasurementMapping> | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/mappings`,
@@ -139,16 +144,17 @@ export class CustomersService {
     /**
      * Append Measurement Mapping
      * Create a new measurement mapping for a customer. If no value_regex is passed, label existence is checked instead.
-     * @param customerName
-     * @param requestBody
      * @returns CustomerMeasurementMapping OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCustomersService1(
+    public static async postCustomersService1({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: CustomerMeasurementMappingInputArgs,
-    ): Promise<CustomerMeasurementMapping | Error> {
+    }): Promise<CustomerMeasurementMapping | Error> {
         const result = await __request({
             method: 'POST',
             path: `/customers/${customerName}/mappings`,
@@ -162,16 +168,17 @@ export class CustomersService {
 
     /**
      * Add PaymentGatewayCredential for Customer
-     * @param customerName
-     * @param requestBody
      * @returns PaymentGatewayCredential OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCustomersService2(
+    public static async postCustomersService2({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: CustomerPaymentGatewayCredentialInputArgs,
-    ): Promise<PaymentGatewayCredential | Error> {
+    }): Promise<PaymentGatewayCredential | Error> {
         const result = await __request({
             method: 'POST',
             path: `/customers/${customerName}/payment_gateway_credentials`,
@@ -186,14 +193,15 @@ export class CustomersService {
     /**
      * Get Billing Settings
      * Fetch the billing settings for a customer.
-     * @param customerName
      * @returns BillingSettings OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService3(
+    public static async getCustomersService3({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<BillingSettings | Error> {
+    }): Promise<BillingSettings | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/billing_settings`,
@@ -204,16 +212,17 @@ export class CustomersService {
     /**
      * Create billing settings.
      * Create billing settings for a vendor.
-     * @param customerName
-     * @param requestBody
      * @returns BillingSettings OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCustomersService3(
+    public static async postCustomersService3({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: CreateBillingSettingsInputArgs,
-    ): Promise<BillingSettings | Error> {
+    }): Promise<BillingSettings | Error> {
         const result = await __request({
             method: 'POST',
             path: `/customers/${customerName}/billing_settings`,
@@ -228,16 +237,17 @@ export class CustomersService {
     /**
      * Update Billing Settings.
      * Update billing settings for a customer.
-     * @param customerName
-     * @param requestBody
      * @returns BillingSettings OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putCustomersService1(
+    public static async putCustomersService1({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: UpdateBillingSettingsInputArgs,
-    ): Promise<BillingSettings | Error> {
+    }): Promise<BillingSettings | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/customers/${customerName}/billing_settings`,
@@ -252,13 +262,14 @@ export class CustomersService {
     /**
      * Delete Billing Settings
      * Delete billing settings for a customer.
-     * @param customerName
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deleteCustomersService1(
+    public static async deleteCustomersService1({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/customers/${customerName}/billing_settings`,
@@ -269,18 +280,19 @@ export class CustomersService {
     /**
      * Get Customer Revenue
      * Fetch revenue of a customer from start_time and end_time.
-     * @param customerName
-     * @param endTime
-     * @param startTime
      * @returns RevenueResponse OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService4(
+    public static async getCustomersService4({
+        customerName,
+        endTime,
+        startTime,
+    }: {
         customerName: string,
         endTime?: string,
         startTime?: string,
-    ): Promise<RevenueResponse | Error> {
+    }): Promise<RevenueResponse | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/revenue`,
@@ -298,17 +310,18 @@ export class CustomersService {
     /**
      * Generate Current Invoice
      * Fetch current cycle revenue for a customer and generate an invoice.
-     * @param customerName
-     * @param invoiceId
-     * @param token
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService5(
-        customerName: string,
-        invoiceId: number,
+    public static async getCustomersService5({
+        token,
+        invoiceId,
+        customerName,
+    }: {
         token: string,
-    ): Promise<Error> {
+        invoiceId: number,
+        customerName: string,
+    }): Promise<Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/invoice/${invoiceId}/${token}`,
@@ -319,15 +332,16 @@ export class CustomersService {
     /**
      * Generate Current Invoice
      * Fetch current cycle revenue for a customer and generate an invoice.
-     * @param customerName
-     * @param token
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService6(
-        customerName: string,
+    public static async getCustomersService6({
+        token,
+        customerName,
+    }: {
         token: string,
-    ): Promise<Error> {
+        customerName: string,
+    }): Promise<Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/sample_invoice/${token}`,
@@ -337,14 +351,15 @@ export class CustomersService {
 
     /**
      * Get the current status for a customer.
-     * @param customerName
      * @returns CustomerStatus OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService7(
+    public static async getCustomersService7({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<CustomerStatus | Error> {
+    }): Promise<CustomerStatus | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/status`,
@@ -354,25 +369,28 @@ export class CustomersService {
 
     /**
      * Get the current status for a customer.
-     * @param customerName
-     * @param meterName
-     * @param endTime Ending timestamp to consider usage formatted as ISO-8601.
-     * @param startTime Starting timestamp to consider usage formatted as ISO-8601.
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService8(
+    public static async getCustomersService8({
+        customerName,
+        endTime,
+        meterName,
+        startTime,
+    }: {
         customerName: string,
-        meterName?: string,
+        /** Ending timestamp to consider usage formatted as ISO-8601. **/
         endTime?: string,
+        meterName?: string,
+        /** Starting timestamp to consider usage formatted as ISO-8601. **/
         startTime?: string,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/usage`,
             query: {
-                'meter_name': meterName,
                 'end_time': endTime,
+                'meter_name': meterName,
                 'start_time': startTime,
             },
             errors: {
@@ -385,14 +403,15 @@ export class CustomersService {
     /**
      * Get Subscriptions
      * Get all subscriptions for the customer.
-     * @param customerName
      * @returns Subscription OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async getCustomersService9(
+    public static async getCustomersService9({
+        customerName,
+    }: {
         customerName: string,
-    ): Promise<Array<Subscription> | Error> {
+    }): Promise<Array<Subscription> | Error> {
         const result = await __request({
             method: 'GET',
             path: `/customers/${customerName}/subscriptions`,
@@ -403,16 +422,17 @@ export class CustomersService {
     /**
      * Create Subscription
      * Create a new subscription for a customer / price plan combination (by unique name).
-     * @param customerName
-     * @param requestBody
      * @returns Subscription OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postCustomersService4(
+    public static async postCustomersService4({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: CreateSubscriptionArgs,
-    ): Promise<Subscription | Error> {
+    }): Promise<Subscription | Error> {
         const result = await __request({
             method: 'POST',
             path: `/customers/${customerName}/subscriptions`,
@@ -427,16 +447,17 @@ export class CustomersService {
     /**
      * Update Subscription
      * Update a subscription for a specific customer (by customer name).
-     * @param customerName
-     * @param requestBody
      * @returns Subscription OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putCustomersService2(
+    public static async putCustomersService2({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: UpdateSubscriptionArgs,
-    ): Promise<Subscription | Error> {
+    }): Promise<Subscription | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/customers/${customerName}/subscription`,
@@ -451,15 +472,16 @@ export class CustomersService {
     /**
      * Delete Subscription
      * Delete a subscription for a specific customer (by customer name).
-     * @param customerName
-     * @param requestBody
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async deleteCustomersService2(
+    public static async deleteCustomersService2({
+        customerName,
+        requestBody,
+    }: {
         customerName: string,
         requestBody: DeleteSubscriptionArgs,
-    ): Promise<Error> {
+    }): Promise<Error> {
         const result = await __request({
             method: 'DELETE',
             path: `/customers/${customerName}/subscription`,

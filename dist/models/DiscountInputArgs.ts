@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type DiscountInputArgs = {
-    amount?: number;
     discount_type?: string;
+    amount?: number;
 }

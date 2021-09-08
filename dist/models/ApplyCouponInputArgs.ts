@@ -3,9 +3,9 @@
 /* eslint-disable */
 
 export type ApplyCouponInputArgs = {
-    code?: string;
+    vendor_id?: number;
     name?: string;
+    code?: string;
     customer_name?: string;
     customer_id?: number;
-    vendor_id?: number;
 }

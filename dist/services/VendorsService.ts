@@ -27,14 +27,15 @@ export class VendorsService {
     /**
      * Create Vendor
      * **[ADMIN ONLY]** Create a new vendor.
-     * @param requestBody
      * @returns Vendor OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async postVendorsService(
+    public static async postVendorsService({
+        requestBody,
+    }: {
         requestBody: CreateVendorArgs,
-    ): Promise<Vendor | Error> {
+    }): Promise<Vendor | Error> {
         const result = await __request({
             method: 'POST',
             path: `/vendors/`,
@@ -49,14 +50,15 @@ export class VendorsService {
     /**
      * Update Vendor
      * Update vendor metadata.
-     * @param requestBody
      * @returns Vendor OK
      * @returns Error Default error response
      * @throws ApiError
      */
-    public static async putVendorsService(
+    public static async putVendorsService({
+        requestBody,
+    }: {
         requestBody: UpdateVendorArgs,
-    ): Promise<Vendor | Error> {
+    }): Promise<Vendor | Error> {
         const result = await __request({
             method: 'PUT',
             path: `/vendors/`,

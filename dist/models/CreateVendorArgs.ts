@@ -5,10 +5,10 @@
 import type { ContactInfoInputArgs } from './ContactInfoInputArgs';
 
 export type CreateVendorArgs = {
-    api_key?: string;
     vendor_name?: string;
     vendor_display_name?: string;
-    contact_info?: ContactInfoInputArgs;
     name?: string;
+    api_key?: string;
+    contact_info?: ContactInfoInputArgs;
     display_name?: string;
 }

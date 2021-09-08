@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type PriceInputArgs = {
-    price?: number;
     cap?: number;
+    price?: number;
 }
