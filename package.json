@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "codegen": "scripts/codegen.sh",
-    "codegen-beta": "openapi --input https://api.cloud.getoctane.io/docs/openapi.json --output ./dist",
+    "codegen-beta": "openapi --input https://api.cloud.getoctane.io/docs/openapi.json --useOptions --useUnionTypes --output ./dist --client node",
     "build": "scripts/build.sh",
     "publish": "scripts/publish.sh",
     "fix": "run-s fix:*",
