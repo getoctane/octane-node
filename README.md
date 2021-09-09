@@ -13,17 +13,17 @@ to the Octane API for server-side JavaScript apps.
 - [Getting started](#getting-started)
 - [Example apps](#example-apps)
 - [Making API calls](#making-api-calls)
-    - [Customers API](#customers-api)
-        - [Example: Creating a new customer](#example-creating-a-new-customer)
-        - [Example: Subscribe a customer to a price plan](#example-subscribe-a-customer-to-a-price-plan)
-    - [Meters API](#meters-api)
-        - [Example: Creating a new meter](#example-creating-a-new-meter)
-    - [Price Plans API](#price-plans-api)
-        - [Example: Creating a new price plan](#example-creating-a-new-price-plan)
-    - [Measurements API](#measurements-api)
-        - [Example: Sending a measurement](#example-sending-a-measurement)
+  - [Customers API](#customers-api)
+    - [Example: Creating a new customer](#example-creating-a-new-customer)
+    - [Example: Subscribe a customer to a price plan](#example-subscribe-a-customer-to-a-price-plan)
+  - [Meters API](#meters-api)
+    - [Example: Creating a new meter](#example-creating-a-new-meter)
+  - [Price Plans API](#price-plans-api)
+    - [Example: Creating a new price plan](#example-creating-a-new-price-plan)
+  - [Measurements API](#measurements-api)
+    - [Example: Sending a measurement](#example-sending-a-measurement)
 - [TypeScript suppport](#typescript-support)
-    - [Types example](#types-example)
+  - [Types example](#types-example)
 - [Development](#development)
 - [Contributing](#contributing)
 
@@ -54,6 +54,30 @@ import Octane from 'octane-node';
 const octane = new Octane(process.env.OCTANE_API_KEY);
 ```
 
+## Configuring the SDK
+
+The SDK accepts an optional configuration object. You can use it to point the
+SDK at a different host or to enable experimental features.
+
+```js
+import Octane from 'octane-node';
+
+// This is the full config object and its default values.
+const config = {
+  // These options modify the SDK client itself.
+  clientConfig: {
+    // If true, all API response data will use camelCase formatting.
+    camelCase: false,
+  },
+  // 'host', 'port', and 'protocol' modify the connection to the API, although
+  // it isn't likely that you'll need to set these.
+  host: 'api.cloud.getoctane.io',
+  port: 443,
+  protocol: 'https',
+};
+const octane = new Octane(process.env.OCTANE_API_KEY, config);
+```
+
 ## Example apps
 
 The following demo applications found in the [examples/](./examples/) directory display
@@ -71,11 +95,11 @@ sample function, `crash`, which can be used to handle API errors:
 
 ```js
 const crash = (errorResponse) => {
-    return errorResponse.json().then(data => {
-        console.error(`Code:    ${data['code']}`);
-        console.error(`Status:  ${data['status']}`);
-        console.error(`Message: ${data['message']}`);
-    });
+  return errorResponse.json().then((data) => {
+    console.error(`Code:    ${data['code']}`);
+    console.error(`Status:  ${data['status']}`);
+    console.error(`Message: ${data['message']}`);
+  });
 };
 ```
 
@@ -90,11 +114,13 @@ make calls to the Octane Customers API.
 const customerName = 'r2d2';
 
 const customer = {
-    name: customerName,
-    measurementMappings: [{
-        label: 'customer_name',
-        valueRegex: customerName
-    }]
+  name: customerName,
+  measurementMappings: [
+    {
+      label: 'customer_name',
+      valueRegex: customerName,
+    },
+  ],
 };
 
 octane.customers.create(customer).catch(crash);
@@ -106,7 +132,7 @@ octane.customers.create(customer).catch(crash);
 const customerName = 'r2d2';
 
 const subscription = {
-    pricePlanName: 'droidplan'
+  pricePlanName: 'droidplan',
 };
 
 octane.customers.createSubscription(customerName, subscription).catch(crash);
@@ -123,10 +149,10 @@ make calls to the Octane Meters API.
 const meterName = 'droidrepairs';
 
 const meter = {
-    name: meterName,
-    meterType: 'COUNTER',
-    isIncremental: true,
-    expectedLabels: ['customer_name']
+  name: meterName,
+  meterType: 'COUNTER',
+  isIncremental: true,
+  expectedLabels: ['customer_name'],
 };
 
 octane.meters.create(meter).catch(crash);
@@ -140,22 +166,26 @@ make calls to the Octane Price Plans API.
 #### Example: Creating a new price plan
 
 ```js
-const pricePlanName = 'droidplan'
+const pricePlanName = 'droidplan';
 const pricePlanRate = 10000; // $100.00
 const meterName = 'droidrepairs';
 
 const pricePlan = {
-    name: pricePlanName,
-    period: 'month',
-    meteredComponents: [{
-        meterName: meterName,
-        priceScheme: {
-            prices: [{
-                price: pricePlanRate
-            }],
-            schemeType: 'FLAT'
-        }
-    }]
+  name: pricePlanName,
+  period: 'month',
+  meteredComponents: [
+    {
+      meterName: meterName,
+      priceScheme: {
+        prices: [
+          {
+            price: pricePlanRate,
+          },
+        ],
+        schemeType: 'FLAT',
+      },
+    },
+  ],
 };
 
 octane.pricePlans.create(pricePlan).catch(crash);
@@ -173,11 +203,11 @@ const meterName = 'droidrepairs';
 const customerName = 'r2d2';
 
 const measurement = {
-    meterName: meterName,
-    value: 1,
-    labels: {
-        'customer_name': customerName
-    }
+  meterName: meterName,
+  value: 1,
+  labels: {
+    customer_name: customerName,
+  },
 };
 
 octane.measurements.create(measurement).catch(crash);
@@ -197,25 +227,26 @@ Here is a full example of using types while creating a customer:
 
 ```typescript
 import Octane from 'octane-node';
-import {CreateCustomerArgs} from 'octane-node/types';
+import { CreateCustomerArgs } from 'octane-node/types';
 
 const octane = new Octane(process.env.OCTANE_API_KEY!);
 
 const customerName = 'r2d2';
 
 const customer: CreateCustomerArgs = {
-    name: customerName,
-    measurementMappings: [{
-        label: 'customer_name',
-        valueRegex: customerName
-    }]
+  name: customerName,
+  measurementMappings: [
+    {
+      label: 'customer_name',
+      valueRegex: customerName,
+    },
+  ],
 };
 
-octane.customers.create(customer)
-    .catch((errorResponse: Response) => {
-        console.error(errorResponse.status);
-        process.exit(1);
-    });
+octane.customers.create(customer).catch((errorResponse: Response) => {
+  console.error(errorResponse.status);
+  process.exit(1);
+});
 ```
 
 ## Development
@@ -250,7 +281,7 @@ npm run-script build
 
 Contributions are welcome!
 
-Prior to submitting a 
+Prior to submitting a
 [pull request](https://github.com/getoctane/octane-node/pulls), please
 check the list of [open issues](https://github.com/getoctane/octane-node/issues).
 If there is not an existing issue related to your changes, please open a
