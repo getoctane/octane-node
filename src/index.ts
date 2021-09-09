@@ -27,10 +27,10 @@ class Octane {
       apiKey: key,
       basePath: `${protocol}://${host}:${port}`,
     };
-    this.customers = new Customers(apiConfig);
-    this.measurements = new Measurements(apiConfig);
-    this.meters = new Meters(apiConfig);
-    this.pricePlans = new PricePlans(apiConfig);
+    this.customers = new Customers(apiConfig, clientConfig);
+    this.measurements = new Measurements(apiConfig, clientConfig);
+    this.meters = new Meters(apiConfig, clientConfig);
+    this.pricePlans = new PricePlans(apiConfig, clientConfig);
   }
 }
 

@@ -12,29 +12,30 @@ import {
 } from '../codegen/api';
 import { ClientConfiguration } from '../types';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
+import { BaseResource } from './base';
 
-class Customers {
+class Customers extends BaseResource {
   private api: CustomersApi;
 
-  private clientConfig: ClientConfiguration;
-
   constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
+    super(clientConfig);
     this.api = new CustomersApi(apiConfig);
-    this.clientConfig = clientConfig;
   }
 
   /**
    * Create a new customer.
    */
   public create(body: CreateCustomerArgs, options?: any): Promise<Customer> {
-    return this.api.customersPost(body, options);
+    return this.api.customersPost(body, options).then(this.formatResponse);
   }
 
   /**
    * Fetch a customer by their unique name.
    */
   public retrieve(customerName: string, options?: any): Promise<Customer> {
-    return this.api.customersCustomerNameGet(customerName, options);
+    return this.api
+      .customersCustomerNameGet(customerName, options)
+      .then(this.formatResponse);
   }
 
   /**
@@ -46,14 +47,16 @@ class Customers {
     options?: any,
   ): Promise<Customer> {
     // NOTE: order or arguments switched here
-    return this.api.customersCustomerNamePut(body, customerName, options);
+    return this.api
+      .customersCustomerNamePut(body, customerName, options)
+      .then(this.formatResponse);
   }
 
   /**
    * Retrieve all customers for a given vendor.
    */
   public list(options?: any): Promise<Customer[]> {
-    return this.api.customersGet(options);
+    return this.api.customersGet(options).then(this.formatResponse);
   }
 
   /**
@@ -61,6 +64,7 @@ class Customers {
    */
   public delete(customerName: string, options?: any): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
+    // NOTE: there's no need to format the response from a delete endpoint
     return this.api.customersCustomerNameDelete(customerName, options);
   }
 
@@ -73,11 +77,13 @@ class Customers {
     options?: any,
   ): Promise<PaymentGatewayCredential> {
     // NOTE: order or arguments switched here
-    return this.api.customersCustomerNamePaymentGatewayCredentialsPost(
-      body,
-      customerName,
-      options,
-    );
+    return this.api
+      .customersCustomerNamePaymentGatewayCredentialsPost(
+        body,
+        customerName,
+        options,
+      )
+      .then(this.formatResponse);
   }
 
   /**
@@ -89,11 +95,9 @@ class Customers {
     options?: any,
   ): Promise<Subscription> {
     // NOTE: order or arguments switched here
-    return this.api.customersCustomerNameSubscriptionsPost(
-      body,
-      customerName,
-      options,
-    );
+    return this.api
+      .customersCustomerNameSubscriptionsPost(body, customerName, options)
+      .then(this.formatResponse);
   }
 
   /**
@@ -103,10 +107,9 @@ class Customers {
     customerName: string,
     options?: any,
   ): Promise<Subscription[]> {
-    return this.api.customersCustomerNameSubscriptionsGet(
-      customerName,
-      options,
-    );
+    return this.api
+      .customersCustomerNameSubscriptionsGet(customerName, options)
+      .then(this.formatResponse);
   }
 
   /**
@@ -118,11 +121,9 @@ class Customers {
     options?: any,
   ): Promise<Subscription> {
     // NOTE: order or arguments switched here
-    return this.api.customersCustomerNameSubscriptionPut(
-      body,
-      customerName,
-      options,
-    );
+    return this.api
+      .customersCustomerNameSubscriptionPut(body, customerName, options)
+      .then(this.formatResponse);
   }
 
   /**
@@ -135,11 +136,9 @@ class Customers {
   ): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
     // NOTE: order or arguments switched here
-    return this.api.customersCustomerNameSubscriptionDelete(
-      body,
-      customerName,
-      options,
-    );
+    return this.api
+      .customersCustomerNameSubscriptionDelete(body, customerName, options)
+      .then(this.formatResponse);
   }
 }
 

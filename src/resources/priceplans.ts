@@ -6,22 +6,21 @@ import {
 } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
 import { ClientConfiguration } from '../types';
+import { BaseResource } from './base';
 
-class PricePlans {
+class PricePlans extends BaseResource {
   private api: PricePlansApi;
 
-  private clientConfig: ClientConfiguration;
-
   constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
+    super(clientConfig);
     this.api = new PricePlansApi(apiConfig);
-    this.clientConfig = clientConfig;
   }
 
   /**
    * Create Price Plan.
    */
   public create(body: CreatePricePlanArgs, options?: any): Promise<PricePlan> {
-    return this.api.pricePlansPost(body, options);
+    return this.api.pricePlansPost(body, options).then(this.formatResponse);
   }
 
   /**
@@ -35,7 +34,7 @@ class PricePlans {
           if (!pricePlan.name) {
             throw new Error('Price plan does not exist');
           }
-          resolve(pricePlan);
+          resolve(this.formatResponse(pricePlan));
         })
         .catch(reject);
     });
@@ -52,14 +51,16 @@ class PricePlans {
     options?: any,
   ): Promise<PricePlan> {
     // NOTE: order of arguments switched here
-    return this.api.pricePlansPricePlanNamePut(body, pricePlanName, options);
+    return this.api
+      .pricePlansPricePlanNamePut(body, pricePlanName, options)
+      .then(this.formatResponse);
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
   public list(options?: any): Promise<PricePlan[]> {
-    return this.api.pricePlansGet(options);
+    return this.api.pricePlansGet(options).then(this.formatResponse);
   }
 
   /**
@@ -67,6 +68,7 @@ class PricePlans {
    */
   public delete(pricePlanName: string, options?: any): Promise<Response> {
     // TODO: void the response as it is inconsistent with others
+    // NOTE: there's no need to format the response from a delete endpoint
     return this.api.pricePlansPricePlanNameDelete(pricePlanName, options);
   }
 }

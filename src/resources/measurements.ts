@@ -1,6 +1,7 @@
 import { Measurement, MeasurementsApi } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
 import { ClientConfiguration } from '../types';
+import { BaseResource } from './base';
 
 interface MeasurementInput extends Omit<Measurement, 'time'> {
   time?: Date | string;
@@ -48,14 +49,12 @@ function normalizeMeasurementInput({
   };
 }
 
-class Measurements {
+class Measurements extends BaseResource {
   private api: MeasurementsApi;
 
-  private clientConfig: ClientConfiguration;
-
   constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
+    super(clientConfig);
     this.api = new MeasurementsApi(apiConfig);
-    this.clientConfig = clientConfig;
   }
 
   /**
@@ -68,17 +67,21 @@ class Measurements {
   public create(
     body: MeasurementInput | MeasurementInput[],
     options?: any,
-  ): Promise<Measurement> | Promise<Measurement[]> {
+  ): Promise<Measurement | Measurement[]> {
     if (body instanceof Array) {
       const normalizedBody = body
         .map(normalizeMeasurementInput)
         .map(fixMeasurementFields);
-      return this.api.measurementsMultiPost(normalizedBody, options);
+      return this.api
+        .measurementsMultiPost(normalizedBody, options)
+        .then(this.formatResponse);
     }
     const normalizedBody = fixMeasurementFields(
       normalizeMeasurementInput(body),
     );
-    return this.api.measurementsPost(normalizedBody, options);
+    return this.api
+      .measurementsPost(normalizedBody, options)
+      .then(this.formatResponse);
   }
 }
 
