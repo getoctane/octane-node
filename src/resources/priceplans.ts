@@ -5,12 +5,16 @@ import {
   PricePlan,
 } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
+import { ClientConfiguration } from '../types';
 
 class PricePlans {
   private api: PricePlansApi;
 
-  constructor(apiConfig: APIConfiguration) {
+  private clientConfig: ClientConfiguration;
+
+  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
     this.api = new PricePlansApi(apiConfig);
+    this.clientConfig = clientConfig;
   }
 
   /**
