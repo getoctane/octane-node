@@ -22,6 +22,7 @@ class Octane {
     const host = overrides?.host || octaneDefaultHost;
     const port = overrides?.port || 443;
     const protocol = overrides?.protocol || 'https';
+    const clientConfig = overrides?.clientConfig ?? {};
     const apiConfig: APIConfiguration = {
       apiKey: key,
       basePath: `${protocol}://${host}:${port}`,

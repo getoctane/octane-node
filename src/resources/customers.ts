@@ -10,13 +10,17 @@ import {
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
 } from '../codegen/api';
+import { ClientConfiguration } from '../types';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
 
 class Customers {
   private api: CustomersApi;
 
-  constructor(apiConfig: APIConfiguration) {
+  private clientConfig: ClientConfiguration;
+
+  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
     this.api = new CustomersApi(apiConfig);
+    this.clientConfig = clientConfig;
   }
 
   /**

@@ -1,5 +1,6 @@
 import { Measurement, MeasurementsApi } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
+import { ClientConfiguration } from '../types';
 
 interface MeasurementInput extends Omit<Measurement, 'time'> {
   time?: Date | string;
@@ -50,8 +51,11 @@ function normalizeMeasurementInput({
 class Measurements {
   private api: MeasurementsApi;
 
-  constructor(apiConfig: APIConfiguration) {
+  private clientConfig: ClientConfiguration;
+
+  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
     this.api = new MeasurementsApi(apiConfig);
+    this.clientConfig = clientConfig;
   }
 
   /**
