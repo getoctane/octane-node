@@ -4,6 +4,7 @@
     "target": "es2017",
     "outDir": "build/",
     "rootDir": "src/",
+    "baseUrl": "src/",
     "moduleResolution": "node",
     "module": "commonjs",
     "declaration": true,
@@ -17,10 +18,10 @@
     "noFallthroughCasesInSwitch": true,
     "pretty": true,
     "lib": ["es2017", "dom"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules/**"],
   "compileOnSave": false
 }
