@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Customers resource makes create requests 1`] = `
+Array [
+  Array [
+    "https://api.made.up.host:1337/customers/",
+    Object {
+      "body": "{\\"name\\":\\"chuck_testa\\",\\"displayName\\":\\"Chuck Testa\\",\\"contactInfo\\":{\\"addressLine1\\":\\"1600 Pennsylvania Avenue NW\\",\\"addressLine2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"}}",
+      "headers": Object {
+        "Authorization": "Bearer 867-5309",
+        "Content-Type": "application/json",
+      },
+      "method": "POST",
+    },
+  ],
+]
+`;
+
+exports[`Customers resource makes delete requests 1`] = `
+Array [
+  Array [
+    "https://api.made.up.host:1337/customers/chuck_testa",
+    Object {
+      "headers": Object {
+        "Authorization": "Bearer 867-5309",
+      },
+      "method": "DELETE",
+    },
+  ],
+]
+`;
+
+exports[`Customers resource makes list requests 1`] = `
+Array [
+  Array [
+    "https://api.made.up.host:1337/customers/",
+    Object {
+      "headers": Object {
+        "Authorization": "Bearer 867-5309",
+      },
+      "method": "GET",
+    },
+  ],
+]
+`;
+
+exports[`Customers resource makes retrieve requests 1`] = `
+Array [
+  Array [
+    "https://api.made.up.host:1337/customers/chuck_testa",
+    Object {
+      "headers": Object {
+        "Authorization": "Bearer 867-5309",
+      },
+      "method": "GET",
+    },
+  ],
+]
+`;
+
+exports[`Customers resource makes update requests 1`] = `
+Array [
+  Array [
+    "https://api.made.up.host:1337/customers/chuck_testa",
+    Object {
+      "body": "{\\"name\\":\\"chuck_testa\\",\\"displayName\\":\\"Chuck Testa\\",\\"contactInfo\\":{\\"addressLine1\\":\\"1600 Pennsylvania Avenue NW\\",\\"addressLine2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"}}",
+      "headers": Object {
+        "Authorization": "Bearer 867-5309",
+        "Content-Type": "application/json",
+      },
+      "method": "PUT",
+    },
+  ],
+]
+`;
