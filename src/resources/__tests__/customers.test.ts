@@ -22,8 +22,6 @@ const FAKE_CUSTOMER: Customer = {
 describe('Customers resource', () => {
   it('makes create requests', async () => {
     const c = new Customers(API_CONFIG, {});
-
-    // Call every endpoint
     fetchMock.once(JSON.stringify(FAKE_CUSTOMER));
     expect(await c.create(FAKE_CUSTOMER)).toEqual(FAKE_CUSTOMER);
     expect(fetchMock.mock.calls).toMatchSnapshot();
