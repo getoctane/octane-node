@@ -2,6 +2,7 @@ import {
   CreateCustomerArgs,
   CreateSubscriptionArgs,
   Customer,
+  CustomerFeature,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
   DeleteSubscriptionArgs,
@@ -138,6 +139,25 @@ class Customers extends BaseResource {
     // NOTE: order or arguments switched here
     return this.api
       .customersCustomerNameSubscriptionDelete(body, customerName, options)
+      .then(this.formatResponse);
+  }
+
+  /**
+   * Retreive a customer's access to feature/limitation.
+   */
+  public retrieveFeature(
+    customerName: string,
+    featureName: string,
+    options?: any,
+  ): Promise<CustomerFeature> {
+    // TODO: void the response as it is inconsistent with others
+    // NOTE: order or arguments switched here
+    return this.api
+      .customersCustomerNameFeaturesFeatureNameGet(
+        featureName,
+        customerName,
+        options,
+      )
       .then(this.formatResponse);
   }
 }
