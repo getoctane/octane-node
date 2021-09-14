@@ -5,7 +5,7 @@ set -ex
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
 
-OPEN_API_URL="https://api.cloud.getoctane.io/docs/openapi.json"
+OPEN_API_URL="${OPEN_API_URL:-https://api.cloud.getoctane.io/docs/openapi.json}"
 
 CODEGEN_VERSION="3.0.27"
 CODEGEN_SHA="66e956839d84bfff44be2ac269761f755404dfea34c7e4903821fedbc3c06043"
