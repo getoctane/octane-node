@@ -15,6 +15,8 @@ import {
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
   PricePlan,
+  CustomerFeature,
+  CustomerUsage,
 } from './codegen/api';
 
 /**
@@ -56,4 +58,6 @@ export {
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
   PricePlan,
+  CustomerFeature,
+  CustomerUsage,
 };
