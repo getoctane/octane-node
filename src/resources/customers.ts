@@ -5,6 +5,7 @@ import {
   CustomerFeature,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
+  CustomerUsage,
   DeleteSubscriptionArgs,
   PaymentGatewayCredential,
   Subscription,
@@ -139,6 +140,38 @@ class Customers extends BaseResource {
     // NOTE: order or arguments switched here
     return this.api
       .customersCustomerNameSubscriptionDelete(body, customerName, options)
+      .then(this.formatResponse);
+  }
+
+  /**
+   * Retreive a customer's access to feature/limitation.
+   */
+  public retrieveUsage(
+    customerName: string,
+    meterName: string,
+    startTime: Date | string,
+    endTime: Date | string,
+    options?: any,
+  ): Promise<CustomerUsage> {
+    // TODO: void the response as it is inconsistent with others
+    // NOTE: order or arguments switched here
+    let startTimeAsDate: Date | undefined;
+    if (startTime) {
+      startTimeAsDate =
+        startTime instanceof Date ? startTime : new Date(startTime);
+    }
+    let endTimeAsDate: Date | undefined;
+    if (endTime) {
+      endTimeAsDate = endTime instanceof Date ? endTime : new Date(endTime);
+    }
+    return this.api
+      .customersCustomerNameUsageGet(
+        customerName,
+        meterName,
+        startTimeAsDate,
+        endTimeAsDate,
+        options,
+      )
       .then(this.formatResponse);
   }
 
