@@ -1,7 +1,11 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { Measurement, MeasurementsApi } from '../codegen/api';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
 import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
+
+dayjs.extend(utc);
 
 interface MeasurementInput extends Omit<Measurement, 'time'> {
   time?: Date | string;
@@ -41,7 +45,7 @@ function normalizeMeasurementInput({
 }: MeasurementInput | Measurement): Measurement {
   let timestamp: Date | undefined;
   if (time) {
-    timestamp = time instanceof Date ? time : new Date(time);
+    timestamp = time instanceof Date ? time : dayjs(time).utc(true).toDate();
   }
   return {
     time: timestamp,

@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "camelcase-keys": "^7.0.0",
+    "dayjs": "^1.10.7",
     "isomorphic-fetch": "^3.0.0"
   }
 }
