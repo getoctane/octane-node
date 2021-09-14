@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import {
   CreateCustomerArgs,
   CreateSubscriptionArgs,
@@ -12,9 +14,11 @@ import {
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
 } from '../codegen/api';
-import { ClientConfiguration } from '../types';
 import { Configuration as APIConfiguration } from '../codegen/configuration';
+import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
+
+dayjs.extend(utc);
 
 class Customers extends BaseResource {
   private api: CustomersApi;
@@ -158,11 +162,14 @@ class Customers extends BaseResource {
     let startTimeAsDate: Date | undefined;
     if (startTime) {
       startTimeAsDate =
-        startTime instanceof Date ? startTime : new Date(startTime);
+        startTime instanceof Date
+          ? startTime
+          : dayjs(startTime).utc(true).toDate();
     }
     let endTimeAsDate: Date | undefined;
     if (endTime) {
-      endTimeAsDate = endTime instanceof Date ? endTime : new Date(endTime);
+      endTimeAsDate =
+        endTime instanceof Date ? endTime : dayjs(endTime).utc(true).toDate();
     }
     return this.api
       .customersCustomerNameUsageGet(
