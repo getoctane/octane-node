@@ -11,7 +11,7 @@ tsc -p tsconfig.json
 
 # Fix for bug in v0.5.0
 cp src/codegen/custom.d.ts build/codegen/
-cat build/codegen/api.d.ts | sed 's/\.\.\/\.\.\/src\/codegen\/custom\.d\.ts/\.\/custom\.d\.ts/g' \
+cat build/codegen/api.d.ts | sed 's/codegen\/custom/\.\/custom/g' \
   > build/codegen/api.d.ts.tmp
 mv build/codegen/api.d.ts.tmp build/codegen/api.d.ts
 
