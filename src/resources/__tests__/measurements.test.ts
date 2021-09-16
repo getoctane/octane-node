@@ -1,6 +1,10 @@
-import { Measurements } from 'resources/measurements';
-import fetchMock from 'jest-fetch-mock';
 import type { Measurement } from 'codegen/api';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import fetchMock from 'jest-fetch-mock';
+import { Measurements } from 'resources/measurements';
+
+dayjs.extend(utc);
 
 const API_CONFIG = {
   apiKey: '867-5309',
@@ -31,7 +35,7 @@ describe('Measurements resource', () => {
     fetchMock.once(JSON.stringify(FAKE_MEASUREMENT));
     const resp2 = await m.create({
       ...FAKE_MEASUREMENT,
-      time: new Date(FAKE_ISO_STRING),
+      time: dayjs(FAKE_ISO_STRING).utc(true).toDate(),
     });
     expect(resp2).toEqual(FAKE_MEASUREMENT);
     const secondRequest = fetchMock.mock.calls[1];

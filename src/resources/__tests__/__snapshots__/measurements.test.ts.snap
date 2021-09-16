@@ -5,7 +5,7 @@ Array [
   Array [
     "https://api.made.up.host:1337/measurements/",
     Object {
-      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T16:36:59.663Z\\",\\"value\\":9001}",
+      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T12:36:59.663Z\\",\\"value\\":9001}",
       "headers": Object {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
@@ -16,7 +16,7 @@ Array [
   Array [
     "https://api.made.up.host:1337/measurements/",
     Object {
-      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T16:36:59.663Z\\",\\"value\\":9001}",
+      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T12:36:59.663Z\\",\\"value\\":9001}",
       "headers": Object {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
