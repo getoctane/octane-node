@@ -13,14 +13,15 @@
   "scripts": {
     "codegen": "scripts/codegen.sh",
     "build": "scripts/build.sh",
+    "acceptance": "scripts/acceptance.sh",
     "publish": "scripts/publish.sh",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
-    "jest": "jest",
+    "jest": "TZ=America/New_York jest",
     "update-jest-snapshots": "jest -u",
-    "test": "run-s build test:*",
-    "test:jest": "jest",
+    "test": "run-s build test:* acceptance",
+    "test:jest": "TZ=America/New_York jest",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different"
   },
