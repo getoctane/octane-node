@@ -11,7 +11,7 @@ jobs:
       - name: Build octane-node
         run: |
           npm install
-          npm run-script build
+          npm run-script test
       - name: Release package to npmjs
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > "${HOME}/.npmrc"
