@@ -15,6 +15,9 @@ cat build/codegen/api.d.ts | sed 's/codegen\/custom/\.\/custom/g' \
   > build/codegen/api.d.ts.tmp
 mv build/codegen/api.d.ts.tmp build/codegen/api.d.ts
 
+# Remove test files
+rm -rf build/resources/__tests__/
+
 cp LICENSE build/
 cp README.md build/
 
