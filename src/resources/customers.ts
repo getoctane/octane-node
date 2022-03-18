@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import {
   CreateCustomerArgs,
+  CustomersCustomerNameFeaturesFeatureNameGetRequest,
+  CustomersCustomerNameUsageGetRequest,
   CreateSubscriptionArgs,
   Customer,
   CustomerFeature,
@@ -13,12 +15,20 @@ import {
   Subscription,
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
-} from '../codegen/api';
-import { Configuration as APIConfiguration } from '../codegen/configuration';
+} from '../codegen';
+import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
 dayjs.extend(utc);
+
+// Extend the generated args for retrieveUsage so we can optionally convert date
+// objects into strings.
+interface RetrieveUsageArgs
+  extends Omit<CustomersCustomerNameUsageGetRequest, 'startTime' | 'endTime'> {
+  startTime?: Date | string;
+  endTime?: Date | string;
+}
 
 class Customers extends BaseResource {
   private api: CustomersApi;
@@ -31,16 +41,24 @@ class Customers extends BaseResource {
   /**
    * Create a new customer.
    */
-  public create(body: CreateCustomerArgs, options?: any): Promise<Customer> {
-    return this.api.customersPost(body, options).then(this.formatResponse);
+  public create(
+    createCustomerArgs: CreateCustomerArgs,
+    overrides?: RequestInit,
+  ): Promise<Customer> {
+    return this.api
+      .customersPost({ createCustomerArgs }, overrides)
+      .then(this.formatResponse);
   }
 
   /**
    * Fetch a customer by their unique name.
    */
-  public retrieve(customerName: string, options?: any): Promise<Customer> {
+  public retrieve(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<Customer> {
     return this.api
-      .customersCustomerNameGet(customerName, options)
+      .customersCustomerNameGet({ customerName }, overrides)
       .then(this.formatResponse);
   }
 
@@ -49,29 +67,27 @@ class Customers extends BaseResource {
    */
   public update(
     customerName: string,
-    body: UpdateCustomerArgs,
-    options?: any,
+    updateCustomerArgs: UpdateCustomerArgs,
+    overrides?: RequestInit,
   ): Promise<Customer> {
-    // NOTE: order or arguments switched here
     return this.api
-      .customersCustomerNamePut(body, customerName, options)
+      .customersCustomerNamePut({ customerName, updateCustomerArgs }, overrides)
       .then(this.formatResponse);
   }
 
   /**
    * Retrieve all customers for a given vendor.
    */
-  public list(options?: any): Promise<Customer[]> {
-    return this.api.customersGet(options).then(this.formatResponse);
+  public list(overrides?: RequestInit): Promise<Customer[]> {
+    return this.api.customersGet(overrides).then(this.formatResponse);
   }
 
   /**
    * Delete a customer by their unique name.
    */
-  public delete(customerName: string, options?: any): Promise<Response> {
-    // TODO: void the response as it is inconsistent with others
+  public delete(customerName: string, overrides?: RequestInit): Promise<void> {
     // NOTE: there's no need to format the response from a delete endpoint
-    return this.api.customersCustomerNameDelete(customerName, options);
+    return this.api.customersCustomerNameDelete({ customerName }, overrides);
   }
 
   /**
@@ -79,15 +95,16 @@ class Customers extends BaseResource {
    */
   public createPaymentGatewayCredential(
     customerName: string,
-    body: CustomerPaymentGatewayCredentialInputArgs,
-    options?: any,
+    customerPaymentGatewayCredentialInputArgs: CustomerPaymentGatewayCredentialInputArgs,
+    overrides?: RequestInit,
   ): Promise<PaymentGatewayCredential> {
-    // NOTE: order or arguments switched here
     return this.api
       .customersCustomerNamePaymentGatewayCredentialsPost(
-        body,
-        customerName,
-        options,
+        {
+          customerName,
+          customerPaymentGatewayCredentialInputArgs,
+        },
+        overrides,
       )
       .then(this.formatResponse);
   }
@@ -97,12 +114,14 @@ class Customers extends BaseResource {
    */
   public createSubscription(
     customerName: string,
-    body: CreateSubscriptionArgs,
-    options?: any,
+    createSubscriptionArgs: CreateSubscriptionArgs,
+    overrides?: RequestInit,
   ): Promise<Subscription> {
-    // NOTE: order or arguments switched here
     return this.api
-      .customersCustomerNameSubscriptionsPost(body, customerName, options)
+      .customersCustomerNameSubscriptionsPost(
+        { customerName, createSubscriptionArgs },
+        overrides,
+      )
       .then(this.formatResponse);
   }
 
@@ -111,10 +130,10 @@ class Customers extends BaseResource {
    */
   public listSubscriptions(
     customerName: string,
-    options?: any,
+    overrides?: RequestInit,
   ): Promise<Subscription[]> {
     return this.api
-      .customersCustomerNameSubscriptionsGet(customerName, options)
+      .customersCustomerNameSubscriptionsGet({ customerName }, overrides)
       .then(this.formatResponse);
   }
 
@@ -123,12 +142,14 @@ class Customers extends BaseResource {
    */
   public updateSubscription(
     customerName: string,
-    body: UpdateSubscriptionArgs,
-    options?: any,
+    updateSubscriptionArgs: UpdateSubscriptionArgs,
+    overrides?: RequestInit,
   ): Promise<Subscription> {
-    // NOTE: order or arguments switched here
     return this.api
-      .customersCustomerNameSubscriptionPut(body, customerName, options)
+      .customersCustomerNameSubscriptionPut(
+        { customerName, updateSubscriptionArgs },
+        overrides,
+      )
       .then(this.formatResponse);
   }
 
@@ -137,28 +158,22 @@ class Customers extends BaseResource {
    */
   public deleteSubscription(
     customerName: string,
-    body: DeleteSubscriptionArgs,
-    options?: any,
-  ): Promise<Response> {
-    // TODO: void the response as it is inconsistent with others
-    // NOTE: order or arguments switched here
-    return this.api
-      .customersCustomerNameSubscriptionDelete(body, customerName, options)
-      .then(this.formatResponse);
+    deleteSubscriptionArgs: DeleteSubscriptionArgs,
+    overrides?: RequestInit,
+  ): Promise<void> {
+    return this.api.customersCustomerNameSubscriptionDelete(
+      { customerName, deleteSubscriptionArgs },
+      overrides,
+    );
   }
 
   /**
    * Retreive a customer's access to feature/limitation.
    */
   public retrieveUsage(
-    customerName: string,
-    meterName: string,
-    startTime: Date | string,
-    endTime: Date | string,
-    options?: any,
+    { startTime, endTime, ...rest }: RetrieveUsageArgs,
+    overrides?: RequestInit,
   ): Promise<CustomerUsage> {
-    // TODO: void the response as it is inconsistent with others
-    // NOTE: order or arguments switched here
     let startTimeAsDate: Date | undefined;
     if (startTime) {
       startTimeAsDate =
@@ -173,11 +188,12 @@ class Customers extends BaseResource {
     }
     return this.api
       .customersCustomerNameUsageGet(
-        customerName,
-        meterName,
-        startTimeAsDate,
-        endTimeAsDate,
-        options,
+        {
+          startTime: startTimeAsDate,
+          endTime: endTimeAsDate,
+          ...rest,
+        },
+        overrides,
       )
       .then(this.formatResponse);
   }
@@ -186,17 +202,13 @@ class Customers extends BaseResource {
    * Retreive a customer's access to feature/limitation.
    */
   public retrieveFeature(
-    customerName: string,
-    featureName: string,
-    options?: any,
+    retrieveFeatureArgs: CustomersCustomerNameFeaturesFeatureNameGetRequest,
+    overrides?: RequestInit,
   ): Promise<CustomerFeature> {
-    // TODO: void the response as it is inconsistent with others
-    // NOTE: order or arguments switched here
     return this.api
       .customersCustomerNameFeaturesFeatureNameGet(
-        featureName,
-        customerName,
-        options,
+        retrieveFeatureArgs,
+        overrides,
       )
       .then(this.formatResponse);
   }
