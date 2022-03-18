@@ -33,7 +33,8 @@ docker run --rm \
   -v ${PWD}/mount:/mount \
   -v ${PWD}/testbin:/testbin \
   --entrypoint java \
-  java:8 \
+    arm64v8/openjdk \
+  --add-opens=java.base/java.util=ALL-UNNAMED \
   -jar /testbin/codegen.jar generate \
   -i /testbin/openapi.json -l typescript-fetch -o /mount
 
