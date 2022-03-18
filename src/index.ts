@@ -5,7 +5,7 @@ import { Measurements } from './resources/measurements';
 import { Meters } from './resources/meters';
 import { PricePlans } from './resources/priceplans';
 
-import { Configuration as APIConfiguration } from './codegen/configuration';
+import { Configuration as APIConfiguration } from './codegen';
 
 const octaneDefaultHost = 'api.cloud.getoctane.io';
 
