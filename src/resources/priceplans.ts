@@ -3,8 +3,8 @@ import {
   CreatePricePlanArgs,
   UpdatePricePlanArgs,
   PricePlan,
-} from '../codegen/api';
-import { Configuration as APIConfiguration } from '../codegen/configuration';
+  Configuration as APIConfiguration,
+} from '../codegen';
 import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 

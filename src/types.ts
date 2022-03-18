@@ -17,7 +17,7 @@ import {
   PricePlan,
   CustomerFeature,
   CustomerUsage,
-} from './codegen/api';
+} from './codegen';
 
 /**
  * Configures the connection to the Octane API

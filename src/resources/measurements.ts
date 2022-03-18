@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import { Measurement, MeasurementsApi } from '../codegen/api';
-import { Configuration as APIConfiguration } from '../codegen/configuration';
+import {
+  Measurement,
+  MeasurementsApi,
+  Configuration as APIConfiguration,
+} from '../codegen';
 import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
