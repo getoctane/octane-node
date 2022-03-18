@@ -17,26 +17,20 @@ if [ ! -f "testbin/openapi.json" ]; then
   curl -L "${OPEN_API_URL}" -o "testbin/openapi.json"
 fi
 
-if [ ! -f "testbin/codegen.jar" ]; then
-  mkdir -p testbin/
-  curl -L "${CODEGEN_URL}" -o "testbin/codegen.jar"
-fi
-
-shasum -a 256 "testbin/codegen.jar" | grep "^${CODEGEN_SHA}  "
-
+# TODO: See if we can just generate this straight into `src/codegen` instead.
 rm -rf mount/
 trap "rm -rf ${PWD}/mount" EXIT
 mkdir -p mount/
 
 # Generate the typescript files from openapi spec
-docker run --rm \
-  -v ${PWD}/mount:/mount \
-  -v ${PWD}/testbin:/testbin \
-  --entrypoint java \
-    arm64v8/openjdk \
-  --add-opens=java.base/java.util=ALL-UNNAMED \
-  -jar /testbin/codegen.jar generate \
-  -i /testbin/openapi.json -l typescript-fetch -o /mount
+npx @openapitools/openapi-generator-cli generate -g typescript-fetch \
+    --skip-validate-spec \
+    --additional-properties=useSingleRequestParameter=true \
+    -o mount \
+    -i testbin/openapi.json
+
+
+# TODO: No sed please
 
 # Replace ModelObject with just Object
 cat mount/api.ts | sed 's/ModelObject/Object/g' > mount/api.ts.tmp
@@ -65,8 +59,10 @@ mv mount/api.ts.tmp mount/api.ts
 # Take the files we care about
 mkdir -p src/codegen/
 mv mount/api.ts src/codegen/
-mv mount/configuration.ts src/codegen/
-mv mount/custom.d.ts src/codegen/
+mv mount/runtime.ts src/codegen/
+mv mount/apis src/codegen/
+mv mount/models/ src/codegen/
+mv mount/index.ts src/codegen/
 
 # This file causes issues on build.. comment this out to see the tests
 # mv mount/api_test.spec.ts src/codegen/

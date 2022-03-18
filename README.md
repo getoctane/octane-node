@@ -10,22 +10,24 @@ to the Octane API for server-side JavaScript apps.
 
 ---
 
-- [Getting started](#getting-started)
-- [Example apps](#example-apps)
-- [Making API calls](#making-api-calls)
-  - [Customers API](#customers-api)
-    - [Example: Creating a new customer](#example-creating-a-new-customer)
-    - [Example: Subscribe a customer to a price plan](#example-subscribe-a-customer-to-a-price-plan)
-  - [Meters API](#meters-api)
-    - [Example: Creating a new meter](#example-creating-a-new-meter)
-  - [Price Plans API](#price-plans-api)
-    - [Example: Creating a new price plan](#example-creating-a-new-price-plan)
-  - [Measurements API](#measurements-api)
-    - [Example: Sending a measurement](#example-sending-a-measurement)
-- [TypeScript suppport](#typescript-support)
-  - [Types example](#types-example)
-- [Development](#development)
-- [Contributing](#contributing)
+- [Octane Node.js Library](#octane-nodejs-library)
+  - [Getting started](#getting-started)
+  - [Configuring the SDK](#configuring-the-sdk)
+  - [Example apps](#example-apps)
+  - [Making API calls](#making-api-calls)
+    - [Customers API](#customers-api)
+      - [Example: Creating a new customer](#example-creating-a-new-customer)
+      - [Example: Subscribe a customer to a price plan](#example-subscribe-a-customer-to-a-price-plan)
+    - [Meters API](#meters-api)
+      - [Example: Creating a new meter](#example-creating-a-new-meter)
+    - [Price Plans API](#price-plans-api)
+      - [Example: Creating a new price plan](#example-creating-a-new-price-plan)
+    - [Measurements API](#measurements-api)
+      - [Example: Sending a measurement](#example-sending-a-measurement)
+  - [TypeScript support](#typescript-support)
+    - [Types example](#types-example)
+  - [Development](#development)
+  - [Contributing](#contributing)
 
 ## Getting started
 
@@ -258,7 +260,7 @@ npm install
 ```
 
 To regenerate files in `src/codegen/` from latest
-Octane OpenAPI spec, run the following (requires Docker):
+Octane OpenAPI spec, run the following:
 
 ```shell
 npm run-script codegen
