@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -euo pipefail
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
@@ -25,7 +25,7 @@ mkdir -p mount/
 # Generate the typescript files from openapi spec
 npx @openapitools/openapi-generator-cli generate -g typescript-fetch \
     --skip-validate-spec \
-    --additional-properties=useSingleRequestParameter=true \
+    --additional-properties=useSingleRequestParameter=true,typescriptThreePlus=true \
     -o mount \
     -i testbin/openapi.json
 
@@ -57,10 +57,10 @@ cat mount/api.ts | sed 's/return fetch(/localVarFetchArgs.options.headers["Autho
 mv mount/api.ts.tmp mount/api.ts
 
 # Take the files we care about
+rm -rf src/codegen/
 mkdir -p src/codegen/
-mv mount/api.ts src/codegen/
 mv mount/runtime.ts src/codegen/
-mv mount/apis src/codegen/
+mv -f mount/apis src/codegen/
 mv mount/models/ src/codegen/
 mv mount/index.ts src/codegen/
 
