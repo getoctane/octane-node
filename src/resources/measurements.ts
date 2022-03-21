@@ -73,21 +73,20 @@ class Measurements extends BaseResource {
   public create(body: MeasurementInput[]): Promise<Measurement[]>;
   public create(
     body: MeasurementInput | MeasurementInput[],
-    options?: any,
+    overrides?: RequestInit,
   ): Promise<Measurement | Measurement[]> {
-    if (body instanceof Array) {
-      const normalizedBody = body
+    if (Array.isArray(body)) {
+      const measurement = body
         .map(normalizeMeasurementInput)
         .map(fixMeasurementFields);
       return this.api
-        .measurementsMultiPost(normalizedBody, options)
+        .measurementsMultiPost({ measurement }, overrides)
         .then(this.formatResponse);
     }
-    const normalizedBody = fixMeasurementFields(
-      normalizeMeasurementInput(body),
-    );
+
+    const measurement = fixMeasurementFields(normalizeMeasurementInput(body));
     return this.api
-      .measurementsPost(normalizedBody, options)
+      .measurementsPost({ measurement }, overrides)
       .then(this.formatResponse);
   }
 }
