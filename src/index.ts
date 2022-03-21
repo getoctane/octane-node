@@ -23,10 +23,10 @@ class Octane {
     const port = overrides?.port || 443;
     const protocol = overrides?.protocol || 'https';
     const clientConfig = overrides?.clientConfig ?? {};
-    const apiConfig: APIConfiguration = {
+    const apiConfig: APIConfiguration = new APIConfiguration({
       apiKey: key,
       basePath: `${protocol}://${host}:${port}`,
-    };
+    });
     this.customers = new Customers(apiConfig, clientConfig);
     this.measurements = new Measurements(apiConfig, clientConfig);
     this.meters = new Meters(apiConfig, clientConfig);
