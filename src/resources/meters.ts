@@ -19,16 +19,21 @@ class Meters extends BaseResource {
   /**
    * Create a new Meter.
    */
-  public create(body: MeterInputArgs, options?: any): Promise<Meter> {
-    return this.api.metersPost(body, options).then(this.formatResponse);
+  public create(
+    meterInputArgs: MeterInputArgs,
+    overrides?: RequestInit,
+  ): Promise<Meter> {
+    return this.api
+      .metersPost({ meterInputArgs }, overrides)
+      .then(this.formatResponse);
   }
 
   /**
    * Fetch a meter by its unique name.
    */
-  public retrieve(meterName: string, options?: any): Promise<Meter> {
+  public retrieve(meterName: string, overrides?: RequestInit): Promise<Meter> {
     return this.api
-      .metersMeterNameGet(meterName, options)
+      .metersMeterNameGet({ meterName }, overrides)
       .then(this.formatResponse);
   }
 
@@ -37,29 +42,27 @@ class Meters extends BaseResource {
    */
   public update(
     meterName: string,
-    body: UpdateMeterArgs,
-    options?: any,
+    updateMeterArgs: UpdateMeterArgs,
+    overrides?: RequestInit,
   ): Promise<Meter> {
-    // NOTE: order or arguments switched here
     return this.api
-      .metersMeterNamePut(body, meterName, options)
+      .metersMeterNamePut({ updateMeterArgs, meterName }, overrides)
       .then(this.formatResponse);
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
-  public list(options?: any): Promise<Meter[]> {
-    return this.api.metersGet(options).then(this.formatResponse);
+  public list(overrides?: RequestInit): Promise<Meter[]> {
+    return this.api.metersGet(overrides).then(this.formatResponse);
   }
 
   /**
    * Delete a meter by its unique name.
    */
-  public delete(meterName: string, options?: any): Promise<Response> {
-    // TODO: void the response as it is inconsistent with others
+  public delete(meterName: string, overrides?: RequestInit): Promise<void> {
     // NOTE: there's no need to format the response from a delete endpoint
-    return this.api.metersMeterNameDelete(meterName, options);
+    return this.api.metersMeterNameDelete({ meterName }, overrides);
   }
 }
 
