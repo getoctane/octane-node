@@ -1,4 +1,4 @@
-import type { Measurement } from 'codegen/api';
+import { Measurement, Configuration } from 'codegen';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import fetchMock from 'jest-fetch-mock';
@@ -6,10 +6,10 @@ import { Measurements } from 'resources/measurements';
 
 dayjs.extend(utc);
 
-const API_CONFIG = {
+const API_CONFIG = new Configuration({
   apiKey: '867-5309',
   basePath: 'https://api.made.up.host:1337',
-};
+});
 
 const FAKE_MEASUREMENT: Measurement = {
   meterName: 'someMeter',

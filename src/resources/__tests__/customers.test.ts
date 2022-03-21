@@ -1,13 +1,13 @@
 import { Customers } from 'resources/customers';
 import fetchMock from 'jest-fetch-mock';
-import type { Customer } from 'codegen/api';
+import { Customer, Configuration, CreateCustomerArgs } from 'codegen';
 
-const API_CONFIG = {
+const API_CONFIG = new Configuration({
   apiKey: '867-5309',
   basePath: 'https://api.made.up.host:1337',
-};
+});
 
-const FAKE_CUSTOMER: Customer = {
+const FAKE_CUSTOMER: CreateCustomerArgs = {
   name: 'chuck_testa',
   displayName: 'Chuck Testa',
   contactInfo: {
@@ -51,9 +51,7 @@ describe('Customers resource', () => {
   it('makes delete requests', async () => {
     const c = new Customers(API_CONFIG, {});
     fetchMock.once(JSON.stringify(FAKE_CUSTOMER));
-    expect(await c.delete('chuck_testa').then((res) => res.json())).toEqual(
-      FAKE_CUSTOMER,
-    );
+    expect(await c.delete('chuck_testa')).toBeUndefined();
     expect(fetchMock.mock.calls).toMatchSnapshot();
   });
 });
