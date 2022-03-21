@@ -19,17 +19,25 @@ class PricePlans extends BaseResource {
   /**
    * Create Price Plan.
    */
-  public create(body: CreatePricePlanArgs, options?: any): Promise<PricePlan> {
-    return this.api.pricePlansPost(body, options).then(this.formatResponse);
+  public create(
+    createPricePlanArgs: CreatePricePlanArgs,
+    overrides?: RequestInit,
+  ): Promise<PricePlan> {
+    return this.api
+      .pricePlansPost({ createPricePlanArgs }, overrides)
+      .then(this.formatResponse);
   }
 
   /**
    * Fetch an existing price plan.
    */
-  public retrieve(pricePlanName: string, options?: any): Promise<PricePlan> {
+  public retrieve(
+    pricePlanName: string,
+    overrides?: RequestInit,
+  ): Promise<PricePlan> {
     return new Promise((resolve, reject) => {
       this.api
-        .pricePlansPricePlanNameGet(pricePlanName, options)
+        .pricePlansPricePlanNameGet({ pricePlanName }, overrides)
         .then((pricePlan) => {
           if (!pricePlan.name) {
             throw new Error('Price plan does not exist');
@@ -47,29 +55,30 @@ class PricePlans extends BaseResource {
    */
   public update(
     pricePlanName: string,
-    body: UpdatePricePlanArgs,
-    options?: any,
+    updatePricePlanArgs: UpdatePricePlanArgs,
+    overrides?: RequestInit,
   ): Promise<PricePlan> {
-    // NOTE: order of arguments switched here
     return this.api
-      .pricePlansPricePlanNamePut(body, pricePlanName, options)
+      .pricePlansPricePlanNamePut(
+        { updatePricePlanArgs, pricePlanName },
+        overrides,
+      )
       .then(this.formatResponse);
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
-  public list(options?: any): Promise<PricePlan[]> {
-    return this.api.pricePlansGet(options).then(this.formatResponse);
+  public list(overrides?: RequestInit): Promise<PricePlan[]> {
+    return this.api.pricePlansGet(overrides).then(this.formatResponse);
   }
 
   /**
    * Delete a meter by its unique name.
    */
-  public delete(pricePlanName: string, options?: any): Promise<Response> {
-    // TODO: void the response as it is inconsistent with others
+  public delete(pricePlanName: string, overrides?: RequestInit): Promise<void> {
     // NOTE: there's no need to format the response from a delete endpoint
-    return this.api.pricePlansPricePlanNameDelete(pricePlanName, options);
+    return this.api.pricePlansPricePlanNameDelete({ pricePlanName }, overrides);
   }
 }
 
