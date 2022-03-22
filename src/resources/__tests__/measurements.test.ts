@@ -7,7 +7,7 @@ import { Measurements } from 'resources/measurements';
 dayjs.extend(utc);
 
 const API_CONFIG = new Configuration({
-  apiKey: '867-5309',
+  accessToken: '867-5309',
   basePath: 'https://api.made.up.host:1337',
 });
 

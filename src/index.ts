@@ -24,7 +24,7 @@ class Octane {
     const protocol = overrides?.protocol || 'https';
     const clientConfig = overrides?.clientConfig ?? {};
     const apiConfig: APIConfiguration = new APIConfiguration({
-      apiKey: key,
+      accessToken: key,
       basePath: `${protocol}://${host}:${port}`,
     });
     this.customers = new Customers(apiConfig, clientConfig);
