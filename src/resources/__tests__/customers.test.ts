@@ -35,35 +35,35 @@ const FAKE_RESPONSE = {
 
 describe('Customers resource', () => {
   it('makes create requests', async () => {
-    const c = new Customers(API_CONFIG, {});
+    const c = new Customers(API_CONFIG);
     fetchMock.once(JSON.stringify(FAKE_RESPONSE));
     expect(await c.create(FAKE_CUSTOMER)).toEqual(FAKE_CUSTOMER);
     expect(fetchMock.mock.calls).toMatchSnapshot();
   });
 
   it('makes retrieve requests', async () => {
-    const c = new Customers(API_CONFIG, {});
+    const c = new Customers(API_CONFIG);
     fetchMock.once(JSON.stringify(FAKE_RESPONSE));
     expect(await c.retrieve('chuck_testa')).toEqual(FAKE_CUSTOMER);
     expect(fetchMock.mock.calls).toMatchSnapshot();
   });
 
   it('makes update requests', async () => {
-    const c = new Customers(API_CONFIG, {});
+    const c = new Customers(API_CONFIG);
     fetchMock.once(JSON.stringify(FAKE_RESPONSE));
     expect(await c.update('chuck_testa', FAKE_CUSTOMER)).toEqual(FAKE_CUSTOMER);
     expect(fetchMock.mock.calls).toMatchSnapshot();
   });
 
   it('makes list requests', async () => {
-    const c = new Customers(API_CONFIG, {});
+    const c = new Customers(API_CONFIG);
     fetchMock.once(JSON.stringify([FAKE_RESPONSE]));
     expect(await c.list()).toEqual([FAKE_CUSTOMER]);
     expect(fetchMock.mock.calls).toMatchSnapshot();
   });
 
   it('makes delete requests', async () => {
-    const c = new Customers(API_CONFIG, {});
+    const c = new Customers(API_CONFIG);
     fetchMock.once(JSON.stringify(FAKE_CUSTOMER));
     expect(await c.delete('chuck_testa')).toBeUndefined();
     expect(fetchMock.mock.calls).toMatchSnapshot();

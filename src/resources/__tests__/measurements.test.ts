@@ -25,7 +25,7 @@ const FAKE_ISO_STRING = '2021-09-10T16:36:59.663Z';
 
 describe('Measurements resource', () => {
   it('makes create requests with either dates or ISO strings', async () => {
-    const m = new Measurements(API_CONFIG, {});
+    const m = new Measurements(API_CONFIG);
 
     // Make one request with time as a string
     fetchMock.once(JSON.stringify(FAKE_RESPONSE));

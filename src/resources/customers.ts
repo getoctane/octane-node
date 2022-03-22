@@ -17,7 +17,6 @@ import {
   UpdateSubscriptionArgs,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
-import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
 dayjs.extend(utc);
@@ -33,8 +32,8 @@ interface RetrieveUsageArgs
 class Customers extends BaseResource {
   private api: CustomersApi;
 
-  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
-    super(clientConfig);
+  constructor(apiConfig: APIConfiguration) {
+    super(apiConfig);
     this.api = new CustomersApi(apiConfig);
   }
 
@@ -45,9 +44,7 @@ class Customers extends BaseResource {
     createCustomerArgs: CreateCustomerArgs,
     overrides?: RequestInit,
   ): Promise<Customer> {
-    return this.api
-      .customersPost({ createCustomerArgs }, overrides)
-      .then(this.formatResponse);
+    return this.api.customersPost({ createCustomerArgs }, overrides);
   }
 
   /**
@@ -57,9 +54,7 @@ class Customers extends BaseResource {
     customerName: string,
     overrides?: RequestInit,
   ): Promise<Customer> {
-    return this.api
-      .customersCustomerNameGet({ customerName }, overrides)
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameGet({ customerName }, overrides);
   }
 
   /**
@@ -70,23 +65,23 @@ class Customers extends BaseResource {
     updateCustomerArgs: UpdateCustomerArgs,
     overrides?: RequestInit,
   ): Promise<Customer> {
-    return this.api
-      .customersCustomerNamePut({ customerName, updateCustomerArgs }, overrides)
-      .then(this.formatResponse);
+    return this.api.customersCustomerNamePut(
+      { customerName, updateCustomerArgs },
+      overrides,
+    );
   }
 
   /**
    * Retrieve all customers for a given vendor.
    */
   public list(overrides?: RequestInit): Promise<Customer[]> {
-    return this.api.customersGet(overrides).then(this.formatResponse);
+    return this.api.customersGet(overrides);
   }
 
   /**
    * Delete a customer by their unique name.
    */
   public delete(customerName: string, overrides?: RequestInit): Promise<void> {
-    // NOTE: there's no need to format the response from a delete endpoint
     return this.api.customersCustomerNameDelete({ customerName }, overrides);
   }
 
@@ -98,15 +93,13 @@ class Customers extends BaseResource {
     customerPaymentGatewayCredentialInputArgs: CustomerPaymentGatewayCredentialInputArgs,
     overrides?: RequestInit,
   ): Promise<PaymentGatewayCredential> {
-    return this.api
-      .customersCustomerNamePaymentGatewayCredentialsPost(
-        {
-          customerName,
-          customerPaymentGatewayCredentialInputArgs,
-        },
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.customersCustomerNamePaymentGatewayCredentialsPost(
+      {
+        customerName,
+        customerPaymentGatewayCredentialInputArgs,
+      },
+      overrides,
+    );
   }
 
   /**
@@ -117,12 +110,10 @@ class Customers extends BaseResource {
     createSubscriptionArgs: CreateSubscriptionArgs,
     overrides?: RequestInit,
   ): Promise<Subscription> {
-    return this.api
-      .customersCustomerNameSubscriptionsPost(
-        { customerName, createSubscriptionArgs },
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameSubscriptionsPost(
+      { customerName, createSubscriptionArgs },
+      overrides,
+    );
   }
 
   /**
@@ -132,9 +123,10 @@ class Customers extends BaseResource {
     customerName: string,
     overrides?: RequestInit,
   ): Promise<Subscription[]> {
-    return this.api
-      .customersCustomerNameSubscriptionsGet({ customerName }, overrides)
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameSubscriptionsGet(
+      { customerName },
+      overrides,
+    );
   }
 
   /**
@@ -145,12 +137,10 @@ class Customers extends BaseResource {
     updateSubscriptionArgs: UpdateSubscriptionArgs,
     overrides?: RequestInit,
   ): Promise<Subscription> {
-    return this.api
-      .customersCustomerNameSubscriptionPut(
-        { customerName, updateSubscriptionArgs },
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameSubscriptionPut(
+      { customerName, updateSubscriptionArgs },
+      overrides,
+    );
   }
 
   /**
@@ -186,16 +176,14 @@ class Customers extends BaseResource {
       endTimeAsDate =
         endTime instanceof Date ? endTime : dayjs(endTime).utc(true).toDate();
     }
-    return this.api
-      .customersCustomerNameUsageGet(
-        {
-          startTime: startTimeAsDate,
-          endTime: endTimeAsDate,
-          ...rest,
-        },
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameUsageGet(
+      {
+        startTime: startTimeAsDate,
+        endTime: endTimeAsDate,
+        ...rest,
+      },
+      overrides,
+    );
   }
 
   /**
@@ -205,12 +193,10 @@ class Customers extends BaseResource {
     retrieveFeatureArgs: CustomersCustomerNameFeaturesFeatureNameGetRequest,
     overrides?: RequestInit,
   ): Promise<CustomerFeature> {
-    return this.api
-      .customersCustomerNameFeaturesFeatureNameGet(
-        retrieveFeatureArgs,
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.customersCustomerNameFeaturesFeatureNameGet(
+      retrieveFeatureArgs,
+      overrides,
+    );
   }
 }
 

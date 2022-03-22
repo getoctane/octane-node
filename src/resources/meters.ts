@@ -5,14 +5,13 @@ import {
   Meter,
   Configuration as APIConfiguration,
 } from '../codegen';
-import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
 class Meters extends BaseResource {
   private api: MetersApi;
 
-  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
-    super(clientConfig);
+  constructor(apiConfig: APIConfiguration) {
+    super(apiConfig);
     this.api = new MetersApi(apiConfig);
   }
 
@@ -23,18 +22,14 @@ class Meters extends BaseResource {
     meterInputArgs: MeterInputArgs,
     overrides?: RequestInit,
   ): Promise<Meter> {
-    return this.api
-      .metersPost({ meterInputArgs }, overrides)
-      .then(this.formatResponse);
+    return this.api.metersPost({ meterInputArgs }, overrides);
   }
 
   /**
    * Fetch a meter by its unique name.
    */
   public retrieve(meterName: string, overrides?: RequestInit): Promise<Meter> {
-    return this.api
-      .metersMeterNameGet({ meterName }, overrides)
-      .then(this.formatResponse);
+    return this.api.metersMeterNameGet({ meterName }, overrides);
   }
 
   /**
@@ -45,16 +40,17 @@ class Meters extends BaseResource {
     updateMeterArgs: UpdateMeterArgs,
     overrides?: RequestInit,
   ): Promise<Meter> {
-    return this.api
-      .metersMeterNamePut({ updateMeterArgs, meterName }, overrides)
-      .then(this.formatResponse);
+    return this.api.metersMeterNamePut(
+      { updateMeterArgs, meterName },
+      overrides,
+    );
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
   public list(overrides?: RequestInit): Promise<Meter[]> {
-    return this.api.metersGet(overrides).then(this.formatResponse);
+    return this.api.metersGet(overrides);
   }
 
   /**

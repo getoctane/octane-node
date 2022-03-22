@@ -5,14 +5,13 @@ import {
   PricePlan,
   Configuration as APIConfiguration,
 } from '../codegen';
-import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
 class PricePlans extends BaseResource {
   private api: PricePlansApi;
 
-  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
-    super(clientConfig);
+  constructor(apiConfig: APIConfiguration) {
+    super(apiConfig);
     this.api = new PricePlansApi(apiConfig);
   }
 
@@ -23,9 +22,7 @@ class PricePlans extends BaseResource {
     createPricePlanArgs: CreatePricePlanArgs,
     overrides?: RequestInit,
   ): Promise<PricePlan> {
-    return this.api
-      .pricePlansPost({ createPricePlanArgs }, overrides)
-      .then(this.formatResponse);
+    return this.api.pricePlansPost({ createPricePlanArgs }, overrides);
   }
 
   /**
@@ -42,7 +39,7 @@ class PricePlans extends BaseResource {
           if (!pricePlan.name) {
             throw new Error('Price plan does not exist');
           }
-          resolve(this.formatResponse(pricePlan));
+          resolve(pricePlan);
         })
         .catch(reject);
     });
@@ -58,26 +55,23 @@ class PricePlans extends BaseResource {
     updatePricePlanArgs: UpdatePricePlanArgs,
     overrides?: RequestInit,
   ): Promise<PricePlan> {
-    return this.api
-      .pricePlansPricePlanNamePut(
-        { updatePricePlanArgs, pricePlanName },
-        overrides,
-      )
-      .then(this.formatResponse);
+    return this.api.pricePlansPricePlanNamePut(
+      { updatePricePlanArgs, pricePlanName },
+      overrides,
+    );
   }
 
   /**
    * Retrieve all meters for a given vendor.
    */
   public list(overrides?: RequestInit): Promise<PricePlan[]> {
-    return this.api.pricePlansGet(overrides).then(this.formatResponse);
+    return this.api.pricePlansGet(overrides);
   }
 
   /**
    * Delete a meter by its unique name.
    */
   public delete(pricePlanName: string, overrides?: RequestInit): Promise<void> {
-    // NOTE: there's no need to format the response from a delete endpoint
     return this.api.pricePlansPricePlanNameDelete({ pricePlanName }, overrides);
   }
 }

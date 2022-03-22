@@ -22,15 +22,14 @@ class Octane {
     const host = overrides?.host || octaneDefaultHost;
     const port = overrides?.port || 443;
     const protocol = overrides?.protocol || 'https';
-    const clientConfig = overrides?.clientConfig ?? {};
     const apiConfig: APIConfiguration = new APIConfiguration({
       accessToken: key,
       basePath: `${protocol}://${host}:${port}`,
     });
-    this.customers = new Customers(apiConfig, clientConfig);
-    this.measurements = new Measurements(apiConfig, clientConfig);
-    this.meters = new Meters(apiConfig, clientConfig);
-    this.pricePlans = new PricePlans(apiConfig, clientConfig);
+    this.customers = new Customers(apiConfig);
+    this.measurements = new Measurements(apiConfig);
+    this.meters = new Meters(apiConfig);
+    this.pricePlans = new PricePlans(apiConfig);
   }
 }
 
