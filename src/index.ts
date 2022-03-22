@@ -19,12 +19,17 @@ class Octane {
   pricePlans: PricePlans;
 
   constructor(key: string, overrides?: Configuration) {
-    const host = overrides?.host || octaneDefaultHost;
-    const port = overrides?.port || 443;
-    const protocol = overrides?.protocol || 'https';
+    const {
+      host = octaneDefaultHost,
+      port = 443,
+      protocol = 'https',
+      ...rest
+    } = overrides ?? {};
+
     const apiConfig: APIConfiguration = new APIConfiguration({
       accessToken: key,
       basePath: `${protocol}://${host}:${port}`,
+      ...rest,
     });
     this.customers = new Customers(apiConfig);
     this.measurements = new Measurements(apiConfig);
