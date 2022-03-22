@@ -5,7 +5,8 @@ Array [
   Array [
     "https://api.made.up.host:1337/customers/",
     Object {
-      "body": "{\\"name\\":\\"chuck_testa\\",\\"displayName\\":\\"Chuck Testa\\",\\"contactInfo\\":{\\"addressLine1\\":\\"1600 Pennsylvania Avenue NW\\",\\"addressLine2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"}}",
+      "body": "{\\"contact_info\\":{\\"address_line_1\\":\\"1600 Pennsylvania Avenue NW\\",\\"address_line_2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"},\\"display_name\\":\\"Chuck Testa\\",\\"name\\":\\"chuck_testa\\"}",
+      "credentials": undefined,
       "headers": Object {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
@@ -21,6 +22,8 @@ Array [
   Array [
     "https://api.made.up.host:1337/customers/chuck_testa",
     Object {
+      "body": undefined,
+      "credentials": undefined,
       "headers": Object {
         "Authorization": "Bearer 867-5309",
       },
@@ -35,6 +38,8 @@ Array [
   Array [
     "https://api.made.up.host:1337/customers/",
     Object {
+      "body": undefined,
+      "credentials": undefined,
       "headers": Object {
         "Authorization": "Bearer 867-5309",
       },
@@ -49,6 +54,8 @@ Array [
   Array [
     "https://api.made.up.host:1337/customers/chuck_testa",
     Object {
+      "body": undefined,
+      "credentials": undefined,
       "headers": Object {
         "Authorization": "Bearer 867-5309",
       },
@@ -63,7 +70,8 @@ Array [
   Array [
     "https://api.made.up.host:1337/customers/chuck_testa",
     Object {
-      "body": "{\\"name\\":\\"chuck_testa\\",\\"displayName\\":\\"Chuck Testa\\",\\"contactInfo\\":{\\"addressLine1\\":\\"1600 Pennsylvania Avenue NW\\",\\"addressLine2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"}}",
+      "body": "{\\"contact_info\\":{\\"address_line_1\\":\\"1600 Pennsylvania Avenue NW\\",\\"address_line_2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"},\\"display_name\\":\\"Chuck Testa\\",\\"name\\":\\"chuck_testa\\"}",
+      "credentials": undefined,
       "headers": Object {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
