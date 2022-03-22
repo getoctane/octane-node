@@ -5,7 +5,6 @@ import {
   MeasurementsApi,
   Configuration as APIConfiguration,
 } from '../codegen';
-import { ClientConfiguration } from '../types';
 import { BaseResource } from './base';
 
 dayjs.extend(utc);
@@ -37,8 +36,8 @@ function normalizeMeasurementInput({
 class Measurements extends BaseResource {
   private api: MeasurementsApi;
 
-  constructor(apiConfig: APIConfiguration, clientConfig: ClientConfiguration) {
-    super(clientConfig);
+  constructor(apiConfig: APIConfiguration) {
+    super(apiConfig);
     this.api = new MeasurementsApi(apiConfig);
   }
 
@@ -55,15 +54,11 @@ class Measurements extends BaseResource {
   ): Promise<Measurement | Measurement[]> {
     if (Array.isArray(body)) {
       const measurement = body.map(normalizeMeasurementInput);
-      return this.api
-        .measurementsMultiPost({ measurement }, overrides)
-        .then(this.formatResponse);
+      return this.api.measurementsMultiPost({ measurement }, overrides);
     }
 
     const measurement = normalizeMeasurementInput(body);
-    return this.api
-      .measurementsPost({ measurement }, overrides)
-      .then(this.formatResponse);
+    return this.api.measurementsPost({ measurement }, overrides);
   }
 }
 
