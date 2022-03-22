@@ -1,4 +1,5 @@
 import {
+  ConfigurationParameters,
   Customer,
   CreateCustomerArgs,
   UpdateCustomerArgs,
@@ -22,7 +23,11 @@ import {
 /**
  * Configures the connection to the Octane API
  */
-export interface Configuration {
+export interface Configuration
+  extends Omit<
+    ConfigurationParameters,
+    'apiKey' | 'username' | 'password' | 'credentials'
+  > {
   host?: string;
   port?: number;
   protocol?: string;
