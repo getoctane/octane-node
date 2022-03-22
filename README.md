@@ -12,6 +12,7 @@ to the Octane API for server-side JavaScript apps.
 
 - [Octane Node.js Library](#octane-nodejs-library)
   - [Getting started](#getting-started)
+    - [CommonJS support](#commonjs-support)
   - [Configuring the SDK](#configuring-the-sdk)
   - [Example apps](#example-apps)
   - [Making API calls](#making-api-calls)
@@ -31,10 +32,16 @@ to the Octane API for server-side JavaScript apps.
 
 ## Getting started
 
-First, install the package (`octane-node`) and add it to your `package.json` dependencies:
+First, install `octane-node` and add it to your `package.json` dependencies:
 
 ```bash
 npm install octane-node --save
+```
+
+We use the `fetch` API to handle making all of our requests. If your environment doesn't have `fetch` available, you'll need to polyfill it. We recommend [`node-fetch`](https://www.npmjs.com/package/node-fetch):
+
+```bash
+npm install node-fetch --save
 ```
 
 Next, obtain an API key from within the [Octane portal](http://cloud.getoctane.io/), and set it in your environment:
@@ -43,17 +50,25 @@ Next, obtain an API key from within the [Octane portal](http://cloud.getoctane.i
 export OCTANE_API_KEY="<insert_octane_api_key_here>"
 ```
 
-Then, from within your application, import the module using either the `require` (CommonJS) syntax:
+Then, from within your application, import the module (and optionally the `fetch` polyfill):
 
 ```js
-const octane = require('octane-node')(process.env.OCTANE_API_KEY);
-```
-
-or using the newer `import` (ES6) syntax:
-
-```js
+import fetch from 'node-fetch';
 import Octane from 'octane-node';
 const octane = new Octane(process.env.OCTANE_API_KEY);
+```
+
+### CommonJS support
+
+The `octane-node` library is compatible with CommonJS-style imports, but unfortunately, `node-fetch` is not by default. To work around this, the library allows passing in any `fetch` library directly. `node-fetch` recommends using the async `import()` method to load their polyfill in CommonJS:
+
+```js
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
+const octane = require('octane-node')(process.env.OCTANE_API_KEY, {
+  fetchApi: fetch,
+});
 ```
 
 ## Configuring the SDK
@@ -66,16 +81,14 @@ import Octane from 'octane-node';
 
 // This is the full config object and its default values.
 const config = {
-  // These options modify the SDK client itself.
-  clientConfig: {
-    // If true, all API response data will use camelCase formatting.
-    camelCase: false,
-  },
   // 'host', 'port', and 'protocol' modify the connection to the API, although
   // it isn't likely that you'll need to set these.
   host: 'api.cloud.getoctane.io',
   port: 443,
   protocol: 'https',
+  // You can override the global `fetch` or directly provide access to a
+  // fetch API using `fetchApi`. The global fetch is used by default.
+  fetchApi: fetch,
 };
 const octane = new Octane(process.env.OCTANE_API_KEY, config);
 ```
@@ -113,16 +126,12 @@ make calls to the Octane Customers API.
 #### Example: Creating a new customer
 
 ```js
-const customerName = 'r2d2';
+const name = 'r2d2';
+const displayName = 'Artoo-Detoo';
 
 const customer = {
-  name: customerName,
-  measurementMappings: [
-    {
-      label: 'customer_name',
-      valueRegex: customerName,
-    },
-  ],
+  name,
+  displayName,
 };
 
 octane.customers.create(customer).catch(crash);
@@ -154,7 +163,6 @@ const meter = {
   name: meterName,
   meterType: 'COUNTER',
   isIncremental: true,
-  expectedLabels: ['customer_name'],
 };
 
 octane.meters.create(meter).catch(crash);
@@ -205,11 +213,9 @@ const meterName = 'droidrepairs';
 const customerName = 'r2d2';
 
 const measurement = {
-  meterName: meterName,
+  meterName,
+  customerName,
   value: 1,
-  labels: {
-    customer_name: customerName,
-  },
 };
 
 octane.measurements.create(measurement).catch(crash);
@@ -218,7 +224,7 @@ octane.measurements.create(measurement).catch(crash);
 ## TypeScript support
 
 The library itself is written first in [TypeScript](https://www.typescriptlang.org/),
-and thus, TypeScript is fully supported.
+and thus, TypeScript is fully supported (v3.6 and later).
 
 The `octane-node/types` submodule contains all of the type defintions used for
 various method arguments and return values when making API requests, etc.
@@ -228,6 +234,7 @@ various method arguments and return values when making API requests, etc.
 Here is a full example of using types while creating a customer:
 
 ```typescript
+import fetch from 'node-fetch';
 import Octane from 'octane-node';
 import { CreateCustomerArgs } from 'octane-node/types';
 
