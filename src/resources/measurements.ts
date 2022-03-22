@@ -15,28 +15,6 @@ interface MeasurementInput extends Omit<Measurement, 'time'> {
 }
 
 /**
- * This helper augments the body with "meter_name" based on the meterName field.
- *
- * TODO: API expects "meter_name", while the generated type uses meterName.
- * This function should be deleted once the API
- */
-function fixMeasurementFields({
-  meterName,
-  ...rest
-}: Measurement): Measurement {
-  return (
-    meterName
-      ? {
-          meter_name: meterName,
-          ...rest,
-        }
-      : {
-          ...rest,
-        }
-  ) as Measurement;
-}
-
-/**
  * We want to be flexible about the input types we accept, but we also want to
  * hit our API with a consistent response. This function takes this SDK's
  * accepted inputs for measurements and normalizes them into the Measurement
@@ -76,15 +54,13 @@ class Measurements extends BaseResource {
     overrides?: RequestInit,
   ): Promise<Measurement | Measurement[]> {
     if (Array.isArray(body)) {
-      const measurement = body
-        .map(normalizeMeasurementInput)
-        .map(fixMeasurementFields);
+      const measurement = body.map(normalizeMeasurementInput);
       return this.api
         .measurementsMultiPost({ measurement }, overrides)
         .then(this.formatResponse);
     }
 
-    const measurement = fixMeasurementFields(normalizeMeasurementInput(body));
+    const measurement = normalizeMeasurementInput(body);
     return this.api
       .measurementsPost({ measurement }, overrides)
       .then(this.formatResponse);
