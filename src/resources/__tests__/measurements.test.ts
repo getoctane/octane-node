@@ -16,6 +16,11 @@ const FAKE_MEASUREMENT: Measurement = {
   value: 9001,
 };
 
+const FAKE_RESPONSE = {
+  meter_name: 'someMeter',
+  value: 9001,
+};
+
 const FAKE_ISO_STRING = '2021-09-10T16:36:59.663Z';
 
 describe('Measurements resource', () => {
@@ -23,7 +28,7 @@ describe('Measurements resource', () => {
     const m = new Measurements(API_CONFIG, {});
 
     // Make one request with time as a string
-    fetchMock.once(JSON.stringify(FAKE_MEASUREMENT));
+    fetchMock.once(JSON.stringify(FAKE_RESPONSE));
     const resp1 = await m.create({
       ...FAKE_MEASUREMENT,
       time: FAKE_ISO_STRING,
@@ -32,7 +37,7 @@ describe('Measurements resource', () => {
     const firstRequest = fetchMock.mock.calls[0];
 
     // Make one request with time as a date object
-    fetchMock.once(JSON.stringify(FAKE_MEASUREMENT));
+    fetchMock.once(JSON.stringify(FAKE_RESPONSE));
     const resp2 = await m.create({
       ...FAKE_MEASUREMENT,
       time: dayjs(FAKE_ISO_STRING).utc(true).toDate(),
