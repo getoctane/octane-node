@@ -30,33 +30,8 @@ npx @openapitools/openapi-generator-cli generate -g typescript-fetch \
     -i testbin/openapi.json
 
 
-# TODO: No sed please
-
-# Replace ModelObject with just Object
-cat mount/api.ts | sed 's/ModelObject/Object/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
-# Fix error: "TS2564: Property 'configuration' has no initializer and is not definitely assigned in the constructor."
-cat mount/api.ts | sed 's/protected configuration: Configuration;/protected configuration!: Configuration;/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
-# Fix error: "TS2564: Property 'name' has no initializer and is not definitely assigned in the constructor."
-cat mount/api.ts | sed 's/name: "RequiredError"/name!: "RequiredError"/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
-# Fix error: "TS6133: 'configuration' is declared but its value is never read."
-cat mount/api.ts | sed 's/function (configuration?: Configuration)/function (_configuration?: Configuration)/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
-# Fix isomorphicfetch "default" namespace issue
-cat mount/api.ts | sed 's/protected fetch: FetchAPI = isomorphicFetch) {/protected fetch: FetchAPI = isomorphicFetch.default) {/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
-# Fix missing API token issue
-cat mount/api.ts | sed 's/return fetch(/localVarFetchArgs.options.headers["Authorization"] = "Bearer " +(configuration?.apiKey || "UNSET"); return fetch(/g' > mount/api.ts.tmp
-mv mount/api.ts.tmp mount/api.ts
-
 # Take the files we care about
+# TODO: See if we can just run the generator right into src/codegen
 rm -rf src/codegen/
 mkdir -p src/codegen/
 mv mount/runtime.ts src/codegen/
