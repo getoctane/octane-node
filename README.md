@@ -89,6 +89,20 @@ const config = {
   // You can override the global `fetch` or directly provide access to a
   // fetch API using `fetchApi`. The global fetch is used by default.
   fetchApi: fetch,
+  // Our SDK supports middleware for intercepting requests before they go
+  // out and responses before they come back.
+  middlewares: [
+    {
+      pre: ({ fetch, url, init }) => {
+        logRequest(url, init);
+        return Promise.resolve({ url, init });
+      },
+      post: ({ fetch, url, init, response }) => {
+        logResponse(response.clone());
+        return Promise.resolve(response);
+      },
+    },
+  ],
 };
 const octane = new Octane(process.env.OCTANE_API_KEY, config);
 ```
