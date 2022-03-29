@@ -1,7 +1,7 @@
 name: release
 on:
   push:
-    tags: ['*']
+    tags: ["*"]
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -14,10 +14,10 @@ jobs:
           npm run-script test
       - name: Release package to npmjs
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > "${HOME}/.npmrc"
+          echo "//registry.npmjs.org/:_authToken=${NPM_AUTOMATION_TOKEN}" > "${HOME}/.npmrc"
           npm run-script publish
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
       - name: Clear
         if: always()
         run: |
