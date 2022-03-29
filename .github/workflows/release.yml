@@ -13,12 +13,6 @@ jobs:
           npm install
           npm run-script test
       - name: Release package to npmjs
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_AUTOMATION_TOKEN}" > "${HOME}/.npmrc"
-          npm run-script publish
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
-      - name: Clear
-        if: always()
-        run: |
-          rm -f "${HOME}/.npmrc"
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
