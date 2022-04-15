@@ -15,7 +15,6 @@
     "codegen": "scripts/codegen.sh",
     "build": "scripts/build.sh",
     "acceptance": "scripts/acceptance.sh",
-    "publish": "scripts/publish.sh",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
