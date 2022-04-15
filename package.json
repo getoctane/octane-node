@@ -1,9 +1,10 @@
 {
   "name": "octane-node",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Node bindings for the Octane API",
   "author": "team@getoctane.io",
-  "main": "index.js",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
   "repository": "https://github.com/getoctane/octane-node",
   "license": "MIT",
   "keywords": [

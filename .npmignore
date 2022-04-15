@@ -1,0 +1,2 @@
+# This file is blank intentionally — if it isn't here, NPM uses .gitignore when deciding
+# what to publish, and .gitignore ignores our build folder.
