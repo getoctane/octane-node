@@ -38,7 +38,7 @@ First, install `octane-node` and add it to your `package.json` dependencies:
 npm install octane-node --save
 ```
 
-We use the `fetch` API to handle making all of our requests. If your environment doesn't have `fetch` available, you'll need to polyfill it. We recommend [`node-fetch`](https://www.npmjs.com/package/node-fetch):
+We use the `fetch` API to handle making all of our requests. If your environment doesn't have `fetch` available, you'll need to polyfill it using something like [`node-fetch`](https://www.npmjs.com/package/node-fetch):
 
 ```bash
 npm install node-fetch --save
@@ -55,7 +55,11 @@ Then, from within your application, import the module (and optionally the `fetch
 ```js
 import fetch from 'node-fetch';
 import Octane from 'octane-node';
-const octane = new Octane(process.env.OCTANE_API_KEY);
+const octane = new Octane(process.env.OCTANE_API_KEY, {
+    // If your fetch polyfill isn't on the global scope,
+    // provide it to the SDK explicitly.
+    fetchApi: fetch
+});
 ```
 
 ### CommonJS support
