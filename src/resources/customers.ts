@@ -103,6 +103,21 @@ class Customers extends BaseResource {
   }
 
   /**
+   * Retrieve PaymentGatewayCredential for a customer.
+   */
+  public retrievePaymentGatewayCredential(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<PaymentGatewayCredential> {
+    return this.api.customersCustomerNamePaymentGatewayCredentialsGet(
+      {
+        customerName,
+      },
+      overrides,
+    );
+  }
+
+  /**
    * Create a new subscription for a customer / price plan combination (by unique name).
    */
   public createSubscription(
