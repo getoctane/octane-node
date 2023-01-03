@@ -56,24 +56,25 @@ Then, from within your application, import the module (and optionally the `fetch
 import fetch from 'node-fetch';
 import Octane from 'octane-node';
 const octane = new Octane(process.env.OCTANE_API_KEY, {
-    // If your fetch polyfill isn't on the global scope,
-    // provide it to the SDK explicitly.
-    fetchApi: fetch
+  // If your fetch polyfill isn't on the global scope,
+  // provide it to the SDK explicitly.
+  fetchApi: fetch,
 });
 ```
 
 ### CommonJS support
 
-The `octane-node` library is compatible with CommonJS-style imports, but unfortunately, `node-fetch` is not by default. To work around this, the library allows passing in any `fetch` library directly. `node-fetch` recommends using the async `import()` method to load their polyfill in CommonJS:
+The `octane-node` library is compatible with CommonJS-style imports, but unfortunately, `node-fetch` is not by default. If you need to use CommonJS and do not have `fetch` available on the global scope, `octane-node` allows passing in any `fetch` library directly. For example, you can provide a copy of [`node-fetch` v2](https://github.com/node-fetch/node-fetch/tree/2.x#readme), which supports CommonJS-style imports:
 
 ```js
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = require('node-fetch');
 
 const octane = require('octane-node')(process.env.OCTANE_API_KEY, {
   fetchApi: fetch,
 });
 ```
+
+For more details on compatibility between `node-fetch` and CommonJS, [check out this section in their docs](https://github.com/node-fetch/node-fetch#commonjs).
 
 ## Configuring the SDK
 
