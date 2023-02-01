@@ -15,6 +15,7 @@ import {
   Subscription,
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
+  ActiveSubscription,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -127,6 +128,19 @@ class Customers extends BaseResource {
   ): Promise<Subscription> {
     return this.api.customersCustomerNameSubscriptionsPost(
       { customerName, createSubscriptionArgs },
+      overrides,
+    );
+  }
+
+  /**
+   * Get active subscription for the customer.
+   */
+  public getActiveSubscription(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<ActiveSubscription> {
+    return this.api.customersCustomerNameActiveSubscriptionGet(
+      { customerName },
       overrides,
     );
   }
