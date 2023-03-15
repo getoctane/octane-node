@@ -16,6 +16,7 @@ import {
   UpdateCustomerArgs,
   UpdateSubscriptionArgs,
   ActiveSubscription,
+  CustomersCustomerNameScheduledSubscriptionsGetRequest,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -223,6 +224,19 @@ class Customers extends BaseResource {
     overrides?: RequestInit,
   ): Promise<CustomerFeature> {
     return this.api.customersCustomerNameFeaturesFeatureNameGet(
+      retrieveFeatureArgs,
+      overrides,
+    );
+  }
+
+  /**
+   * Get a list of scheduled subscriptions for the given customer.
+   */
+  public getScheduledSubscription(
+    retrieveFeatureArgs: CustomersCustomerNameScheduledSubscriptionsGetRequest,
+    overrides?: RequestInit,
+  ): Promise<Subscription[]> {
+    return this.api.customersCustomerNameScheduledSubscriptionsGet(
       retrieveFeatureArgs,
       overrides,
     );
