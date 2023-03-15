@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Customers resource makes create requests 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/customers/",
-    Object {
-      "body": "{\\"contact_info\\":{\\"address_line_1\\":\\"1600 Pennsylvania Avenue NW\\",\\"address_line_2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"},\\"display_name\\":\\"Chuck Testa\\",\\"name\\":\\"chuck_testa\\"}",
+    {
+      "body": "{"contact_info":{"address_line_1":"1600 Pennsylvania Avenue NW","address_line_2":"Apt. 4F","city":"Washington","state":"DC","zipcode":"20500"},"display_name":"Chuck Testa","name":"chuck_testa"}",
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
       },
@@ -18,13 +18,13 @@ Array [
 `;
 
 exports[`Customers resource makes delete requests 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/customers/chuck_testa",
-    Object {
+    {
       "body": undefined,
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
       },
       "method": "DELETE",
@@ -34,13 +34,13 @@ Array [
 `;
 
 exports[`Customers resource makes list requests 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/customers/",
-    Object {
+    {
       "body": undefined,
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
       },
       "method": "GET",
@@ -50,13 +50,13 @@ Array [
 `;
 
 exports[`Customers resource makes retrieve requests 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/customers/chuck_testa",
-    Object {
+    {
       "body": undefined,
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
       },
       "method": "GET",
@@ -66,13 +66,13 @@ Array [
 `;
 
 exports[`Customers resource makes update requests 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/customers/chuck_testa",
-    Object {
-      "body": "{\\"contact_info\\":{\\"address_line_1\\":\\"1600 Pennsylvania Avenue NW\\",\\"address_line_2\\":\\"Apt. 4F\\",\\"city\\":\\"Washington\\",\\"state\\":\\"DC\\",\\"zipcode\\":\\"20500\\"},\\"display_name\\":\\"Chuck Testa\\",\\"name\\":\\"chuck_testa\\"}",
+    {
+      "body": "{"contact_info":{"address_line_1":"1600 Pennsylvania Avenue NW","address_line_2":"Apt. 4F","city":"Washington","state":"DC","zipcode":"20500"},"display_name":"Chuck Testa","name":"chuck_testa"}",
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
       },
