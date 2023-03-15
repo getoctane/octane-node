@@ -1,25 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Measurements resource makes create requests with either dates or ISO strings 1`] = `
-Array [
-  Array [
+[
+  [
     "https://api.made.up.host:1337/measurements/",
-    Object {
-      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T12:36:59.663Z\\",\\"value\\":9001}",
+    {
+      "body": "{"meter_name":"someMeter","time":"2021-09-10T12:36:59.663Z","value":9001}",
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
       },
       "method": "POST",
     },
   ],
-  Array [
+  [
     "https://api.made.up.host:1337/measurements/",
-    Object {
-      "body": "{\\"meter_name\\":\\"someMeter\\",\\"time\\":\\"2021-09-10T12:36:59.663Z\\",\\"value\\":9001}",
+    {
+      "body": "{"meter_name":"someMeter","time":"2021-09-10T12:36:59.663Z","value":9001}",
       "credentials": undefined,
-      "headers": Object {
+      "headers": {
         "Authorization": "Bearer 867-5309",
         "Content-Type": "application/json",
       },
