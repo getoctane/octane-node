@@ -33,6 +33,24 @@ export interface ListCreditGrants {
      */
     limit?: number;
     /**
+     * The sort column offset to start at when paging forwards
+     * @type {string}
+     * @memberof ListCreditGrants
+     */
+    forwardSortOffset?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ListCreditGrants
+     */
+    sortDirection?: string;
+    /**
+     * The unique offset to start at when paging forwards
+     * @type {string}
+     * @memberof ListCreditGrants
+     */
+    forwardSecondarySortOffset?: string;
+    /**
      * 
      * @type {Array<CreditGrant>}
      * @memberof ListCreditGrants
@@ -43,25 +61,7 @@ export interface ListCreditGrants {
      * @type {string}
      * @memberof ListCreditGrants
      */
-    sortDirection?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ListCreditGrants
-     */
     sortColumn?: string;
-    /**
-     * The unique offset to start at when paging forwards
-     * @type {string}
-     * @memberof ListCreditGrants
-     */
-    forwardSecondarySortOffset?: string;
-    /**
-     * The sort column offset to start at when paging forwards
-     * @type {string}
-     * @memberof ListCreditGrants
-     */
-    forwardSortOffset?: string;
 }
 
 export function ListCreditGrantsFromJSON(json: any): ListCreditGrants {
@@ -75,11 +75,11 @@ export function ListCreditGrantsFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'creditGrants': !exists(json, 'credit_grants') ? undefined : ((json['credit_grants'] as Array<any>).map(CreditGrantFromJSON)),
-        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
-        'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
-        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
         'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
+        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
+        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
+        'creditGrants': !exists(json, 'credit_grants') ? undefined : ((json['credit_grants'] as Array<any>).map(CreditGrantFromJSON)),
+        'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
     };
 }
 
@@ -93,11 +93,11 @@ export function ListCreditGrantsToJSON(value?: ListCreditGrants | null): any {
     return {
         
         'limit': value.limit,
-        'credit_grants': value.creditGrants === undefined ? undefined : ((value.creditGrants as Array<any>).map(CreditGrantToJSON)),
-        'sort_direction': value.sortDirection,
-        'sort_column': value.sortColumn,
-        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
         'forward_sort_offset': value.forwardSortOffset,
+        'sort_direction': value.sortDirection,
+        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
+        'credit_grants': value.creditGrants === undefined ? undefined : ((value.creditGrants as Array<any>).map(CreditGrantToJSON)),
+        'sort_column': value.sortColumn,
     };
 }
 

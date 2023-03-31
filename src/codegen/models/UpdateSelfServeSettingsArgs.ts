@@ -20,17 +20,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateSelfServeSettingsArgs {
     /**
-     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
-     * @type {number}
+     * Time length unit for the default expiration for credits bought in the customer portal.
+     * @type {string}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    pricePerCreditCents?: number;
+    creditsExpirationUnit?: string;
+    /**
+     * True if the customer can switch their current price plan via self serve. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    switchPricePlans?: boolean;
     /**
      * True if the vendor has enabled customization for their customer portal.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    customization?: boolean;
+    enabled?: boolean;
     /**
      * Time length of the default expiration for credits bought in the customer portal.
      * @type {number}
@@ -42,19 +48,13 @@ export interface UpdateSelfServeSettingsArgs {
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    enabled?: boolean;
+    customization?: boolean;
     /**
-     * True if the customer can switch their current price plan via self serve. Defaults to False.
-     * @type {boolean}
+     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
+     * @type {number}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    switchPricePlans?: boolean;
-    /**
-     * Time length unit for the default expiration for credits bought in the customer portal.
-     * @type {string}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    creditsExpirationUnit?: string;
+    pricePerCreditCents?: number;
     /**
      * True if the customer can purchase credits via self serve. Defaults to False.
      * @type {boolean}
@@ -73,12 +73,12 @@ export function UpdateSelfServeSettingsArgsFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
-        'customization': !exists(json, 'customization') ? undefined : json['customization'],
-        'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
-        'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
         'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
+        'customization': !exists(json, 'customization') ? undefined : json['customization'],
+        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
     };
 }
@@ -92,12 +92,12 @@ export function UpdateSelfServeSettingsArgsToJSON(value?: UpdateSelfServeSetting
     }
     return {
         
-        'price_per_credit_cents': value.pricePerCreditCents,
-        'customization': value.customization,
-        'credits_expiration_length': value.creditsExpirationLength,
-        'enabled': value.enabled,
-        'switch_price_plans': value.switchPricePlans,
         'credits_expiration_unit': value.creditsExpirationUnit,
+        'switch_price_plans': value.switchPricePlans,
+        'enabled': value.enabled,
+        'credits_expiration_length': value.creditsExpirationLength,
+        'customization': value.customization,
+        'price_per_credit_cents': value.pricePerCreditCents,
         'purchase_credits': value.purchaseCredits,
     };
 }

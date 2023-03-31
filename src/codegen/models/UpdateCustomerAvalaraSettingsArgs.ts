@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateCustomerAvalaraSettingsArgs {
     /**
-     * Tax exemption number specific to this customer
-     * @type {string}
+     * True if Avalara integration should be enabled for this customer, False otherwise.
+     * @type {boolean}
      * @memberof UpdateCustomerAvalaraSettingsArgs
      */
-    exemptionNumber?: string;
+    enableIntegration?: boolean;
     /**
      * Entity code describing this customer.
      * @type {string}
@@ -32,11 +32,11 @@ export interface UpdateCustomerAvalaraSettingsArgs {
      */
     entityUseCode?: string;
     /**
-     * True if Avalara integration should be enabled for this customer, False otherwise.
-     * @type {boolean}
+     * Tax exemption number specific to this customer
+     * @type {string}
      * @memberof UpdateCustomerAvalaraSettingsArgs
      */
-    enableIntegration?: boolean;
+    exemptionNumber?: string;
 }
 
 export function UpdateCustomerAvalaraSettingsArgsFromJSON(json: any): UpdateCustomerAvalaraSettingsArgs {
@@ -49,9 +49,9 @@ export function UpdateCustomerAvalaraSettingsArgsFromJSONTyped(json: any, ignore
     }
     return {
         
-        'exemptionNumber': !exists(json, 'exemption_number') ? undefined : json['exemption_number'],
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
+        'exemptionNumber': !exists(json, 'exemption_number') ? undefined : json['exemption_number'],
     };
 }
 
@@ -64,9 +64,9 @@ export function UpdateCustomerAvalaraSettingsArgsToJSON(value?: UpdateCustomerAv
     }
     return {
         
-        'exemption_number': value.exemptionNumber,
-        'entity_use_code': value.entityUseCode,
         'enable_integration': value.enableIntegration,
+        'entity_use_code': value.entityUseCode,
+        'exemption_number': value.exemptionNumber,
     };
 }
 

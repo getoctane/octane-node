@@ -102,7 +102,7 @@ export interface EcpCustomerPortalUrlPostRequest {
     customerPortalTokenInputArgs: CustomerPortalTokenInputArgs;
 }
 
-export interface EcpFilteredUsageGetRequest {
+export interface EcpFilteredUsagePostRequest {
     customerPortalMeterLabelFilter: CustomerPortalMeterLabelFilter;
 }
 
@@ -401,11 +401,11 @@ export class CustomerPortalApi extends runtime.BaseAPI {
 
     /**
      * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication.
-     * Get Filtered Daily Usage
+     * Compute Filtered Daily Usage
      */
-    async ecpFilteredUsageGetRaw(requestParameters: EcpFilteredUsageGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsage>> {
+    async ecpFilteredUsagePostRaw(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsage>> {
         if (requestParameters.customerPortalMeterLabelFilter === null || requestParameters.customerPortalMeterLabelFilter === undefined) {
-            throw new runtime.RequiredError('customerPortalMeterLabelFilter','Required parameter requestParameters.customerPortalMeterLabelFilter was null or undefined when calling ecpFilteredUsageGet.');
+            throw new runtime.RequiredError('customerPortalMeterLabelFilter','Required parameter requestParameters.customerPortalMeterLabelFilter was null or undefined when calling ecpFilteredUsagePost.');
         }
 
         const queryParameters: any = {};
@@ -424,7 +424,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
         }
         const response = await this.request({
             path: `/ecp/filtered_usage`,
-            method: 'GET',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: CustomerPortalMeterLabelFilterToJSON(requestParameters.customerPortalMeterLabelFilter),
@@ -435,10 +435,10 @@ export class CustomerPortalApi extends runtime.BaseAPI {
 
     /**
      * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication.
-     * Get Filtered Daily Usage
+     * Compute Filtered Daily Usage
      */
-    async ecpFilteredUsageGet(requestParameters: EcpFilteredUsageGetRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsage> {
-        const response = await this.ecpFilteredUsageGetRaw(requestParameters, initOverrides);
+    async ecpFilteredUsagePost(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsage> {
+        const response = await this.ecpFilteredUsagePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

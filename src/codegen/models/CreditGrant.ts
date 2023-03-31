@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditGrant {
     /**
-     * The date at which this grant expires
-     * @type {Date}
+     * A unique identifier for this grant
+     * @type {string}
      * @memberof CreditGrant
      */
-    expiresAt?: Date;
+    uuid?: string;
     /**
      * The source of the grant.
      * @type {string}
@@ -38,29 +38,29 @@ export interface CreditGrant {
      */
     price?: number;
     /**
-     * Optional description. This is only viewable internally
-     * @type {string}
-     * @memberof CreditGrant
-     */
-    description?: string;
-    /**
      * Name of the customer who received the grant
      * @type {string}
      * @memberof CreditGrant
      */
     customerName?: string;
     /**
-     * A unique identifier for this grant
-     * @type {string}
+     * The date at which this grant expires
+     * @type {Date}
      * @memberof CreditGrant
      */
-    uuid?: string;
+    expiresAt?: Date;
     /**
      * Number of credits granted
      * @type {number}
      * @memberof CreditGrant
      */
     amount?: number;
+    /**
+     * Optional description. This is only viewable internally
+     * @type {string}
+     * @memberof CreditGrant
+     */
+    description?: string;
     /**
      * The date at which this grant is effective
      * @type {Date}
@@ -79,13 +79,13 @@ export function CreditGrantFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'source': !exists(json, 'source') ? undefined : json['source'],
         'price': !exists(json, 'price') ? undefined : json['price'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
+        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
     };
 }
@@ -99,13 +99,13 @@ export function CreditGrantToJSON(value?: CreditGrant | null): any {
     }
     return {
         
-        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'uuid': value.uuid,
         'source': value.source,
         'price': value.price,
-        'description': value.description,
         'customer_name': value.customerName,
-        'uuid': value.uuid,
+        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
         'amount': value.amount,
+        'description': value.description,
         'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
     };
 }

@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface SubscriptionAddOnInput {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof SubscriptionAddOnInput
      */
-    quantity?: number;
+    name: string;
     /**
      * Override for the add-on price on this subscription.
      * @type {number}
@@ -33,10 +33,10 @@ export interface SubscriptionAddOnInput {
     price?: number;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof SubscriptionAddOnInput
      */
-    name: string;
+    quantity?: number;
 }
 
 export function SubscriptionAddOnInputFromJSON(json: any): SubscriptionAddOnInput {
@@ -49,9 +49,9 @@ export function SubscriptionAddOnInputFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
         'name': json['name'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
     };
 }
 
@@ -64,9 +64,9 @@ export function SubscriptionAddOnInputToJSON(value?: SubscriptionAddOnInput | nu
     }
     return {
         
-        'quantity': value.quantity,
-        'price': value.price,
         'name': value.name,
+        'price': value.price,
+        'quantity': value.quantity,
     };
 }
 

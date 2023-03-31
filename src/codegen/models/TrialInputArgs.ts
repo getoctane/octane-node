@@ -21,12 +21,6 @@ import { exists, mapValues } from '../runtime';
 export interface TrialInputArgs {
     /**
      * 
-     * @type {number}
-     * @memberof TrialInputArgs
-     */
-    credit?: number;
-    /**
-     * 
      * @type {string}
      * @memberof TrialInputArgs
      */
@@ -37,6 +31,12 @@ export interface TrialInputArgs {
      * @memberof TrialInputArgs
      */
     timeLength?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrialInputArgs
+     */
+    credit?: number;
 }
 
 export function TrialInputArgsFromJSON(json: any): TrialInputArgs {
@@ -49,9 +49,9 @@ export function TrialInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'credit': !exists(json, 'credit') ? undefined : json['credit'],
         'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'timeLength': !exists(json, 'time_length') ? undefined : json['time_length'],
+        'credit': !exists(json, 'credit') ? undefined : json['credit'],
     };
 }
 
@@ -64,9 +64,9 @@ export function TrialInputArgsToJSON(value?: TrialInputArgs | null): any {
     }
     return {
         
-        'credit': value.credit,
         'time_unit_name': value.timeUnitName,
         'time_length': value.timeLength,
+        'credit': value.credit,
     };
 }
 

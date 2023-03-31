@@ -21,34 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface MeterInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    meterType?: MeterInputArgsMeterTypeEnum;
-    /**
-     * 
      * @type {Array<string>}
      * @memberof MeterInputArgs
      */
-    expectedLabels?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    name?: string;
+    primaryLabels?: Array<string>;
     /**
      * 
      * @type {string}
@@ -57,10 +33,16 @@ export interface MeterInputArgs {
     unitName?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof MeterInputArgs
      */
-    vendorId?: number;
+    name?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MeterInputArgs
+     */
+    expectedLabels?: Array<string>;
     /**
      * 
      * @type {boolean}
@@ -69,10 +51,28 @@ export interface MeterInputArgs {
     isIncremental?: boolean;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof MeterInputArgs
      */
-    primaryLabels?: Array<string>;
+    displayName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeterInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    meterType?: MeterInputArgsMeterTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    description?: string;
 }
 
 /**
@@ -94,15 +94,15 @@ export function MeterInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
-        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'isIncremental': !exists(json, 'is_incremental') ? undefined : json['is_incremental'],
         'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
+        'isIncremental': !exists(json, 'is_incremental') ? undefined : json['is_incremental'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
+        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -115,15 +115,15 @@ export function MeterInputArgsToJSON(value?: MeterInputArgs | null): any {
     }
     return {
         
-        'display_name': value.displayName,
-        'meter_type': value.meterType,
-        'expected_labels': value.expectedLabels,
-        'description': value.description,
-        'name': value.name,
-        'unit_name': value.unitName,
-        'vendor_id': value.vendorId,
-        'is_incremental': value.isIncremental,
         'primary_labels': value.primaryLabels,
+        'unit_name': value.unitName,
+        'name': value.name,
+        'expected_labels': value.expectedLabels,
+        'is_incremental': value.isIncremental,
+        'display_name': value.displayName,
+        'vendor_id': value.vendorId,
+        'meter_type': value.meterType,
+        'description': value.description,
     };
 }
 

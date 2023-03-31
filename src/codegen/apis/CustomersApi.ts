@@ -24,12 +24,18 @@ import {
     BillingSettings,
     BillingSettingsFromJSON,
     BillingSettingsToJSON,
+    CreateCreditTopOffPlanInputArgs,
+    CreateCreditTopOffPlanInputArgsFromJSON,
+    CreateCreditTopOffPlanInputArgsToJSON,
     CreateCustomerArgs,
     CreateCustomerArgsFromJSON,
     CreateCustomerArgsToJSON,
     CreateSubscriptionArgs,
     CreateSubscriptionArgsFromJSON,
     CreateSubscriptionArgsToJSON,
+    CreditTopOffPlan,
+    CreditTopOffPlanFromJSON,
+    CreditTopOffPlanToJSON,
     Customer,
     CustomerFromJSON,
     CustomerToJSON,
@@ -51,6 +57,9 @@ import {
     CustomerMetadata,
     CustomerMetadataFromJSON,
     CustomerMetadataToJSON,
+    CustomerMetadataInput,
+    CustomerMetadataInputFromJSON,
+    CustomerMetadataInputToJSON,
     CustomerPaymentGatewayCredentialInputArgs,
     CustomerPaymentGatewayCredentialInputArgsFromJSON,
     CustomerPaymentGatewayCredentialInputArgsToJSON,
@@ -90,6 +99,9 @@ import {
     SubscriptionAddOnItem,
     SubscriptionAddOnItemFromJSON,
     SubscriptionAddOnItemToJSON,
+    UpdateCreditTopOffPlanInputArgs,
+    UpdateCreditTopOffPlanInputArgsFromJSON,
+    UpdateCreditTopOffPlanInputArgsToJSON,
     UpdateCustomerArgs,
     UpdateCustomerArgsFromJSON,
     UpdateCustomerArgsToJSON,
@@ -106,6 +118,14 @@ import {
     ValidateAddressRespFromJSON,
     ValidateAddressRespToJSON,
 } from '../models';
+
+export interface CustomersCustomerNameAccountingDeleteRequest {
+    customerName: string;
+}
+
+export interface CustomersCustomerNameAccountingGenerationPostRequest {
+    customerName: string;
+}
 
 export interface CustomersCustomerNameAccountingGetRequest {
     customerName: string;
@@ -140,6 +160,24 @@ export interface CustomersCustomerNameBillingSettingsPostRequest {
 export interface CustomersCustomerNameBillingSettingsPutRequest {
     customerName: string;
     customerBillingSettingsInputArgs: CustomerBillingSettingsInputArgs;
+}
+
+export interface CustomersCustomerNameCreditTopOffPlanDeleteRequest {
+    customerName: string;
+}
+
+export interface CustomersCustomerNameCreditTopOffPlanGetRequest {
+    customerName: string;
+}
+
+export interface CustomersCustomerNameCreditTopOffPlanPostRequest {
+    customerName: string;
+    createCreditTopOffPlanInputArgs: CreateCreditTopOffPlanInputArgs;
+}
+
+export interface CustomersCustomerNameCreditTopOffPlanPutRequest {
+    customerName: string;
+    updateCreditTopOffPlanInputArgs: UpdateCreditTopOffPlanInputArgs;
 }
 
 export interface CustomersCustomerNameDeleteRequest {
@@ -180,20 +218,20 @@ export interface CustomersCustomerNameIntegrationTaxAvalaraSettingsPutRequest {
 
 export interface CustomersCustomerNameInvoiceInvoiceIdTokenGetRequest {
     invoiceId: number;
-    token: string;
     customerName: string;
+    token: string;
 }
 
 export interface CustomersCustomerNameInvoicesGetRequest {
     customerName: string;
     limit?: number;
-    status?: string;
-    sortDirection?: string;
-    sortColumn?: string;
-    forwardSecondarySortOffset?: string;
-    startTime?: Date;
-    customerName2?: string;
     forwardSortOffset?: string;
+    customerName2?: string;
+    sortDirection?: string;
+    startTime?: Date;
+    forwardSecondarySortOffset?: string;
+    status?: string;
+    sortColumn?: string;
 }
 
 export interface CustomersCustomerNameMappingsGetRequest {
@@ -211,7 +249,7 @@ export interface CustomersCustomerNameMetadataGetRequest {
 
 export interface CustomersCustomerNameMetadataPostRequest {
     customerName: string;
-    customerMetadata: Array<CustomerMetadata>;
+    customerMetadataInput: Array<CustomerMetadataInput>;
 }
 
 export interface CustomersCustomerNamePaymentGatewayCredentialsGetRequest {
@@ -239,14 +277,14 @@ export interface CustomersCustomerNameRevenueGetRequest {
 }
 
 export interface CustomersCustomerNameSampleInvoiceAsOfStrTokenGetRequest {
-    token: string;
     asOfStr: string;
     customerName: string;
+    token: string;
 }
 
 export interface CustomersCustomerNameSampleInvoiceTokenGetRequest {
-    token: string;
     customerName: string;
+    token: string;
 }
 
 export interface CustomersCustomerNameScheduledSubscriptionsGetRequest {
@@ -288,9 +326,9 @@ export interface CustomersCustomerNameSubscriptionsPostRequest {
 
 export interface CustomersCustomerNameUsageGetRequest {
     customerName: string;
-    meterName?: string;
     endTime?: Date;
     startTime?: Date;
+    meterName?: string;
 }
 
 export interface CustomersPostRequest {
@@ -301,6 +339,84 @@ export interface CustomersPostRequest {
  * 
  */
 export class CustomersApi extends runtime.BaseAPI {
+
+    /**
+     * Deletes the customer entity tied to your accounting software.
+     * Delete Accounting Customer
+     */
+    async customersCustomerNameAccountingDeleteRaw(requestParameters: CustomersCustomerNameAccountingDeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameAccountingDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/accounting`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes the customer entity tied to your accounting software.
+     * Delete Accounting Customer
+     */
+    async customersCustomerNameAccountingDelete(requestParameters: CustomersCustomerNameAccountingDeleteRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.customersCustomerNameAccountingDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Create the customer entity tied to your accounting software.
+     * Create Accounting Customer
+     */
+    async customersCustomerNameAccountingGenerationPostRaw(requestParameters: CustomersCustomerNameAccountingGenerationPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameAccountingGenerationPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/accounting/generation`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Create the customer entity tied to your accounting software.
+     * Create Accounting Customer
+     */
+    async customersCustomerNameAccountingGenerationPost(requestParameters: CustomersCustomerNameAccountingGenerationPostRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.customersCustomerNameAccountingGenerationPostRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Get the accounting customer ID of a customer that has been connected via an accounting integration.
@@ -638,6 +754,179 @@ export class CustomersApi extends runtime.BaseAPI {
      */
     async customersCustomerNameBillingSettingsPut(requestParameters: CustomersCustomerNameBillingSettingsPutRequest, initOverrides?: RequestInit): Promise<BillingSettings> {
         const response = await this.customersCustomerNameBillingSettingsPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Delete a customer\'s credit top off plan.
+     * Delete Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanDeleteRaw(requestParameters: CustomersCustomerNameCreditTopOffPlanDeleteRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameCreditTopOffPlanDelete.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/credit_top_off_plan`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Delete a customer\'s credit top off plan.
+     * Delete Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanDelete(requestParameters: CustomersCustomerNameCreditTopOffPlanDeleteRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.customersCustomerNameCreditTopOffPlanDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Get a customer\'s credit top off plan.
+     * Get Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanGetRaw(requestParameters: CustomersCustomerNameCreditTopOffPlanGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CreditTopOffPlan>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameCreditTopOffPlanGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/credit_top_off_plan`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreditTopOffPlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a customer\'s credit top off plan.
+     * Get Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanGet(requestParameters: CustomersCustomerNameCreditTopOffPlanGetRequest, initOverrides?: RequestInit): Promise<CreditTopOffPlan> {
+        const response = await this.customersCustomerNameCreditTopOffPlanGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create a credit top off plan for a customer.
+     * Create Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanPostRaw(requestParameters: CustomersCustomerNameCreditTopOffPlanPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CreditTopOffPlan>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameCreditTopOffPlanPost.');
+        }
+
+        if (requestParameters.createCreditTopOffPlanInputArgs === null || requestParameters.createCreditTopOffPlanInputArgs === undefined) {
+            throw new runtime.RequiredError('createCreditTopOffPlanInputArgs','Required parameter requestParameters.createCreditTopOffPlanInputArgs was null or undefined when calling customersCustomerNameCreditTopOffPlanPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/credit_top_off_plan`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateCreditTopOffPlanInputArgsToJSON(requestParameters.createCreditTopOffPlanInputArgs),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreditTopOffPlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a credit top off plan for a customer.
+     * Create Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanPost(requestParameters: CustomersCustomerNameCreditTopOffPlanPostRequest, initOverrides?: RequestInit): Promise<CreditTopOffPlan> {
+        const response = await this.customersCustomerNameCreditTopOffPlanPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a customer\'s current credit top off plan.
+     * Update Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanPutRaw(requestParameters: CustomersCustomerNameCreditTopOffPlanPutRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CreditTopOffPlan>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameCreditTopOffPlanPut.');
+        }
+
+        if (requestParameters.updateCreditTopOffPlanInputArgs === null || requestParameters.updateCreditTopOffPlanInputArgs === undefined) {
+            throw new runtime.RequiredError('updateCreditTopOffPlanInputArgs','Required parameter requestParameters.updateCreditTopOffPlanInputArgs was null or undefined when calling customersCustomerNameCreditTopOffPlanPut.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/credit_top_off_plan`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateCreditTopOffPlanInputArgsToJSON(requestParameters.updateCreditTopOffPlanInputArgs),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreditTopOffPlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Update a customer\'s current credit top off plan.
+     * Update Customer\'s Credit Top Off Plan
+     */
+    async customersCustomerNameCreditTopOffPlanPut(requestParameters: CustomersCustomerNameCreditTopOffPlanPutRequest, initOverrides?: RequestInit): Promise<CreditTopOffPlan> {
+        const response = await this.customersCustomerNameCreditTopOffPlanPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -992,12 +1281,12 @@ export class CustomersApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('invoiceId','Required parameter requestParameters.invoiceId was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
         }
 
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1013,7 +1302,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/invoice/{invoice_id}/{token}`.replace(`{${"invoice_id"}}`, encodeURIComponent(String(requestParameters.invoiceId))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            path: `/customers/{customer_name}/invoice/{invoice_id}/{token}`.replace(`{${"invoice_id"}}`, encodeURIComponent(String(requestParameters.invoiceId))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1046,32 +1335,32 @@ export class CustomersApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
-        }
-
-        if (requestParameters.sortDirection !== undefined) {
-            queryParameters['sort_direction'] = requestParameters.sortDirection;
-        }
-
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
-        }
-
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
-        }
-
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.customerName2 !== undefined) {
             queryParameters['customer_name'] = requestParameters.customerName2;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.sortDirection !== undefined) {
+            queryParameters['sort_direction'] = requestParameters.sortDirection;
+        }
+
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        }
+
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1194,7 +1483,7 @@ export class CustomersApi extends runtime.BaseAPI {
      * Get the metadata for a given customer
      * Get All Customer Metadata
      */
-    async customersCustomerNameMetadataGetRaw(requestParameters: CustomersCustomerNameMetadataGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
+    async customersCustomerNameMetadataGetRaw(requestParameters: CustomersCustomerNameMetadataGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerMetadata>>> {
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameMetadataGet.');
         }
@@ -1218,14 +1507,14 @@ export class CustomersApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomerMetadataFromJSON));
     }
 
     /**
      * Get the metadata for a given customer
      * Get All Customer Metadata
      */
-    async customersCustomerNameMetadataGet(requestParameters: CustomersCustomerNameMetadataGetRequest, initOverrides?: RequestInit): Promise<Error> {
+    async customersCustomerNameMetadataGet(requestParameters: CustomersCustomerNameMetadataGetRequest, initOverrides?: RequestInit): Promise<Array<CustomerMetadata>> {
         const response = await this.customersCustomerNameMetadataGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1239,8 +1528,8 @@ export class CustomersApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameMetadataPost.');
         }
 
-        if (requestParameters.customerMetadata === null || requestParameters.customerMetadata === undefined) {
-            throw new runtime.RequiredError('customerMetadata','Required parameter requestParameters.customerMetadata was null or undefined when calling customersCustomerNameMetadataPost.');
+        if (requestParameters.customerMetadataInput === null || requestParameters.customerMetadataInput === undefined) {
+            throw new runtime.RequiredError('customerMetadataInput','Required parameter requestParameters.customerMetadataInput was null or undefined when calling customersCustomerNameMetadataPost.');
         }
 
         const queryParameters: any = {};
@@ -1262,7 +1551,7 @@ export class CustomersApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.customerMetadata.map(CustomerMetadataToJSON),
+            body: requestParameters.customerMetadataInput.map(CustomerMetadataInputToJSON),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1503,16 +1792,16 @@ export class CustomersApi extends runtime.BaseAPI {
      * Generate Current Invoice
      */
     async customersCustomerNameSampleInvoiceAsOfStrTokenGetRaw(requestParameters: CustomersCustomerNameSampleInvoiceAsOfStrTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
-        }
-
         if (requestParameters.asOfStr === null || requestParameters.asOfStr === undefined) {
             throw new runtime.RequiredError('asOfStr','Required parameter requestParameters.asOfStr was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
         }
 
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1528,7 +1817,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/sample_invoice/{as_of_str}/{token}`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            path: `/customers/{customer_name}/sample_invoice/{as_of_str}/{token}`.replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1551,12 +1840,12 @@ export class CustomersApi extends runtime.BaseAPI {
      * Generate Current Invoice
      */
     async customersCustomerNameSampleInvoiceTokenGetRaw(requestParameters: CustomersCustomerNameSampleInvoiceTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1572,7 +1861,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/sample_invoice/{token}`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            path: `/customers/{customer_name}/sample_invoice/{token}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1954,16 +2243,16 @@ export class CustomersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.meterName !== undefined) {
-            queryParameters['meter_name'] = requestParameters.meterName;
-        }
-
         if (requestParameters.endTime !== undefined) {
             queryParameters['end_time'] = (requestParameters.endTime as any).toISOString();
         }
 
         if (requestParameters.startTime !== undefined) {
             queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        }
+
+        if (requestParameters.meterName !== undefined) {
+            queryParameters['meter_name'] = requestParameters.meterName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -16,39 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface CustomerPortalLabelFilter
+ * @interface CustomerMetadataInput
  */
-export interface CustomerPortalLabelFilter {
-    /**
-     * Primary label value associated with the key
-     * @type {string}
-     * @memberof CustomerPortalLabelFilter
-     */
-    value?: string;
+export interface CustomerMetadataInput {
     /**
      * 
      * @type {string}
-     * @memberof CustomerPortalLabelFilter
+     * @memberof CustomerMetadataInput
      */
-    key?: string;
+    value?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerMetadataInput
+     */
+    property?: string;
 }
 
-export function CustomerPortalLabelFilterFromJSON(json: any): CustomerPortalLabelFilter {
-    return CustomerPortalLabelFilterFromJSONTyped(json, false);
+export function CustomerMetadataInputFromJSON(json: any): CustomerMetadataInput {
+    return CustomerMetadataInputFromJSONTyped(json, false);
 }
 
-export function CustomerPortalLabelFilterFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomerPortalLabelFilter {
+export function CustomerMetadataInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomerMetadataInput {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'key': !exists(json, 'key') ? undefined : json['key'],
+        'property': !exists(json, 'property') ? undefined : json['property'],
     };
 }
 
-export function CustomerPortalLabelFilterToJSON(value?: CustomerPortalLabelFilter | null): any {
+export function CustomerMetadataInputToJSON(value?: CustomerMetadataInput | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -58,7 +58,7 @@ export function CustomerPortalLabelFilterToJSON(value?: CustomerPortalLabelFilte
     return {
         
         'value': value.value,
-        'key': value.key,
+        'property': value.property,
     };
 }
 

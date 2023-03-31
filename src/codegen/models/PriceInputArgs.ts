@@ -24,12 +24,6 @@ export interface PriceInputArgs {
      * @type {number}
      * @memberof PriceInputArgs
      */
-    cap?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PriceInputArgs
-     */
     price?: number;
     /**
      * 
@@ -37,6 +31,12 @@ export interface PriceInputArgs {
      * @memberof PriceInputArgs
      */
     description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PriceInputArgs
+     */
+    cap?: number;
 }
 
 export function PriceInputArgsFromJSON(json: any): PriceInputArgs {
@@ -49,9 +49,9 @@ export function PriceInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'cap': !exists(json, 'cap') ? undefined : json['cap'],
         'price': !exists(json, 'price') ? undefined : json['price'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'cap': !exists(json, 'cap') ? undefined : json['cap'],
     };
 }
 
@@ -64,9 +64,9 @@ export function PriceInputArgsToJSON(value?: PriceInputArgs | null): any {
     }
     return {
         
-        'cap': value.cap,
         'price': value.price,
         'description': value.description,
+        'cap': value.cap,
     };
 }
 

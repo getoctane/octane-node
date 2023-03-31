@@ -26,17 +26,17 @@ export interface EntityUseCode {
      */
     code?: string;
     /**
-     * Text describing the meaning of this use code.
-     * @type {string}
-     * @memberof EntityUseCode
-     */
-    description?: string;
-    /**
      * The name of this entity use code.
      * @type {string}
      * @memberof EntityUseCode
      */
     name?: string;
+    /**
+     * Text describing the meaning of this use code.
+     * @type {string}
+     * @memberof EntityUseCode
+     */
+    description?: string;
     /**
      * A list of countries where this use code is valid.
      * @type {Array<string>}
@@ -56,8 +56,8 @@ export function EntityUseCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'code': !exists(json, 'code') ? undefined : json['code'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
     };
 }
@@ -72,8 +72,8 @@ export function EntityUseCodeToJSON(value?: EntityUseCode | null): any {
     return {
         
         'code': value.code,
-        'description': value.description,
         'name': value.name,
+        'description': value.description,
         'valid_countries': value.validCountries,
     };
 }

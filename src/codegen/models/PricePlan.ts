@@ -117,6 +117,12 @@ export interface PricePlan {
      */
     minimumCharge?: number | null;
     /**
+     * The frequency (as a an integer multiple of the period) at which to charge the minimum charge.
+     * @type {number}
+     * @memberof PricePlan
+     */
+    minimumChargeFrequency?: number | null;
+    /**
      * 
      * @type {Array<Feature>}
      * @memberof PricePlan
@@ -174,6 +180,7 @@ export function PricePlanFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'period': json['period'],
         'meteredComponents': ((json['metered_components'] as Array<any>).map(MeteredComponentFromJSON)),
         'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
+        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
         'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureFromJSON)),
         'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnFromJSON)),
         'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitFromJSON)),
@@ -202,6 +209,7 @@ export function PricePlanToJSON(value?: PricePlan | null): any {
         'period': value.period,
         'metered_components': ((value.meteredComponents as Array<any>).map(MeteredComponentToJSON)),
         'minimum_charge': value.minimumCharge,
+        'minimum_charge_frequency': value.minimumChargeFrequency,
         'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureToJSON)),
         'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnToJSON)),
         'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitToJSON)),

@@ -37,7 +37,7 @@ export interface LimitInputArgs {
      * @type {FeatureInputArgs}
      * @memberof LimitInputArgs
      */
-    feature?: FeatureInputArgs;
+    feature: FeatureInputArgs;
 }
 
 export function LimitInputArgsFromJSON(json: any): LimitInputArgs {
@@ -51,7 +51,7 @@ export function LimitInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'feature': !exists(json, 'feature') ? undefined : FeatureInputArgsFromJSON(json['feature']),
+        'feature': FeatureInputArgsFromJSON(json['feature']),
     };
 }
 

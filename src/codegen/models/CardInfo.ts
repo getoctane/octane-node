@@ -20,29 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CardInfo {
     /**
-     * Last 4 digits of the card.
-     * @type {string}
-     * @memberof CardInfo
-     */
-    last4?: string;
-    /**
-     * Country of the card
-     * @type {string}
-     * @memberof CardInfo
-     */
-    country?: string;
-    /**
      * Year the card expires
      * @type {number}
      * @memberof CardInfo
      */
     expYear?: number;
     /**
+     * Last 4 digits of the card.
+     * @type {string}
+     * @memberof CardInfo
+     */
+    last4?: string;
+    /**
      * Brand of card. E.g. Amex, Visa, etc.
      * @type {string}
      * @memberof CardInfo
      */
     brand?: string;
+    /**
+     * Country of the card
+     * @type {string}
+     * @memberof CardInfo
+     */
+    country?: string;
     /**
      * Month the card expires
      * @type {number}
@@ -61,10 +61,10 @@ export function CardInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'last4': !exists(json, 'last4') ? undefined : json['last4'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
         'expYear': !exists(json, 'exp_year') ? undefined : json['exp_year'],
+        'last4': !exists(json, 'last4') ? undefined : json['last4'],
         'brand': !exists(json, 'brand') ? undefined : json['brand'],
+        'country': !exists(json, 'country') ? undefined : json['country'],
         'expMonth': !exists(json, 'exp_month') ? undefined : json['exp_month'],
     };
 }
@@ -78,10 +78,10 @@ export function CardInfoToJSON(value?: CardInfo | null): any {
     }
     return {
         
-        'last4': value.last4,
-        'country': value.country,
         'exp_year': value.expYear,
+        'last4': value.last4,
         'brand': value.brand,
+        'country': value.country,
         'exp_month': value.expMonth,
     };
 }

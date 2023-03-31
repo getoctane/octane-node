@@ -27,18 +27,6 @@ import {
  */
 export interface CustomerPortalMeter {
     /**
-     * Type of the meter. E.g. COUNTER or GAUGE.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    meterType?: string;
-    /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalMeterLabels>}
-     * @memberof CustomerPortalMeter
-     */
-    labels?: Array<CustomerPortalMeterLabels>;
-    /**
      * Name of the unit the meter uses.
      * @type {string}
      * @memberof CustomerPortalMeter
@@ -51,11 +39,23 @@ export interface CustomerPortalMeter {
      */
     meterDisplayName?: string;
     /**
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalMeterLabels>}
+     * @memberof CustomerPortalMeter
+     */
+    labels?: Array<CustomerPortalMeterLabels>;
+    /**
      * Name of the meter.
      * @type {string}
      * @memberof CustomerPortalMeter
      */
     meterName?: string;
+    /**
+     * Type of the meter. E.g. COUNTER or GAUGE.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    meterType?: string;
 }
 
 export function CustomerPortalMeterFromJSON(json: any): CustomerPortalMeter {
@@ -68,11 +68,11 @@ export function CustomerPortalMeterFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
         'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
+        'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
+        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerPortalMeterToJSON(value?: CustomerPortalMeter | null): a
     }
     return {
         
-        'meter_type': value.meterType,
-        'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
         'unit_name': value.unitName,
         'meter_display_name': value.meterDisplayName,
+        'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
         'meter_name': value.meterName,
+        'meter_type': value.meterType,
     };
 }
 

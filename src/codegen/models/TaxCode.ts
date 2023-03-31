@@ -20,23 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TaxCode {
     /**
-     * A friendly description of this tax code.
+     * A code string that identifies this tax code.
      * @type {string}
      * @memberof TaxCode
      */
-    description?: string;
-    /**
-     * The unique ID number of this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    id?: string;
-    /**
-     * The type of this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    taxCodeTypeId?: string;
+    taxCode?: string;
     /**
      * The Avalara Entity Use Code represented by this tax code.
      * @type {string}
@@ -44,11 +32,23 @@ export interface TaxCode {
      */
     entityUseCode?: string;
     /**
-     * A code string that identifies this tax code.
+     * The type of this tax code.
      * @type {string}
      * @memberof TaxCode
      */
-    taxCode?: string;
+    taxCodeTypeId?: string;
+    /**
+     * The unique ID number of this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    id?: string;
+    /**
+     * A friendly description of this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    description?: string;
 }
 
 export function TaxCodeFromJSON(json: any): TaxCode {
@@ -61,11 +61,11 @@ export function TaxCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     }
     return {
         
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
+        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -78,11 +78,11 @@ export function TaxCodeToJSON(value?: TaxCode | null): any {
     }
     return {
         
-        'description': value.description,
-        'id': value.id,
-        'tax_code_type_id': value.taxCodeTypeId,
-        'entity_use_code': value.entityUseCode,
         'tax_code': value.taxCode,
+        'entity_use_code': value.entityUseCode,
+        'tax_code_type_id': value.taxCodeTypeId,
+        'id': value.id,
+        'description': value.description,
     };
 }
 

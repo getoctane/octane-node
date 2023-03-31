@@ -27,11 +27,11 @@ import {
  */
 export interface CycleUsage {
     /**
-     * Total usage in the cycle.
-     * @type {number}
+     * The start of the billing cycle in UTC.
+     * @type {Date}
      * @memberof CycleUsage
      */
-    totalUsage?: number;
+    cycleStart?: Date;
     /**
      * 
      * @type {Array<DailyUsage>}
@@ -39,11 +39,11 @@ export interface CycleUsage {
      */
     usageByTime?: Array<DailyUsage>;
     /**
-     * The start of the billing cycle in UTC.
-     * @type {Date}
+     * Total usage in the cycle.
+     * @type {number}
      * @memberof CycleUsage
      */
-    cycleStart?: Date;
+    totalUsage?: number;
     /**
      * The end of the billing cycle in UTC.
      * @type {Date}
@@ -62,9 +62,9 @@ export function CycleUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'totalUsage': !exists(json, 'total_usage') ? undefined : json['total_usage'],
-        'usageByTime': !exists(json, 'usage_by_time') ? undefined : ((json['usage_by_time'] as Array<any>).map(DailyUsageFromJSON)),
         'cycleStart': !exists(json, 'cycle_start') ? undefined : (new Date(json['cycle_start'])),
+        'usageByTime': !exists(json, 'usage_by_time') ? undefined : ((json['usage_by_time'] as Array<any>).map(DailyUsageFromJSON)),
+        'totalUsage': !exists(json, 'total_usage') ? undefined : json['total_usage'],
         'cycleEnd': !exists(json, 'cycle_end') ? undefined : (new Date(json['cycle_end'])),
     };
 }
@@ -78,9 +78,9 @@ export function CycleUsageToJSON(value?: CycleUsage | null): any {
     }
     return {
         
-        'total_usage': value.totalUsage,
-        'usage_by_time': value.usageByTime === undefined ? undefined : ((value.usageByTime as Array<any>).map(DailyUsageToJSON)),
         'cycle_start': value.cycleStart === undefined ? undefined : (value.cycleStart.toISOString()),
+        'usage_by_time': value.usageByTime === undefined ? undefined : ((value.usageByTime as Array<any>).map(DailyUsageToJSON)),
+        'total_usage': value.totalUsage,
         'cycle_end': value.cycleEnd === undefined ? undefined : (value.cycleEnd.toISOString()),
     };
 }

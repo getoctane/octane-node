@@ -27,23 +27,23 @@ import {
  */
 export interface PriceSchemeInputArgs {
     /**
-     * The name of the unit used for this metered component (e.g., gigabyte)
-     * @type {string}
-     * @memberof PriceSchemeInputArgs
-     */
-    unitName?: string;
-    /**
      * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
      * @type {Array<PriceInputArgs>}
      * @memberof PriceSchemeInputArgs
      */
     prices?: Array<PriceInputArgs>;
     /**
-     * One of 'FLAT', 'TIERED', or 'STAIRSTEP'
+     * The name of the unit used for this metered component (e.g., gigabyte)
      * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    schemeType: string;
+    unitName?: string;
+    /**
+     * Size of the unit batch to use for the prices. Can only be set if scheme_type='FLAT' or 'TIERED'. E.g. To charge $10 per 100 API Requests, set batch_size to 100.
+     * @type {number}
+     * @memberof PriceSchemeInputArgs
+     */
+    batchSize?: number;
     /**
      * The time unit for the metered component (e.g., month or hour)
      * @type {string}
@@ -51,11 +51,11 @@ export interface PriceSchemeInputArgs {
      */
     timeUnitName?: string;
     /**
-     * Size of the unit batch to use for the prices. Can only be set if scheme_type='FLAT' or 'TIERED'. E.g. To charge $10 per 100 API Requests, set batch_size to 100.
-     * @type {number}
+     * One of 'FLAT', 'TIERED', or 'STAIRSTEP'
+     * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    batchSize?: number;
+    schemeType: string;
     /**
      * Array of (key, value) meter labels to price on & the price tiers that should be used against those labels
      * @type {Array<object>}
@@ -74,11 +74,11 @@ export function PriceSchemeInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
         'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
-        'schemeType': json['scheme_type'],
-        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
         'batchSize': !exists(json, 'batch_size') ? undefined : json['batch_size'],
+        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
+        'schemeType': json['scheme_type'],
         'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
     };
 }
@@ -92,11 +92,11 @@ export function PriceSchemeInputArgsToJSON(value?: PriceSchemeInputArgs | null):
     }
     return {
         
-        'unit_name': value.unitName,
         'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
-        'scheme_type': value.schemeType,
-        'time_unit_name': value.timeUnitName,
+        'unit_name': value.unitName,
         'batch_size': value.batchSize,
+        'time_unit_name': value.timeUnitName,
+        'scheme_type': value.schemeType,
         'price_list': value.priceList,
     };
 }

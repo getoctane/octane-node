@@ -15,18 +15,36 @@
 
 import * as runtime from '../runtime';
 import {
+    AddAddOnsToPricePlanInput,
+    AddAddOnsToPricePlanInputFromJSON,
+    AddAddOnsToPricePlanInputToJSON,
+    AddFeaturesToPricePlanInput,
+    AddFeaturesToPricePlanInputFromJSON,
+    AddFeaturesToPricePlanInputToJSON,
+    AddMeteredComponentsToPricePlanInput,
+    AddMeteredComponentsToPricePlanInputFromJSON,
+    AddMeteredComponentsToPricePlanInputToJSON,
     CreatePricePlanArgs,
     CreatePricePlanArgsFromJSON,
     CreatePricePlanArgsToJSON,
     ListPricePlans,
     ListPricePlansFromJSON,
     ListPricePlansToJSON,
+    MeteredComponent,
+    MeteredComponentFromJSON,
+    MeteredComponentToJSON,
     PricePlan,
     PricePlanFromJSON,
     PricePlanToJSON,
+    RemoveFeaturesFromPricePlanInput,
+    RemoveFeaturesFromPricePlanInputFromJSON,
+    RemoveFeaturesFromPricePlanInputToJSON,
     SelfServePricePlansInputArgs,
     SelfServePricePlansInputArgsFromJSON,
     SelfServePricePlansInputArgsToJSON,
+    UpdateMeteredComponentLimitsInput,
+    UpdateMeteredComponentLimitsInputFromJSON,
+    UpdateMeteredComponentLimitsInputToJSON,
     UpdatePricePlanArgs,
     UpdatePricePlanArgsFromJSON,
     UpdatePricePlanArgsToJSON,
@@ -35,14 +53,19 @@ import {
     UpdatePricePlanInPlaceArgsToJSON,
 } from '../models';
 
+export interface PricePlansMeteredComponentsUuidUpdateLimitsPostRequest {
+    uuid: string;
+    updateMeteredComponentLimitsInput: UpdateMeteredComponentLimitsInput;
+}
+
 export interface PricePlansPaginateGetRequest {
     limit?: number;
-    tags?: Array<string>;
+    forwardSortOffset?: string;
     sortDirection?: string;
-    sortColumn?: string;
     forwardSecondarySortOffset?: string;
     names?: Array<string>;
-    forwardSortOffset?: string;
+    tags?: Array<string>;
+    sortColumn?: string;
 }
 
 export interface PricePlansPostRequest {
@@ -84,6 +107,26 @@ export interface PricePlansUpdateInPlacePricePlanNameTagPostRequest {
     pricePlanName: string;
     tag: string;
     updatePricePlanInPlaceArgs: UpdatePricePlanInPlaceArgs;
+}
+
+export interface PricePlansUuidAddAddOnsPostRequest {
+    uuid: string;
+    addAddOnsToPricePlanInput: AddAddOnsToPricePlanInput;
+}
+
+export interface PricePlansUuidAddFeaturesPostRequest {
+    uuid: string;
+    addFeaturesToPricePlanInput: AddFeaturesToPricePlanInput;
+}
+
+export interface PricePlansUuidAddMeteredComponentsPostRequest {
+    uuid: string;
+    addMeteredComponentsToPricePlanInput: AddMeteredComponentsToPricePlanInput;
+}
+
+export interface PricePlansUuidRemoveFeaturesPostRequest {
+    uuid: string;
+    removeFeaturesFromPricePlanInput: RemoveFeaturesFromPricePlanInput;
 }
 
 /**
@@ -128,6 +171,53 @@ export class PricePlansApi extends runtime.BaseAPI {
     }
 
     /**
+     * Update metered component usage limits in place
+     * Update Metered Component Limits
+     */
+    async pricePlansMeteredComponentsUuidUpdateLimitsPostRaw(requestParameters: PricePlansMeteredComponentsUuidUpdateLimitsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<MeteredComponent>> {
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling pricePlansMeteredComponentsUuidUpdateLimitsPost.');
+        }
+
+        if (requestParameters.updateMeteredComponentLimitsInput === null || requestParameters.updateMeteredComponentLimitsInput === undefined) {
+            throw new runtime.RequiredError('updateMeteredComponentLimitsInput','Required parameter requestParameters.updateMeteredComponentLimitsInput was null or undefined when calling pricePlansMeteredComponentsUuidUpdateLimitsPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/price_plans/metered_components/{uuid}/update_limits`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateMeteredComponentLimitsInputToJSON(requestParameters.updateMeteredComponentLimitsInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MeteredComponentFromJSON(jsonValue));
+    }
+
+    /**
+     * Update metered component usage limits in place
+     * Update Metered Component Limits
+     */
+    async pricePlansMeteredComponentsUuidUpdateLimitsPost(requestParameters: PricePlansMeteredComponentsUuidUpdateLimitsPostRequest, initOverrides?: RequestInit): Promise<MeteredComponent> {
+        const response = await this.pricePlansMeteredComponentsUuidUpdateLimitsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * List all price plans with pagination.
      * Get Paginated Price Plans
      */
@@ -138,16 +228,12 @@ export class PricePlansApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.tags) {
-            queryParameters['tags'] = requestParameters.tags;
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
-        }
-
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         if (requestParameters.forwardSecondarySortOffset !== undefined) {
@@ -158,8 +244,12 @@ export class PricePlansApi extends runtime.BaseAPI {
             queryParameters['names'] = requestParameters.names;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.tags) {
+            queryParameters['tags'] = requestParameters.tags;
+        }
+
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -616,6 +706,194 @@ export class PricePlansApi extends runtime.BaseAPI {
      */
     async pricePlansUpdateInPlacePricePlanNameTagPost(requestParameters: PricePlansUpdateInPlacePricePlanNameTagPostRequest, initOverrides?: RequestInit): Promise<PricePlan> {
         const response = await this.pricePlansUpdateInPlacePricePlanNameTagPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Add add ons to price plan in place
+     * Add AddOns
+     */
+    async pricePlansUuidAddAddOnsPostRaw(requestParameters: PricePlansUuidAddAddOnsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling pricePlansUuidAddAddOnsPost.');
+        }
+
+        if (requestParameters.addAddOnsToPricePlanInput === null || requestParameters.addAddOnsToPricePlanInput === undefined) {
+            throw new runtime.RequiredError('addAddOnsToPricePlanInput','Required parameter requestParameters.addAddOnsToPricePlanInput was null or undefined when calling pricePlansUuidAddAddOnsPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/price_plans/{uuid}/add_add_ons`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddAddOnsToPricePlanInputToJSON(requestParameters.addAddOnsToPricePlanInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricePlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Add add ons to price plan in place
+     * Add AddOns
+     */
+    async pricePlansUuidAddAddOnsPost(requestParameters: PricePlansUuidAddAddOnsPostRequest, initOverrides?: RequestInit): Promise<PricePlan> {
+        const response = await this.pricePlansUuidAddAddOnsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Add features and(or) limits to a price plan in place
+     * Add features and limits
+     */
+    async pricePlansUuidAddFeaturesPostRaw(requestParameters: PricePlansUuidAddFeaturesPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling pricePlansUuidAddFeaturesPost.');
+        }
+
+        if (requestParameters.addFeaturesToPricePlanInput === null || requestParameters.addFeaturesToPricePlanInput === undefined) {
+            throw new runtime.RequiredError('addFeaturesToPricePlanInput','Required parameter requestParameters.addFeaturesToPricePlanInput was null or undefined when calling pricePlansUuidAddFeaturesPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/price_plans/{uuid}/add_features`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddFeaturesToPricePlanInputToJSON(requestParameters.addFeaturesToPricePlanInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricePlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Add features and(or) limits to a price plan in place
+     * Add features and limits
+     */
+    async pricePlansUuidAddFeaturesPost(requestParameters: PricePlansUuidAddFeaturesPostRequest, initOverrides?: RequestInit): Promise<PricePlan> {
+        const response = await this.pricePlansUuidAddFeaturesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Add metered components to price plan in place
+     * Add Metered Components
+     */
+    async pricePlansUuidAddMeteredComponentsPostRaw(requestParameters: PricePlansUuidAddMeteredComponentsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling pricePlansUuidAddMeteredComponentsPost.');
+        }
+
+        if (requestParameters.addMeteredComponentsToPricePlanInput === null || requestParameters.addMeteredComponentsToPricePlanInput === undefined) {
+            throw new runtime.RequiredError('addMeteredComponentsToPricePlanInput','Required parameter requestParameters.addMeteredComponentsToPricePlanInput was null or undefined when calling pricePlansUuidAddMeteredComponentsPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/price_plans/{uuid}/add_metered_components`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AddMeteredComponentsToPricePlanInputToJSON(requestParameters.addMeteredComponentsToPricePlanInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricePlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Add metered components to price plan in place
+     * Add Metered Components
+     */
+    async pricePlansUuidAddMeteredComponentsPost(requestParameters: PricePlansUuidAddMeteredComponentsPostRequest, initOverrides?: RequestInit): Promise<PricePlan> {
+        const response = await this.pricePlansUuidAddMeteredComponentsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Remove features and(or) limits from a price plan in place
+     * Remove features and limits
+     */
+    async pricePlansUuidRemoveFeaturesPostRaw(requestParameters: PricePlansUuidRemoveFeaturesPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
+        if (requestParameters.uuid === null || requestParameters.uuid === undefined) {
+            throw new runtime.RequiredError('uuid','Required parameter requestParameters.uuid was null or undefined when calling pricePlansUuidRemoveFeaturesPost.');
+        }
+
+        if (requestParameters.removeFeaturesFromPricePlanInput === null || requestParameters.removeFeaturesFromPricePlanInput === undefined) {
+            throw new runtime.RequiredError('removeFeaturesFromPricePlanInput','Required parameter requestParameters.removeFeaturesFromPricePlanInput was null or undefined when calling pricePlansUuidRemoveFeaturesPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/price_plans/{uuid}/remove_features`.replace(`{${"uuid"}}`, encodeURIComponent(String(requestParameters.uuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: RemoveFeaturesFromPricePlanInputToJSON(requestParameters.removeFeaturesFromPricePlanInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PricePlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Remove features and(or) limits from a price plan in place
+     * Remove features and limits
+     */
+    async pricePlansUuidRemoveFeaturesPost(requestParameters: PricePlansUuidRemoveFeaturesPostRequest, initOverrides?: RequestInit): Promise<PricePlan> {
+        const response = await this.pricePlansUuidRemoveFeaturesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

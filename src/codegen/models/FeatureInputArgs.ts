@@ -24,6 +24,12 @@ export interface FeatureInputArgs {
      * @type {string}
      * @memberof FeatureInputArgs
      */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FeatureInputArgs
+     */
     displayName?: string;
     /**
      * 
@@ -31,12 +37,6 @@ export interface FeatureInputArgs {
      * @memberof FeatureInputArgs
      */
     description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureInputArgs
-     */
-    name?: string;
 }
 
 export function FeatureInputArgsFromJSON(json: any): FeatureInputArgs {
@@ -49,9 +49,9 @@ export function FeatureInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
+        'name': json['name'],
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -64,9 +64,9 @@ export function FeatureInputArgsToJSON(value?: FeatureInputArgs | null): any {
     }
     return {
         
+        'name': value.name,
         'display_name': value.displayName,
         'description': value.description,
-        'name': value.name,
     };
 }
 
