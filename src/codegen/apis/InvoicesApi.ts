@@ -28,13 +28,13 @@ import {
 
 export interface InvoicesGetRequest {
     limit?: number;
-    status?: string;
-    sortDirection?: string;
-    sortColumn?: string;
-    forwardSecondarySortOffset?: string;
-    startTime?: Date;
-    customerName?: string;
     forwardSortOffset?: string;
+    customerName?: string;
+    sortDirection?: string;
+    startTime?: Date;
+    forwardSecondarySortOffset?: string;
+    status?: string;
+    sortColumn?: string;
 }
 
 export interface InvoicesInvoiceUuidDeleteRequest {
@@ -74,32 +74,32 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
-        }
-
-        if (requestParameters.sortDirection !== undefined) {
-            queryParameters['sort_direction'] = requestParameters.sortDirection;
-        }
-
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
-        }
-
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
-        }
-
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.customerName !== undefined) {
             queryParameters['customer_name'] = requestParameters.customerName;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.sortDirection !== undefined) {
+            queryParameters['sort_direction'] = requestParameters.sortDirection;
+        }
+
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        }
+
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -261,7 +261,7 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Manually change the status of an invoice in Octane. For example, if an invoice was paid outside of Octane\'s payment providers, you can reflect that in Octane by setting the status to paid.
      * Update Invoice Status
      */
-    async invoicesInvoiceUuidStatusPostRaw(requestParameters: InvoicesInvoiceUuidStatusPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
+    async invoicesInvoiceUuidStatusPostRaw(requestParameters: InvoicesInvoiceUuidStatusPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.invoiceUuid === null || requestParameters.invoiceUuid === undefined) {
             throw new runtime.RequiredError('invoiceUuid','Required parameter requestParameters.invoiceUuid was null or undefined when calling invoicesInvoiceUuidStatusPost.');
         }
@@ -285,16 +285,15 @@ export class InvoicesApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Manually change the status of an invoice in Octane. For example, if an invoice was paid outside of Octane\'s payment providers, you can reflect that in Octane by setting the status to paid.
      * Update Invoice Status
      */
-    async invoicesInvoiceUuidStatusPost(requestParameters: InvoicesInvoiceUuidStatusPostRequest, initOverrides?: RequestInit): Promise<Error> {
-        const response = await this.invoicesInvoiceUuidStatusPostRaw(requestParameters, initOverrides);
-        return await response.value();
+    async invoicesInvoiceUuidStatusPost(requestParameters: InvoicesInvoiceUuidStatusPostRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.invoicesInvoiceUuidStatusPostRaw(requestParameters, initOverrides);
     }
 
     /**

@@ -26,17 +26,17 @@ export interface CreateCreditGrantArgs {
      */
     price?: number;
     /**
-     * Optional description. This is only viewable internally
-     * @type {string}
-     * @memberof CreateCreditGrantArgs
-     */
-    description?: string;
-    /**
      * Name of the customer receving the grant
      * @type {string}
      * @memberof CreateCreditGrantArgs
      */
     customerName: string;
+    /**
+     * The date at which this grant expires
+     * @type {Date}
+     * @memberof CreateCreditGrantArgs
+     */
+    expiresAt?: Date;
     /**
      * Number of credits to grant
      * @type {number}
@@ -44,17 +44,17 @@ export interface CreateCreditGrantArgs {
      */
     amount: number;
     /**
+     * Optional description. This is only viewable internally
+     * @type {string}
+     * @memberof CreateCreditGrantArgs
+     */
+    description?: string;
+    /**
      * The date at which the grant is effective
      * @type {Date}
      * @memberof CreateCreditGrantArgs
      */
     effectiveAt?: Date;
-    /**
-     * The date at which this grant expires
-     * @type {Date}
-     * @memberof CreateCreditGrantArgs
-     */
-    expiresAt?: Date;
 }
 
 export function CreateCreditGrantArgsFromJSON(json: any): CreateCreditGrantArgs {
@@ -68,11 +68,11 @@ export function CreateCreditGrantArgsFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'price': !exists(json, 'price') ? undefined : json['price'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'customerName': json['customer_name'],
-        'amount': json['amount'],
-        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
         'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'amount': json['amount'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
     };
 }
 
@@ -86,11 +86,11 @@ export function CreateCreditGrantArgsToJSON(value?: CreateCreditGrantArgs | null
     return {
         
         'price': value.price,
-        'description': value.description,
         'customer_name': value.customerName,
-        'amount': value.amount,
-        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
         'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'amount': value.amount,
+        'description': value.description,
+        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
     };
 }
 

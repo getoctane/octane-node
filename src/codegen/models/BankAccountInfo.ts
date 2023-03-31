@@ -20,6 +20,18 @@ import { exists, mapValues } from '../runtime';
  */
 export interface BankAccountInfo {
     /**
+     * Last 4 digits of the bank account number.
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    last4?: string;
+    /**
+     * Routing number for the bank accopunt
+     * @type {number}
+     * @memberof BankAccountInfo
+     */
+    routingNumber?: number;
+    /**
      * Country the bank account is in.
      * @type {string}
      * @memberof BankAccountInfo
@@ -37,18 +49,6 @@ export interface BankAccountInfo {
      * @memberof BankAccountInfo
      */
     bankName?: string;
-    /**
-     * Routing number for the bank accopunt
-     * @type {number}
-     * @memberof BankAccountInfo
-     */
-    routingNumber?: number;
-    /**
-     * Last 4 digits of the bank account number.
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    last4?: string;
 }
 
 export function BankAccountInfoFromJSON(json: any): BankAccountInfo {
@@ -61,11 +61,11 @@ export function BankAccountInfoFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'last4': !exists(json, 'last4') ? undefined : json['last4'],
+        'routingNumber': !exists(json, 'routing_number') ? undefined : json['routing_number'],
         'country': !exists(json, 'country') ? undefined : json['country'],
         'accountType': !exists(json, 'account_type') ? undefined : json['account_type'],
         'bankName': !exists(json, 'bank_name') ? undefined : json['bank_name'],
-        'routingNumber': !exists(json, 'routing_number') ? undefined : json['routing_number'],
-        'last4': !exists(json, 'last4') ? undefined : json['last4'],
     };
 }
 
@@ -78,11 +78,11 @@ export function BankAccountInfoToJSON(value?: BankAccountInfo | null): any {
     }
     return {
         
+        'last4': value.last4,
+        'routing_number': value.routingNumber,
         'country': value.country,
         'account_type': value.accountType,
         'bank_name': value.bankName,
-        'routing_number': value.routingNumber,
-        'last4': value.last4,
     };
 }
 

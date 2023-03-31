@@ -39,12 +39,6 @@ export interface CustomerPortalActiveSubscription {
      */
     billingCycle: BillingCycleDate | null;
     /**
-     * The total fixed price the customer will be charged for this billing cycle. Includes the base price and any add ons.
-     * @type {number}
-     * @memberof CustomerPortalActiveSubscription
-     */
-    totalFixedPrice?: number;
-    /**
      * Customer's current active subscription. Includes the price plan and overrides they are subscribed to.
      * @type {Subscription}
      * @memberof CustomerPortalActiveSubscription
@@ -56,6 +50,12 @@ export interface CustomerPortalActiveSubscription {
      * @memberof CustomerPortalActiveSubscription
      */
     discountedFixedPrice?: number;
+    /**
+     * The total fixed price the customer will be charged for this billing cycle. Includes the base price and any add ons.
+     * @type {number}
+     * @memberof CustomerPortalActiveSubscription
+     */
+    totalFixedPrice?: number;
     /**
      * The date that the customer will be invoiced for their current billing cycle.
      * @type {Date}
@@ -75,9 +75,9 @@ export function CustomerPortalActiveSubscriptionFromJSONTyped(json: any, ignoreD
     return {
         
         'billingCycle': BillingCycleDateFromJSON(json['billing_cycle']),
-        'totalFixedPrice': !exists(json, 'total_fixed_price') ? undefined : json['total_fixed_price'],
         'subscription': !exists(json, 'subscription') ? undefined : SubscriptionFromJSON(json['subscription']),
         'discountedFixedPrice': !exists(json, 'discounted_fixed_price') ? undefined : json['discounted_fixed_price'],
+        'totalFixedPrice': !exists(json, 'total_fixed_price') ? undefined : json['total_fixed_price'],
         'invoicingDate': !exists(json, 'invoicing_date') ? undefined : (new Date(json['invoicing_date'])),
     };
 }
@@ -92,9 +92,9 @@ export function CustomerPortalActiveSubscriptionToJSON(value?: CustomerPortalAct
     return {
         
         'billing_cycle': BillingCycleDateToJSON(value.billingCycle),
-        'total_fixed_price': value.totalFixedPrice,
         'subscription': SubscriptionToJSON(value.subscription),
         'discounted_fixed_price': value.discountedFixedPrice,
+        'total_fixed_price': value.totalFixedPrice,
         'invoicing_date': value.invoicingDate === undefined ? undefined : (value.invoicingDate.toISOString()),
     };
 }

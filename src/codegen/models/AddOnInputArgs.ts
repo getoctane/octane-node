@@ -27,12 +27,6 @@ import {
  */
 export interface AddOnInputArgs {
     /**
-     * 
-     * @type {boolean}
-     * @memberof AddOnInputArgs
-     */
-    quantityEnabled?: boolean;
-    /**
      * Whether this add on can only be used & charged once.
      * @type {boolean}
      * @memberof AddOnInputArgs
@@ -58,10 +52,16 @@ export interface AddOnInputArgs {
     immediatelyCharge?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof AddOnInputArgs
+     */
+    quantityEnabled?: boolean;
+    /**
+     * 
      * @type {FeatureInputArgs}
      * @memberof AddOnInputArgs
      */
-    feature?: FeatureInputArgs;
+    feature: FeatureInputArgs;
 }
 
 export function AddOnInputArgsFromJSON(json: any): AddOnInputArgs {
@@ -74,12 +74,12 @@ export function AddOnInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
         'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
         'price': !exists(json, 'price') ? undefined : json['price'],
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
-        'feature': !exists(json, 'feature') ? undefined : FeatureInputArgsFromJSON(json['feature']),
+        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
+        'feature': FeatureInputArgsFromJSON(json['feature']),
     };
 }
 
@@ -92,11 +92,11 @@ export function AddOnInputArgsToJSON(value?: AddOnInputArgs | null): any {
     }
     return {
         
-        'quantity_enabled': value.quantityEnabled,
         'single_use': value.singleUse,
         'price': value.price,
         'limit': value.limit,
         'immediately_charge': value.immediatelyCharge,
+        'quantity_enabled': value.quantityEnabled,
         'feature': FeatureInputArgsToJSON(value.feature),
     };
 }

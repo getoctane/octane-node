@@ -20,29 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DiscountInputArgs {
     /**
-     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
-     * @type {{ [key: string]: string; }}
-     * @memberof DiscountInputArgs
-     */
-    labels?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscountInputArgs
-     */
-    discountType?: DiscountInputArgsDiscountTypeEnum;
-    /**
      * The scope that this discount covers. One of 'INVOICE_TOTAL', 'ADD_ON', 'METERED_COMPONENT'.
      * @type {string}
      * @memberof DiscountInputArgs
      */
     scope?: DiscountInputArgsScopeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof DiscountInputArgs
-     */
-    amount?: number;
     /**
      * For ADD_ON scoped discounts: the name of the add on that the discount covers.
      * @type {string}
@@ -50,27 +32,38 @@ export interface DiscountInputArgs {
      */
     addOnName?: string;
     /**
-     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
+     * 
      * @type {string}
      * @memberof DiscountInputArgs
      */
-    meteredComponentUuid?: string;
+    discountType?: DiscountInputArgsDiscountTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof DiscountInputArgs
+     */
+    amount?: number;
     /**
      * Length, in billing cycles, that this discount will be active.
      * @type {number}
      * @memberof DiscountInputArgs
      */
     billingCycleDuration?: number;
+    /**
+     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
+     * @type {{ [key: string]: string; }}
+     * @memberof DiscountInputArgs
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    meteredComponentUuid?: string;
 }
 
 /**
-* @export
-* @enum {string}
-*/
-export enum DiscountInputArgsDiscountTypeEnum {
-    Flat = 'FLAT',
-    Percent = 'PERCENT'
-}/**
 * @export
 * @enum {string}
 */
@@ -78,6 +71,13 @@ export enum DiscountInputArgsScopeEnum {
     InvoiceTotal = 'INVOICE_TOTAL',
     AddOn = 'ADD_ON',
     MeteredComponent = 'METERED_COMPONENT'
+}/**
+* @export
+* @enum {string}
+*/
+export enum DiscountInputArgsDiscountTypeEnum {
+    Flat = 'FLAT',
+    Percent = 'PERCENT'
 }
 
 export function DiscountInputArgsFromJSON(json: any): DiscountInputArgs {
@@ -90,13 +90,13 @@ export function DiscountInputArgsFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
         'scope': !exists(json, 'scope') ? undefined : json['scope'],
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
-        'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
+        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
+        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
     };
 }
 
@@ -109,13 +109,13 @@ export function DiscountInputArgsToJSON(value?: DiscountInputArgs | null): any {
     }
     return {
         
-        'labels': value.labels,
-        'discount_type': value.discountType,
         'scope': value.scope,
-        'amount': value.amount,
         'add_on_name': value.addOnName,
-        'metered_component_uuid': value.meteredComponentUuid,
+        'discount_type': value.discountType,
+        'amount': value.amount,
         'billing_cycle_duration': value.billingCycleDuration,
+        'labels': value.labels,
+        'metered_component_uuid': value.meteredComponentUuid,
     };
 }
 

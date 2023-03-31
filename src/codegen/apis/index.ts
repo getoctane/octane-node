@@ -14,5 +14,6 @@ export * from './MetersApi';
 export * from './PaymentGatewayCredentialApi';
 export * from './PricePlansApi';
 export * from './RefundApi';
+export * from './RevenueRecognitionApi';
 export * from './SelfServeSettingsApi';
 export * from './WebhooksApi';

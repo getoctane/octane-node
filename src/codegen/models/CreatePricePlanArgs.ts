@@ -51,23 +51,35 @@ import {
  */
 export interface CreatePricePlanArgs {
     /**
+     * The frequency (as a an integer multiple of the period) at which to charge the minimum charge.
+     * @type {number}
+     * @memberof CreatePricePlanArgs
+     */
+    minimumChargeFrequency?: number | null;
+    /**
+     * The frequency (as a an integer multiple of the period) at which to charge the base price.
+     * @type {number}
+     * @memberof CreatePricePlanArgs
+     */
+    basePriceFrequency?: number;
+    /**
      * 
      * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    displayName?: string;
+    name?: string;
     /**
-     * Custom invoice description for the base price line item.
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    basePriceDescription?: string | null;
-    /**
-     * Minimum amount (in cents) to charge every price plan period.
+     * 
      * @type {number}
      * @memberof CreatePricePlanArgs
      */
-    minimumCharge?: number | null;
+    basePrice?: number;
+    /**
+     * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
     /**
      * 
      * @type {Array<FeatureInputArgs>}
@@ -79,25 +91,7 @@ export interface CreatePricePlanArgs {
      * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePricePlanArgs
-     */
-    name?: string;
-    /**
-     * The frequency (as a an integer multiple of the period) at which to charge the base price.
-     * @type {number}
-     * @memberof CreatePricePlanArgs
-     */
-    basePriceFrequency?: number;
-    /**
-     * 
-     * @type {Array<LimitInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    limits?: Array<LimitInputArgs>;
+    displayName?: string;
     /**
      * 
      * @type {Array<string>}
@@ -111,17 +105,17 @@ export interface CreatePricePlanArgs {
      */
     vendorId?: number;
     /**
-     * 
-     * @type {Array<AddOnInputArgs>}
-     * @memberof CreatePricePlanArgs
-     */
-    addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
+     * Custom invoice description for the base price line item.
      * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    period?: string;
+    basePriceDescription?: string | null;
+    /**
+     * 
+     * @type {Array<LimitInputArgs>}
+     * @memberof CreatePricePlanArgs
+     */
+    limits?: Array<LimitInputArgs>;
     /**
      * 
      * @type {TrialInputArgs}
@@ -130,16 +124,28 @@ export interface CreatePricePlanArgs {
     trial?: TrialInputArgs;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof CreatePricePlanArgs
      */
-    basePrice?: number;
+    period?: string;
     /**
      * 
      * @type {Array<MeteredComponentInputArgs>}
      * @memberof CreatePricePlanArgs
      */
     meteredComponents?: Array<MeteredComponentInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePricePlanArgs
+     */
+    description?: string;
+    /**
+     * Minimum amount (in cents) to charge every price plan period.
+     * @type {number}
+     * @memberof CreatePricePlanArgs
+     */
+    minimumCharge?: number | null;
 }
 
 export function CreatePricePlanArgsFromJSON(json: any): CreatePricePlanArgs {
@@ -152,21 +158,22 @@ export function CreatePricePlanArgsFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
-        'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
-        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
         'basePriceFrequency': !exists(json, 'base_price_frequency') ? undefined : json['base_price_frequency'],
-        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'basePrice': !exists(json, 'base_price') ? undefined : json['base_price'],
+        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
+        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
-        'period': !exists(json, 'period') ? undefined : json['period'],
+        'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
+        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
         'trial': !exists(json, 'trial') ? undefined : TrialInputArgsFromJSON(json['trial']),
-        'basePrice': !exists(json, 'base_price') ? undefined : json['base_price'],
+        'period': !exists(json, 'period') ? undefined : json['period'],
         'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
     };
 }
 
@@ -179,21 +186,22 @@ export function CreatePricePlanArgsToJSON(value?: CreatePricePlanArgs | null): a
     }
     return {
         
-        'display_name': value.displayName,
-        'base_price_description': value.basePriceDescription,
-        'minimum_charge': value.minimumCharge,
-        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
-        'description': value.description,
-        'name': value.name,
+        'minimum_charge_frequency': value.minimumChargeFrequency,
         'base_price_frequency': value.basePriceFrequency,
-        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
+        'name': value.name,
+        'base_price': value.basePrice,
+        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
+        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
+        'display_name': value.displayName,
         'tags': value.tags,
         'vendor_id': value.vendorId,
-        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
-        'period': value.period,
+        'base_price_description': value.basePriceDescription,
+        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
         'trial': TrialInputArgsToJSON(value.trial),
-        'base_price': value.basePrice,
+        'period': value.period,
         'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
+        'description': value.description,
+        'minimum_charge': value.minimumCharge,
     };
 }
 

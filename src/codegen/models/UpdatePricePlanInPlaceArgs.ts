@@ -46,16 +46,22 @@ import {
 export interface UpdatePricePlanInPlaceArgs {
     /**
      * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    features?: Array<FeatureInputArgs>;
+    /**
+     * 
      * @type {string}
      * @memberof UpdatePricePlanInPlaceArgs
      */
     displayName?: string;
     /**
      * 
-     * @type {Array<FeatureInputArgs>}
+     * @type {Array<LimitInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
-    features?: Array<FeatureInputArgs>;
+    limits?: Array<LimitInputArgs>;
     /**
      * Custom invoice description for the base price line item.
      * @type {string}
@@ -64,28 +70,22 @@ export interface UpdatePricePlanInPlaceArgs {
     basePriceDescription?: string | null;
     /**
      * 
+     * @type {Array<MeteredComponentInputArgs>}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    meteredComponents?: Array<MeteredComponentInputArgs>;
+    /**
+     * 
      * @type {string}
      * @memberof UpdatePricePlanInPlaceArgs
      */
     description?: string;
     /**
      * 
-     * @type {Array<LimitInputArgs>}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    limits?: Array<LimitInputArgs>;
-    /**
-     * 
      * @type {Array<AddOnInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
     addOns?: Array<AddOnInputArgs>;
-    /**
-     * 
-     * @type {Array<MeteredComponentInputArgs>}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    meteredComponents?: Array<MeteredComponentInputArgs>;
 }
 
 export function UpdatePricePlanInPlaceArgsFromJSON(json: any): UpdatePricePlanInPlaceArgs {
@@ -98,13 +98,13 @@ export function UpdatePricePlanInPlaceArgsFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
-        'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
-        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
+        'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
         'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
     };
 }
 
@@ -117,13 +117,13 @@ export function UpdatePricePlanInPlaceArgsToJSON(value?: UpdatePricePlanInPlaceA
     }
     return {
         
-        'display_name': value.displayName,
         'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
-        'base_price_description': value.basePriceDescription,
-        'description': value.description,
+        'display_name': value.displayName,
         'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
-        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
+        'base_price_description': value.basePriceDescription,
         'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
+        'description': value.description,
+        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
     };
 }
 

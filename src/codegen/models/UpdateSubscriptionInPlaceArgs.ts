@@ -39,11 +39,11 @@ export interface UpdateSubscriptionInPlaceArgs {
      */
     couponOverrideName?: string;
     /**
-     * 
-     * @type {Array<SubscriptionAddOnInput>}
+     * DEPRECATED - use discounts field
+     * @type {DiscountInputArgs}
      * @memberof UpdateSubscriptionInPlaceArgs
      */
-    addOns?: Array<SubscriptionAddOnInput> | null;
+    discountOverride?: DiscountInputArgs | null;
     /**
      * 
      * @type {Array<DiscountInputArgs>}
@@ -51,11 +51,11 @@ export interface UpdateSubscriptionInPlaceArgs {
      */
     discounts?: Array<DiscountInputArgs>;
     /**
-     * DEPRECATED - use discounts field
-     * @type {DiscountInputArgs}
+     * 
+     * @type {Array<SubscriptionAddOnInput>}
      * @memberof UpdateSubscriptionInPlaceArgs
      */
-    discountOverride?: DiscountInputArgs | null;
+    addOns?: Array<SubscriptionAddOnInput> | null;
 }
 
 export function UpdateSubscriptionInPlaceArgsFromJSON(json: any): UpdateSubscriptionInPlaceArgs {
@@ -69,9 +69,9 @@ export function UpdateSubscriptionInPlaceArgsFromJSONTyped(json: any, ignoreDisc
     return {
         
         'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
-        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
-        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
         'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
+        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
+        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
     };
 }
 
@@ -85,9 +85,9 @@ export function UpdateSubscriptionInPlaceArgsToJSON(value?: UpdateSubscriptionIn
     return {
         
         'coupon_override_name': value.couponOverrideName,
-        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
-        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
         'discount_override': DiscountInputArgsToJSON(value.discountOverride),
+        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
+        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
     };
 }
 

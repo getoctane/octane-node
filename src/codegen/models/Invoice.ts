@@ -27,41 +27,17 @@ import {
  */
 export interface Invoice {
     /**
-     * Amount due before any credits are applied
-     * @type {number}
+     * False if invoice has not been sent to the customer
+     * @type {boolean}
      * @memberof Invoice
      */
-    subTotal?: number;
+    isInvoiced?: boolean;
     /**
      * 
      * @type {string}
      * @memberof Invoice
      */
-    status?: string;
-    /**
-     * [DEPRECATED] Start time of the cycle in which the invoice was generated
-     * @type {Date}
-     * @memberof Invoice
-     */
-    startTime?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Invoice
-     */
-    latestPaymentAttemptAt?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Invoice
-     */
-    dueDate?: Date;
-    /**
-     * Any discount credits applied to the invoice
-     * @type {number}
-     * @memberof Invoice
-     */
-    discountCredit?: number;
+    id?: string;
     /**
      * The number of retries done to send the invoice
      * @type {number}
@@ -69,41 +45,23 @@ export interface Invoice {
      */
     invoiceRetryAttempt?: number;
     /**
-     * Non-empty string if there was an error while sending out invoice
-     * @type {string}
-     * @memberof Invoice
-     */
-    invoicingError?: string;
-    /**
      * Non-empty string if there was an error while processing payment
      * @type {string}
      * @memberof Invoice
      */
     paymentError?: string;
     /**
-     * The date the invoice will be issued to the end customer or forwarded to the payment processor.
-     * @type {Date}
-     * @memberof Invoice
-     */
-    issueDate?: Date;
-    /**
-     * The number of retries done to process the payment
-     * @type {number}
-     * @memberof Invoice
-     */
-    paymentRetryAttempt?: number;
-    /**
      * 
-     * @type {Date}
+     * @type {string}
      * @memberof Invoice
      */
-    latestInvoiceAttemptAt?: Date;
+    pdfUrl?: string;
     /**
-     * False if not paid yet
-     * @type {boolean}
+     * Name of the customer this invoice is for.
+     * @type {string}
      * @memberof Invoice
      */
-    isPaid?: boolean;
+    customerName?: string;
     /**
      * [DEPRECATED] End time of the cycle in which the invoice was generated
      * @type {Date}
@@ -112,40 +70,22 @@ export interface Invoice {
     endTime?: Date;
     /**
      * 
-     * @type {string}
-     * @memberof Invoice
-     */
-    pdfUrl?: string;
-    /**
-     * Tax amount applied to subtotal
-     * @type {number}
-     * @memberof Invoice
-     */
-    taxAmount?: number;
-    /**
-     * Total amount due
-     * @type {number}
-     * @memberof Invoice
-     */
-    amountDue?: number;
-    /**
-     * 
-     * @type {Array<LineItems>}
-     * @memberof Invoice
-     */
-    lineItems?: Array<LineItems>;
-    /**
-     * 
-     * @type {string}
-     * @memberof Invoice
-     */
-    id?: string;
-    /**
-     * Earliest start time of line items covered by the invoice
      * @type {Date}
      * @memberof Invoice
      */
-    minItemStartTime?: Date;
+    latestInvoiceAttemptAt?: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof Invoice
+     */
+    latestPaymentAttemptAt?: Date;
+    /**
+     * Any discount credits applied to the invoice
+     * @type {number}
+     * @memberof Invoice
+     */
+    discountCredit?: number;
     /**
      * False if not approved
      * @type {boolean}
@@ -153,17 +93,89 @@ export interface Invoice {
      */
     isApproved?: boolean;
     /**
-     * False if invoice has not been sent to the customer
-     * @type {boolean}
+     * 
+     * @type {Date}
      * @memberof Invoice
      */
-    isInvoiced?: boolean;
+    dueDate?: Date;
+    /**
+     * The number of retries done to process the payment
+     * @type {number}
+     * @memberof Invoice
+     */
+    paymentRetryAttempt?: number;
+    /**
+     * [DEPRECATED] Start time of the cycle in which the invoice was generated
+     * @type {Date}
+     * @memberof Invoice
+     */
+    startTime?: Date;
+    /**
+     * Total amount due
+     * @type {number}
+     * @memberof Invoice
+     */
+    amountDue?: number;
+    /**
+     * If there is an error processing this invoice, this field contains the error message.
+     * @type {string}
+     * @memberof Invoice
+     */
+    statusError?: string;
+    /**
+     * Tax amount applied to subtotal
+     * @type {number}
+     * @memberof Invoice
+     */
+    taxAmount?: number;
     /**
      * Latest end time of line items covered by the invoice
      * @type {Date}
      * @memberof Invoice
      */
     maxItemEndTime?: Date;
+    /**
+     * The potentially permanent state this invoice can live in (e.g., ISSUED if the invoice has been issued to the customer)
+     * @type {string}
+     * @memberof Invoice
+     */
+    status?: string;
+    /**
+     * Amount due before any credits are applied
+     * @type {number}
+     * @memberof Invoice
+     */
+    subTotal?: number;
+    /**
+     * Earliest start time of line items covered by the invoice
+     * @type {Date}
+     * @memberof Invoice
+     */
+    minItemStartTime?: Date;
+    /**
+     * Non-empty string if there was an error while sending out invoice
+     * @type {string}
+     * @memberof Invoice
+     */
+    invoicingError?: string;
+    /**
+     * False if not paid yet
+     * @type {boolean}
+     * @memberof Invoice
+     */
+    isPaid?: boolean;
+    /**
+     * 
+     * @type {Array<LineItems>}
+     * @memberof Invoice
+     */
+    lineItems?: Array<LineItems>;
+    /**
+     * The date the invoice will be issued to the end customer or forwarded to the payment processor.
+     * @type {Date}
+     * @memberof Invoice
+     */
+    issueDate?: Date;
 }
 
 export function InvoiceFromJSON(json: any): Invoice {
@@ -176,29 +188,31 @@ export function InvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolean): I
     }
     return {
         
-        'subTotal': !exists(json, 'sub_total') ? undefined : json['sub_total'],
-        'status': !exists(json, 'status') ? undefined : json['status'],
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'latestPaymentAttemptAt': !exists(json, 'latest_payment_attempt_at') ? undefined : (new Date(json['latest_payment_attempt_at'])),
-        'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
-        'discountCredit': !exists(json, 'discount_credit') ? undefined : json['discount_credit'],
-        'invoiceRetryAttempt': !exists(json, 'invoice_retry_attempt') ? undefined : json['invoice_retry_attempt'],
-        'invoicingError': !exists(json, 'invoicing_error') ? undefined : json['invoicing_error'],
-        'paymentError': !exists(json, 'payment_error') ? undefined : json['payment_error'],
-        'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
-        'paymentRetryAttempt': !exists(json, 'payment_retry_attempt') ? undefined : json['payment_retry_attempt'],
-        'latestInvoiceAttemptAt': !exists(json, 'latest_invoice_attempt_at') ? undefined : (new Date(json['latest_invoice_attempt_at'])),
-        'isPaid': !exists(json, 'is_paid') ? undefined : json['is_paid'],
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
-        'pdfUrl': !exists(json, 'pdf_url') ? undefined : json['pdf_url'],
-        'taxAmount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
-        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
-        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(LineItemsFromJSON)),
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'minItemStartTime': !exists(json, 'min_item_start_time') ? undefined : (new Date(json['min_item_start_time'])),
-        'isApproved': !exists(json, 'is_approved') ? undefined : json['is_approved'],
         'isInvoiced': !exists(json, 'is_invoiced') ? undefined : json['is_invoiced'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'invoiceRetryAttempt': !exists(json, 'invoice_retry_attempt') ? undefined : json['invoice_retry_attempt'],
+        'paymentError': !exists(json, 'payment_error') ? undefined : json['payment_error'],
+        'pdfUrl': !exists(json, 'pdf_url') ? undefined : json['pdf_url'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'latestInvoiceAttemptAt': !exists(json, 'latest_invoice_attempt_at') ? undefined : (new Date(json['latest_invoice_attempt_at'])),
+        'latestPaymentAttemptAt': !exists(json, 'latest_payment_attempt_at') ? undefined : (new Date(json['latest_payment_attempt_at'])),
+        'discountCredit': !exists(json, 'discount_credit') ? undefined : json['discount_credit'],
+        'isApproved': !exists(json, 'is_approved') ? undefined : json['is_approved'],
+        'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
+        'paymentRetryAttempt': !exists(json, 'payment_retry_attempt') ? undefined : json['payment_retry_attempt'],
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
+        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
+        'statusError': !exists(json, 'status_error') ? undefined : json['status_error'],
+        'taxAmount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
         'maxItemEndTime': !exists(json, 'max_item_end_time') ? undefined : (new Date(json['max_item_end_time'])),
+        'status': !exists(json, 'status') ? undefined : json['status'],
+        'subTotal': !exists(json, 'sub_total') ? undefined : json['sub_total'],
+        'minItemStartTime': !exists(json, 'min_item_start_time') ? undefined : (new Date(json['min_item_start_time'])),
+        'invoicingError': !exists(json, 'invoicing_error') ? undefined : json['invoicing_error'],
+        'isPaid': !exists(json, 'is_paid') ? undefined : json['is_paid'],
+        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(LineItemsFromJSON)),
+        'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
     };
 }
 
@@ -211,29 +225,31 @@ export function InvoiceToJSON(value?: Invoice | null): any {
     }
     return {
         
-        'sub_total': value.subTotal,
-        'status': value.status,
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'latest_payment_attempt_at': value.latestPaymentAttemptAt === undefined ? undefined : (value.latestPaymentAttemptAt.toISOString()),
-        'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
-        'discount_credit': value.discountCredit,
-        'invoice_retry_attempt': value.invoiceRetryAttempt,
-        'invoicing_error': value.invoicingError,
-        'payment_error': value.paymentError,
-        'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
-        'payment_retry_attempt': value.paymentRetryAttempt,
-        'latest_invoice_attempt_at': value.latestInvoiceAttemptAt === undefined ? undefined : (value.latestInvoiceAttemptAt.toISOString()),
-        'is_paid': value.isPaid,
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
-        'pdf_url': value.pdfUrl,
-        'tax_amount': value.taxAmount,
-        'amount_due': value.amountDue,
-        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(LineItemsToJSON)),
-        'id': value.id,
-        'min_item_start_time': value.minItemStartTime === undefined ? undefined : (value.minItemStartTime.toISOString()),
-        'is_approved': value.isApproved,
         'is_invoiced': value.isInvoiced,
+        'id': value.id,
+        'invoice_retry_attempt': value.invoiceRetryAttempt,
+        'payment_error': value.paymentError,
+        'pdf_url': value.pdfUrl,
+        'customer_name': value.customerName,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'latest_invoice_attempt_at': value.latestInvoiceAttemptAt === undefined ? undefined : (value.latestInvoiceAttemptAt.toISOString()),
+        'latest_payment_attempt_at': value.latestPaymentAttemptAt === undefined ? undefined : (value.latestPaymentAttemptAt.toISOString()),
+        'discount_credit': value.discountCredit,
+        'is_approved': value.isApproved,
+        'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
+        'payment_retry_attempt': value.paymentRetryAttempt,
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
+        'amount_due': value.amountDue,
+        'status_error': value.statusError,
+        'tax_amount': value.taxAmount,
         'max_item_end_time': value.maxItemEndTime === undefined ? undefined : (value.maxItemEndTime.toISOString()),
+        'status': value.status,
+        'sub_total': value.subTotal,
+        'min_item_start_time': value.minItemStartTime === undefined ? undefined : (value.minItemStartTime.toISOString()),
+        'invoicing_error': value.invoicingError,
+        'is_paid': value.isPaid,
+        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(LineItemsToJSON)),
+        'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
     };
 }
 
