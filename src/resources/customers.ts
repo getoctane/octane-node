@@ -241,6 +241,19 @@ class Customers extends BaseResource {
       overrides,
     );
   }
+
+  /**
+   * Create the customer entity tied to your accounting software.
+   */
+  public createAccountingCustomer(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<void> {
+    return this.api.customersCustomerNameAccountingGenerationPost(
+      { customerName },
+      overrides,
+    );
+  }
 }
 
 export { Customers };
