@@ -5,7 +5,7 @@ exports[`Customers resource makes create requests 1`] = `
   [
     "https://api.made.up.host:1337/customers/",
     {
-      "body": "{"contact_info":{"address_line_2":"Apt. 4F","address_line_1":"1600 Pennsylvania Avenue NW","zipcode":"20500","city":"Washington","state":"DC"},"name":"chuck_testa","display_name":"Chuck Testa"}",
+      "body": "{"display_name":"Chuck Testa","name":"chuck_testa","contact_info":{"address_line_1":"1600 Pennsylvania Avenue NW","zipcode":"20500","state":"DC","address_line_2":"Apt. 4F","city":"Washington"}}",
       "credentials": undefined,
       "headers": {
         "Authorization": "Bearer 867-5309",
@@ -70,7 +70,7 @@ exports[`Customers resource makes update requests 1`] = `
   [
     "https://api.made.up.host:1337/customers/chuck_testa",
     {
-      "body": "{"contact_info":{"address_line_2":"Apt. 4F","address_line_1":"1600 Pennsylvania Avenue NW","zipcode":"20500","city":"Washington","state":"DC"},"name":"chuck_testa","display_name":"Chuck Testa"}",
+      "body": "{"display_name":"Chuck Testa","name":"chuck_testa","contact_info":{"address_line_1":"1600 Pennsylvania Avenue NW","zipcode":"20500","state":"DC","address_line_2":"Apt. 4F","city":"Washington"}}",
       "credentials": undefined,
       "headers": {
         "Authorization": "Bearer 867-5309",
