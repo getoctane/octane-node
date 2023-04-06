@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface PriceTier {
     /**
-     * Cap of the tier, meaning that any subsequent usage will be bucketed into the following tier. If cap is undefined, it is effectively treated as Infinity.
-     * @type {number}
+     * The line item description to use if usage falls in this tier.
+     * @type {string}
      * @memberof PriceTier
      */
-    cap?: number;
+    description?: string;
     /**
      * The price (in lowest currency denomination by which to charge, given that the usage is within the cap range.
      * @type {number}
@@ -32,11 +32,11 @@ export interface PriceTier {
      */
     price: number;
     /**
-     * The line item description to use if usage falls in this tier.
-     * @type {string}
+     * Cap of the tier, meaning that any subsequent usage will be bucketed into the following tier. If cap is undefined, it is effectively treated as Infinity.
+     * @type {number}
      * @memberof PriceTier
      */
-    description?: string;
+    cap?: number;
 }
 
 export function PriceTierFromJSON(json: any): PriceTier {
@@ -49,9 +49,9 @@ export function PriceTierFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'cap': !exists(json, 'cap') ? undefined : json['cap'],
-        'price': json['price'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'price': json['price'],
+        'cap': !exists(json, 'cap') ? undefined : json['cap'],
     };
 }
 
@@ -64,9 +64,9 @@ export function PriceTierToJSON(value?: PriceTier | null): any {
     }
     return {
         
-        'cap': value.cap,
-        'price': value.price,
         'description': value.description,
+        'price': value.price,
+        'cap': value.cap,
     };
 }
 

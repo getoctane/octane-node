@@ -27,17 +27,17 @@ import {
  */
 export interface UpdateMeteredComponentLimitsInput {
     /**
-     * 
-     * @type {Array<MeteredComponentLabelLimitInputArgs>}
-     * @memberof UpdateMeteredComponentLimitsInput
-     */
-    labelLimits?: Array<MeteredComponentLabelLimitInputArgs>;
-    /**
      * Numeric limit to set on customer usage for the meter.
      * @type {number}
      * @memberof UpdateMeteredComponentLimitsInput
      */
     limit?: number | null;
+    /**
+     * 
+     * @type {Array<MeteredComponentLabelLimitInputArgs>}
+     * @memberof UpdateMeteredComponentLimitsInput
+     */
+    labelLimits?: Array<MeteredComponentLabelLimitInputArgs>;
 }
 
 export function UpdateMeteredComponentLimitsInputFromJSON(json: any): UpdateMeteredComponentLimitsInput {
@@ -50,8 +50,8 @@ export function UpdateMeteredComponentLimitsInputFromJSONTyped(json: any, ignore
     }
     return {
         
-        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(MeteredComponentLabelLimitInputArgsFromJSON)),
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(MeteredComponentLabelLimitInputArgsFromJSON)),
     };
 }
 
@@ -64,8 +64,8 @@ export function UpdateMeteredComponentLimitsInputToJSON(value?: UpdateMeteredCom
     }
     return {
         
-        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(MeteredComponentLabelLimitInputArgsToJSON)),
         'limit': value.limit,
+        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(MeteredComponentLabelLimitInputArgsToJSON)),
     };
 }
 

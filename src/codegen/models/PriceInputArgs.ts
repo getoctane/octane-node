@@ -21,12 +21,6 @@ import { exists, mapValues } from '../runtime';
 export interface PriceInputArgs {
     /**
      * 
-     * @type {number}
-     * @memberof PriceInputArgs
-     */
-    price?: number;
-    /**
-     * 
      * @type {string}
      * @memberof PriceInputArgs
      */
@@ -37,6 +31,12 @@ export interface PriceInputArgs {
      * @memberof PriceInputArgs
      */
     cap?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PriceInputArgs
+     */
+    price?: number;
 }
 
 export function PriceInputArgsFromJSON(json: any): PriceInputArgs {
@@ -49,9 +49,9 @@ export function PriceInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'price': !exists(json, 'price') ? undefined : json['price'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'cap': !exists(json, 'cap') ? undefined : json['cap'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
     };
 }
 
@@ -64,9 +64,9 @@ export function PriceInputArgsToJSON(value?: PriceInputArgs | null): any {
     }
     return {
         
-        'price': value.price,
         'description': value.description,
         'cap': value.cap,
+        'price': value.price,
     };
 }
 

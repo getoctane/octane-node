@@ -28,13 +28,13 @@ import {
 
 export interface InvoicesGetRequest {
     limit?: number;
-    forwardSortOffset?: string;
-    customerName?: string;
     sortDirection?: string;
     startTime?: Date;
-    forwardSecondarySortOffset?: string;
     status?: string;
+    forwardSortOffset?: string;
+    forwardSecondarySortOffset?: string;
     sortColumn?: string;
+    customerName?: string;
 }
 
 export interface InvoicesInvoiceUuidDeleteRequest {
@@ -74,14 +74,6 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
-        }
-
-        if (requestParameters.customerName !== undefined) {
-            queryParameters['customer_name'] = requestParameters.customerName;
-        }
-
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
         }
@@ -90,16 +82,24 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
-        }
-
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
 
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        }
+
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        }
+
         if (requestParameters.sortColumn !== undefined) {
             queryParameters['sort_column'] = requestParameters.sortColumn;
+        }
+
+        if (requestParameters.customerName !== undefined) {
+            queryParameters['customer_name'] = requestParameters.customerName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

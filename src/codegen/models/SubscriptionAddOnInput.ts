@@ -26,17 +26,17 @@ export interface SubscriptionAddOnInput {
      */
     name: string;
     /**
-     * Override for the add-on price on this subscription.
-     * @type {number}
-     * @memberof SubscriptionAddOnInput
-     */
-    price?: number;
-    /**
      * 
      * @type {number}
      * @memberof SubscriptionAddOnInput
      */
     quantity?: number;
+    /**
+     * Override for the add-on price on this subscription.
+     * @type {number}
+     * @memberof SubscriptionAddOnInput
+     */
+    price?: number;
 }
 
 export function SubscriptionAddOnInputFromJSON(json: any): SubscriptionAddOnInput {
@@ -50,8 +50,8 @@ export function SubscriptionAddOnInputFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'name': json['name'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
     };
 }
 
@@ -65,8 +65,8 @@ export function SubscriptionAddOnInputToJSON(value?: SubscriptionAddOnInput | nu
     return {
         
         'name': value.name,
-        'price': value.price,
         'quantity': value.quantity,
+        'price': value.price,
     };
 }
 

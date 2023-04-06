@@ -27,17 +27,17 @@ import {
  */
 export interface CustomerPortalMeterLabelFilter {
     /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalLabelFilter>}
-     * @memberof CustomerPortalMeterLabelFilter
-     */
-    labelFilters: Array<CustomerPortalLabelFilter>;
-    /**
      * Name of the meter.
      * @type {string}
      * @memberof CustomerPortalMeterLabelFilter
      */
     meterName: string;
+    /**
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalLabelFilter>}
+     * @memberof CustomerPortalMeterLabelFilter
+     */
+    labelFilters: Array<CustomerPortalLabelFilter>;
 }
 
 export function CustomerPortalMeterLabelFilterFromJSON(json: any): CustomerPortalMeterLabelFilter {
@@ -50,8 +50,8 @@ export function CustomerPortalMeterLabelFilterFromJSONTyped(json: any, ignoreDis
     }
     return {
         
-        'labelFilters': ((json['label_filters'] as Array<any>).map(CustomerPortalLabelFilterFromJSON)),
         'meterName': json['meter_name'],
+        'labelFilters': ((json['label_filters'] as Array<any>).map(CustomerPortalLabelFilterFromJSON)),
     };
 }
 
@@ -64,8 +64,8 @@ export function CustomerPortalMeterLabelFilterToJSON(value?: CustomerPortalMeter
     }
     return {
         
-        'label_filters': ((value.labelFilters as Array<any>).map(CustomerPortalLabelFilterToJSON)),
         'meter_name': value.meterName,
+        'label_filters': ((value.labelFilters as Array<any>).map(CustomerPortalLabelFilterToJSON)),
     };
 }
 

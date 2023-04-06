@@ -33,11 +33,11 @@ import {
  */
 export interface CustomerPortalPaymentMethod {
     /**
-     * Info about the customer's US bank account, if that is their payment method.
-     * @type {BankAccountInfo}
+     * Info about the customer's card, if that is their payment method.
+     * @type {CardInfo}
      * @memberof CustomerPortalPaymentMethod
      */
-    bankAccountInfo?: BankAccountInfo | null;
+    cardInfo?: CardInfo | null;
     /**
      * Type of payment method for the customer.
      * @type {string}
@@ -45,11 +45,11 @@ export interface CustomerPortalPaymentMethod {
      */
     paymentMethodType?: string;
     /**
-     * Info about the customer's card, if that is their payment method.
-     * @type {CardInfo}
+     * Info about the customer's US bank account, if that is their payment method.
+     * @type {BankAccountInfo}
      * @memberof CustomerPortalPaymentMethod
      */
-    cardInfo?: CardInfo | null;
+    bankAccountInfo?: BankAccountInfo | null;
 }
 
 export function CustomerPortalPaymentMethodFromJSON(json: any): CustomerPortalPaymentMethod {
@@ -62,9 +62,9 @@ export function CustomerPortalPaymentMethodFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'bankAccountInfo': !exists(json, 'bank_account_info') ? undefined : BankAccountInfoFromJSON(json['bank_account_info']),
-        'paymentMethodType': !exists(json, 'payment_method_type') ? undefined : json['payment_method_type'],
         'cardInfo': !exists(json, 'card_info') ? undefined : CardInfoFromJSON(json['card_info']),
+        'paymentMethodType': !exists(json, 'payment_method_type') ? undefined : json['payment_method_type'],
+        'bankAccountInfo': !exists(json, 'bank_account_info') ? undefined : BankAccountInfoFromJSON(json['bank_account_info']),
     };
 }
 
@@ -77,9 +77,9 @@ export function CustomerPortalPaymentMethodToJSON(value?: CustomerPortalPaymentM
     }
     return {
         
-        'bank_account_info': BankAccountInfoToJSON(value.bankAccountInfo),
-        'payment_method_type': value.paymentMethodType,
         'card_info': CardInfoToJSON(value.cardInfo),
+        'payment_method_type': value.paymentMethodType,
+        'bank_account_info': BankAccountInfoToJSON(value.bankAccountInfo),
     };
 }
 

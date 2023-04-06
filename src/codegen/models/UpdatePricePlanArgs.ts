@@ -51,24 +51,6 @@ import {
  */
 export interface UpdatePricePlanArgs {
     /**
-     * The frequency (as a an integer multiple of the period) at which to charge the minimum charge.
-     * @type {number}
-     * @memberof UpdatePricePlanArgs
-     */
-    minimumChargeFrequency?: number | null;
-    /**
-     * The frequency (as a an integer multiple of the period) at which to charge the base price.
-     * @type {number}
-     * @memberof UpdatePricePlanArgs
-     */
-    basePriceFrequency?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    name?: string;
-    /**
      * 
      * @type {number}
      * @memberof UpdatePricePlanArgs
@@ -76,16 +58,16 @@ export interface UpdatePricePlanArgs {
     basePrice?: number;
     /**
      * 
-     * @type {Array<AddOnInputArgs>}
+     * @type {Array<string>}
      * @memberof UpdatePricePlanArgs
      */
-    addOns?: Array<AddOnInputArgs>;
+    tags?: Array<string>;
     /**
      * 
-     * @type {Array<FeatureInputArgs>}
+     * @type {string}
      * @memberof UpdatePricePlanArgs
      */
-    features?: Array<FeatureInputArgs>;
+    period?: string;
     /**
      * 
      * @type {string}
@@ -93,11 +75,17 @@ export interface UpdatePricePlanArgs {
      */
     displayName?: string;
     /**
-     * 
-     * @type {Array<string>}
+     * The frequency (as a an integer multiple of the period) at which to charge the minimum charge.
+     * @type {number}
      * @memberof UpdatePricePlanArgs
      */
-    tags?: Array<string>;
+    minimumChargeFrequency?: number | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanArgs
+     */
+    name?: string;
     /**
      * 
      * @type {number}
@@ -111,23 +99,17 @@ export interface UpdatePricePlanArgs {
      */
     basePriceDescription?: string | null;
     /**
+     * Minimum amount (in cents) to charge every price plan period.
+     * @type {number}
+     * @memberof UpdatePricePlanArgs
+     */
+    minimumCharge?: number | null;
+    /**
      * 
      * @type {Array<LimitInputArgs>}
      * @memberof UpdatePricePlanArgs
      */
     limits?: Array<LimitInputArgs>;
-    /**
-     * 
-     * @type {TrialInputArgs}
-     * @memberof UpdatePricePlanArgs
-     */
-    trial?: TrialInputArgs;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanArgs
-     */
-    period?: string;
     /**
      * 
      * @type {Array<MeteredComponentInputArgs>}
@@ -136,16 +118,34 @@ export interface UpdatePricePlanArgs {
     meteredComponents?: Array<MeteredComponentInputArgs>;
     /**
      * 
+     * @type {Array<AddOnInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    addOns?: Array<AddOnInputArgs>;
+    /**
+     * 
      * @type {string}
      * @memberof UpdatePricePlanArgs
      */
     description?: string;
     /**
-     * Minimum amount (in cents) to charge every price plan period.
+     * The frequency (as a an integer multiple of the period) at which to charge the base price.
      * @type {number}
      * @memberof UpdatePricePlanArgs
      */
-    minimumCharge?: number | null;
+    basePriceFrequency?: number;
+    /**
+     * 
+     * @type {TrialInputArgs}
+     * @memberof UpdatePricePlanArgs
+     */
+    trial?: TrialInputArgs;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof UpdatePricePlanArgs
+     */
+    features?: Array<FeatureInputArgs>;
 }
 
 export function UpdatePricePlanArgsFromJSON(json: any): UpdatePricePlanArgs {
@@ -158,22 +158,22 @@ export function UpdatePricePlanArgsFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
-        'basePriceFrequency': !exists(json, 'base_price_frequency') ? undefined : json['base_price_frequency'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
         'basePrice': !exists(json, 'base_price') ? undefined : json['base_price'],
-        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
-        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
+        'period': !exists(json, 'period') ? undefined : json['period'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
-        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
-        'trial': !exists(json, 'trial') ? undefined : TrialInputArgsFromJSON(json['trial']),
-        'period': !exists(json, 'period') ? undefined : json['period'],
-        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
+        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
+        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'basePriceFrequency': !exists(json, 'base_price_frequency') ? undefined : json['base_price_frequency'],
+        'trial': !exists(json, 'trial') ? undefined : TrialInputArgsFromJSON(json['trial']),
+        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
     };
 }
 
@@ -186,22 +186,22 @@ export function UpdatePricePlanArgsToJSON(value?: UpdatePricePlanArgs | null): a
     }
     return {
         
-        'minimum_charge_frequency': value.minimumChargeFrequency,
-        'base_price_frequency': value.basePriceFrequency,
-        'name': value.name,
         'base_price': value.basePrice,
-        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
-        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
-        'display_name': value.displayName,
         'tags': value.tags,
+        'period': value.period,
+        'display_name': value.displayName,
+        'minimum_charge_frequency': value.minimumChargeFrequency,
+        'name': value.name,
         'vendor_id': value.vendorId,
         'base_price_description': value.basePriceDescription,
-        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
-        'trial': TrialInputArgsToJSON(value.trial),
-        'period': value.period,
-        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
-        'description': value.description,
         'minimum_charge': value.minimumCharge,
+        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
+        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
+        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
+        'description': value.description,
+        'base_price_frequency': value.basePriceFrequency,
+        'trial': TrialInputArgsToJSON(value.trial),
+        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
     };
 }
 

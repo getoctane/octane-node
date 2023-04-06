@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface ApplyCouponInputArgs {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ApplyCouponInputArgs
      */
-    customerName?: string;
+    customerId?: number;
     /**
      * 
      * @type {string}
@@ -45,10 +45,10 @@ export interface ApplyCouponInputArgs {
     code?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    customerId?: number;
+    customerName?: string;
 }
 
 export function ApplyCouponInputArgsFromJSON(json: any): ApplyCouponInputArgs {
@@ -61,11 +61,11 @@ export function ApplyCouponInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'code': !exists(json, 'code') ? undefined : json['code'],
-        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
     };
 }
 
@@ -78,11 +78,11 @@ export function ApplyCouponInputArgsToJSON(value?: ApplyCouponInputArgs | null):
     }
     return {
         
-        'customer_name': value.customerName,
+        'customer_id': value.customerId,
         'name': value.name,
         'vendor_id': value.vendorId,
         'code': value.code,
-        'customer_id': value.customerId,
+        'customer_name': value.customerName,
     };
 }
 

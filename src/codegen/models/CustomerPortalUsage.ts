@@ -27,17 +27,11 @@ import {
  */
 export interface CustomerPortalUsage {
     /**
-     * Name of the unit the meter uses.
+     * Type of the meter. E.g. COUNTER or GAUGE.
      * @type {string}
      * @memberof CustomerPortalUsage
      */
-    unitName?: string;
-    /**
-     * Daily usage across the previous billing cycle.
-     * @type {CycleUsage}
-     * @memberof CustomerPortalUsage
-     */
-    previousCycleUsage?: CycleUsage | null;
+    meterType?: string;
     /**
      * Display name of the meter.
      * @type {string}
@@ -45,23 +39,29 @@ export interface CustomerPortalUsage {
      */
     meterDisplayName?: string;
     /**
-     * Name of the meter.
-     * @type {string}
-     * @memberof CustomerPortalUsage
-     */
-    meterName?: string;
-    /**
      * Daily usage across the current billing cycle.
      * @type {CycleUsage}
      * @memberof CustomerPortalUsage
      */
     currentCycleUsage?: CycleUsage | null;
     /**
-     * Type of the meter. E.g. COUNTER or GAUGE.
+     * Name of the meter.
      * @type {string}
      * @memberof CustomerPortalUsage
      */
-    meterType?: string;
+    meterName?: string;
+    /**
+     * Daily usage across the previous billing cycle.
+     * @type {CycleUsage}
+     * @memberof CustomerPortalUsage
+     */
+    previousCycleUsage?: CycleUsage | null;
+    /**
+     * Name of the unit the meter uses.
+     * @type {string}
+     * @memberof CustomerPortalUsage
+     */
+    unitName?: string;
 }
 
 export function CustomerPortalUsageFromJSON(json: any): CustomerPortalUsage {
@@ -74,12 +74,12 @@ export function CustomerPortalUsageFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
-        'previousCycleUsage': !exists(json, 'previous_cycle_usage') ? undefined : CycleUsageFromJSON(json['previous_cycle_usage']),
-        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
-        'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
-        'currentCycleUsage': !exists(json, 'current_cycle_usage') ? undefined : CycleUsageFromJSON(json['current_cycle_usage']),
         'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
+        'currentCycleUsage': !exists(json, 'current_cycle_usage') ? undefined : CycleUsageFromJSON(json['current_cycle_usage']),
+        'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
+        'previousCycleUsage': !exists(json, 'previous_cycle_usage') ? undefined : CycleUsageFromJSON(json['previous_cycle_usage']),
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
     };
 }
 
@@ -92,12 +92,12 @@ export function CustomerPortalUsageToJSON(value?: CustomerPortalUsage | null): a
     }
     return {
         
-        'unit_name': value.unitName,
-        'previous_cycle_usage': CycleUsageToJSON(value.previousCycleUsage),
-        'meter_display_name': value.meterDisplayName,
-        'meter_name': value.meterName,
-        'current_cycle_usage': CycleUsageToJSON(value.currentCycleUsage),
         'meter_type': value.meterType,
+        'meter_display_name': value.meterDisplayName,
+        'current_cycle_usage': CycleUsageToJSON(value.currentCycleUsage),
+        'meter_name': value.meterName,
+        'previous_cycle_usage': CycleUsageToJSON(value.previousCycleUsage),
+        'unit_name': value.unitName,
     };
 }
 

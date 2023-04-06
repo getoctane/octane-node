@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface CreateWebhookArgs {
     /**
      * 
-     * @type {string}
-     * @memberof CreateWebhookArgs
-     */
-    url?: string;
-    /**
-     * 
      * @type {boolean}
      * @memberof CreateWebhookArgs
      */
     enableSignature?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateWebhookArgs
+     */
+    url?: string;
 }
 
 export function CreateWebhookArgsFromJSON(json: any): CreateWebhookArgs {
@@ -43,8 +43,8 @@ export function CreateWebhookArgsFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'url': !exists(json, 'url') ? undefined : json['url'],
         'enableSignature': !exists(json, 'enable_signature') ? undefined : json['enable_signature'],
+        'url': !exists(json, 'url') ? undefined : json['url'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CreateWebhookArgsToJSON(value?: CreateWebhookArgs | null): any {
     }
     return {
         
-        'url': value.url,
         'enable_signature': value.enableSignature,
+        'url': value.url,
     };
 }
 

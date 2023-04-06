@@ -27,16 +27,22 @@ export interface LineItems {
     metadata?: { [key: string]: string; };
     /**
      * 
+     * @type {Date}
+     * @memberof LineItems
+     */
+    startTime?: Date;
+    /**
+     * 
+     * @type {number}
+     * @memberof LineItems
+     */
+    quantity?: number;
+    /**
+     * 
      * @type {string}
      * @memberof LineItems
      */
     price?: string;
-    /**
-     * 
-     * @type {Date}
-     * @memberof LineItems
-     */
-    endTime?: Date;
     /**
      * 
      * @type {string}
@@ -45,16 +51,16 @@ export interface LineItems {
     name?: string;
     /**
      * 
-     * @type {Date}
-     * @memberof LineItems
-     */
-    startTime?: Date;
-    /**
-     * 
      * @type {string}
      * @memberof LineItems
      */
-    id?: string;
+    quantityUnit?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof LineItems
+     */
+    endTime?: Date;
     /**
      * 
      * @type {number}
@@ -66,13 +72,7 @@ export interface LineItems {
      * @type {string}
      * @memberof LineItems
      */
-    quantityUnit?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    quantity?: number;
+    id?: string;
     /**
      * 
      * @type {string}
@@ -92,14 +92,14 @@ export function LineItemsFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
-        'name': !exists(json, 'name') ? undefined : json['name'],
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
-        'quantityUnit': !exists(json, 'quantity_unit') ? undefined : json['quantity_unit'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'quantityUnit': !exists(json, 'quantity_unit') ? undefined : json['quantity_unit'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
@@ -114,14 +114,14 @@ export function LineItemsToJSON(value?: LineItems | null): any {
     return {
         
         'metadata': value.metadata,
-        'price': value.price,
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
-        'name': value.name,
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'id': value.id,
-        'price_int': value.priceInt,
-        'quantity_unit': value.quantityUnit,
         'quantity': value.quantity,
+        'price': value.price,
+        'name': value.name,
+        'quantity_unit': value.quantityUnit,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'price_int': value.priceInt,
+        'id': value.id,
         'description': value.description,
     };
 }

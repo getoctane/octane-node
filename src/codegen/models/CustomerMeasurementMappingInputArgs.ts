@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerMeasurementMappingInputArgs {
     /**
-     * A regex used to match the value of the associated label key.
-     * @type {string}
-     * @memberof CustomerMeasurementMappingInputArgs
-     */
-    valueRegex: string;
-    /**
      * The label key used to map measurements to customers.
      * @type {string}
      * @memberof CustomerMeasurementMappingInputArgs
      */
     label: string;
+    /**
+     * A regex used to match the value of the associated label key.
+     * @type {string}
+     * @memberof CustomerMeasurementMappingInputArgs
+     */
+    valueRegex: string;
 }
 
 export function CustomerMeasurementMappingInputArgsFromJSON(json: any): CustomerMeasurementMappingInputArgs {
@@ -43,8 +43,8 @@ export function CustomerMeasurementMappingInputArgsFromJSONTyped(json: any, igno
     }
     return {
         
-        'valueRegex': json['value_regex'],
         'label': json['label'],
+        'valueRegex': json['value_regex'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerMeasurementMappingInputArgsToJSON(value?: CustomerMeasur
     }
     return {
         
-        'value_regex': value.valueRegex,
         'label': value.label,
+        'value_regex': value.valueRegex,
     };
 }
 

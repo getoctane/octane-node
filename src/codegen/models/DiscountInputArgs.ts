@@ -32,11 +32,11 @@ export interface DiscountInputArgs {
      */
     addOnName?: string;
     /**
-     * 
-     * @type {string}
+     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
+     * @type {{ [key: string]: string; }}
      * @memberof DiscountInputArgs
      */
-    discountType?: DiscountInputArgsDiscountTypeEnum;
+    labels?: { [key: string]: string; };
     /**
      * 
      * @type {number}
@@ -50,17 +50,17 @@ export interface DiscountInputArgs {
      */
     billingCycleDuration?: number;
     /**
-     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
-     * @type {{ [key: string]: string; }}
-     * @memberof DiscountInputArgs
-     */
-    labels?: { [key: string]: string; };
-    /**
      * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
      * @type {string}
      * @memberof DiscountInputArgs
      */
     meteredComponentUuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    discountType?: DiscountInputArgsDiscountTypeEnum;
 }
 
 /**
@@ -92,11 +92,11 @@ export function DiscountInputArgsFromJSONTyped(json: any, ignoreDiscriminator: b
         
         'scope': !exists(json, 'scope') ? undefined : json['scope'],
         'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
-        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
+        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
     };
 }
 
@@ -111,11 +111,11 @@ export function DiscountInputArgsToJSON(value?: DiscountInputArgs | null): any {
         
         'scope': value.scope,
         'add_on_name': value.addOnName,
-        'discount_type': value.discountType,
+        'labels': value.labels,
         'amount': value.amount,
         'billing_cycle_duration': value.billingCycleDuration,
-        'labels': value.labels,
         'metered_component_uuid': value.meteredComponentUuid,
+        'discount_type': value.discountType,
     };
 }
 

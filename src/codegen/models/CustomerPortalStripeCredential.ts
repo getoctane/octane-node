@@ -24,6 +24,12 @@ export interface CustomerPortalStripeCredential {
      * @type {string}
      * @memberof CustomerPortalStripeCredential
      */
+    accountId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalStripeCredential
+     */
     clientSecret?: string;
     /**
      * 
@@ -31,12 +37,6 @@ export interface CustomerPortalStripeCredential {
      * @memberof CustomerPortalStripeCredential
      */
     publishableKey?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalStripeCredential
-     */
-    accountId?: string;
 }
 
 export function CustomerPortalStripeCredentialFromJSON(json: any): CustomerPortalStripeCredential {
@@ -49,9 +49,9 @@ export function CustomerPortalStripeCredentialFromJSONTyped(json: any, ignoreDis
     }
     return {
         
+        'accountId': !exists(json, 'account_id') ? undefined : json['account_id'],
         'clientSecret': !exists(json, 'client_secret') ? undefined : json['client_secret'],
         'publishableKey': !exists(json, 'publishable_key') ? undefined : json['publishable_key'],
-        'accountId': !exists(json, 'account_id') ? undefined : json['account_id'],
     };
 }
 
@@ -64,9 +64,9 @@ export function CustomerPortalStripeCredentialToJSON(value?: CustomerPortalStrip
     }
     return {
         
+        'account_id': value.accountId,
         'client_secret': value.clientSecret,
         'publishable_key': value.publishableKey,
-        'account_id': value.accountId,
     };
 }
 

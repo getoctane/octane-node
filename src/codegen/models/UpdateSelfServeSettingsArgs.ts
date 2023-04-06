@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateSelfServeSettingsArgs {
     /**
-     * Time length unit for the default expiration for credits bought in the customer portal.
-     * @type {string}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    creditsExpirationUnit?: string;
-    /**
-     * True if the customer can switch their current price plan via self serve. Defaults to False.
-     * @type {boolean}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    switchPricePlans?: boolean;
-    /**
      * True if the vendor has enabled customization for their customer portal.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
@@ -49,6 +37,18 @@ export interface UpdateSelfServeSettingsArgs {
      * @memberof UpdateSelfServeSettingsArgs
      */
     customization?: boolean;
+    /**
+     * True if the customer can switch their current price plan via self serve. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    switchPricePlans?: boolean;
+    /**
+     * Time length unit for the default expiration for credits bought in the customer portal.
+     * @type {string}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsExpirationUnit?: string;
     /**
      * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
      * @type {number}
@@ -73,11 +73,11 @@ export function UpdateSelfServeSettingsArgsFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
-        'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
         'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
         'customization': !exists(json, 'customization') ? undefined : json['customization'],
+        'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
+        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
         'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
     };
@@ -92,11 +92,11 @@ export function UpdateSelfServeSettingsArgsToJSON(value?: UpdateSelfServeSetting
     }
     return {
         
-        'credits_expiration_unit': value.creditsExpirationUnit,
-        'switch_price_plans': value.switchPricePlans,
         'enabled': value.enabled,
         'credits_expiration_length': value.creditsExpirationLength,
         'customization': value.customization,
+        'switch_price_plans': value.switchPricePlans,
+        'credits_expiration_unit': value.creditsExpirationUnit,
         'price_per_credit_cents': value.pricePerCreditCents,
         'purchase_credits': value.purchaseCredits,
     };

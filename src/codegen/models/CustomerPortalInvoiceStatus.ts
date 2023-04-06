@@ -26,23 +26,11 @@ export interface CustomerPortalInvoiceStatus {
      */
     updateSource?: string;
     /**
-     * The timestamp that the action will be performed at.
+     * Time the invoice status was last updated.
      * @type {Date}
      * @memberof CustomerPortalInvoiceStatus
      */
-    pendingActionTime?: Date;
-    /**
-     * The current upcoming action associated with this invoice status, if any.
-     * @type {string}
-     * @memberof CustomerPortalInvoiceStatus
-     */
-    action?: string;
-    /**
-     * Creation time of this invoice status.
-     * @type {Date}
-     * @memberof CustomerPortalInvoiceStatus
-     */
-    createdAt?: Date;
+    updatedAt?: Date;
     /**
      * The current processing state for this invoice.
      * @type {string}
@@ -50,17 +38,29 @@ export interface CustomerPortalInvoiceStatus {
      */
     status?: string;
     /**
-     * Time the invoice status was last updated.
-     * @type {Date}
-     * @memberof CustomerPortalInvoiceStatus
-     */
-    updatedAt?: Date;
-    /**
      * 
      * @type {string}
      * @memberof CustomerPortalInvoiceStatus
      */
     error?: string;
+    /**
+     * The current upcoming action associated with this invoice status, if any.
+     * @type {string}
+     * @memberof CustomerPortalInvoiceStatus
+     */
+    action?: string;
+    /**
+     * The timestamp that the action will be performed at.
+     * @type {Date}
+     * @memberof CustomerPortalInvoiceStatus
+     */
+    pendingActionTime?: Date;
+    /**
+     * Creation time of this invoice status.
+     * @type {Date}
+     * @memberof CustomerPortalInvoiceStatus
+     */
+    createdAt?: Date;
 }
 
 export function CustomerPortalInvoiceStatusFromJSON(json: any): CustomerPortalInvoiceStatus {
@@ -74,12 +74,12 @@ export function CustomerPortalInvoiceStatusFromJSONTyped(json: any, ignoreDiscri
     return {
         
         'updateSource': !exists(json, 'update_source') ? undefined : json['update_source'],
-        'pendingActionTime': !exists(json, 'pending_action_time') ? undefined : (new Date(json['pending_action_time'])),
-        'action': !exists(json, 'action') ? undefined : json['action'],
-        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
-        'status': !exists(json, 'status') ? undefined : json['status'],
         'updatedAt': !exists(json, 'updated_at') ? undefined : (new Date(json['updated_at'])),
+        'status': !exists(json, 'status') ? undefined : json['status'],
         'error': !exists(json, 'error') ? undefined : json['error'],
+        'action': !exists(json, 'action') ? undefined : json['action'],
+        'pendingActionTime': !exists(json, 'pending_action_time') ? undefined : (new Date(json['pending_action_time'])),
+        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
     };
 }
 
@@ -93,12 +93,12 @@ export function CustomerPortalInvoiceStatusToJSON(value?: CustomerPortalInvoiceS
     return {
         
         'update_source': value.updateSource,
-        'pending_action_time': value.pendingActionTime === undefined ? undefined : (value.pendingActionTime.toISOString()),
-        'action': value.action,
-        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
-        'status': value.status,
         'updated_at': value.updatedAt === undefined ? undefined : (value.updatedAt.toISOString()),
+        'status': value.status,
         'error': value.error,
+        'action': value.action,
+        'pending_action_time': value.pendingActionTime === undefined ? undefined : (value.pendingActionTime.toISOString()),
+        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
     };
 }
 
