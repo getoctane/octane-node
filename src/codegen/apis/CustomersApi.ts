@@ -225,13 +225,13 @@ export interface CustomersCustomerNameInvoiceInvoiceIdTokenGetRequest {
 export interface CustomersCustomerNameInvoicesGetRequest {
     customerName: string;
     limit?: number;
-    forwardSortOffset?: string;
-    customerName2?: string;
     sortDirection?: string;
     startTime?: Date;
-    forwardSecondarySortOffset?: string;
     status?: string;
+    forwardSortOffset?: string;
+    forwardSecondarySortOffset?: string;
     sortColumn?: string;
+    customerName2?: string;
 }
 
 export interface CustomersCustomerNameMappingsGetRequest {
@@ -326,9 +326,9 @@ export interface CustomersCustomerNameSubscriptionsPostRequest {
 
 export interface CustomersCustomerNameUsageGetRequest {
     customerName: string;
+    meterName?: string;
     endTime?: Date;
     startTime?: Date;
-    meterName?: string;
 }
 
 export interface CustomersPostRequest {
@@ -1335,14 +1335,6 @@ export class CustomersApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
-        }
-
-        if (requestParameters.customerName2 !== undefined) {
-            queryParameters['customer_name'] = requestParameters.customerName2;
-        }
-
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
         }
@@ -1351,16 +1343,24 @@ export class CustomersApi extends runtime.BaseAPI {
             queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
-        }
-
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
 
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        }
+
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        }
+
         if (requestParameters.sortColumn !== undefined) {
             queryParameters['sort_column'] = requestParameters.sortColumn;
+        }
+
+        if (requestParameters.customerName2 !== undefined) {
+            queryParameters['customer_name'] = requestParameters.customerName2;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2243,16 +2243,16 @@ export class CustomersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.meterName !== undefined) {
+            queryParameters['meter_name'] = requestParameters.meterName;
+        }
+
         if (requestParameters.endTime !== undefined) {
             queryParameters['end_time'] = (requestParameters.endTime as any).toISOString();
         }
 
         if (requestParameters.startTime !== undefined) {
             queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
-        }
-
-        if (requestParameters.meterName !== undefined) {
-            queryParameters['meter_name'] = requestParameters.meterName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

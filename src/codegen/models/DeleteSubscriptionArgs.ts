@@ -26,6 +26,12 @@ export interface DeleteSubscriptionArgs {
      */
     expireAt?: Date;
     /**
+     * 
+     * @type {number}
+     * @memberof DeleteSubscriptionArgs
+     */
+    vendorId?: number;
+    /**
      * Boolean that indicates whether to expire the subscription at the end of thebilling cycle. If 'true' and `expire_at` is set, will return an error.
      * @type {boolean}
      * @memberof DeleteSubscriptionArgs
@@ -37,12 +43,6 @@ export interface DeleteSubscriptionArgs {
      * @memberof DeleteSubscriptionArgs
      */
     customerId?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof DeleteSubscriptionArgs
-     */
-    vendorId?: number;
 }
 
 export function DeleteSubscriptionArgsFromJSON(json: any): DeleteSubscriptionArgs {
@@ -56,9 +56,9 @@ export function DeleteSubscriptionArgsFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'expireAt': !exists(json, 'expire_at') ? undefined : (new Date(json['expire_at'])),
+        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
         'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
-        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
     };
 }
 
@@ -72,9 +72,9 @@ export function DeleteSubscriptionArgsToJSON(value?: DeleteSubscriptionArgs | nu
     return {
         
         'expire_at': value.expireAt === undefined ? undefined : (value.expireAt.toISOString()),
+        'vendor_id': value.vendorId,
         'at_cycle_end': value.atCycleEnd,
         'customer_id': value.customerId,
-        'vendor_id': value.vendorId,
     };
 }
 

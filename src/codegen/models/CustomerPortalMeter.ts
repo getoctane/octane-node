@@ -27,11 +27,11 @@ import {
  */
 export interface CustomerPortalMeter {
     /**
-     * Name of the unit the meter uses.
+     * Type of the meter. E.g. COUNTER or GAUGE.
      * @type {string}
      * @memberof CustomerPortalMeter
      */
-    unitName?: string;
+    meterType?: string;
     /**
      * Display name of the meter.
      * @type {string}
@@ -51,11 +51,11 @@ export interface CustomerPortalMeter {
      */
     meterName?: string;
     /**
-     * Type of the meter. E.g. COUNTER or GAUGE.
+     * Name of the unit the meter uses.
      * @type {string}
      * @memberof CustomerPortalMeter
      */
-    meterType?: string;
+    unitName?: string;
 }
 
 export function CustomerPortalMeterFromJSON(json: any): CustomerPortalMeter {
@@ -68,11 +68,11 @@ export function CustomerPortalMeterFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
         'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
         'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerPortalMeterToJSON(value?: CustomerPortalMeter | null): a
     }
     return {
         
-        'unit_name': value.unitName,
+        'meter_type': value.meterType,
         'meter_display_name': value.meterDisplayName,
         'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
         'meter_name': value.meterName,
-        'meter_type': value.meterType,
+        'unit_name': value.unitName,
     };
 }
 

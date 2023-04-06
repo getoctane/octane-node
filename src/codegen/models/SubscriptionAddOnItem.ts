@@ -26,12 +26,6 @@ export interface SubscriptionAddOnItem {
      */
     atCycleEnd?: boolean;
     /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionAddOnItem
-     */
-    featureName?: string;
-    /**
      * Quantity represents how many of this add on you want to attach to the subscription. Can be positive forincreasing the number of this add on or negative for decreasing.
      * @type {number}
      * @memberof SubscriptionAddOnItem
@@ -49,6 +43,12 @@ export interface SubscriptionAddOnItem {
      * @memberof SubscriptionAddOnItem
      */
     atCycleStart?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionAddOnItem
+     */
+    featureName?: string;
 }
 
 export function SubscriptionAddOnItemFromJSON(json: any): SubscriptionAddOnItem {
@@ -62,10 +62,10 @@ export function SubscriptionAddOnItemFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
-        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
         'atCycleStart': !exists(json, 'at_cycle_start') ? undefined : json['at_cycle_start'],
+        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
     };
 }
 
@@ -79,10 +79,10 @@ export function SubscriptionAddOnItemToJSON(value?: SubscriptionAddOnItem | null
     return {
         
         'at_cycle_end': value.atCycleEnd,
-        'feature_name': value.featureName,
         'quantity': value.quantity,
         'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
         'at_cycle_start': value.atCycleStart,
+        'feature_name': value.featureName,
     };
 }
 

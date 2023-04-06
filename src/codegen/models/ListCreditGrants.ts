@@ -33,17 +33,17 @@ export interface ListCreditGrants {
      */
     limit?: number;
     /**
-     * The sort column offset to start at when paging forwards
-     * @type {string}
-     * @memberof ListCreditGrants
-     */
-    forwardSortOffset?: string;
-    /**
      * 
      * @type {string}
      * @memberof ListCreditGrants
      */
     sortDirection?: string;
+    /**
+     * The sort column offset to start at when paging forwards
+     * @type {string}
+     * @memberof ListCreditGrants
+     */
+    forwardSortOffset?: string;
     /**
      * The unique offset to start at when paging forwards
      * @type {string}
@@ -75,8 +75,8 @@ export function ListCreditGrantsFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
         'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
+        'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
         'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
         'creditGrants': !exists(json, 'credit_grants') ? undefined : ((json['credit_grants'] as Array<any>).map(CreditGrantFromJSON)),
         'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
@@ -93,8 +93,8 @@ export function ListCreditGrantsToJSON(value?: ListCreditGrants | null): any {
     return {
         
         'limit': value.limit,
-        'forward_sort_offset': value.forwardSortOffset,
         'sort_direction': value.sortDirection,
+        'forward_sort_offset': value.forwardSortOffset,
         'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
         'credit_grants': value.creditGrants === undefined ? undefined : ((value.creditGrants as Array<any>).map(CreditGrantToJSON)),
         'sort_column': value.sortColumn,

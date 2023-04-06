@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateCreditTopOffPlanInputArgs {
     /**
-     * The threshold in amount of credits at which the balance will be topped off.
-     * @type {number}
+     * Time length unit for the default expiration for credits granted in a top off.
+     * @type {string}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
-    triggerAmount: number;
+    expirationUnit?: string;
     /**
      * Price for the grant, in lowest denomination (i.e cents).
      * @type {number}
@@ -32,17 +32,17 @@ export interface CreateCreditTopOffPlanInputArgs {
      */
     price: number;
     /**
+     * The threshold in amount of credits at which the balance will be topped off.
+     * @type {number}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    triggerAmount: number;
+    /**
      * Amount of credits that are granted in a single top off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     grantAmount: number;
-    /**
-     * Time length unit for the default expiration for credits granted in a top off.
-     * @type {string}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    expirationUnit?: string;
     /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
@@ -61,10 +61,10 @@ export function CreateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'triggerAmount': json['trigger_amount'],
-        'price': json['price'],
-        'grantAmount': json['grant_amount'],
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
+        'price': json['price'],
+        'triggerAmount': json['trigger_amount'],
+        'grantAmount': json['grant_amount'],
         'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
     };
 }
@@ -78,10 +78,10 @@ export function CreateCreditTopOffPlanInputArgsToJSON(value?: CreateCreditTopOff
     }
     return {
         
-        'trigger_amount': value.triggerAmount,
-        'price': value.price,
-        'grant_amount': value.grantAmount,
         'expiration_unit': value.expirationUnit,
+        'price': value.price,
+        'trigger_amount': value.triggerAmount,
+        'grant_amount': value.grantAmount,
         'expiration_length': value.expirationLength,
     };
 }

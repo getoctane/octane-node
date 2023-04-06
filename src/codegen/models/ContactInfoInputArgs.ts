@@ -24,55 +24,13 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    addressLine2?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
     vatId?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    addressLine1?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    legalName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    country?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    url?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    zipcode?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    city?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof ContactInfoInputArgs
-     */
-    email?: string | null;
+    logoUrl?: string | null;
     /**
      * List of secondary contact emails (all email communication will also be sent to these emails).
      * @type {Array<string>}
@@ -90,13 +48,55 @@ export interface ContactInfoInputArgs {
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
-    logoUrl?: string | null;
+    country?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    addressLine1?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    legalName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    zipcode?: string | null;
     /**
      * 
      * @type {string}
      * @memberof ContactInfoInputArgs
      */
     state?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    url?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    addressLine2?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    email?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContactInfoInputArgs
+     */
+    city?: string | null;
 }
 
 export function ContactInfoInputArgsFromJSON(json: any): ContactInfoInputArgs {
@@ -109,19 +109,19 @@ export function ContactInfoInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'addressLine2': !exists(json, 'address_line_2') ? undefined : json['address_line_2'],
         'vatId': !exists(json, 'vat_id') ? undefined : json['vat_id'],
-        'addressLine1': !exists(json, 'address_line_1') ? undefined : json['address_line_1'],
-        'legalName': !exists(json, 'legal_name') ? undefined : json['legal_name'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'url': !exists(json, 'url') ? undefined : json['url'],
-        'zipcode': !exists(json, 'zipcode') ? undefined : json['zipcode'],
-        'city': !exists(json, 'city') ? undefined : json['city'],
-        'email': !exists(json, 'email') ? undefined : json['email'],
+        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
         'secondaryEmails': !exists(json, 'secondary_emails') ? undefined : json['secondary_emails'],
         'phone': !exists(json, 'phone') ? undefined : json['phone'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'country': !exists(json, 'country') ? undefined : json['country'],
+        'addressLine1': !exists(json, 'address_line_1') ? undefined : json['address_line_1'],
+        'legalName': !exists(json, 'legal_name') ? undefined : json['legal_name'],
+        'zipcode': !exists(json, 'zipcode') ? undefined : json['zipcode'],
         'state': !exists(json, 'state') ? undefined : json['state'],
+        'url': !exists(json, 'url') ? undefined : json['url'],
+        'addressLine2': !exists(json, 'address_line_2') ? undefined : json['address_line_2'],
+        'email': !exists(json, 'email') ? undefined : json['email'],
+        'city': !exists(json, 'city') ? undefined : json['city'],
     };
 }
 
@@ -134,19 +134,19 @@ export function ContactInfoInputArgsToJSON(value?: ContactInfoInputArgs | null):
     }
     return {
         
-        'address_line_2': value.addressLine2,
         'vat_id': value.vatId,
-        'address_line_1': value.addressLine1,
-        'legal_name': value.legalName,
-        'country': value.country,
-        'url': value.url,
-        'zipcode': value.zipcode,
-        'city': value.city,
-        'email': value.email,
+        'logo_url': value.logoUrl,
         'secondary_emails': value.secondaryEmails,
         'phone': value.phone,
-        'logo_url': value.logoUrl,
+        'country': value.country,
+        'address_line_1': value.addressLine1,
+        'legal_name': value.legalName,
+        'zipcode': value.zipcode,
         'state': value.state,
+        'url': value.url,
+        'address_line_2': value.addressLine2,
+        'email': value.email,
+        'city': value.city,
     };
 }
 

@@ -26,12 +26,6 @@ export interface TaxCode {
      */
     taxCode?: string;
     /**
-     * The Avalara Entity Use Code represented by this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    entityUseCode?: string;
-    /**
      * The type of this tax code.
      * @type {string}
      * @memberof TaxCode
@@ -49,6 +43,12 @@ export interface TaxCode {
      * @memberof TaxCode
      */
     description?: string;
+    /**
+     * The Avalara Entity Use Code represented by this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    entityUseCode?: string;
 }
 
 export function TaxCodeFromJSON(json: any): TaxCode {
@@ -62,10 +62,10 @@ export function TaxCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     return {
         
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
     };
 }
 
@@ -79,10 +79,10 @@ export function TaxCodeToJSON(value?: TaxCode | null): any {
     return {
         
         'tax_code': value.taxCode,
-        'entity_use_code': value.entityUseCode,
         'tax_code_type_id': value.taxCodeTypeId,
         'id': value.id,
         'description': value.description,
+        'entity_use_code': value.entityUseCode,
     };
 }
 

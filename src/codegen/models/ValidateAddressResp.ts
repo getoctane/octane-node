@@ -20,23 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ValidateAddressResp {
     /**
-     * Set if 'success' is True. Geospatial latitude measurement, in Decimal Degrees (string).
-     * @type {string}
-     * @memberof ValidateAddressResp
-     */
-    latitude?: string;
-    /**
-     * True if validation was successful, False address is invalid.
-     * @type {boolean}
-     * @memberof ValidateAddressResp
-     */
-    success?: boolean;
-    /**
      * Set if 'sucess' is True. Geospatial latitude measurement, in Decimal Degrees (string).
      * @type {string}
      * @memberof ValidateAddressResp
      */
     longitude?: string;
+    /**
+     * Set if 'success' is False. Contains the details of why the address is invalid.
+     * @type {string}
+     * @memberof ValidateAddressResp
+     */
+    invalidAddressError?: string;
     /**
      * Set if 'success' is True. The resolution quality of the geospatial coordinates.
      * @type {string}
@@ -44,11 +38,17 @@ export interface ValidateAddressResp {
      */
     resolutionQuality?: string;
     /**
-     * Set if 'success' is False. Contains the details of why the address is invalid.
+     * True if validation was successful, False address is invalid.
+     * @type {boolean}
+     * @memberof ValidateAddressResp
+     */
+    success?: boolean;
+    /**
+     * Set if 'success' is True. Geospatial latitude measurement, in Decimal Degrees (string).
      * @type {string}
      * @memberof ValidateAddressResp
      */
-    invalidAddressError?: string;
+    latitude?: string;
 }
 
 export function ValidateAddressRespFromJSON(json: any): ValidateAddressResp {
@@ -61,11 +61,11 @@ export function ValidateAddressRespFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'latitude': !exists(json, 'latitude') ? undefined : json['latitude'],
-        'success': !exists(json, 'success') ? undefined : json['success'],
         'longitude': !exists(json, 'longitude') ? undefined : json['longitude'],
-        'resolutionQuality': !exists(json, 'resolution_quality') ? undefined : json['resolution_quality'],
         'invalidAddressError': !exists(json, 'invalid_address_error') ? undefined : json['invalid_address_error'],
+        'resolutionQuality': !exists(json, 'resolution_quality') ? undefined : json['resolution_quality'],
+        'success': !exists(json, 'success') ? undefined : json['success'],
+        'latitude': !exists(json, 'latitude') ? undefined : json['latitude'],
     };
 }
 
@@ -78,11 +78,11 @@ export function ValidateAddressRespToJSON(value?: ValidateAddressResp | null): a
     }
     return {
         
-        'latitude': value.latitude,
-        'success': value.success,
         'longitude': value.longitude,
-        'resolution_quality': value.resolutionQuality,
         'invalid_address_error': value.invalidAddressError,
+        'resolution_quality': value.resolutionQuality,
+        'success': value.success,
+        'latitude': value.latitude,
     };
 }
 

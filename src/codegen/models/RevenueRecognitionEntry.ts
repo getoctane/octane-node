@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface RevenueRecognitionEntry {
     /**
-     * The change in deferred revenue this month (in cents).
+     * The newly booked amount in this month (in cents).
      * @type {number}
      * @memberof RevenueRecognitionEntry
      */
-    deferred?: number;
+    booked?: number;
     /**
      * The change in recognized revenue this month (in cents).
      * @type {number}
@@ -32,17 +32,17 @@ export interface RevenueRecognitionEntry {
      */
     recognized?: number;
     /**
-     * The newly booked amount in this month (in cents).
-     * @type {number}
-     * @memberof RevenueRecognitionEntry
-     */
-    booked?: number;
-    /**
      * The month in which the revenue is booked and(or) recognized.
      * @type {Date}
      * @memberof RevenueRecognitionEntry
      */
     month?: Date;
+    /**
+     * The change in deferred revenue this month (in cents).
+     * @type {number}
+     * @memberof RevenueRecognitionEntry
+     */
+    deferred?: number;
 }
 
 export function RevenueRecognitionEntryFromJSON(json: any): RevenueRecognitionEntry {
@@ -55,10 +55,10 @@ export function RevenueRecognitionEntryFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
-        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
         'booked': !exists(json, 'booked') ? undefined : json['booked'],
+        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
         'month': !exists(json, 'month') ? undefined : (new Date(json['month'])),
+        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
     };
 }
 
@@ -71,10 +71,10 @@ export function RevenueRecognitionEntryToJSON(value?: RevenueRecognitionEntry | 
     }
     return {
         
-        'deferred': value.deferred,
-        'recognized': value.recognized,
         'booked': value.booked,
+        'recognized': value.recognized,
         'month': value.month === undefined ? undefined : (value.month.toISOString()),
+        'deferred': value.deferred,
     };
 }
 

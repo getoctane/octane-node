@@ -21,46 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface MeterInputArgs {
     /**
      * 
-     * @type {Array<string>}
-     * @memberof MeterInputArgs
-     */
-    primaryLabels?: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    unitName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    name?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof MeterInputArgs
-     */
-    expectedLabels?: Array<string>;
-    /**
-     * 
      * @type {boolean}
      * @memberof MeterInputArgs
      */
     isIncremental?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof MeterInputArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MeterInputArgs
-     */
-    vendorId?: number;
     /**
      * 
      * @type {string}
@@ -72,7 +36,43 @@ export interface MeterInputArgs {
      * @type {string}
      * @memberof MeterInputArgs
      */
+    displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof MeterInputArgs
+     */
+    vendorId?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MeterInputArgs
+     */
+    expectedLabels?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
     description?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeterInputArgs
+     */
+    unitName?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MeterInputArgs
+     */
+    primaryLabels?: Array<string>;
 }
 
 /**
@@ -94,15 +94,15 @@ export function MeterInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
         'isIncremental': !exists(json, 'is_incremental') ? undefined : json['is_incremental'],
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
+        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
     };
 }
 
@@ -115,15 +115,15 @@ export function MeterInputArgsToJSON(value?: MeterInputArgs | null): any {
     }
     return {
         
-        'primary_labels': value.primaryLabels,
-        'unit_name': value.unitName,
-        'name': value.name,
-        'expected_labels': value.expectedLabels,
         'is_incremental': value.isIncremental,
-        'display_name': value.displayName,
-        'vendor_id': value.vendorId,
         'meter_type': value.meterType,
+        'display_name': value.displayName,
+        'name': value.name,
+        'vendor_id': value.vendorId,
+        'expected_labels': value.expectedLabels,
         'description': value.description,
+        'unit_name': value.unitName,
+        'primary_labels': value.primaryLabels,
     };
 }
 

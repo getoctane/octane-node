@@ -20,29 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditLedger {
     /**
-     * 
-     * @type {boolean}
-     * @memberof CreditLedger
-     */
-    pending?: boolean;
-    /**
-     * The time at which this credit balance change occurred.
-     * @type {Date}
-     * @memberof CreditLedger
-     */
-    timestamp?: Date;
-    /**
      * Credit balance as of this change
      * @type {number}
      * @memberof CreditLedger
      */
     balance?: number;
     /**
+     * 
+     * @type {boolean}
+     * @memberof CreditLedger
+     */
+    pending?: boolean;
+    /**
      * The change in numer of credits
      * @type {number}
      * @memberof CreditLedger
      */
     amount?: number;
+    /**
+     * The time at which this credit balance change occurred.
+     * @type {Date}
+     * @memberof CreditLedger
+     */
+    timestamp?: Date;
 }
 
 export function CreditLedgerFromJSON(json: any): CreditLedger {
@@ -55,10 +55,10 @@ export function CreditLedgerFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'pending': !exists(json, 'pending') ? undefined : json['pending'],
-        'timestamp': !exists(json, 'timestamp') ? undefined : (new Date(json['timestamp'])),
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
+        'pending': !exists(json, 'pending') ? undefined : json['pending'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
+        'timestamp': !exists(json, 'timestamp') ? undefined : (new Date(json['timestamp'])),
     };
 }
 
@@ -71,10 +71,10 @@ export function CreditLedgerToJSON(value?: CreditLedger | null): any {
     }
     return {
         
-        'pending': value.pending,
-        'timestamp': value.timestamp === undefined ? undefined : (value.timestamp.toISOString()),
         'balance': value.balance,
+        'pending': value.pending,
         'amount': value.amount,
+        'timestamp': value.timestamp === undefined ? undefined : (value.timestamp.toISOString()),
     };
 }
 
