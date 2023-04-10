@@ -10,6 +10,8 @@ import { Configuration as APIConfiguration } from './codegen';
 const octaneDefaultHost = 'api.cloud.getoctane.io';
 
 class Octane {
+  private apiConfig: APIConfiguration;
+
   customers: Customers;
 
   measurements: Measurements;
@@ -31,10 +33,20 @@ class Octane {
       basePath: `${protocol}://${host}:${port}`,
       ...rest,
     });
+    this.apiConfig = apiConfig;
+
     this.customers = new Customers(apiConfig);
     this.measurements = new Measurements(apiConfig);
     this.meters = new Meters(apiConfig);
     this.pricePlans = new PricePlans(apiConfig);
+  }
+
+  /**
+   * Get the API configuration object. Useful for calling the
+   * generated API files directly.
+   */
+  getApiConfig(): APIConfiguration {
+    return this.apiConfig;
   }
 }
 
