@@ -17,6 +17,8 @@ import {
   UpdateSubscriptionArgs,
   ActiveSubscription,
   CustomersCustomerNameScheduledSubscriptionsGetRequest,
+  CustomerBillingSettingsInputArgs,
+  BillingSettings,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -251,6 +253,20 @@ class Customers extends BaseResource {
   ): Promise<void> {
     return this.api.customersCustomerNameAccountingGenerationPost(
       { customerName },
+      overrides,
+    );
+  }
+
+  /**
+   * Update customer's billing settings.
+   */
+  public updateBillingSettings(
+    customerName: string,
+    customerBillingSettingsInputArgs: CustomerBillingSettingsInputArgs,
+    overrides?: RequestInit,
+  ): Promise<BillingSettings> {
+    return this.api.customersCustomerNameBillingSettingsPut(
+      { customerName, customerBillingSettingsInputArgs },
       overrides,
     );
   }
