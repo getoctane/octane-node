@@ -258,6 +258,20 @@ class Customers extends BaseResource {
   }
 
   /**
+   * Create customer's billing settings.
+   */
+  public createBillingSettings(
+    customerName: string,
+    customerBillingSettingsInputArgs: CustomerBillingSettingsInputArgs,
+    overrides?: RequestInit,
+  ): Promise<BillingSettings> {
+    return this.api.customersCustomerNameBillingSettingsPost(
+      { customerName, customerBillingSettingsInputArgs },
+      overrides,
+    );
+  }
+
+  /**
    * Update customer's billing settings.
    */
   public updateBillingSettings(
