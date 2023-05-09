@@ -24,13 +24,13 @@ export interface BillingCycleDate {
      * @type {Date}
      * @memberof BillingCycleDate
      */
-    cycleStart: Date;
+    cycleEnd: Date;
     /**
      * 
      * @type {Date}
      * @memberof BillingCycleDate
      */
-    cycleEnd: Date;
+    cycleStart: Date;
 }
 
 export function BillingCycleDateFromJSON(json: any): BillingCycleDate {
@@ -43,8 +43,8 @@ export function BillingCycleDateFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'cycleStart': (new Date(json['cycle_start'])),
         'cycleEnd': (new Date(json['cycle_end'])),
+        'cycleStart': (new Date(json['cycle_start'])),
     };
 }
 
@@ -57,8 +57,8 @@ export function BillingCycleDateToJSON(value?: BillingCycleDate | null): any {
     }
     return {
         
-        'cycle_start': (value.cycleStart.toISOString()),
         'cycle_end': (value.cycleEnd.toISOString()),
+        'cycle_start': (value.cycleStart.toISOString()),
     };
 }
 

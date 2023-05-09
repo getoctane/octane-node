@@ -28,22 +28,16 @@ import {
 export interface CustomerFeature {
     /**
      * 
-     * @type {number}
-     * @memberof CustomerFeature
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerFeature
-     */
-    quantity?: number;
-    /**
-     * 
      * @type {Array<CustomerLabelLimit>}
      * @memberof CustomerFeature
      */
     labelLimits?: Array<CustomerLabelLimit>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerFeature
+     */
+    limit?: number;
     /**
      * 
      * @type {string}
@@ -56,6 +50,12 @@ export interface CustomerFeature {
      * @memberof CustomerFeature
      */
     enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerFeature
+     */
+    quantity?: number;
 }
 
 export function CustomerFeatureFromJSON(json: any): CustomerFeature {
@@ -68,11 +68,11 @@ export function CustomerFeatureFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(CustomerLabelLimitFromJSON)),
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
         'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerFeatureToJSON(value?: CustomerFeature | null): any {
     }
     return {
         
-        'limit': value.limit,
-        'quantity': value.quantity,
         'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(CustomerLabelLimitToJSON)),
+        'limit': value.limit,
         'feature_name': value.featureName,
         'enabled': value.enabled,
+        'quantity': value.quantity,
     };
 }
 

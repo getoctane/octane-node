@@ -74,6 +74,18 @@ export interface MeteredComponent {
      * @memberof MeteredComponent
      */
     externalUuid?: string;
+    /**
+     * Minimum charge for the metered component
+     * @type {number}
+     * @memberof MeteredComponent
+     */
+    minimumCharge?: number | null;
+    /**
+     * Minimum charge frequency (as a multiple of the price plan period) for the metered component
+     * @type {number}
+     * @memberof MeteredComponent
+     */
+    minimumChargeFrequency?: number | null;
 }
 
 export function MeteredComponentFromJSON(json: any): MeteredComponent {
@@ -93,6 +105,8 @@ export function MeteredComponentFromJSONTyped(json: any, ignoreDiscriminator: bo
         'labelLimits': ((json['label_limits'] as Array<any>).map(MeteredComponentLabelLimitFromJSON)),
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'externalUuid': !exists(json, 'external_uuid') ? undefined : json['external_uuid'],
+        'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
+        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
     };
 }
 
@@ -112,6 +126,8 @@ export function MeteredComponentToJSON(value?: MeteredComponent | null): any {
         'label_limits': ((value.labelLimits as Array<any>).map(MeteredComponentLabelLimitToJSON)),
         'display_name': value.displayName,
         'external_uuid': value.externalUuid,
+        'minimum_charge': value.minimumCharge,
+        'minimum_charge_frequency': value.minimumChargeFrequency,
     };
 }
 

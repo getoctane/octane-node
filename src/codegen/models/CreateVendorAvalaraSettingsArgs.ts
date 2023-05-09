@@ -26,17 +26,35 @@ export interface CreateVendorAvalaraSettingsArgs {
      */
     password: string;
     /**
-     * Username of the Avalara account.
+     * The Avalara company code string to associate the Octane vendor with.
      * @type {string}
      * @memberof CreateVendorAvalaraSettingsArgs
      */
-    username: string;
+    companyCode?: string;
     /**
      * The item description to use to represent all the lines on the Octane invoice.
      * @type {string}
      * @memberof CreateVendorAvalaraSettingsArgs
      */
     itemDescription?: string;
+    /**
+     * Username of the Avalara account.
+     * @type {string}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    username: string;
+    /**
+     * The Avalara item code to use to represent all the line items on the Octane invoice.
+     * @type {string}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    itemCode?: string;
+    /**
+     * True if the documents generated in Avalara should be committed, false otherwise. Defaults to False.
+     * @type {boolean}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    commitDocuments?: boolean;
     /**
      * True if enabling logging for Avalara calls, false otherwise. Defaults to False.
      * @type {boolean}
@@ -50,18 +68,6 @@ export interface CreateVendorAvalaraSettingsArgs {
      */
     taxCode?: string;
     /**
-     * The Avalara item code to use to represent all the line items on the Octane invoice.
-     * @type {string}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    itemCode?: string;
-    /**
-     * The Avalara company code string to associate the Octane vendor with.
-     * @type {string}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    companyCode?: string;
-    /**
      * True if connecting to Avalara sandbox account, false otherwise.
      * @type {boolean}
      * @memberof CreateVendorAvalaraSettingsArgs
@@ -73,12 +79,6 @@ export interface CreateVendorAvalaraSettingsArgs {
      * @memberof CreateVendorAvalaraSettingsArgs
      */
     enableIntegration: boolean;
-    /**
-     * True if the documents generated in Avalara should be committed, false otherwise. Defaults to False.
-     * @type {boolean}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    commitDocuments?: boolean;
 }
 
 export function CreateVendorAvalaraSettingsArgsFromJSON(json: any): CreateVendorAvalaraSettingsArgs {
@@ -92,15 +92,15 @@ export function CreateVendorAvalaraSettingsArgsFromJSONTyped(json: any, ignoreDi
     return {
         
         'password': json['password'],
-        'username': json['username'],
+        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'username': json['username'],
+        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
+        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
         'enableLogging': !exists(json, 'enable_logging') ? undefined : json['enable_logging'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
-        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
-        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'sandboxMode': json['sandbox_mode'],
         'enableIntegration': json['enable_integration'],
-        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
     };
 }
 
@@ -114,15 +114,15 @@ export function CreateVendorAvalaraSettingsArgsToJSON(value?: CreateVendorAvalar
     return {
         
         'password': value.password,
-        'username': value.username,
+        'company_code': value.companyCode,
         'item_description': value.itemDescription,
+        'username': value.username,
+        'item_code': value.itemCode,
+        'commit_documents': value.commitDocuments,
         'enable_logging': value.enableLogging,
         'tax_code': value.taxCode,
-        'item_code': value.itemCode,
-        'company_code': value.companyCode,
         'sandbox_mode': value.sandboxMode,
         'enable_integration': value.enableIntegration,
-        'commit_documents': value.commitDocuments,
     };
 }
 

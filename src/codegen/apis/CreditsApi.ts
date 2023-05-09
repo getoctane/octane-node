@@ -45,8 +45,8 @@ export interface CreditsGrantPostRequest {
 }
 
 export interface CreditsLedgerCustomerNameAsOfStrGetRequest {
-    asOfStr: string;
     customerName: string;
+    asOfStr: string;
 }
 
 export interface CreditsLedgerCustomerNameGetRequest {
@@ -188,12 +188,12 @@ export class CreditsApi extends runtime.BaseAPI {
      * Fetch a Credit Ledger
      */
     async creditsLedgerCustomerNameAsOfStrGetRaw(requestParameters: CreditsLedgerCustomerNameAsOfStrGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CreditLedger>>> {
-        if (requestParameters.asOfStr === null || requestParameters.asOfStr === undefined) {
-            throw new runtime.RequiredError('asOfStr','Required parameter requestParameters.asOfStr was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
+        }
+
+        if (requestParameters.asOfStr === null || requestParameters.asOfStr === undefined) {
+            throw new runtime.RequiredError('asOfStr','Required parameter requestParameters.asOfStr was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
         }
 
         const queryParameters: any = {};
@@ -209,7 +209,7 @@ export class CreditsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/credits/ledger/{customer_name}/{as_of_str}`.replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            path: `/credits/ledger/{customer_name}/{as_of_str}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditLedger {
     /**
-     * Credit balance as of this change
-     * @type {number}
+     * The time at which this credit balance change occurred.
+     * @type {Date}
      * @memberof CreditLedger
      */
-    balance?: number;
+    timestamp?: Date;
     /**
      * 
      * @type {boolean}
@@ -32,17 +32,17 @@ export interface CreditLedger {
      */
     pending?: boolean;
     /**
+     * Credit balance as of this change
+     * @type {number}
+     * @memberof CreditLedger
+     */
+    balance?: number;
+    /**
      * The change in numer of credits
      * @type {number}
      * @memberof CreditLedger
      */
     amount?: number;
-    /**
-     * The time at which this credit balance change occurred.
-     * @type {Date}
-     * @memberof CreditLedger
-     */
-    timestamp?: Date;
 }
 
 export function CreditLedgerFromJSON(json: any): CreditLedger {
@@ -55,10 +55,10 @@ export function CreditLedgerFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'balance': !exists(json, 'balance') ? undefined : json['balance'],
-        'pending': !exists(json, 'pending') ? undefined : json['pending'],
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'timestamp': !exists(json, 'timestamp') ? undefined : (new Date(json['timestamp'])),
+        'pending': !exists(json, 'pending') ? undefined : json['pending'],
+        'balance': !exists(json, 'balance') ? undefined : json['balance'],
+        'amount': !exists(json, 'amount') ? undefined : json['amount'],
     };
 }
 
@@ -71,10 +71,10 @@ export function CreditLedgerToJSON(value?: CreditLedger | null): any {
     }
     return {
         
-        'balance': value.balance,
-        'pending': value.pending,
-        'amount': value.amount,
         'timestamp': value.timestamp === undefined ? undefined : (value.timestamp.toISOString()),
+        'pending': value.pending,
+        'balance': value.balance,
+        'amount': value.amount,
     };
 }
 

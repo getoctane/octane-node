@@ -26,29 +26,29 @@ export interface CreateCreditTopOffPlanInputArgs {
      */
     expirationUnit?: string;
     /**
-     * Price for the grant, in lowest denomination (i.e cents).
-     * @type {number}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    price: number;
-    /**
      * The threshold in amount of credits at which the balance will be topped off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     triggerAmount: number;
     /**
-     * Amount of credits that are granted in a single top off.
+     * Price for the grant, in lowest denomination (i.e cents).
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
-    grantAmount: number;
+    price: number;
     /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     expirationLength?: number;
+    /**
+     * Amount of credits that are granted in a single top off.
+     * @type {number}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    grantAmount: number;
 }
 
 export function CreateCreditTopOffPlanInputArgsFromJSON(json: any): CreateCreditTopOffPlanInputArgs {
@@ -62,10 +62,10 @@ export function CreateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     return {
         
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
-        'price': json['price'],
         'triggerAmount': json['trigger_amount'],
-        'grantAmount': json['grant_amount'],
+        'price': json['price'],
         'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'grantAmount': json['grant_amount'],
     };
 }
 
@@ -79,10 +79,10 @@ export function CreateCreditTopOffPlanInputArgsToJSON(value?: CreateCreditTopOff
     return {
         
         'expiration_unit': value.expirationUnit,
-        'price': value.price,
         'trigger_amount': value.triggerAmount,
-        'grant_amount': value.grantAmount,
+        'price': value.price,
         'expiration_length': value.expirationLength,
+        'grant_amount': value.grantAmount,
     };
 }
 

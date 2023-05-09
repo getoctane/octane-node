@@ -16,46 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface FeatureInputArgs
+ * @interface CustomerPortalLabelDisplayName
  */
-export interface FeatureInputArgs {
+export interface CustomerPortalLabelDisplayName {
     /**
      * 
      * @type {string}
-     * @memberof FeatureInputArgs
+     * @memberof CustomerPortalLabelDisplayName
      */
     displayName?: string;
     /**
-     * 
+     * The raw value of the label data
      * @type {string}
-     * @memberof FeatureInputArgs
+     * @memberof CustomerPortalLabelDisplayName
      */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FeatureInputArgs
-     */
-    description?: string;
+    name?: string;
 }
 
-export function FeatureInputArgsFromJSON(json: any): FeatureInputArgs {
-    return FeatureInputArgsFromJSONTyped(json, false);
+export function CustomerPortalLabelDisplayNameFromJSON(json: any): CustomerPortalLabelDisplayName {
+    return CustomerPortalLabelDisplayNameFromJSONTyped(json, false);
 }
 
-export function FeatureInputArgsFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeatureInputArgs {
+export function CustomerPortalLabelDisplayNameFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomerPortalLabelDisplayName {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'name': json['name'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
-export function FeatureInputArgsToJSON(value?: FeatureInputArgs | null): any {
+export function CustomerPortalLabelDisplayNameToJSON(value?: CustomerPortalLabelDisplayName | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -66,7 +59,6 @@ export function FeatureInputArgsToJSON(value?: FeatureInputArgs | null): any {
         
         'display_name': value.displayName,
         'name': value.name,
-        'description': value.description,
     };
 }
 

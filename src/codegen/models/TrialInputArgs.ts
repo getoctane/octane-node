@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface TrialInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof TrialInputArgs
-     */
-    timeUnitName?: string;
-    /**
-     * 
      * @type {number}
      * @memberof TrialInputArgs
      */
     timeLength?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrialInputArgs
+     */
+    timeUnitName?: string;
     /**
      * 
      * @type {number}
@@ -49,8 +49,8 @@ export function TrialInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'timeLength': !exists(json, 'time_length') ? undefined : json['time_length'],
+        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'credit': !exists(json, 'credit') ? undefined : json['credit'],
     };
 }
@@ -64,8 +64,8 @@ export function TrialInputArgsToJSON(value?: TrialInputArgs | null): any {
     }
     return {
         
-        'time_unit_name': value.timeUnitName,
         'time_length': value.timeLength,
+        'time_unit_name': value.timeUnitName,
         'credit': value.credit,
     };
 }

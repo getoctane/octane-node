@@ -20,11 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateSelfServeSettingsArgs {
     /**
-     * True if the vendor has enabled customization for their customer portal.
-     * @type {boolean}
+     * Time length unit for the default expiration for credits bought in the customer portal.
+     * @type {string}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    enabled?: boolean;
+    creditsExpirationUnit?: string;
+    /**
+     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
+     * @type {number}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    pricePerCreditCents?: number;
     /**
      * Time length of the default expiration for credits bought in the customer portal.
      * @type {number}
@@ -44,17 +50,11 @@ export interface UpdateSelfServeSettingsArgs {
      */
     switchPricePlans?: boolean;
     /**
-     * Time length unit for the default expiration for credits bought in the customer portal.
-     * @type {string}
+     * True if the vendor has enabled customization for their customer portal.
+     * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    creditsExpirationUnit?: string;
-    /**
-     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
-     * @type {number}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    pricePerCreditCents?: number;
+    enabled?: boolean;
     /**
      * True if the customer can purchase credits via self serve. Defaults to False.
      * @type {boolean}
@@ -73,12 +73,12 @@ export function UpdateSelfServeSettingsArgsFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
         'customization': !exists(json, 'customization') ? undefined : json['customization'],
         'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
-        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
-        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
     };
 }
@@ -92,12 +92,12 @@ export function UpdateSelfServeSettingsArgsToJSON(value?: UpdateSelfServeSetting
     }
     return {
         
-        'enabled': value.enabled,
+        'credits_expiration_unit': value.creditsExpirationUnit,
+        'price_per_credit_cents': value.pricePerCreditCents,
         'credits_expiration_length': value.creditsExpirationLength,
         'customization': value.customization,
         'switch_price_plans': value.switchPricePlans,
-        'credits_expiration_unit': value.creditsExpirationUnit,
-        'price_per_credit_cents': value.pricePerCreditCents,
+        'enabled': value.enabled,
         'purchase_credits': value.purchaseCredits,
     };
 }

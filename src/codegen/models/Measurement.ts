@@ -20,17 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Measurement {
     /**
-     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
-     * @type {Date}
+     * Applies to incremental meters and resets the total current value to this new value.
+     * @type {boolean}
      * @memberof Measurement
      */
-    time?: Date;
-    /**
-     * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
-     * @type {{ [key: string]: string; }}
-     * @memberof Measurement
-     */
-    labels?: { [key: string]: string; };
+    resetTotal?: boolean;
     /**
      * The unique name of the meter associated with this measurement
      * @type {string}
@@ -38,23 +32,35 @@ export interface Measurement {
      */
     meterName: string;
     /**
-     * The raw value of the measurement
-     * @type {number}
-     * @memberof Measurement
-     */
-    value: number;
-    /**
-     * Applies to incremental meters and resets the total current value to this new value.
-     * @type {boolean}
-     * @memberof Measurement
-     */
-    resetTotal?: boolean;
-    /**
      * The name of the customer to associate the measurement with.
      * @type {string}
      * @memberof Measurement
      */
     customerName?: string;
+    /**
+     * An ID that is unique for the set of labels and meter_name
+     * @type {string}
+     * @memberof Measurement
+     */
+    id?: string;
+    /**
+     * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
+     * @type {{ [key: string]: string; }}
+     * @memberof Measurement
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
+     * @type {Date}
+     * @memberof Measurement
+     */
+    time?: Date;
+    /**
+     * The raw value of the measurement
+     * @type {number}
+     * @memberof Measurement
+     */
+    value: number;
 }
 
 export function MeasurementFromJSON(json: any): Measurement {
@@ -67,12 +73,13 @@ export function MeasurementFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'meterName': json['meter_name'],
-        'value': json['value'],
         'resetTotal': !exists(json, 'reset_total') ? undefined : json['reset_total'],
+        'meterName': json['meter_name'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
+        'value': json['value'],
     };
 }
 
@@ -85,12 +92,13 @@ export function MeasurementToJSON(value?: Measurement | null): any {
     }
     return {
         
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
-        'labels': value.labels,
-        'meter_name': value.meterName,
-        'value': value.value,
         'reset_total': value.resetTotal,
+        'meter_name': value.meterName,
         'customer_name': value.customerName,
+        'id': value.id,
+        'labels': value.labels,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
+        'value': value.value,
     };
 }
 

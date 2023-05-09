@@ -11,9 +11,10 @@ CODEGEN_VERSION="3.0.27"
 CODEGEN_SHA="66e956839d84bfff44be2ac269761f755404dfea34c7e4903821fedbc3c06043"
 CODEGEN_URL="https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/${CODEGEN_VERSION}/swagger-codegen-cli-${CODEGEN_VERSION}.jar"
 
-mkdir -p testbin/
+rm -rf testbin/
 
 if [ ! -f "testbin/openapi.json" ]; then
+  mkdir -p testbin/
   curl -L "${OPEN_API_URL}" -o "testbin/openapi.json"
 fi
 
