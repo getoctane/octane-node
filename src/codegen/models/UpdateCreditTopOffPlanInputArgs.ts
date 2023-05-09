@@ -26,29 +26,29 @@ export interface UpdateCreditTopOffPlanInputArgs {
      */
     expirationUnit?: string;
     /**
-     * Price for the grant, in lowest denomination (i.e cents).
-     * @type {number}
-     * @memberof UpdateCreditTopOffPlanInputArgs
-     */
-    price?: number;
-    /**
      * The threshold in amount of credits at which the balance will be topped off.
      * @type {number}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
     triggerAmount?: number;
     /**
-     * Amount of credits that are granted in a single top off.
+     * Price for the grant, in lowest denomination (i.e cents).
      * @type {number}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
-    grantAmount?: number;
+    price?: number;
     /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
     expirationLength?: number;
+    /**
+     * Amount of credits that are granted in a single top off.
+     * @type {number}
+     * @memberof UpdateCreditTopOffPlanInputArgs
+     */
+    grantAmount?: number;
 }
 
 export function UpdateCreditTopOffPlanInputArgsFromJSON(json: any): UpdateCreditTopOffPlanInputArgs {
@@ -62,10 +62,10 @@ export function UpdateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     return {
         
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
         'triggerAmount': !exists(json, 'trigger_amount') ? undefined : json['trigger_amount'],
-        'grantAmount': !exists(json, 'grant_amount') ? undefined : json['grant_amount'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
         'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'grantAmount': !exists(json, 'grant_amount') ? undefined : json['grant_amount'],
     };
 }
 
@@ -79,10 +79,10 @@ export function UpdateCreditTopOffPlanInputArgsToJSON(value?: UpdateCreditTopOff
     return {
         
         'expiration_unit': value.expirationUnit,
-        'price': value.price,
         'trigger_amount': value.triggerAmount,
-        'grant_amount': value.grantAmount,
+        'price': value.price,
         'expiration_length': value.expirationLength,
+        'grant_amount': value.grantAmount,
     };
 }
 

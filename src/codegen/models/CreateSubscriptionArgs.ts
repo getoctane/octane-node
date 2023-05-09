@@ -52,46 +52,16 @@ import {
 export interface CreateSubscriptionArgs {
     /**
      * 
-     * @type {string}
+     * @type {Array<DiscountInputArgs>}
      * @memberof CreateSubscriptionArgs
      */
-    pricePlanName?: string;
+    discounts?: Array<DiscountInputArgs>;
     /**
      * 
-     * @type {number}
+     * @type {TrialInputArgs}
      * @memberof CreateSubscriptionArgs
      */
-    customerId?: number;
-    /**
-     * DEPRECATED - use discounts field
-     * @type {DiscountInputArgs}
-     * @memberof CreateSubscriptionArgs
-     */
-    discountOverride?: DiscountInputArgs | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSubscriptionArgs
-     */
-    pricePlanTag?: string;
-    /**
-     * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof CreateSubscriptionArgs
-     */
-    featuresOverride?: Array<FeatureInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateSubscriptionArgs
-     */
-    couponOverrideName?: string;
-    /**
-     * 
-     * @type {Date}
-     * @memberof CreateSubscriptionArgs
-     */
-    effectiveAt?: Date;
+    trialOverride?: TrialInputArgs;
     /**
      * 
      * @type {number}
@@ -100,22 +70,16 @@ export interface CreateSubscriptionArgs {
     vendorId?: number;
     /**
      * 
-     * @type {Array<LimitInputArgs>}
+     * @type {number}
      * @memberof CreateSubscriptionArgs
      */
-    limitsOverride?: Array<LimitInputArgs>;
+    customerId?: number;
     /**
      * 
-     * @type {Array<SubscriptionAddOnInput>}
+     * @type {boolean}
      * @memberof CreateSubscriptionArgs
      */
-    addOns?: Array<SubscriptionAddOnInput>;
-    /**
-     * 
-     * @type {Array<DiscountInputArgs>}
-     * @memberof CreateSubscriptionArgs
-     */
-    discounts?: Array<DiscountInputArgs>;
+    alignToCalendar?: boolean;
     /**
      * 
      * @type {number}
@@ -130,16 +94,52 @@ export interface CreateSubscriptionArgs {
     couponOverrideId?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof CreateSubscriptionArgs
      */
-    alignToCalendar?: boolean;
+    pricePlanTag?: string;
     /**
      * 
-     * @type {TrialInputArgs}
+     * @type {Date}
      * @memberof CreateSubscriptionArgs
      */
-    trialOverride?: TrialInputArgs;
+    effectiveAt?: Date;
+    /**
+     * 
+     * @type {Array<LimitInputArgs>}
+     * @memberof CreateSubscriptionArgs
+     */
+    limitsOverride?: Array<LimitInputArgs>;
+    /**
+     * 
+     * @type {Array<SubscriptionAddOnInput>}
+     * @memberof CreateSubscriptionArgs
+     */
+    addOns?: Array<SubscriptionAddOnInput>;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof CreateSubscriptionArgs
+     */
+    featuresOverride?: Array<FeatureInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSubscriptionArgs
+     */
+    couponOverrideName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateSubscriptionArgs
+     */
+    pricePlanName?: string;
+    /**
+     * DEPRECATED - use discounts field
+     * @type {DiscountInputArgs}
+     * @memberof CreateSubscriptionArgs
+     */
+    discountOverride?: DiscountInputArgs | null;
 }
 
 export function CreateSubscriptionArgsFromJSON(json: any): CreateSubscriptionArgs {
@@ -152,21 +152,21 @@ export function CreateSubscriptionArgsFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
-        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
-        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
-        'pricePlanTag': !exists(json, 'price_plan_tag') ? undefined : json['price_plan_tag'],
-        'featuresOverride': !exists(json, 'features_override') ? undefined : ((json['features_override'] as Array<any>).map(FeatureInputArgsFromJSON)),
-        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
-        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
-        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'limitsOverride': !exists(json, 'limits_override') ? undefined : ((json['limits_override'] as Array<any>).map(LimitInputArgsFromJSON)),
-        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
         'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
+        'trialOverride': !exists(json, 'trial_override') ? undefined : TrialInputArgsFromJSON(json['trial_override']),
+        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
+        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
+        'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
         'pricePlanId': !exists(json, 'price_plan_id') ? undefined : json['price_plan_id'],
         'couponOverrideId': !exists(json, 'coupon_override_id') ? undefined : json['coupon_override_id'],
-        'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
-        'trialOverride': !exists(json, 'trial_override') ? undefined : TrialInputArgsFromJSON(json['trial_override']),
+        'pricePlanTag': !exists(json, 'price_plan_tag') ? undefined : json['price_plan_tag'],
+        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
+        'limitsOverride': !exists(json, 'limits_override') ? undefined : ((json['limits_override'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
+        'featuresOverride': !exists(json, 'features_override') ? undefined : ((json['features_override'] as Array<any>).map(FeatureInputArgsFromJSON)),
+        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
+        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
+        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
     };
 }
 
@@ -179,21 +179,21 @@ export function CreateSubscriptionArgsToJSON(value?: CreateSubscriptionArgs | nu
     }
     return {
         
-        'price_plan_name': value.pricePlanName,
-        'customer_id': value.customerId,
-        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
-        'price_plan_tag': value.pricePlanTag,
-        'features_override': value.featuresOverride === undefined ? undefined : ((value.featuresOverride as Array<any>).map(FeatureInputArgsToJSON)),
-        'coupon_override_name': value.couponOverrideName,
-        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
-        'vendor_id': value.vendorId,
-        'limits_override': value.limitsOverride === undefined ? undefined : ((value.limitsOverride as Array<any>).map(LimitInputArgsToJSON)),
-        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
         'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
+        'trial_override': TrialInputArgsToJSON(value.trialOverride),
+        'vendor_id': value.vendorId,
+        'customer_id': value.customerId,
+        'align_to_calendar': value.alignToCalendar,
         'price_plan_id': value.pricePlanId,
         'coupon_override_id': value.couponOverrideId,
-        'align_to_calendar': value.alignToCalendar,
-        'trial_override': TrialInputArgsToJSON(value.trialOverride),
+        'price_plan_tag': value.pricePlanTag,
+        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
+        'limits_override': value.limitsOverride === undefined ? undefined : ((value.limitsOverride as Array<any>).map(LimitInputArgsToJSON)),
+        'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
+        'features_override': value.featuresOverride === undefined ? undefined : ((value.featuresOverride as Array<any>).map(FeatureInputArgsToJSON)),
+        'coupon_override_name': value.couponOverrideName,
+        'price_plan_name': value.pricePlanName,
+        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
     };
 }
 

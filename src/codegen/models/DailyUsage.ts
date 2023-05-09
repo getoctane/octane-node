@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DailyUsage {
     /**
-     * Start of the 24 hour time window in UTC.
-     * @type {Date}
-     * @memberof DailyUsage
-     */
-    time?: Date;
-    /**
      * Total usage during this window.
      * @type {number}
      * @memberof DailyUsage
      */
     usage?: number;
+    /**
+     * Start of the 24 hour time window in UTC.
+     * @type {Date}
+     * @memberof DailyUsage
+     */
+    time?: Date;
 }
 
 export function DailyUsageFromJSON(json: any): DailyUsage {
@@ -43,8 +43,8 @@ export function DailyUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'usage': !exists(json, 'usage') ? undefined : json['usage'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
     };
 }
 
@@ -57,8 +57,8 @@ export function DailyUsageToJSON(value?: DailyUsage | null): any {
     }
     return {
         
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'usage': value.usage,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
     };
 }
 

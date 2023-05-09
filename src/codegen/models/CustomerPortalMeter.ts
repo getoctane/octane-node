@@ -19,6 +19,12 @@ import {
     CustomerPortalMeterLabelsFromJSONTyped,
     CustomerPortalMeterLabelsToJSON,
 } from './CustomerPortalMeterLabels';
+import {
+    CustomerPortalMeterLabelsWithDisplayName,
+    CustomerPortalMeterLabelsWithDisplayNameFromJSON,
+    CustomerPortalMeterLabelsWithDisplayNameFromJSONTyped,
+    CustomerPortalMeterLabelsWithDisplayNameToJSON,
+} from './CustomerPortalMeterLabelsWithDisplayName';
 
 /**
  * 
@@ -33,17 +39,11 @@ export interface CustomerPortalMeter {
      */
     meterType?: string;
     /**
-     * Display name of the meter.
-     * @type {string}
+     * The raw and prettified label keys and values
+     * @type {Array<CustomerPortalMeterLabelsWithDisplayName>}
      * @memberof CustomerPortalMeter
      */
-    meterDisplayName?: string;
-    /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalMeterLabels>}
-     * @memberof CustomerPortalMeter
-     */
-    labels?: Array<CustomerPortalMeterLabels>;
+    labelsWithDisplayNames?: Array<CustomerPortalMeterLabelsWithDisplayName>;
     /**
      * Name of the meter.
      * @type {string}
@@ -56,6 +56,18 @@ export interface CustomerPortalMeter {
      * @memberof CustomerPortalMeter
      */
     unitName?: string;
+    /**
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalMeterLabels>}
+     * @memberof CustomerPortalMeter
+     */
+    labels?: Array<CustomerPortalMeterLabels>;
+    /**
+     * Display name of the meter.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    meterDisplayName?: string;
 }
 
 export function CustomerPortalMeterFromJSON(json: any): CustomerPortalMeter {
@@ -69,10 +81,11 @@ export function CustomerPortalMeterFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
-        'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
+        'labelsWithDisplayNames': !exists(json, 'labels_with_display_names') ? undefined : ((json['labels_with_display_names'] as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameFromJSON)),
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
+        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
     };
 }
 
@@ -86,10 +99,11 @@ export function CustomerPortalMeterToJSON(value?: CustomerPortalMeter | null): a
     return {
         
         'meter_type': value.meterType,
-        'meter_display_name': value.meterDisplayName,
-        'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
+        'labels_with_display_names': value.labelsWithDisplayNames === undefined ? undefined : ((value.labelsWithDisplayNames as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameToJSON)),
         'meter_name': value.meterName,
         'unit_name': value.unitName,
+        'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
+        'meter_display_name': value.meterDisplayName,
     };
 }
 

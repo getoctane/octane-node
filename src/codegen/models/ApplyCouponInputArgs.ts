@@ -24,19 +24,19 @@ export interface ApplyCouponInputArgs {
      * @type {number}
      * @memberof ApplyCouponInputArgs
      */
+    vendorId?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ApplyCouponInputArgs
+     */
     customerId?: number;
     /**
      * 
      * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApplyCouponInputArgs
-     */
-    vendorId?: number;
+    customerName?: string;
     /**
      * 
      * @type {string}
@@ -48,7 +48,7 @@ export interface ApplyCouponInputArgs {
      * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    customerName?: string;
+    name?: string;
 }
 
 export function ApplyCouponInputArgsFromJSON(json: any): ApplyCouponInputArgs {
@@ -61,11 +61,11 @@ export function ApplyCouponInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'code': !exists(json, 'code') ? undefined : json['code'],
+        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'code': !exists(json, 'code') ? undefined : json['code'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -78,11 +78,11 @@ export function ApplyCouponInputArgsToJSON(value?: ApplyCouponInputArgs | null):
     }
     return {
         
-        'customer_id': value.customerId,
-        'name': value.name,
         'vendor_id': value.vendorId,
-        'code': value.code,
+        'customer_id': value.customerId,
         'customer_name': value.customerName,
+        'code': value.code,
+        'name': value.name,
     };
 }
 

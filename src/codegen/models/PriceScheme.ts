@@ -74,6 +74,12 @@ export interface PriceScheme {
      * @memberof PriceScheme
      */
     unitName?: string | null;
+    /**
+     * The % increase/decrease in price after the minimum charge is reached.
+     * @type {number}
+     * @memberof PriceScheme
+     */
+    postMinimumChargePercentageChange?: number | null;
 }
 
 export function PriceSchemeFromJSON(json: any): PriceScheme {
@@ -94,6 +100,7 @@ export function PriceSchemeFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
         'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
     };
 }
 
@@ -113,6 +120,7 @@ export function PriceSchemeToJSON(value?: PriceScheme | null): any {
         'price_list': value.priceList,
         'time_unit_name': value.timeUnitName,
         'unit_name': value.unitName,
+        'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
     };
 }
 

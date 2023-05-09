@@ -32,17 +32,17 @@ export interface EntityUseCode {
      */
     description?: string;
     /**
-     * A list of countries where this use code is valid.
-     * @type {Array<string>}
-     * @memberof EntityUseCode
-     */
-    validCountries?: Array<string>;
-    /**
      * The Avalara-recognized entity use code for this definition.
      * @type {string}
      * @memberof EntityUseCode
      */
     code?: string;
+    /**
+     * A list of countries where this use code is valid.
+     * @type {Array<string>}
+     * @memberof EntityUseCode
+     */
+    validCountries?: Array<string>;
 }
 
 export function EntityUseCodeFromJSON(json: any): EntityUseCode {
@@ -57,8 +57,8 @@ export function EntityUseCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
         'code': !exists(json, 'code') ? undefined : json['code'],
+        'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
     };
 }
 
@@ -73,8 +73,8 @@ export function EntityUseCodeToJSON(value?: EntityUseCode | null): any {
         
         'name': value.name,
         'description': value.description,
-        'valid_countries': value.validCountries,
         'code': value.code,
+        'valid_countries': value.validCountries,
     };
 }
 

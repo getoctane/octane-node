@@ -20,11 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CardInfo {
     /**
+     * Year the card expires
+     * @type {number}
+     * @memberof CardInfo
+     */
+    expYear?: number;
+    /**
      * Month the card expires
      * @type {number}
      * @memberof CardInfo
      */
     expMonth?: number;
+    /**
+     * Last 4 digits of the card.
+     * @type {string}
+     * @memberof CardInfo
+     */
+    last4?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CardInfo
+     */
+    externalId?: string;
     /**
      * Country of the card
      * @type {string}
@@ -37,18 +55,6 @@ export interface CardInfo {
      * @memberof CardInfo
      */
     brand?: string;
-    /**
-     * Last 4 digits of the card.
-     * @type {string}
-     * @memberof CardInfo
-     */
-    last4?: string;
-    /**
-     * Year the card expires
-     * @type {number}
-     * @memberof CardInfo
-     */
-    expYear?: number;
 }
 
 export function CardInfoFromJSON(json: any): CardInfo {
@@ -61,11 +67,12 @@ export function CardInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
+        'expYear': !exists(json, 'exp_year') ? undefined : json['exp_year'],
         'expMonth': !exists(json, 'exp_month') ? undefined : json['exp_month'],
+        'last4': !exists(json, 'last4') ? undefined : json['last4'],
+        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
         'country': !exists(json, 'country') ? undefined : json['country'],
         'brand': !exists(json, 'brand') ? undefined : json['brand'],
-        'last4': !exists(json, 'last4') ? undefined : json['last4'],
-        'expYear': !exists(json, 'exp_year') ? undefined : json['exp_year'],
     };
 }
 
@@ -78,11 +85,12 @@ export function CardInfoToJSON(value?: CardInfo | null): any {
     }
     return {
         
+        'exp_year': value.expYear,
         'exp_month': value.expMonth,
+        'last4': value.last4,
+        'external_id': value.externalId,
         'country': value.country,
         'brand': value.brand,
-        'last4': value.last4,
-        'exp_year': value.expYear,
     };
 }
 

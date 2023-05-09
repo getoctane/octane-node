@@ -27,12 +27,6 @@ import {
  */
 export interface AddOnInputArgs {
     /**
-     * 
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    limit?: number;
-    /**
      * Whether this add on can only be used & charged once.
      * @type {boolean}
      * @memberof AddOnInputArgs
@@ -40,16 +34,22 @@ export interface AddOnInputArgs {
     singleUse?: boolean;
     /**
      * 
+     * @type {FeatureInputArgs}
+     * @memberof AddOnInputArgs
+     */
+    feature: FeatureInputArgs;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    limit?: number;
+    /**
+     * 
      * @type {number}
      * @memberof AddOnInputArgs
      */
     price?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AddOnInputArgs
-     */
-    quantityEnabled?: boolean;
     /**
      * This field indicates whether or not we should cut an invoice immediately upon attaching this add on to a price plan.
      * @type {boolean}
@@ -58,10 +58,10 @@ export interface AddOnInputArgs {
     immediatelyCharge?: boolean;
     /**
      * 
-     * @type {FeatureInputArgs}
+     * @type {boolean}
      * @memberof AddOnInputArgs
      */
-    feature: FeatureInputArgs;
+    quantityEnabled?: boolean;
 }
 
 export function AddOnInputArgsFromJSON(json: any): AddOnInputArgs {
@@ -74,12 +74,12 @@ export function AddOnInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
-        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
-        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
         'feature': FeatureInputArgsFromJSON(json['feature']),
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
+        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
     };
 }
 
@@ -92,12 +92,12 @@ export function AddOnInputArgsToJSON(value?: AddOnInputArgs | null): any {
     }
     return {
         
-        'limit': value.limit,
         'single_use': value.singleUse,
-        'price': value.price,
-        'quantity_enabled': value.quantityEnabled,
-        'immediately_charge': value.immediatelyCharge,
         'feature': FeatureInputArgsToJSON(value.feature),
+        'limit': value.limit,
+        'price': value.price,
+        'immediately_charge': value.immediatelyCharge,
+        'quantity_enabled': value.quantityEnabled,
     };
 }
 

@@ -39,11 +39,11 @@ export interface CustomerPortalVendor {
      */
     displayName?: string;
     /**
-     * Unique name identifier of a Vendor
-     * @type {string}
+     * Full contact info for the Vendor
+     * @type {ContactInfo}
      * @memberof CustomerPortalVendor
      */
-    name?: string;
+    contactInfo?: ContactInfo | null;
     /**
      * Currency preference of the Vendor.
      * @type {string}
@@ -51,11 +51,11 @@ export interface CustomerPortalVendor {
      */
     currency?: string;
     /**
-     * Full contact info for the Vendor
-     * @type {ContactInfo}
+     * Unique name identifier of a Vendor
+     * @type {string}
      * @memberof CustomerPortalVendor
      */
-    contactInfo?: ContactInfo | null;
+    name?: string;
 }
 
 export function CustomerPortalVendorFromJSON(json: any): CustomerPortalVendor {
@@ -70,9 +70,9 @@ export function CustomerPortalVendorFromJSONTyped(json: any, ignoreDiscriminator
         
         'paymentGateway': !exists(json, 'payment_gateway') ? undefined : json['payment_gateway'],
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
         'contactInfo': !exists(json, 'contact_info') ? undefined : ContactInfoFromJSON(json['contact_info']),
+        'currency': !exists(json, 'currency') ? undefined : json['currency'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -87,9 +87,9 @@ export function CustomerPortalVendorToJSON(value?: CustomerPortalVendor | null):
         
         'payment_gateway': value.paymentGateway,
         'display_name': value.displayName,
-        'name': value.name,
-        'currency': value.currency,
         'contact_info': ContactInfoToJSON(value.contactInfo),
+        'currency': value.currency,
+        'name': value.name,
     };
 }
 

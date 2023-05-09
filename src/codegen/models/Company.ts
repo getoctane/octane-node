@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Company {
     /**
+     * A unique code that references this company within your account.
+     * @type {string}
+     * @memberof Company
+     */
+    companyCode?: string;
+    /**
      * This flag indicates whether tax activity can occur for this company.
      * @type {boolean}
      * @memberof Company
@@ -32,23 +38,17 @@ export interface Company {
      */
     companyName?: string;
     /**
-     * This flag is true if this company is the default company for this account.
-     * @type {boolean}
-     * @memberof Company
-     */
-    isDefault?: boolean;
-    /**
-     * A unique code that references this company within your account.
-     * @type {string}
-     * @memberof Company
-     */
-    companyCode?: string;
-    /**
      * The unique ID number of this company.
      * @type {string}
      * @memberof Company
      */
     id?: string;
+    /**
+     * This flag is true if this company is the default company for this account.
+     * @type {boolean}
+     * @memberof Company
+     */
+    isDefault?: boolean;
 }
 
 export function CompanyFromJSON(json: any): Company {
@@ -61,11 +61,11 @@ export function CompanyFromJSONTyped(json: any, ignoreDiscriminator: boolean): C
     }
     return {
         
+        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'isActive': !exists(json, 'is_active') ? undefined : json['is_active'],
         'companyName': !exists(json, 'company_name') ? undefined : json['company_name'],
-        'isDefault': !exists(json, 'is_default') ? undefined : json['is_default'],
-        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'isDefault': !exists(json, 'is_default') ? undefined : json['is_default'],
     };
 }
 
@@ -78,11 +78,11 @@ export function CompanyToJSON(value?: Company | null): any {
     }
     return {
         
+        'company_code': value.companyCode,
         'is_active': value.isActive,
         'company_name': value.companyName,
-        'is_default': value.isDefault,
-        'company_code': value.companyCode,
         'id': value.id,
+        'is_default': value.isDefault,
     };
 }
 

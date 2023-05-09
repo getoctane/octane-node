@@ -34,6 +34,18 @@ import {
 export interface UpdateSubscriptionInPlaceArgs {
     /**
      * 
+     * @type {Array<SubscriptionAddOnInput>}
+     * @memberof UpdateSubscriptionInPlaceArgs
+     */
+    addOns?: Array<SubscriptionAddOnInput> | null;
+    /**
+     * 
+     * @type {Array<DiscountInputArgs>}
+     * @memberof UpdateSubscriptionInPlaceArgs
+     */
+    discounts?: Array<DiscountInputArgs>;
+    /**
+     * 
      * @type {string}
      * @memberof UpdateSubscriptionInPlaceArgs
      */
@@ -44,18 +56,6 @@ export interface UpdateSubscriptionInPlaceArgs {
      * @memberof UpdateSubscriptionInPlaceArgs
      */
     discountOverride?: DiscountInputArgs | null;
-    /**
-     * 
-     * @type {Array<DiscountInputArgs>}
-     * @memberof UpdateSubscriptionInPlaceArgs
-     */
-    discounts?: Array<DiscountInputArgs>;
-    /**
-     * 
-     * @type {Array<SubscriptionAddOnInput>}
-     * @memberof UpdateSubscriptionInPlaceArgs
-     */
-    addOns?: Array<SubscriptionAddOnInput> | null;
 }
 
 export function UpdateSubscriptionInPlaceArgsFromJSON(json: any): UpdateSubscriptionInPlaceArgs {
@@ -68,10 +68,10 @@ export function UpdateSubscriptionInPlaceArgsFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
+        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
+        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
         'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
         'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
-        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
-        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
     };
 }
 
@@ -84,10 +84,10 @@ export function UpdateSubscriptionInPlaceArgsToJSON(value?: UpdateSubscriptionIn
     }
     return {
         
+        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
+        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
         'coupon_override_name': value.couponOverrideName,
         'discount_override': DiscountInputArgsToJSON(value.discountOverride),
-        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
-        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
     };
 }
 

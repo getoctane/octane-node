@@ -27,11 +27,29 @@ import {
  */
 export interface PastInvoices {
     /**
+     * 
+     * @type {Array<PastInvoice>}
+     * @memberof PastInvoices
+     */
+    invoices?: Array<PastInvoice>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PastInvoices
+     */
+    sortColumn?: string;
+    /**
      * The number of items to fetch. Defaults to 10.
      * @type {number}
      * @memberof PastInvoices
      */
     limit?: number;
+    /**
+     * The unique offset to start at when paging forwards
+     * @type {string}
+     * @memberof PastInvoices
+     */
+    forwardSecondarySortOffset?: string;
     /**
      * 
      * @type {string}
@@ -44,24 +62,6 @@ export interface PastInvoices {
      * @memberof PastInvoices
      */
     forwardSortOffset?: string;
-    /**
-     * The unique offset to start at when paging forwards
-     * @type {string}
-     * @memberof PastInvoices
-     */
-    forwardSecondarySortOffset?: string;
-    /**
-     * 
-     * @type {Array<PastInvoice>}
-     * @memberof PastInvoices
-     */
-    invoices?: Array<PastInvoice>;
-    /**
-     * 
-     * @type {string}
-     * @memberof PastInvoices
-     */
-    sortColumn?: string;
 }
 
 export function PastInvoicesFromJSON(json: any): PastInvoices {
@@ -74,12 +74,12 @@ export function PastInvoicesFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
-        'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
-        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
         'invoices': !exists(json, 'invoices') ? undefined : ((json['invoices'] as Array<any>).map(PastInvoiceFromJSON)),
         'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
+        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
+        'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
     };
 }
 
@@ -92,12 +92,12 @@ export function PastInvoicesToJSON(value?: PastInvoices | null): any {
     }
     return {
         
-        'limit': value.limit,
-        'sort_direction': value.sortDirection,
-        'forward_sort_offset': value.forwardSortOffset,
-        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
         'invoices': value.invoices === undefined ? undefined : ((value.invoices as Array<any>).map(PastInvoiceToJSON)),
         'sort_column': value.sortColumn,
+        'limit': value.limit,
+        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
+        'sort_direction': value.sortDirection,
+        'forward_sort_offset': value.forwardSortOffset,
     };
 }
 

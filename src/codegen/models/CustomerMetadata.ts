@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerMetadata {
     /**
-     * Value of property for customer
-     * @type {string}
-     * @memberof CustomerMetadata
-     */
-    value?: string;
-    /**
      * Property name
      * @type {string}
      * @memberof CustomerMetadata
      */
     property?: string;
+    /**
+     * Value of property for customer
+     * @type {string}
+     * @memberof CustomerMetadata
+     */
+    value?: string;
 }
 
 export function CustomerMetadataFromJSON(json: any): CustomerMetadata {
@@ -43,8 +43,8 @@ export function CustomerMetadataFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'value': !exists(json, 'value') ? undefined : json['value'],
         'property': !exists(json, 'property') ? undefined : json['property'],
+        'value': !exists(json, 'value') ? undefined : json['value'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerMetadataToJSON(value?: CustomerMetadata | null): any {
     }
     return {
         
-        'value': value.value,
         'property': value.property,
+        'value': value.value,
     };
 }
 
