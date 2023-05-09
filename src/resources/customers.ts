@@ -284,6 +284,19 @@ class Customers extends BaseResource {
       overrides,
     );
   }
+
+  /**
+   * Delete customer's billing settings.
+   */
+  public deleteBillingSettings(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<void> {
+    return this.api.customersCustomerNameBillingSettingsDelete(
+      { customerName },
+      overrides,
+    );
+  }
 }
 
 export { Customers };
