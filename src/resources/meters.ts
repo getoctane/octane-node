@@ -1,5 +1,5 @@
 import {
-  MeterInputArgs,
+  CreateMeterArgs,
   MetersApi,
   UpdateMeterArgs,
   Meter,
@@ -19,10 +19,10 @@ class Meters extends BaseResource {
    * Create a new Meter.
    */
   public create(
-    meterInputArgs: MeterInputArgs,
+    createMeterArgs: CreateMeterArgs,
     overrides?: RequestInit,
   ): Promise<Meter> {
-    return this.api.metersPost({ meterInputArgs }, overrides);
+    return this.api.metersPost({ createMeterArgs }, overrides);
   }
 
   /**
