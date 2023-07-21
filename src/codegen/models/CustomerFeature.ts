@@ -28,10 +28,16 @@ import {
 export interface CustomerFeature {
     /**
      * 
-     * @type {Array<CustomerLabelLimit>}
+     * @type {boolean}
      * @memberof CustomerFeature
      */
-    labelLimits?: Array<CustomerLabelLimit>;
+    enabled?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof CustomerFeature
+     */
+    quantity?: number;
     /**
      * 
      * @type {number}
@@ -46,16 +52,10 @@ export interface CustomerFeature {
     featureName?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<CustomerLabelLimit>}
      * @memberof CustomerFeature
      */
-    enabled?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CustomerFeature
-     */
-    quantity?: number;
+    labelLimits?: Array<CustomerLabelLimit>;
 }
 
 export function CustomerFeatureFromJSON(json: any): CustomerFeature {
@@ -68,11 +68,11 @@ export function CustomerFeatureFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(CustomerLabelLimitFromJSON)),
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
         'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
+        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(CustomerLabelLimitFromJSON)),
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerFeatureToJSON(value?: CustomerFeature | null): any {
     }
     return {
         
-        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(CustomerLabelLimitToJSON)),
-        'limit': value.limit,
-        'feature_name': value.featureName,
         'enabled': value.enabled,
         'quantity': value.quantity,
+        'limit': value.limit,
+        'feature_name': value.featureName,
+        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(CustomerLabelLimitToJSON)),
     };
 }
 

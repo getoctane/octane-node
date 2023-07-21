@@ -33,11 +33,17 @@ import {
  */
 export interface UpdateSubscriptionInPlaceArgs {
     /**
-     * 
-     * @type {Array<SubscriptionAddOnInput>}
+     * DEPRECATED - use discounts field
+     * @type {DiscountInputArgs}
      * @memberof UpdateSubscriptionInPlaceArgs
      */
-    addOns?: Array<SubscriptionAddOnInput> | null;
+    discountOverride?: DiscountInputArgs | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateSubscriptionInPlaceArgs
+     */
+    couponOverrideName?: string;
     /**
      * 
      * @type {Array<DiscountInputArgs>}
@@ -46,16 +52,10 @@ export interface UpdateSubscriptionInPlaceArgs {
     discounts?: Array<DiscountInputArgs>;
     /**
      * 
-     * @type {string}
+     * @type {Array<SubscriptionAddOnInput>}
      * @memberof UpdateSubscriptionInPlaceArgs
      */
-    couponOverrideName?: string;
-    /**
-     * DEPRECATED - use discounts field
-     * @type {DiscountInputArgs}
-     * @memberof UpdateSubscriptionInPlaceArgs
-     */
-    discountOverride?: DiscountInputArgs | null;
+    addOns?: Array<SubscriptionAddOnInput> | null;
 }
 
 export function UpdateSubscriptionInPlaceArgsFromJSON(json: any): UpdateSubscriptionInPlaceArgs {
@@ -68,10 +68,10 @@ export function UpdateSubscriptionInPlaceArgsFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
-        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
-        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
-        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
         'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
+        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
+        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
+        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
     };
 }
 
@@ -84,10 +84,10 @@ export function UpdateSubscriptionInPlaceArgsToJSON(value?: UpdateSubscriptionIn
     }
     return {
         
-        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
-        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
-        'coupon_override_name': value.couponOverrideName,
         'discount_override': DiscountInputArgsToJSON(value.discountOverride),
+        'coupon_override_name': value.couponOverrideName,
+        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
+        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
     };
 }
 

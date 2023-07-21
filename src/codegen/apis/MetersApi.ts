@@ -15,12 +15,12 @@
 
 import * as runtime from '../runtime';
 import {
+    CreateMeterArgs,
+    CreateMeterArgsFromJSON,
+    CreateMeterArgsToJSON,
     Meter,
     MeterFromJSON,
     MeterToJSON,
-    MeterInputArgs,
-    MeterInputArgsFromJSON,
-    MeterInputArgsToJSON,
     UpdateMeterArgs,
     UpdateMeterArgsFromJSON,
     UpdateMeterArgsToJSON,
@@ -44,7 +44,7 @@ export interface MetersMeterNamePutRequest {
 }
 
 export interface MetersPostRequest {
-    meterInputArgs: MeterInputArgs;
+    createMeterArgs: CreateMeterArgs;
 }
 
 /**
@@ -258,8 +258,8 @@ export class MetersApi extends runtime.BaseAPI {
      * Create Meter
      */
     async metersPostRaw(requestParameters: MetersPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Meter>> {
-        if (requestParameters.meterInputArgs === null || requestParameters.meterInputArgs === undefined) {
-            throw new runtime.RequiredError('meterInputArgs','Required parameter requestParameters.meterInputArgs was null or undefined when calling metersPost.');
+        if (requestParameters.createMeterArgs === null || requestParameters.createMeterArgs === undefined) {
+            throw new runtime.RequiredError('createMeterArgs','Required parameter requestParameters.createMeterArgs was null or undefined when calling metersPost.');
         }
 
         const queryParameters: any = {};
@@ -281,7 +281,7 @@ export class MetersApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: MeterInputArgsToJSON(requestParameters.meterInputArgs),
+            body: CreateMeterArgsToJSON(requestParameters.createMeterArgs),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => MeterFromJSON(jsonValue));

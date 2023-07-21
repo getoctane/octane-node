@@ -20,17 +20,35 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DailyUsage {
     /**
+     * Start of the 24 hour time window in UTC.
+     * @type {Date}
+     * @memberof DailyUsage
+     */
+    time?: Date;
+    /**
      * Total usage during this window.
      * @type {number}
      * @memberof DailyUsage
      */
     usage?: number;
     /**
-     * Start of the 24 hour time window in UTC.
-     * @type {Date}
+     * [DEPRECATED] Please use labels field instead.
+     * @type {string}
      * @memberof DailyUsage
      */
-    time?: Date;
+    labelKey?: string;
+    /**
+     * Labels for this usage. Only present if label_group_by_keys is provided.
+     * @type {{ [key: string]: string; }}
+     * @memberof DailyUsage
+     */
+    labels?: { [key: string]: string; };
+    /**
+     * [DEPRECATED] Please use labels field instead.
+     * @type {string}
+     * @memberof DailyUsage
+     */
+    labelValue?: string;
 }
 
 export function DailyUsageFromJSON(json: any): DailyUsage {
@@ -43,8 +61,11 @@ export function DailyUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'usage': !exists(json, 'usage') ? undefined : json['usage'],
         'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
+        'usage': !exists(json, 'usage') ? undefined : json['usage'],
+        'labelKey': !exists(json, 'label_key') ? undefined : json['label_key'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
     };
 }
 
@@ -57,8 +78,11 @@ export function DailyUsageToJSON(value?: DailyUsage | null): any {
     }
     return {
         
-        'usage': value.usage,
         'time': value.time === undefined ? undefined : (value.time.toISOString()),
+        'usage': value.usage,
+        'label_key': value.labelKey,
+        'labels': value.labels,
+        'label_value': value.labelValue,
     };
 }
 

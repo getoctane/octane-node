@@ -27,13 +27,19 @@ import {
  */
 export interface CustomerPortalActiveSubscriptionInputArgs {
     /**
-     * 
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
+     * @memberof CustomerPortalActiveSubscriptionInputArgs
+     */
+    customerName?: string;
+    /**
+     * Price plan uuid to subscribe to.
      * @type {string}
      * @memberof CustomerPortalActiveSubscriptionInputArgs
      */
     pricePlanUuid?: string;
     /**
-     * 
+     * Add ons to include in subscription.
      * @type {Array<SubscriptionAddOnInput>}
      * @memberof CustomerPortalActiveSubscriptionInputArgs
      */
@@ -50,6 +56,7 @@ export function CustomerPortalActiveSubscriptionInputArgsFromJSONTyped(json: any
     }
     return {
         
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'pricePlanUuid': !exists(json, 'price_plan_uuid') ? undefined : json['price_plan_uuid'],
         'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
     };
@@ -64,6 +71,7 @@ export function CustomerPortalActiveSubscriptionInputArgsToJSON(value?: Customer
     }
     return {
         
+        'customer_name': value.customerName,
         'price_plan_uuid': value.pricePlanUuid,
         'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
     };

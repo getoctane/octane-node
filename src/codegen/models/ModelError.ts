@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ModelError {
     /**
-     * Error message
-     * @type {string}
-     * @memberof ModelError
-     */
-    message?: string;
-    /**
      * Error name
      * @type {string}
      * @memberof ModelError
      */
     status?: string;
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ModelError
+     */
+    message?: string;
     /**
      * Errors
      * @type {object}
@@ -55,8 +55,8 @@ export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'message': !exists(json, 'message') ? undefined : json['message'],
         'status': !exists(json, 'status') ? undefined : json['status'],
+        'message': !exists(json, 'message') ? undefined : json['message'],
         'errors': !exists(json, 'errors') ? undefined : json['errors'],
         'code': !exists(json, 'code') ? undefined : json['code'],
     };
@@ -71,8 +71,8 @@ export function ModelErrorToJSON(value?: ModelError | null): any {
     }
     return {
         
-        'message': value.message,
         'status': value.status,
+        'message': value.message,
         'errors': value.errors,
         'code': value.code,
     };

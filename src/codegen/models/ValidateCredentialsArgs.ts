@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ValidateCredentialsArgs {
     /**
-     * Password of the Avalara account
-     * @type {string}
-     * @memberof ValidateCredentialsArgs
-     */
-    password: string;
-    /**
      * Username of the Avalara account
      * @type {string}
      * @memberof ValidateCredentialsArgs
@@ -37,6 +31,12 @@ export interface ValidateCredentialsArgs {
      * @memberof ValidateCredentialsArgs
      */
     sandboxMode: boolean;
+    /**
+     * Password of the Avalara account
+     * @type {string}
+     * @memberof ValidateCredentialsArgs
+     */
+    password: string;
 }
 
 export function ValidateCredentialsArgsFromJSON(json: any): ValidateCredentialsArgs {
@@ -49,9 +49,9 @@ export function ValidateCredentialsArgsFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'password': json['password'],
         'username': json['username'],
         'sandboxMode': json['sandbox_mode'],
+        'password': json['password'],
     };
 }
 
@@ -64,9 +64,9 @@ export function ValidateCredentialsArgsToJSON(value?: ValidateCredentialsArgs | 
     }
     return {
         
-        'password': value.password,
         'username': value.username,
         'sandbox_mode': value.sandboxMode,
+        'password': value.password,
     };
 }
 

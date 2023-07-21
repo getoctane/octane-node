@@ -19,6 +19,12 @@ import {
     FeatureInputArgsFromJSONTyped,
     FeatureInputArgsToJSON,
 } from './FeatureInputArgs';
+import {
+    PriceInputArgs,
+    PriceInputArgsFromJSON,
+    PriceInputArgsFromJSONTyped,
+    PriceInputArgsToJSON,
+} from './PriceInputArgs';
 
 /**
  * 
@@ -27,29 +33,11 @@ import {
  */
 export interface AddOnInputArgs {
     /**
-     * Whether this add on can only be used & charged once.
+     * 
      * @type {boolean}
      * @memberof AddOnInputArgs
      */
-    singleUse?: boolean;
-    /**
-     * 
-     * @type {FeatureInputArgs}
-     * @memberof AddOnInputArgs
-     */
-    feature: FeatureInputArgs;
-    /**
-     * 
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    limit?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    price?: number;
+    quantityEnabled?: boolean;
     /**
      * This field indicates whether or not we should cut an invoice immediately upon attaching this add on to a price plan.
      * @type {boolean}
@@ -57,11 +45,62 @@ export interface AddOnInputArgs {
      */
     immediatelyCharge?: boolean;
     /**
-     * 
+     * Whether this add on can only be used & charged once.
      * @type {boolean}
      * @memberof AddOnInputArgs
      */
-    quantityEnabled?: boolean;
+    singleUse?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    limit?: number;
+    /**
+     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
+     * @type {Array<PriceInputArgs>}
+     * @memberof AddOnInputArgs
+     */
+    prices?: Array<PriceInputArgs>;
+    /**
+     * DEPRECATED. Use price_scheme_type and prices instead.
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    price?: number;
+    /**
+     * The frequency at which to charge this add on. Currently the only values supported are price_frequency or 1.
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    chargeFrequency?: number;
+    /**
+     * 
+     * @type {FeatureInputArgs}
+     * @memberof AddOnInputArgs
+     */
+    feature: FeatureInputArgs;
+    /**
+     * The frequency at which to price this add on.
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    priceFrequency?: number;
+    /**
+     * One of 'FLAT', 'TIERED'
+     * @type {string}
+     * @memberof AddOnInputArgs
+     */
+    priceSchemeType?: AddOnInputArgsPriceSchemeTypeEnum;
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum AddOnInputArgsPriceSchemeTypeEnum {
+    Flat = 'FLAT',
+    Tiered = 'TIERED'
 }
 
 export function AddOnInputArgsFromJSON(json: any): AddOnInputArgs {
@@ -74,12 +113,16 @@ export function AddOnInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
-        'feature': FeatureInputArgsFromJSON(json['feature']),
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
-        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
         'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
+        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
+        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'chargeFrequency': !exists(json, 'charge_frequency') ? undefined : json['charge_frequency'],
+        'feature': FeatureInputArgsFromJSON(json['feature']),
+        'priceFrequency': !exists(json, 'price_frequency') ? undefined : json['price_frequency'],
+        'priceSchemeType': !exists(json, 'price_scheme_type') ? undefined : json['price_scheme_type'],
     };
 }
 
@@ -92,12 +135,16 @@ export function AddOnInputArgsToJSON(value?: AddOnInputArgs | null): any {
     }
     return {
         
-        'single_use': value.singleUse,
-        'feature': FeatureInputArgsToJSON(value.feature),
-        'limit': value.limit,
-        'price': value.price,
-        'immediately_charge': value.immediatelyCharge,
         'quantity_enabled': value.quantityEnabled,
+        'immediately_charge': value.immediatelyCharge,
+        'single_use': value.singleUse,
+        'limit': value.limit,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
+        'price': value.price,
+        'charge_frequency': value.chargeFrequency,
+        'feature': FeatureInputArgsToJSON(value.feature),
+        'price_frequency': value.priceFrequency,
+        'price_scheme_type': value.priceSchemeType,
     };
 }
 

@@ -33,17 +33,17 @@ import {
  */
 export interface CustomerPortalPaymentMethod {
     /**
-     * Type of payment method for the customer.
-     * @type {string}
-     * @memberof CustomerPortalPaymentMethod
-     */
-    paymentMethodType?: string;
-    /**
      * Info about the customer's card, if that is their payment method.
      * @type {CardInfo}
      * @memberof CustomerPortalPaymentMethod
      */
     cardInfo?: CardInfo | null;
+    /**
+     * Type of payment method for the customer.
+     * @type {string}
+     * @memberof CustomerPortalPaymentMethod
+     */
+    paymentMethodType?: string;
     /**
      * Info about the customer's US bank account, if that is their payment method.
      * @type {BankAccountInfo}
@@ -62,8 +62,8 @@ export function CustomerPortalPaymentMethodFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'paymentMethodType': !exists(json, 'payment_method_type') ? undefined : json['payment_method_type'],
         'cardInfo': !exists(json, 'card_info') ? undefined : CardInfoFromJSON(json['card_info']),
+        'paymentMethodType': !exists(json, 'payment_method_type') ? undefined : json['payment_method_type'],
         'bankAccountInfo': !exists(json, 'bank_account_info') ? undefined : BankAccountInfoFromJSON(json['bank_account_info']),
     };
 }
@@ -77,8 +77,8 @@ export function CustomerPortalPaymentMethodToJSON(value?: CustomerPortalPaymentM
     }
     return {
         
-        'payment_method_type': value.paymentMethodType,
         'card_info': CardInfoToJSON(value.cardInfo),
+        'payment_method_type': value.paymentMethodType,
         'bank_account_info': BankAccountInfoToJSON(value.bankAccountInfo),
     };
 }

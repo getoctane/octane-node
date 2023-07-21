@@ -20,6 +20,12 @@ import {
     BillingCycleDateToJSON,
 } from './BillingCycleDate';
 import {
+    CreditPlan,
+    CreditPlanFromJSON,
+    CreditPlanFromJSONTyped,
+    CreditPlanToJSON,
+} from './CreditPlan';
+import {
     Discount,
     DiscountFromJSON,
     DiscountFromJSONTyped,
@@ -57,6 +63,12 @@ import {
  */
 export interface ActiveSubscription {
     /**
+     * 
+     * @type {string}
+     * @memberof ActiveSubscription
+     */
+    uuid: string;
+    /**
      * Unique name identifier of a customer
      * @type {any}
      * @memberof ActiveSubscription
@@ -68,6 +80,12 @@ export interface ActiveSubscription {
      * @memberof ActiveSubscription
      */
     readonly pricePlanName: any | null;
+    /**
+     * External facing unique identifier of a price plan
+     * @type {any}
+     * @memberof ActiveSubscription
+     */
+    readonly pricePlanUuid: any | null;
     /**
      * Price plan associated with this subscription.
      * @type {PricePlan}
@@ -117,6 +135,12 @@ export interface ActiveSubscription {
      */
     expiredAt?: Date | null;
     /**
+     * Credit plan associated with this subscription.
+     * @type {CreditPlan}
+     * @memberof ActiveSubscription
+     */
+    creditPlan?: CreditPlan | null;
+    /**
      * Align billing cycles to a calendar unit if true. For example if the period is month, cycles will end on the first of every month.
      * @type {boolean}
      * @memberof ActiveSubscription
@@ -158,8 +182,10 @@ export function ActiveSubscriptionFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'uuid': json['uuid'],
         'customerName': json['customer_name'],
         'pricePlanName': json['price_plan_name'],
+        'pricePlanUuid': json['price_plan_uuid'],
         'pricePlan': !exists(json, 'price_plan') ? undefined : PricePlanFromJSON(json['price_plan']),
         'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountFromJSON)),
         'addOns': !exists(json, 'add_ons') ? undefined : json['add_ons'],
@@ -168,6 +194,7 @@ export function ActiveSubscriptionFromJSONTyped(json: any, ignoreDiscriminator: 
         'limitsOverride': !exists(json, 'limits_override') ? undefined : ((json['limits_override'] as Array<any>).map(LimitFromJSON)),
         'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
         'expiredAt': !exists(json, 'expired_at') ? undefined : (json['expired_at'] === null ? null : new Date(json['expired_at'])),
+        'creditPlan': !exists(json, 'credit_plan') ? undefined : CreditPlanFromJSON(json['credit_plan']),
         'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
         'basePriceOverride': !exists(json, 'base_price_override') ? undefined : json['base_price_override'],
         'currentBillingCycle': !exists(json, 'current_billing_cycle') ? undefined : BillingCycleDateFromJSON(json['current_billing_cycle']),
@@ -185,6 +212,7 @@ export function ActiveSubscriptionToJSON(value?: ActiveSubscription | null): any
     }
     return {
         
+        'uuid': value.uuid,
         'customer_name': value.customerName,
         'price_plan': PricePlanToJSON(value.pricePlan),
         'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountToJSON)),
@@ -193,6 +221,7 @@ export function ActiveSubscriptionToJSON(value?: ActiveSubscription | null): any
         'limits_override': value.limitsOverride === undefined ? undefined : ((value.limitsOverride as Array<any>).map(LimitToJSON)),
         'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
         'expired_at': value.expiredAt === undefined ? undefined : (value.expiredAt === null ? null : value.expiredAt.toISOString()),
+        'credit_plan': CreditPlanToJSON(value.creditPlan),
         'align_to_calendar': value.alignToCalendar,
         'base_price_override': value.basePriceOverride,
         'current_billing_cycle': BillingCycleDateToJSON(value.currentBillingCycle),

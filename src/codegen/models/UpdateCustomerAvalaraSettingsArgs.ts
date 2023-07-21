@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateCustomerAvalaraSettingsArgs {
     /**
-     * True if Avalara integration should be enabled for this customer, False otherwise.
-     * @type {boolean}
-     * @memberof UpdateCustomerAvalaraSettingsArgs
-     */
-    enableIntegration?: boolean;
-    /**
      * Entity code describing this customer.
      * @type {string}
      * @memberof UpdateCustomerAvalaraSettingsArgs
      */
     entityUseCode?: string;
+    /**
+     * True if Avalara integration should be enabled for this customer, False otherwise.
+     * @type {boolean}
+     * @memberof UpdateCustomerAvalaraSettingsArgs
+     */
+    enableIntegration?: boolean;
     /**
      * Tax exemption number specific to this customer
      * @type {string}
@@ -49,8 +49,8 @@ export function UpdateCustomerAvalaraSettingsArgsFromJSONTyped(json: any, ignore
     }
     return {
         
-        'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
         'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
+        'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
         'exemptionNumber': !exists(json, 'exemption_number') ? undefined : json['exemption_number'],
     };
 }
@@ -64,8 +64,8 @@ export function UpdateCustomerAvalaraSettingsArgsToJSON(value?: UpdateCustomerAv
     }
     return {
         
-        'enable_integration': value.enableIntegration,
         'entity_use_code': value.entityUseCode,
+        'enable_integration': value.enableIntegration,
         'exemption_number': value.exemptionNumber,
     };
 }

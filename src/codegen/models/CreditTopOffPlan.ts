@@ -55,6 +55,12 @@ export interface CreditTopOffPlan {
      * @memberof CreditTopOffPlan
      */
     expirationUnit?: string | null;
+    /**
+     * A description that will be used on the invoice line items.
+     * @type {string}
+     * @memberof CreditTopOffPlan
+     */
+    description?: string | null;
 }
 
 export function CreditTopOffPlanFromJSON(json: any): CreditTopOffPlan {
@@ -73,6 +79,7 @@ export function CreditTopOffPlanFromJSONTyped(json: any, ignoreDiscriminator: bo
         'price': json['price'],
         'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -91,6 +98,7 @@ export function CreditTopOffPlanToJSON(value?: CreditTopOffPlan | null): any {
         'price': value.price,
         'expiration_length': value.expirationLength,
         'expiration_unit': value.expirationUnit,
+        'description': value.description,
     };
 }
 

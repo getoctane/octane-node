@@ -34,6 +34,12 @@ import {
 export interface UpdateCustomerArgs {
     /**
      * 
+     * @type {Date}
+     * @memberof UpdateCustomerArgs
+     */
+    createdAt?: Date;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateCustomerArgs
      */
@@ -46,34 +52,28 @@ export interface UpdateCustomerArgs {
     displayName?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof UpdateCustomerArgs
-     */
-    tags?: Array<string> | null;
-    /**
-     * 
      * @type {ContactInfoInputArgs}
      * @memberof UpdateCustomerArgs
      */
     contactInfo?: ContactInfoInputArgs;
     /**
      * 
-     * @type {Date}
+     * @type {Array<string>}
      * @memberof UpdateCustomerArgs
      */
-    createdAt?: Date;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateCustomerArgs
-     */
-    name?: string;
+    tags?: Array<string> | null;
     /**
      * 
      * @type {Array<CustomerMeasurementMappingInputArgs>}
      * @memberof UpdateCustomerArgs
      */
     measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateCustomerArgs
+     */
+    name?: string;
 }
 
 export function UpdateCustomerArgsFromJSON(json: any): UpdateCustomerArgs {
@@ -86,13 +86,13 @@ export function UpdateCustomerArgsFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'contactInfo': !exists(json, 'contact_info') ? undefined : ContactInfoInputArgsFromJSON(json['contact_info']),
-        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'measurementMappings': !exists(json, 'measurement_mappings') ? undefined : ((json['measurement_mappings'] as Array<any>).map(CustomerMeasurementMappingInputArgsFromJSON)),
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -105,13 +105,13 @@ export function UpdateCustomerArgsToJSON(value?: UpdateCustomerArgs | null): any
     }
     return {
         
+        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
         'vendor_id': value.vendorId,
         'display_name': value.displayName,
-        'tags': value.tags,
         'contact_info': ContactInfoInputArgsToJSON(value.contactInfo),
-        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
-        'name': value.name,
+        'tags': value.tags,
         'measurement_mappings': value.measurementMappings === undefined ? undefined : ((value.measurementMappings as Array<any>).map(CustomerMeasurementMappingInputArgsToJSON)),
+        'name': value.name,
     };
 }
 

@@ -24,17 +24,20 @@ import {
     Retry,
     RetryFromJSON,
     RetryToJSON,
+    UpdateInvoiceStatusArgs,
+    UpdateInvoiceStatusArgsFromJSON,
+    UpdateInvoiceStatusArgsToJSON,
 } from '../models';
 
 export interface InvoicesGetRequest {
-    sortColumn?: string;
-    limit?: number;
-    startTime?: Date;
-    customerName?: string;
-    forwardSecondarySortOffset?: string;
-    sortDirection?: string;
     forwardSortOffset?: string;
+    limit?: number;
+    sortColumn?: string;
+    customerName?: string;
     status?: string;
+    sortDirection?: string;
+    forwardSecondarySortOffset?: string;
+    startTime?: Date;
 }
 
 export interface InvoicesInvoiceUuidDeleteRequest {
@@ -52,6 +55,7 @@ export interface InvoicesInvoiceUuidRetriesPostRequest {
 
 export interface InvoicesInvoiceUuidStatusPostRequest {
     invoiceUuid: string;
+    updateInvoiceStatusArgs: UpdateInvoiceStatusArgs;
 }
 
 export interface InvoicesInvoiceUuidTokenPdfGetRequest {
@@ -70,36 +74,36 @@ export class InvoicesApi extends runtime.BaseAPI {
     async invoicesGetRaw(requestParameters: InvoicesGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PastInvoices>> {
         const queryParameters: any = {};
 
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         if (requestParameters.customerName !== undefined) {
             queryParameters['customer_name'] = requestParameters.customerName;
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
         }
 
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -266,9 +270,15 @@ export class InvoicesApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('invoiceUuid','Required parameter requestParameters.invoiceUuid was null or undefined when calling invoicesInvoiceUuidStatusPost.');
         }
 
+        if (requestParameters.updateInvoiceStatusArgs === null || requestParameters.updateInvoiceStatusArgs === undefined) {
+            throw new runtime.RequiredError('updateInvoiceStatusArgs','Required parameter requestParameters.updateInvoiceStatusArgs was null or undefined when calling invoicesInvoiceUuidStatusPost.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
@@ -283,6 +293,7 @@ export class InvoicesApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: UpdateInvoiceStatusArgsToJSON(requestParameters.updateInvoiceStatusArgs),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);

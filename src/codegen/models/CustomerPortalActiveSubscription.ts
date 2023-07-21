@@ -45,12 +45,6 @@ export interface CustomerPortalActiveSubscription {
      */
     totalFixedPrice?: number;
     /**
-     * Customer's current active biling cycle.
-     * @type {BillingCycleDate}
-     * @memberof CustomerPortalActiveSubscription
-     */
-    billingCycle: BillingCycleDate | null;
-    /**
      * The total fixed price with all discounts applied.
      * @type {number}
      * @memberof CustomerPortalActiveSubscription
@@ -62,6 +56,12 @@ export interface CustomerPortalActiveSubscription {
      * @memberof CustomerPortalActiveSubscription
      */
     subscription?: Subscription | null;
+    /**
+     * Customer's current active biling cycle.
+     * @type {BillingCycleDate}
+     * @memberof CustomerPortalActiveSubscription
+     */
+    billingCycle: BillingCycleDate | null;
 }
 
 export function CustomerPortalActiveSubscriptionFromJSON(json: any): CustomerPortalActiveSubscription {
@@ -76,9 +76,9 @@ export function CustomerPortalActiveSubscriptionFromJSONTyped(json: any, ignoreD
         
         'invoicingDate': !exists(json, 'invoicing_date') ? undefined : (new Date(json['invoicing_date'])),
         'totalFixedPrice': !exists(json, 'total_fixed_price') ? undefined : json['total_fixed_price'],
-        'billingCycle': BillingCycleDateFromJSON(json['billing_cycle']),
         'discountedFixedPrice': !exists(json, 'discounted_fixed_price') ? undefined : json['discounted_fixed_price'],
         'subscription': !exists(json, 'subscription') ? undefined : SubscriptionFromJSON(json['subscription']),
+        'billingCycle': BillingCycleDateFromJSON(json['billing_cycle']),
     };
 }
 
@@ -93,9 +93,9 @@ export function CustomerPortalActiveSubscriptionToJSON(value?: CustomerPortalAct
         
         'invoicing_date': value.invoicingDate === undefined ? undefined : (value.invoicingDate.toISOString()),
         'total_fixed_price': value.totalFixedPrice,
-        'billing_cycle': BillingCycleDateToJSON(value.billingCycle),
         'discounted_fixed_price': value.discountedFixedPrice,
         'subscription': SubscriptionToJSON(value.subscription),
+        'billing_cycle': BillingCycleDateToJSON(value.billingCycle),
     };
 }
 

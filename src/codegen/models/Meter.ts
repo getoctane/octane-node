@@ -38,23 +38,47 @@ export interface Meter {
      */
     description?: string | null;
     /**
+     * Name of the event associated with this meter
+     * @type {string}
+     * @memberof Meter
+     */
+    eventName: string;
+    /**
+     * One of `COUNTER`, `GAUGE`.
+     * @type {string}
+     * @memberof Meter
+     */
+    meterType: string;
+    /**
+     * One of `CONTINUOUS`, `DISCRETE`.
+     * @type {string}
+     * @memberof Meter
+     */
+    dataType: string;
+    /**
+     * The aggregation applied to the measurement values. One of `TIME_WEIGHTED_SUM`, `MAX`, `SUM`.
+     * @type {string}
+     * @memberof Meter
+     */
+    aggregation: string;
+    /**
+     * The reporting unit for the meter
+     * @type {string}
+     * @memberof Meter
+     */
+    unitName?: string | null;
+    /**
      * Whether measurement values are to be considered incremental (versus a running total)
      * @type {boolean}
      * @memberof Meter
      */
     isIncremental: boolean;
     /**
-     * 
-     * @type {any}
+     * Whether measurement values are to be considered to be the incremental change or the running total. One of `DELTA`, `TOTAL`.
+     * @type {string}
      * @memberof Meter
      */
-    readonly meterType?: any | null;
-    /**
-     * The expected unit for the measurement values associated with this meter.
-     * @type {any}
-     * @memberof Meter
-     */
-    unitName?: any | null;
+    reportingMethod: string;
     /**
      * 
      * @type {Array<any>}
@@ -82,9 +106,13 @@ export function MeterFromJSONTyped(json: any, ignoreDiscriminator: boolean): Met
         'name': json['name'],
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'isIncremental': json['is_incremental'],
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'eventName': json['event_name'],
+        'meterType': json['meter_type'],
+        'dataType': json['data_type'],
+        'aggregation': json['aggregation'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'isIncremental': json['is_incremental'],
+        'reportingMethod': json['reporting_method'],
         'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
         'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
     };
@@ -101,8 +129,13 @@ export function MeterToJSON(value?: Meter | null): any {
         
         'display_name': value.displayName,
         'description': value.description,
-        'is_incremental': value.isIncremental,
+        'event_name': value.eventName,
+        'meter_type': value.meterType,
+        'data_type': value.dataType,
+        'aggregation': value.aggregation,
         'unit_name': value.unitName,
+        'is_incremental': value.isIncremental,
+        'reporting_method': value.reportingMethod,
         'expected_labels': value.expectedLabels,
         'primary_labels': value.primaryLabels,
     };

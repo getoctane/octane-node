@@ -217,6 +217,12 @@ export interface BillingSettings {
      * @memberof BillingSettings
      */
     alternateSendgridTemplateId?: string | null;
+    /**
+     * If set, a minimum charge line item will override any line items that contribute to the minimum (i.e., the minimum charge line item would be the only line item).
+     * @type {boolean}
+     * @memberof BillingSettings
+     */
+    shouldMinimumChargeOverrideLineItems?: boolean | null;
 }
 
 export function BillingSettingsFromJSON(json: any): BillingSettings {
@@ -262,6 +268,7 @@ export function BillingSettingsFromJSONTyped(json: any, ignoreDiscriminator: boo
         'syncCustomerDataToPaymentGateway': !exists(json, 'sync_customer_data_to_payment_gateway') ? undefined : json['sync_customer_data_to_payment_gateway'],
         'stripeImmediateFinalization': !exists(json, 'stripe_immediate_finalization') ? undefined : json['stripe_immediate_finalization'],
         'alternateSendgridTemplateId': !exists(json, 'alternate_sendgrid_template_id') ? undefined : json['alternate_sendgrid_template_id'],
+        'shouldMinimumChargeOverrideLineItems': !exists(json, 'should_minimum_charge_override_line_items') ? undefined : json['should_minimum_charge_override_line_items'],
     };
 }
 
@@ -306,6 +313,7 @@ export function BillingSettingsToJSON(value?: BillingSettings | null): any {
         'sync_customer_data_to_payment_gateway': value.syncCustomerDataToPaymentGateway,
         'stripe_immediate_finalization': value.stripeImmediateFinalization,
         'alternate_sendgrid_template_id': value.alternateSendgridTemplateId,
+        'should_minimum_charge_override_line_items': value.shouldMinimumChargeOverrideLineItems,
     };
 }
 
