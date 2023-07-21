@@ -18,9 +18,6 @@ import {
     ContactInfo,
     ContactInfoFromJSON,
     ContactInfoToJSON,
-    ContactInfoInputArgs,
-    ContactInfoInputArgsFromJSON,
-    ContactInfoInputArgsToJSON,
     CreditGrant,
     CreditGrantFromJSON,
     CreditGrantToJSON,
@@ -30,15 +27,27 @@ import {
     CustomerPaymentMethodStatus,
     CustomerPaymentMethodStatusFromJSON,
     CustomerPaymentMethodStatusToJSON,
+    CustomerPortalAccruedRevenue,
+    CustomerPortalAccruedRevenueFromJSON,
+    CustomerPortalAccruedRevenueToJSON,
     CustomerPortalActiveSubscription,
     CustomerPortalActiveSubscriptionFromJSON,
     CustomerPortalActiveSubscriptionToJSON,
     CustomerPortalActiveSubscriptionInputArgs,
     CustomerPortalActiveSubscriptionInputArgsFromJSON,
     CustomerPortalActiveSubscriptionInputArgsToJSON,
+    CustomerPortalAvailableCreditBalance,
+    CustomerPortalAvailableCreditBalanceFromJSON,
+    CustomerPortalAvailableCreditBalanceToJSON,
+    CustomerPortalContactInfoInputArgs,
+    CustomerPortalContactInfoInputArgsFromJSON,
+    CustomerPortalContactInfoInputArgsToJSON,
     CustomerPortalCreditPurchase,
     CustomerPortalCreditPurchaseFromJSON,
     CustomerPortalCreditPurchaseToJSON,
+    CustomerPortalDailyAccruedRevenue,
+    CustomerPortalDailyAccruedRevenueFromJSON,
+    CustomerPortalDailyAccruedRevenueToJSON,
     CustomerPortalInvoice,
     CustomerPortalInvoiceFromJSON,
     CustomerPortalInvoiceToJSON,
@@ -91,7 +100,7 @@ export interface EcpActiveSubscriptionPostRequest {
 }
 
 export interface EcpContactInfoPutRequest {
-    contactInfoInputArgs: ContactInfoInputArgs;
+    customerPortalContactInfoInputArgs: CustomerPortalContactInfoInputArgs;
 }
 
 export interface EcpCreditPurchasePostRequest {
@@ -120,7 +129,7 @@ export interface EcpTokenPostRequest {
 export class CustomerPortalApi extends runtime.BaseAPI {
 
     /**
-     * Fetch the customer\'s active subscription and related information if they exists. This endpoint expects the customer-scoped token for authentication.
+     * Fetch the customer\'s active subscription and related information if they exists. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Active Subscription
      */
     async ecpActiveSubscriptionGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalActiveSubscription>> {
@@ -147,7 +156,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch the customer\'s active subscription and related information if they exists. This endpoint expects the customer-scoped token for authentication.
+     * Fetch the customer\'s active subscription and related information if they exists. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Active Subscription
      */
     async ecpActiveSubscriptionGet(initOverrides?: RequestInit): Promise<CustomerPortalActiveSubscription> {
@@ -156,7 +165,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Active Subscription
      */
     async ecpActiveSubscriptionPostRaw(requestParameters: EcpActiveSubscriptionPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalSubscription>> {
@@ -190,7 +199,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Active Subscription
      */
     async ecpActiveSubscriptionPost(requestParameters: EcpActiveSubscriptionPostRequest, initOverrides?: RequestInit): Promise<CustomerPortalSubscription> {
@@ -199,7 +208,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the customer\'s contact info. This endpoint expects the customer-scoped token for authentication.
+     * Gets the customer\'s contact info. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Contact Info
      */
     async ecpContactInfoGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<ContactInfo>> {
@@ -226,7 +235,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the customer\'s contact info. This endpoint expects the customer-scoped token for authentication.
+     * Gets the customer\'s contact info. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Contact Info
      */
     async ecpContactInfoGet(initOverrides?: RequestInit): Promise<ContactInfo> {
@@ -235,12 +244,12 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create/update the customer\'s contact info. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s contact info. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Contact Info
      */
     async ecpContactInfoPutRaw(requestParameters: EcpContactInfoPutRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ContactInfo>> {
-        if (requestParameters.contactInfoInputArgs === null || requestParameters.contactInfoInputArgs === undefined) {
-            throw new runtime.RequiredError('contactInfoInputArgs','Required parameter requestParameters.contactInfoInputArgs was null or undefined when calling ecpContactInfoPut.');
+        if (requestParameters.customerPortalContactInfoInputArgs === null || requestParameters.customerPortalContactInfoInputArgs === undefined) {
+            throw new runtime.RequiredError('customerPortalContactInfoInputArgs','Required parameter requestParameters.customerPortalContactInfoInputArgs was null or undefined when calling ecpContactInfoPut.');
         }
 
         const queryParameters: any = {};
@@ -262,14 +271,14 @@ export class CustomerPortalApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ContactInfoInputArgsToJSON(requestParameters.contactInfoInputArgs),
+            body: CustomerPortalContactInfoInputArgsToJSON(requestParameters.customerPortalContactInfoInputArgs),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ContactInfoFromJSON(jsonValue));
     }
 
     /**
-     * Create/update the customer\'s contact info. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s contact info. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Contact Info
      */
     async ecpContactInfoPut(requestParameters: EcpContactInfoPutRequest, initOverrides?: RequestInit): Promise<ContactInfo> {
@@ -278,7 +287,43 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the customer entire credit ledger. This can be used to compute the current and available credit balance. This endpoint expects the customer-scoped token for authentication.
+     * Returns the credit balance. This is a live balance including the accrued revenue in the current cycle. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get the available credit balance.
+     */
+    async ecpCreditAvailableBalanceGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalAvailableCreditBalance>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/credit/available_balance`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomerPortalAvailableCreditBalanceFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns the credit balance. This is a live balance including the accrued revenue in the current cycle. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get the available credit balance.
+     */
+    async ecpCreditAvailableBalanceGet(initOverrides?: RequestInit): Promise<CustomerPortalAvailableCreditBalance> {
+        const response = await this.ecpCreditAvailableBalanceGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the customer entire credit ledger. This can be used to compute the current and available credit balance. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Fetch the Credit Ledger
      */
     async ecpCreditLedgerGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CreditLedger>>> {
@@ -305,7 +350,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns the customer entire credit ledger. This can be used to compute the current and available credit balance. This endpoint expects the customer-scoped token for authentication.
+     * Returns the customer entire credit ledger. This can be used to compute the current and available credit balance. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Fetch the Credit Ledger
      */
     async ecpCreditLedgerGet(initOverrides?: RequestInit): Promise<Array<CreditLedger>> {
@@ -314,7 +359,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Purchase the provided amount of credits at the default expiration and price set by the vendor. This endpoint expects the customer-scoped token for authentication.
+     * Purchase the provided amount of credits at the default expiration and price set by the vendor. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Purchase Credits
      */
     async ecpCreditPurchasePostRaw(requestParameters: EcpCreditPurchasePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CreditGrant>> {
@@ -348,7 +393,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Purchase the provided amount of credits at the default expiration and price set by the vendor. This endpoint expects the customer-scoped token for authentication.
+     * Purchase the provided amount of credits at the default expiration and price set by the vendor. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Purchase Credits
      */
     async ecpCreditPurchasePost(requestParameters: EcpCreditPurchasePostRequest, initOverrides?: RequestInit): Promise<CreditGrant> {
@@ -400,7 +445,43 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication.
+     * Gets the daily accrued revenue for a customer broken down by line item until the beginning of the current hour. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get Daily Accrued Revenue
+     */
+    async ecpDailyAccruedRevenueGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalDailyAccruedRevenue>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/daily_accrued_revenue`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomerPortalDailyAccruedRevenueFromJSON));
+    }
+
+    /**
+     * Gets the daily accrued revenue for a customer broken down by line item until the beginning of the current hour. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get Daily Accrued Revenue
+     */
+    async ecpDailyAccruedRevenueGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalDailyAccruedRevenue>> {
+        const response = await this.ecpDailyAccruedRevenueGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Compute Filtered Daily Usage
      */
     async ecpFilteredUsagePostRaw(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsage>> {
@@ -434,7 +515,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Compute Filtered Daily Usage
      */
     async ecpFilteredUsagePost(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsage> {
@@ -443,7 +524,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all invoices visible to the given customer. This endpoint expects the customer-scoped token for authentication.
+     * Get all invoices visible to the given customer. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Invoices
      */
     async ecpInvoicesGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalInvoice>>> {
@@ -470,7 +551,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all invoices visible to the given customer. This endpoint expects the customer-scoped token for authentication.
+     * Get all invoices visible to the given customer. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Invoices
      */
     async ecpInvoicesGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalInvoice>> {
@@ -479,7 +560,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the meters and corresponding primary label keys and values from the customer\'s active subscription.
+     * Get the meters and corresponding primary label keys and values from the customer\'s active subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Meters and Primary Labels
      */
     async ecpMetersGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalMeter>>> {
@@ -506,7 +587,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the meters and corresponding primary label keys and values from the customer\'s active subscription.
+     * Get the meters and corresponding primary label keys and values from the customer\'s active subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Meters and Primary Labels
      */
     async ecpMetersGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalMeter>> {
@@ -515,7 +596,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s current payment method if it exists in their payment gateway. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s current payment method if it exists in their payment gateway. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Payment Method
      */
     async ecpPaymentMethodGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalPaymentMethod>> {
@@ -542,7 +623,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s current payment method if it exists in their payment gateway. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s current payment method if it exists in their payment gateway. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Payment Method
      */
     async ecpPaymentMethodGet(initOverrides?: RequestInit): Promise<CustomerPortalPaymentMethod> {
@@ -551,7 +632,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the customer\'s current payment method status. Returns a 400 if the customer has no configuration or if the current payment provider doesn\'t have customer-level payment status. This endpoint expects the customer-scoped token for authentication.
+     * Gets the customer\'s current payment method status. Returns a 400 if the customer has no configuration or if the current payment provider doesn\'t have customer-level payment status. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Payment Method Status
      */
     async ecpPaymentMethodStatusGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPaymentMethodStatus>> {
@@ -578,7 +659,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the customer\'s current payment method status. Returns a 400 if the customer has no configuration or if the current payment provider doesn\'t have customer-level payment status. This endpoint expects the customer-scoped token for authentication.
+     * Gets the customer\'s current payment method status. Returns a 400 if the customer has no configuration or if the current payment provider doesn\'t have customer-level payment status. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Payment Method Status
      */
     async ecpPaymentMethodStatusGet(initOverrides?: RequestInit): Promise<CustomerPaymentMethodStatus> {
@@ -587,7 +668,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication.
+     * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get the Customer Portal Url
      */
     async ecpPortalUrlGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUrl>> {
@@ -614,7 +695,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication.
+     * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get the Customer Portal Url
      */
     async ecpPortalUrlGet(initOverrides?: RequestInit): Promise<CustomerPortalUrl> {
@@ -623,7 +704,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all price plans visible to the given customer for self serve. By default, no price plans are visible. Price plan visibility can be configured by the vendor using the /price_plans/self_serve endpoint.
+     * Get all price plans visible to the given customer for self serve. By default, no price plans are visible. Price plan visibility can be configured by the vendor using the /price_plans/self_serve endpoint. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Price Plans
      */
     async ecpPricePlansGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<PricePlan>>> {
@@ -650,7 +731,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all price plans visible to the given customer for self serve. By default, no price plans are visible. Price plan visibility can be configured by the vendor using the /price_plans/self_serve endpoint.
+     * Get all price plans visible to the given customer for self serve. By default, no price plans are visible. Price plan visibility can be configured by the vendor using the /price_plans/self_serve endpoint. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Price Plans
      */
     async ecpPricePlansGet(initOverrides?: RequestInit): Promise<Array<PricePlan>> {
@@ -659,7 +740,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s self serve customization. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s self serve customization. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Customization.
      */
     async ecpSelfServeCustomizationGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<SelfServeCustomization>> {
@@ -686,7 +767,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s self serve customization. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s self serve customization. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Customization.
      */
     async ecpSelfServeCustomizationGet(initOverrides?: RequestInit): Promise<SelfServeCustomization> {
@@ -695,7 +776,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s self serve settings. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s self serve settings. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Settings.
      */
     async ecpSelfServeSettingsGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<SelfServeSettings>> {
@@ -722,7 +803,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s self serve settings. This endpoint expects the customer-scoped token for authentication.
+     * Get the customer\'s self serve settings. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Self Serve Settings.
      */
     async ecpSelfServeSettingsGet(initOverrides?: RequestInit): Promise<SelfServeSettings> {
@@ -731,7 +812,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Attempt to create a Stripe SetupIntent object. This endpoint expects the customer-scoped token for authentication.
+     * Attempt to create a Stripe SetupIntent object. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Create SetupIntent
      */
     async ecpSetupIntentPostRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalStripeCredential>> {
@@ -758,7 +839,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Attempt to create a Stripe SetupIntent object. This endpoint expects the customer-scoped token for authentication.
+     * Attempt to create a Stripe SetupIntent object. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Create SetupIntent
      */
     async ecpSetupIntentPost(initOverrides?: RequestInit): Promise<CustomerPortalStripeCredential> {
@@ -767,7 +848,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cancel the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Cancel the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Cancel Subscription
      */
     async ecpSubscriptionDeleteRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
@@ -794,7 +875,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cancel the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Cancel the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Cancel Subscription
      */
     async ecpSubscriptionDelete(initOverrides?: RequestInit): Promise<void> {
@@ -802,7 +883,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch the customer\'s active price plan if it exists. This endpoint expects the customer-scoped token for authentication.
+     * Fetch the customer\'s active price plan if it exists. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Price Plan
      */
     async ecpSubscriptionGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalSubscription>> {
@@ -829,7 +910,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Fetch the customer\'s active price plan if it exists. This endpoint expects the customer-scoped token for authentication.
+     * Fetch the customer\'s active price plan if it exists. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Price Plan
      */
     async ecpSubscriptionGet(initOverrides?: RequestInit): Promise<CustomerPortalSubscription> {
@@ -838,7 +919,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Subscription
      */
     async ecpSubscriptionPostRaw(requestParameters: EcpSubscriptionPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalSubscription>> {
@@ -872,7 +953,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication.
+     * Create/update the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
      * Create/Update Subscription
      */
     async ecpSubscriptionPost(requestParameters: EcpSubscriptionPostRequest, initOverrides?: RequestInit): Promise<CustomerPortalSubscription> {
@@ -924,7 +1005,43 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage by meter for current and previous billing cycles. This endpoint expects the customer-scoped token for authentication.
+     * Gets the total accrued revenue for a customer broken down by line item until the beginning of the current hour. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get Total Accrued Revenue
+     */
+    async ecpTotalAccruedRevenueGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalAccruedRevenue>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/total_accrued_revenue`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomerPortalAccruedRevenueFromJSON(jsonValue));
+    }
+
+    /**
+     * Gets the total accrued revenue for a customer broken down by line item until the beginning of the current hour. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Get Total Accrued Revenue
+     */
+    async ecpTotalAccruedRevenueGet(initOverrides?: RequestInit): Promise<CustomerPortalAccruedRevenue> {
+        const response = await this.ecpTotalAccruedRevenueGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * [DEPRECATED] Please use /ecp/filtered_usage instead.
      * Get Daily Usage
      */
     async ecpUsageGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalUsage>>> {
@@ -951,7 +1068,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage by meter for current and previous billing cycles. This endpoint expects the customer-scoped token for authentication.
+     * [DEPRECATED] Please use /ecp/filtered_usage instead.
      * Get Daily Usage
      */
     async ecpUsageGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalUsage>> {
@@ -960,7 +1077,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get relevant information about the customer\'s vendor. This endpoint expects the customer-scoped token for authentication.
+     * Get relevant information about the customer\'s vendor.This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Vendor Information
      */
     async ecpVendorGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalVendor>> {
@@ -987,7 +1104,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get relevant information about the customer\'s vendor. This endpoint expects the customer-scoped token for authentication.
+     * Get relevant information about the customer\'s vendor.This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get Vendor Information
      */
     async ecpVendorGet(initOverrides?: RequestInit): Promise<CustomerPortalVendor> {

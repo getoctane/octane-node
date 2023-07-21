@@ -24,6 +24,12 @@ export interface TrialInputArgs {
      * @type {number}
      * @memberof TrialInputArgs
      */
+    credit?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TrialInputArgs
+     */
     timeLength?: number;
     /**
      * 
@@ -31,12 +37,6 @@ export interface TrialInputArgs {
      * @memberof TrialInputArgs
      */
     timeUnitName?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TrialInputArgs
-     */
-    credit?: number;
 }
 
 export function TrialInputArgsFromJSON(json: any): TrialInputArgs {
@@ -49,9 +49,9 @@ export function TrialInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
+        'credit': !exists(json, 'credit') ? undefined : json['credit'],
         'timeLength': !exists(json, 'time_length') ? undefined : json['time_length'],
         'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
-        'credit': !exists(json, 'credit') ? undefined : json['credit'],
     };
 }
 
@@ -64,9 +64,9 @@ export function TrialInputArgsToJSON(value?: TrialInputArgs | null): any {
     }
     return {
         
+        'credit': value.credit,
         'time_length': value.timeLength,
         'time_unit_name': value.timeUnitName,
-        'credit': value.credit,
     };
 }
 

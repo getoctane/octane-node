@@ -57,6 +57,12 @@ export interface Discount {
      */
     endDate?: Date | null;
     /**
+     * Offset in number of billing cycles for when this discount will apply. For example, if set to 1, the discount will apply from the start of the next billing cycle.
+     * @type {number}
+     * @memberof Discount
+     */
+    billingCycleStartOffset?: number;
+    /**
      * Duration of this discount in number of billing cycles.
      * @type {number}
      * @memberof Discount
@@ -114,6 +120,7 @@ export function DiscountFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'startDate': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
         'endDate': !exists(json, 'end_date') ? undefined : (json['end_date'] === null ? null : new Date(json['end_date'])),
+        'billingCycleStartOffset': !exists(json, 'billing_cycle_start_offset') ? undefined : json['billing_cycle_start_offset'],
         'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
         'couponId': !exists(json, 'coupon_id') ? undefined : json['coupon_id'],
         'externalUuid': !exists(json, 'external_uuid') ? undefined : json['external_uuid'],
@@ -136,6 +143,7 @@ export function DiscountToJSON(value?: Discount | null): any {
         'amount': value.amount,
         'start_date': value.startDate === undefined ? undefined : (value.startDate === null ? null : value.startDate.toISOString()),
         'end_date': value.endDate === undefined ? undefined : (value.endDate === null ? null : value.endDate.toISOString()),
+        'billing_cycle_start_offset': value.billingCycleStartOffset,
         'billing_cycle_duration': value.billingCycleDuration,
         'coupon_id': value.couponId,
         'external_uuid': value.externalUuid,

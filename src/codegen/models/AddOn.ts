@@ -19,6 +19,12 @@ import {
     FeatureFromJSONTyped,
     FeatureToJSON,
 } from './Feature';
+import {
+    PriceTier,
+    PriceTierFromJSON,
+    PriceTierFromJSONTyped,
+    PriceTierToJSON,
+} from './PriceTier';
 
 /**
  * 
@@ -38,6 +44,18 @@ export interface AddOn {
      * @memberof AddOn
      */
     price: number;
+    /**
+     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
+     * @type {Array<PriceTier>}
+     * @memberof AddOn
+     */
+    prices?: Array<PriceTier>;
+    /**
+     * The price scheme of the add on. One of 'FLAT' or 'TIERED'
+     * @type {string}
+     * @memberof AddOn
+     */
+    priceSchemeType: string;
     /**
      * If true, customer is just charged once in the first billing cycle.
      * @type {boolean}
@@ -62,6 +80,18 @@ export interface AddOn {
      * @memberof AddOn
      */
     limit?: number;
+    /**
+     * The frequency at which to price this add on.
+     * @type {number}
+     * @memberof AddOn
+     */
+    priceFrequency?: number;
+    /**
+     * The frequency at which to charge this add on. Currently the only values supported are price_frequency or 1.
+     * @type {number}
+     * @memberof AddOn
+     */
+    chargeFrequency?: number;
 }
 
 export function AddOnFromJSON(json: any): AddOn {
@@ -76,10 +106,14 @@ export function AddOnFromJSONTyped(json: any, ignoreDiscriminator: boolean): Add
         
         'feature': FeatureFromJSON(json['feature']),
         'price': json['price'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceTierFromJSON)),
+        'priceSchemeType': json['price_scheme_type'],
         'singleUse': json['single_use'],
         'quantityEnabled': json['quantity_enabled'],
         'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'priceFrequency': !exists(json, 'price_frequency') ? undefined : json['price_frequency'],
+        'chargeFrequency': !exists(json, 'charge_frequency') ? undefined : json['charge_frequency'],
     };
 }
 
@@ -94,10 +128,14 @@ export function AddOnToJSON(value?: AddOn | null): any {
         
         'feature': FeatureToJSON(value.feature),
         'price': value.price,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceTierToJSON)),
+        'price_scheme_type': value.priceSchemeType,
         'single_use': value.singleUse,
         'quantity_enabled': value.quantityEnabled,
         'immediately_charge': value.immediatelyCharge,
         'limit': value.limit,
+        'price_frequency': value.priceFrequency,
+        'charge_frequency': value.chargeFrequency,
     };
 }
 

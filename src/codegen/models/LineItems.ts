@@ -21,22 +21,22 @@ import { exists, mapValues } from '../runtime';
 export interface LineItems {
     /**
      * 
-     * @type {{ [key: string]: string; }}
+     * @type {number}
      * @memberof LineItems
      */
-    metadata?: { [key: string]: string; };
-    /**
-     * 
-     * @type {Date}
-     * @memberof LineItems
-     */
-    startTime?: Date;
+    quantity?: number;
     /**
      * 
      * @type {string}
      * @memberof LineItems
      */
-    description?: string;
+    quantityUnit?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof LineItems
+     */
+    metadata?: { [key: string]: string; };
     /**
      * 
      * @type {string}
@@ -48,7 +48,19 @@ export interface LineItems {
      * @type {string}
      * @memberof LineItems
      */
-    quantityUnit?: string;
+    description?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LineItems
+     */
+    priceInt?: number;
+    /**
+     * 
+     * @type {Date}
+     * @memberof LineItems
+     */
+    startTime?: Date;
     /**
      * 
      * @type {string}
@@ -67,18 +79,6 @@ export interface LineItems {
      * @memberof LineItems
      */
     name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    priceInt?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    quantity?: number;
 }
 
 export function LineItemsFromJSON(json: any): LineItems {
@@ -91,16 +91,16 @@ export function LineItemsFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
+        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'quantityUnit': !exists(json, 'quantity_unit') ? undefined : json['quantity_unit'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
-        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
     };
 }
 
@@ -113,16 +113,16 @@ export function LineItemsToJSON(value?: LineItems | null): any {
     }
     return {
         
-        'metadata': value.metadata,
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'description': value.description,
-        'price': value.price,
+        'quantity': value.quantity,
         'quantity_unit': value.quantityUnit,
+        'metadata': value.metadata,
+        'price': value.price,
+        'description': value.description,
+        'price_int': value.priceInt,
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
         'id': value.id,
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
         'name': value.name,
-        'price_int': value.priceInt,
-        'quantity': value.quantity,
     };
 }
 

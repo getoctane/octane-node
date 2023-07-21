@@ -18,6 +18,9 @@ import {
     AccountingCustomer,
     AccountingCustomerFromJSON,
     AccountingCustomerToJSON,
+    AccruedRevenue,
+    AccruedRevenueFromJSON,
+    AccruedRevenueToJSON,
     ActiveSubscription,
     ActiveSubscriptionFromJSON,
     ActiveSubscriptionToJSON,
@@ -72,6 +75,9 @@ import {
     CustomerUsage,
     CustomerUsageFromJSON,
     CustomerUsageToJSON,
+    DailyAccruedRevenue,
+    DailyAccruedRevenueFromJSON,
+    DailyAccruedRevenueToJSON,
     DeleteDiscountInputArgs,
     DeleteDiscountInputArgsFromJSON,
     DeleteDiscountInputArgsToJSON,
@@ -180,6 +186,10 @@ export interface CustomersCustomerNameCreditTopOffPlanPutRequest {
     updateCreditTopOffPlanInputArgs: UpdateCreditTopOffPlanInputArgs;
 }
 
+export interface CustomersCustomerNameDailyAccruedRevenueGetRequest {
+    customerName: string;
+}
+
 export interface CustomersCustomerNameDeleteRequest {
     customerName: string;
 }
@@ -217,21 +227,21 @@ export interface CustomersCustomerNameIntegrationTaxAvalaraSettingsPutRequest {
 }
 
 export interface CustomersCustomerNameInvoiceInvoiceIdTokenGetRequest {
-    invoiceId: number;
     customerName: string;
     token: string;
+    invoiceId: number;
 }
 
 export interface CustomersCustomerNameInvoicesGetRequest {
     customerName: string;
-    sortColumn?: string;
-    limit?: number;
-    startTime?: Date;
-    customerName2?: string;
-    forwardSecondarySortOffset?: string;
-    sortDirection?: string;
     forwardSortOffset?: string;
+    limit?: number;
+    sortColumn?: string;
+    customerName2?: string;
     status?: string;
+    sortDirection?: string;
+    forwardSecondarySortOffset?: string;
+    startTime?: Date;
 }
 
 export interface CustomersCustomerNameMappingsGetRequest {
@@ -277,14 +287,14 @@ export interface CustomersCustomerNameRevenueGetRequest {
 }
 
 export interface CustomersCustomerNameSampleInvoiceAsOfStrTokenGetRequest {
-    token: string;
     customerName: string;
     asOfStr: string;
+    token: string;
 }
 
 export interface CustomersCustomerNameSampleInvoiceTokenGetRequest {
-    token: string;
     customerName: string;
+    token: string;
 }
 
 export interface CustomersCustomerNameScheduledSubscriptionsGetRequest {
@@ -324,11 +334,22 @@ export interface CustomersCustomerNameSubscriptionsPostRequest {
     createSubscriptionArgs: CreateSubscriptionArgs;
 }
 
+export interface CustomersCustomerNameTotalAccruedRevenueGetRequest {
+    customerName: string;
+}
+
+export interface CustomersCustomerNameUsageAcrossMetersTokenGetRequest {
+    customerName: string;
+    token: string;
+    startTime: Date;
+    endTime: Date;
+}
+
 export interface CustomersCustomerNameUsageGetRequest {
     customerName: string;
-    meterName?: string;
     startTime?: Date;
     endTime?: Date;
+    meterName?: string;
 }
 
 export interface CustomersPostRequest {
@@ -931,6 +952,46 @@ export class CustomersApi extends runtime.BaseAPI {
     }
 
     /**
+     * Gets the daily accrued revenue for a customer broken down by line item until the beginning of the current hour.
+     * Get Daily Accrued Revenue
+     */
+    async customersCustomerNameDailyAccruedRevenueGetRaw(requestParameters: CustomersCustomerNameDailyAccruedRevenueGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<DailyAccruedRevenue>>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameDailyAccruedRevenueGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/daily_accrued_revenue`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(DailyAccruedRevenueFromJSON));
+    }
+
+    /**
+     * Gets the daily accrued revenue for a customer broken down by line item until the beginning of the current hour.
+     * Get Daily Accrued Revenue
+     */
+    async customersCustomerNameDailyAccruedRevenueGet(requestParameters: CustomersCustomerNameDailyAccruedRevenueGetRequest, initOverrides?: RequestInit): Promise<Array<DailyAccruedRevenue>> {
+        const response = await this.customersCustomerNameDailyAccruedRevenueGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Delete a customer by their unique name.
      * Delete Customer
      */
@@ -1277,16 +1338,16 @@ export class CustomersApi extends runtime.BaseAPI {
      * Generate Current Invoice
      */
     async customersCustomerNameInvoiceInvoiceIdTokenGetRaw(requestParameters: CustomersCustomerNameInvoiceInvoiceIdTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
-        if (requestParameters.invoiceId === null || requestParameters.invoiceId === undefined) {
-            throw new runtime.RequiredError('invoiceId','Required parameter requestParameters.invoiceId was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
         }
 
         if (requestParameters.token === null || requestParameters.token === undefined) {
             throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
+        }
+
+        if (requestParameters.invoiceId === null || requestParameters.invoiceId === undefined) {
+            throw new runtime.RequiredError('invoiceId','Required parameter requestParameters.invoiceId was null or undefined when calling customersCustomerNameInvoiceInvoiceIdTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1302,7 +1363,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/invoice/{invoice_id}/{token}`.replace(`{${"invoice_id"}}`, encodeURIComponent(String(requestParameters.invoiceId))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            path: `/customers/{customer_name}/invoice/{invoice_id}/{token}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"invoice_id"}}`, encodeURIComponent(String(requestParameters.invoiceId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1331,36 +1392,36 @@ export class CustomersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         if (requestParameters.customerName2 !== undefined) {
             queryParameters['customer_name'] = requestParameters.customerName2;
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
         }
 
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
         }
 
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -1792,16 +1853,16 @@ export class CustomersApi extends runtime.BaseAPI {
      * Generate Current Invoice
      */
     async customersCustomerNameSampleInvoiceAsOfStrTokenGetRaw(requestParameters: CustomersCustomerNameSampleInvoiceAsOfStrTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
         }
 
         if (requestParameters.asOfStr === null || requestParameters.asOfStr === undefined) {
             throw new runtime.RequiredError('asOfStr','Required parameter requestParameters.asOfStr was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceAsOfStrTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1817,7 +1878,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/sample_invoice/{as_of_str}/{token}`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))),
+            path: `/customers/{customer_name}/sample_invoice/{as_of_str}/{token}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -1840,12 +1901,12 @@ export class CustomersApi extends runtime.BaseAPI {
      * Generate Current Invoice
      */
     async customersCustomerNameSampleInvoiceTokenGetRaw(requestParameters: CustomersCustomerNameSampleInvoiceTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Error>> {
-        if (requestParameters.token === null || requestParameters.token === undefined) {
-            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
-        }
-
         if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
             throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameSampleInvoiceTokenGet.');
         }
 
         const queryParameters: any = {};
@@ -1861,7 +1922,7 @@ export class CustomersApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/customers/{customer_name}/sample_invoice/{token}`.replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            path: `/customers/{customer_name}/sample_invoice/{token}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -2233,7 +2294,106 @@ export class CustomersApi extends runtime.BaseAPI {
     }
 
     /**
-     * For the given meter, get a customer\'s total usage.
+     * Gets the total accrued revenue for a customer broken down by line item until the beginning of the current hour.
+     * Get Total Accrued Revenue
+     */
+    async customersCustomerNameTotalAccruedRevenueGetRaw(requestParameters: CustomersCustomerNameTotalAccruedRevenueGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<AccruedRevenue>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameTotalAccruedRevenueGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/total_accrued_revenue`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccruedRevenueFromJSON(jsonValue));
+    }
+
+    /**
+     * Gets the total accrued revenue for a customer broken down by line item until the beginning of the current hour.
+     * Get Total Accrued Revenue
+     */
+    async customersCustomerNameTotalAccruedRevenueGet(requestParameters: CustomersCustomerNameTotalAccruedRevenueGetRequest, initOverrides?: RequestInit): Promise<AccruedRevenue> {
+        const response = await this.customersCustomerNameTotalAccruedRevenueGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the usage for a customer across all meters in XLS format for a given time period.
+     * Get Customer\'s Usage Across Meters
+     */
+    async customersCustomerNameUsageAcrossMetersTokenGetRaw(requestParameters: CustomersCustomerNameUsageAcrossMetersTokenGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling customersCustomerNameUsageAcrossMetersTokenGet.');
+        }
+
+        if (requestParameters.token === null || requestParameters.token === undefined) {
+            throw new runtime.RequiredError('token','Required parameter requestParameters.token was null or undefined when calling customersCustomerNameUsageAcrossMetersTokenGet.');
+        }
+
+        if (requestParameters.startTime === null || requestParameters.startTime === undefined) {
+            throw new runtime.RequiredError('startTime','Required parameter requestParameters.startTime was null or undefined when calling customersCustomerNameUsageAcrossMetersTokenGet.');
+        }
+
+        if (requestParameters.endTime === null || requestParameters.endTime === undefined) {
+            throw new runtime.RequiredError('endTime','Required parameter requestParameters.endTime was null or undefined when calling customersCustomerNameUsageAcrossMetersTokenGet.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        }
+
+        if (requestParameters.endTime !== undefined) {
+            queryParameters['end_time'] = (requestParameters.endTime as any).toISOString();
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/customers/{customer_name}/usage_across_meters/{token}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"token"}}`, encodeURIComponent(String(requestParameters.token))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Get the usage for a customer across all meters in XLS format for a given time period.
+     * Get Customer\'s Usage Across Meters
+     */
+    async customersCustomerNameUsageAcrossMetersTokenGet(requestParameters: CustomersCustomerNameUsageAcrossMetersTokenGetRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.customersCustomerNameUsageAcrossMetersTokenGetRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * [DEPRECATED] For the given meter, get a customer\'s total usage.
      * Get Usage By Meter
      */
     async customersCustomerNameUsageGetRaw(requestParameters: CustomersCustomerNameUsageGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerUsage>> {
@@ -2243,16 +2403,16 @@ export class CustomersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.meterName !== undefined) {
-            queryParameters['meter_name'] = requestParameters.meterName;
-        }
-
         if (requestParameters.startTime !== undefined) {
             queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
         if (requestParameters.endTime !== undefined) {
             queryParameters['end_time'] = (requestParameters.endTime as any).toISOString();
+        }
+
+        if (requestParameters.meterName !== undefined) {
+            queryParameters['meter_name'] = requestParameters.meterName;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -2276,7 +2436,7 @@ export class CustomersApi extends runtime.BaseAPI {
     }
 
     /**
-     * For the given meter, get a customer\'s total usage.
+     * [DEPRECATED] For the given meter, get a customer\'s total usage.
      * Get Usage By Meter
      */
     async customersCustomerNameUsageGet(requestParameters: CustomersCustomerNameUsageGetRequest, initOverrides?: RequestInit): Promise<CustomerUsage> {

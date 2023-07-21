@@ -33,11 +33,11 @@ import {
  */
 export interface CustomerPortalInvoice {
     /**
-     * False if not paid yet
-     * @type {boolean}
+     * Total amount due
+     * @type {number}
      * @memberof CustomerPortalInvoice
      */
-    isPaid?: boolean;
+    amountDue?: number;
     /**
      * Earliest start time of line items covered by the invoice
      * @type {Date}
@@ -45,11 +45,11 @@ export interface CustomerPortalInvoice {
      */
     minItemStartTime?: Date;
     /**
-     * Latest end time of line items covered by the invoice
+     * The date the invoice will be issued to the end customer or forwarded to the payment processor.
      * @type {Date}
      * @memberof CustomerPortalInvoice
      */
-    maxItemEndTime?: Date;
+    issueDate?: Date;
     /**
      * Amount due before any credits are applied
      * @type {number}
@@ -57,17 +57,35 @@ export interface CustomerPortalInvoice {
      */
     subTotal?: number;
     /**
+     * Latest end time of line items covered by the invoice
+     * @type {Date}
+     * @memberof CustomerPortalInvoice
+     */
+    maxItemEndTime?: Date;
+    /**
+     * Tax amount applied to subtotal
+     * @type {number}
+     * @memberof CustomerPortalInvoice
+     */
+    taxAmount?: number;
+    /**
+     * 
+     * @type {Array<LineItems>}
+     * @memberof CustomerPortalInvoice
+     */
+    lineItems?: Array<LineItems>;
+    /**
+     * Url pointing to the pdf of this invoice.
+     * @type {string}
+     * @memberof CustomerPortalInvoice
+     */
+    pdfUrl?: string;
+    /**
      * 
      * @type {Date}
      * @memberof CustomerPortalInvoice
      */
     dueDate?: Date;
-    /**
-     * The date the invoice will be issued to the end customer or forwarded to the payment processor.
-     * @type {Date}
-     * @memberof CustomerPortalInvoice
-     */
-    issueDate?: Date;
     /**
      * [DEPRECATED] Start time of the cycle in which the invoice was generated
      * @type {Date}
@@ -75,11 +93,11 @@ export interface CustomerPortalInvoice {
      */
     startTime?: Date;
     /**
-     * Any discount credits applied to the invoice
-     * @type {number}
+     * 
+     * @type {string}
      * @memberof CustomerPortalInvoice
      */
-    discountCredit?: number;
+    id?: string;
     /**
      * Information related to the current status of this invoice.
      * @type {CustomerPortalInvoiceStatus}
@@ -93,35 +111,17 @@ export interface CustomerPortalInvoice {
      */
     endTime?: Date;
     /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalInvoice
-     */
-    id?: string;
-    /**
-     * Total amount due
+     * Any discount credits applied to the invoice
      * @type {number}
      * @memberof CustomerPortalInvoice
      */
-    amountDue?: number;
+    discountCredit?: number;
     /**
-     * 
-     * @type {Array<LineItems>}
+     * False if not paid yet
+     * @type {boolean}
      * @memberof CustomerPortalInvoice
      */
-    lineItems?: Array<LineItems>;
-    /**
-     * Tax amount applied to subtotal
-     * @type {number}
-     * @memberof CustomerPortalInvoice
-     */
-    taxAmount?: number;
-    /**
-     * Url pointing to the pdf of this invoice.
-     * @type {string}
-     * @memberof CustomerPortalInvoice
-     */
-    pdfUrl?: string;
+    isPaid?: boolean;
 }
 
 export function CustomerPortalInvoiceFromJSON(json: any): CustomerPortalInvoice {
@@ -134,21 +134,21 @@ export function CustomerPortalInvoiceFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'isPaid': !exists(json, 'is_paid') ? undefined : json['is_paid'],
+        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
         'minItemStartTime': !exists(json, 'min_item_start_time') ? undefined : (new Date(json['min_item_start_time'])),
-        'maxItemEndTime': !exists(json, 'max_item_end_time') ? undefined : (new Date(json['max_item_end_time'])),
-        'subTotal': !exists(json, 'sub_total') ? undefined : json['sub_total'],
-        'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
         'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
+        'subTotal': !exists(json, 'sub_total') ? undefined : json['sub_total'],
+        'maxItemEndTime': !exists(json, 'max_item_end_time') ? undefined : (new Date(json['max_item_end_time'])),
+        'taxAmount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
+        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(LineItemsFromJSON)),
+        'pdfUrl': !exists(json, 'pdf_url') ? undefined : json['pdf_url'],
+        'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'discountCredit': !exists(json, 'discount_credit') ? undefined : json['discount_credit'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'status': !exists(json, 'status') ? undefined : CustomerPortalInvoiceStatusFromJSON(json['status']),
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
-        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(LineItemsFromJSON)),
-        'taxAmount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
-        'pdfUrl': !exists(json, 'pdf_url') ? undefined : json['pdf_url'],
+        'discountCredit': !exists(json, 'discount_credit') ? undefined : json['discount_credit'],
+        'isPaid': !exists(json, 'is_paid') ? undefined : json['is_paid'],
     };
 }
 
@@ -161,21 +161,21 @@ export function CustomerPortalInvoiceToJSON(value?: CustomerPortalInvoice | null
     }
     return {
         
-        'is_paid': value.isPaid,
+        'amount_due': value.amountDue,
         'min_item_start_time': value.minItemStartTime === undefined ? undefined : (value.minItemStartTime.toISOString()),
-        'max_item_end_time': value.maxItemEndTime === undefined ? undefined : (value.maxItemEndTime.toISOString()),
-        'sub_total': value.subTotal,
-        'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
         'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
+        'sub_total': value.subTotal,
+        'max_item_end_time': value.maxItemEndTime === undefined ? undefined : (value.maxItemEndTime.toISOString()),
+        'tax_amount': value.taxAmount,
+        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(LineItemsToJSON)),
+        'pdf_url': value.pdfUrl,
+        'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'discount_credit': value.discountCredit,
+        'id': value.id,
         'status': CustomerPortalInvoiceStatusToJSON(value.status),
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
-        'id': value.id,
-        'amount_due': value.amountDue,
-        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(LineItemsToJSON)),
-        'tax_amount': value.taxAmount,
-        'pdf_url': value.pdfUrl,
+        'discount_credit': value.discountCredit,
+        'is_paid': value.isPaid,
     };
 }
 

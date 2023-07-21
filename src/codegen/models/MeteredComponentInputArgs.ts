@@ -33,23 +33,17 @@ import {
  */
 export interface MeteredComponentInputArgs {
     /**
-     * 
-     * @type {Array<MeteredComponentLabelLimitInputArgs>}
-     * @memberof MeteredComponentInputArgs
-     */
-    labelLimits?: Array<MeteredComponentLabelLimitInputArgs>;
-    /**
-     * Minimum charge frequency (as a multiple of the price plan period) for the metered component
-     * @type {number}
-     * @memberof MeteredComponentInputArgs
-     */
-    minimumChargeFrequency?: number | null;
-    /**
-     * Codename of the meter.
+     * Name to be used on invoice.
      * @type {string}
      * @memberof MeteredComponentInputArgs
      */
-    meterName?: string;
+    displayName?: string;
+    /**
+     * Numeric limit to set on customer usage for the meter.
+     * @type {number}
+     * @memberof MeteredComponentInputArgs
+     */
+    limit?: number;
     /**
      * 
      * @type {PriceSchemeInputArgs}
@@ -63,17 +57,17 @@ export interface MeteredComponentInputArgs {
      */
     minimumCharge?: number | null;
     /**
-     * Numeric limit to set on customer usage for the meter.
+     * Minimum charge frequency (as a multiple of the price plan period) for the metered component
      * @type {number}
      * @memberof MeteredComponentInputArgs
      */
-    limit?: number;
+    minimumChargeFrequency?: number | null;
     /**
-     * Name to be used on invoice.
-     * @type {string}
+     * 
+     * @type {Array<MeteredComponentLabelLimitInputArgs>}
      * @memberof MeteredComponentInputArgs
      */
-    displayName?: string;
+    labelLimits?: Array<MeteredComponentLabelLimitInputArgs>;
     /**
      * 
      * @type {number}
@@ -86,6 +80,18 @@ export interface MeteredComponentInputArgs {
      * @memberof MeteredComponentInputArgs
      */
     meterId?: number;
+    /**
+     * Watermark value under which the meter should not be charged. Only applicable to meters with 'time_weighted' aggregation.
+     * @type {number}
+     * @memberof MeteredComponentInputArgs
+     */
+    watermark?: number;
+    /**
+     * Codename of the meter.
+     * @type {string}
+     * @memberof MeteredComponentInputArgs
+     */
+    meterName?: string;
 }
 
 export function MeteredComponentInputArgsFromJSON(json: any): MeteredComponentInputArgs {
@@ -98,15 +104,16 @@ export function MeteredComponentInputArgsFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(MeteredComponentLabelLimitInputArgsFromJSON)),
-        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
-        'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'priceScheme': !exists(json, 'price_scheme') ? undefined : PriceSchemeInputArgsFromJSON(json['price_scheme']),
         'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
+        'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(MeteredComponentLabelLimitInputArgsFromJSON)),
         'id': !exists(json, 'id') ? undefined : json['id'],
         'meterId': !exists(json, 'meter_id') ? undefined : json['meter_id'],
+        'watermark': !exists(json, 'watermark') ? undefined : json['watermark'],
+        'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
     };
 }
 
@@ -119,15 +126,16 @@ export function MeteredComponentInputArgsToJSON(value?: MeteredComponentInputArg
     }
     return {
         
-        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(MeteredComponentLabelLimitInputArgsToJSON)),
-        'minimum_charge_frequency': value.minimumChargeFrequency,
-        'meter_name': value.meterName,
+        'display_name': value.displayName,
+        'limit': value.limit,
         'price_scheme': PriceSchemeInputArgsToJSON(value.priceScheme),
         'minimum_charge': value.minimumCharge,
-        'limit': value.limit,
-        'display_name': value.displayName,
+        'minimum_charge_frequency': value.minimumChargeFrequency,
+        'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(MeteredComponentLabelLimitInputArgsToJSON)),
         'id': value.id,
         'meter_id': value.meterId,
+        'watermark': value.watermark,
+        'meter_name': value.meterName,
     };
 }
 

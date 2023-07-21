@@ -20,17 +20,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateCreditTopOffPlanInputArgs {
     /**
-     * Time length unit for the default expiration for credits granted in a top off.
-     * @type {string}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    expirationUnit?: string;
-    /**
      * The threshold in amount of credits at which the balance will be topped off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     triggerAmount: number;
+    /**
+     * Amount of credits that are granted in a single top off.
+     * @type {number}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    grantAmount: number;
+    /**
+     * Time length unit for the default expiration for credits granted in a top off.
+     * @type {string}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    expirationUnit?: string;
     /**
      * Price for the grant, in lowest denomination (i.e cents).
      * @type {number}
@@ -38,17 +44,17 @@ export interface CreateCreditTopOffPlanInputArgs {
      */
     price: number;
     /**
+     * A description that will be used on the invoice line items.
+     * @type {string}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    description?: string | null;
+    /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     expirationLength?: number;
-    /**
-     * Amount of credits that are granted in a single top off.
-     * @type {number}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    grantAmount: number;
 }
 
 export function CreateCreditTopOffPlanInputArgsFromJSON(json: any): CreateCreditTopOffPlanInputArgs {
@@ -61,11 +67,12 @@ export function CreateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
         'triggerAmount': json['trigger_amount'],
-        'price': json['price'],
-        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
         'grantAmount': json['grant_amount'],
+        'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
+        'price': json['price'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
     };
 }
 
@@ -78,11 +85,12 @@ export function CreateCreditTopOffPlanInputArgsToJSON(value?: CreateCreditTopOff
     }
     return {
         
-        'expiration_unit': value.expirationUnit,
         'trigger_amount': value.triggerAmount,
-        'price': value.price,
-        'expiration_length': value.expirationLength,
         'grant_amount': value.grantAmount,
+        'expiration_unit': value.expirationUnit,
+        'price': value.price,
+        'description': value.description,
+        'expiration_length': value.expirationLength,
     };
 }
 

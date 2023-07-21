@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface RevenueRecognitionEntry {
     /**
-     * The change in deferred revenue this month (in cents).
-     * @type {number}
-     * @memberof RevenueRecognitionEntry
-     */
-    deferred?: number;
-    /**
      * The newly booked amount in this month (in cents).
      * @type {number}
      * @memberof RevenueRecognitionEntry
@@ -43,6 +37,12 @@ export interface RevenueRecognitionEntry {
      * @memberof RevenueRecognitionEntry
      */
     recognized?: number;
+    /**
+     * The change in deferred revenue this month (in cents).
+     * @type {number}
+     * @memberof RevenueRecognitionEntry
+     */
+    deferred?: number;
 }
 
 export function RevenueRecognitionEntryFromJSON(json: any): RevenueRecognitionEntry {
@@ -55,10 +55,10 @@ export function RevenueRecognitionEntryFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
         'booked': !exists(json, 'booked') ? undefined : json['booked'],
         'month': !exists(json, 'month') ? undefined : (new Date(json['month'])),
         'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
+        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
     };
 }
 
@@ -71,10 +71,10 @@ export function RevenueRecognitionEntryToJSON(value?: RevenueRecognitionEntry | 
     }
     return {
         
-        'deferred': value.deferred,
         'booked': value.booked,
         'month': value.month === undefined ? undefined : (value.month.toISOString()),
         'recognized': value.recognized,
+        'deferred': value.deferred,
     };
 }
 

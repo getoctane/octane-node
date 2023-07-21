@@ -86,6 +86,12 @@ export interface MeteredComponent {
      * @memberof MeteredComponent
      */
     minimumChargeFrequency?: number | null;
+    /**
+     * Watermark value under which the meter should not be charged. Only applicable to meters with 'time_weighted' aggregation.
+     * @type {number}
+     * @memberof MeteredComponent
+     */
+    watermark?: number | null;
 }
 
 export function MeteredComponentFromJSON(json: any): MeteredComponent {
@@ -107,6 +113,7 @@ export function MeteredComponentFromJSONTyped(json: any, ignoreDiscriminator: bo
         'externalUuid': !exists(json, 'external_uuid') ? undefined : json['external_uuid'],
         'minimumCharge': !exists(json, 'minimum_charge') ? undefined : json['minimum_charge'],
         'minimumChargeFrequency': !exists(json, 'minimum_charge_frequency') ? undefined : json['minimum_charge_frequency'],
+        'watermark': !exists(json, 'watermark') ? undefined : json['watermark'],
     };
 }
 
@@ -128,6 +135,7 @@ export function MeteredComponentToJSON(value?: MeteredComponent | null): any {
         'external_uuid': value.externalUuid,
         'minimum_charge': value.minimumCharge,
         'minimum_charge_frequency': value.minimumChargeFrequency,
+        'watermark': value.watermark,
     };
 }
 

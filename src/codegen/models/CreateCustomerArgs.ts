@@ -25,6 +25,12 @@ import {
     CustomerMeasurementMappingInputArgsFromJSONTyped,
     CustomerMeasurementMappingInputArgsToJSON,
 } from './CustomerMeasurementMappingInputArgs';
+import {
+    CustomerMetadataInput,
+    CustomerMetadataInputFromJSON,
+    CustomerMetadataInputFromJSONTyped,
+    CustomerMetadataInputToJSON,
+} from './CustomerMetadataInput';
 
 /**
  * 
@@ -34,10 +40,16 @@ import {
 export interface CreateCustomerArgs {
     /**
      * 
-     * @type {boolean}
+     * @type {string}
      * @memberof CreateCustomerArgs
      */
-    autogenerateAccountingCustomer?: boolean;
+    pricePlanName?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CreateCustomerArgs
+     */
+    createdAt?: Date;
     /**
      * 
      * @type {number}
@@ -46,22 +58,10 @@ export interface CreateCustomerArgs {
     vendorId?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof CreateCustomerArgs
-     */
-    autogeneratePaymentGatewayCustomer?: boolean;
-    /**
-     * 
      * @type {string}
      * @memberof CreateCustomerArgs
      */
     displayName?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof CreateCustomerArgs
-     */
-    tags?: Array<string> | null;
     /**
      * 
      * @type {string}
@@ -76,28 +76,40 @@ export interface CreateCustomerArgs {
     contactInfo?: ContactInfoInputArgs;
     /**
      * 
-     * @type {Date}
+     * @type {boolean}
      * @memberof CreateCustomerArgs
      */
-    createdAt?: Date;
+    autogenerateAccountingCustomer?: boolean;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof CreateCustomerArgs
      */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateCustomerArgs
-     */
-    pricePlanName?: string;
+    tags?: Array<string> | null;
     /**
      * 
      * @type {Array<CustomerMeasurementMappingInputArgs>}
      * @memberof CreateCustomerArgs
      */
     measurementMappings?: Array<CustomerMeasurementMappingInputArgs>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateCustomerArgs
+     */
+    autogeneratePaymentGatewayCustomer?: boolean;
+    /**
+     * 
+     * @type {Array<CustomerMetadataInput>}
+     * @memberof CreateCustomerArgs
+     */
+    customerMetadata?: Array<CustomerMetadataInput>;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateCustomerArgs
+     */
+    name?: string;
 }
 
 export function CreateCustomerArgsFromJSON(json: any): CreateCustomerArgs {
@@ -110,17 +122,18 @@ export function CreateCustomerArgsFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'autogenerateAccountingCustomer': !exists(json, 'autogenerate_accounting_customer') ? undefined : json['autogenerate_accounting_customer'],
+        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
+        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'autogeneratePaymentGatewayCustomer': !exists(json, 'autogenerate_payment_gateway_customer') ? undefined : json['autogenerate_payment_gateway_customer'],
         'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'pricePlanTag': !exists(json, 'price_plan_tag') ? undefined : json['price_plan_tag'],
         'contactInfo': !exists(json, 'contact_info') ? undefined : ContactInfoInputArgsFromJSON(json['contact_info']),
-        'createdAt': !exists(json, 'created_at') ? undefined : (new Date(json['created_at'])),
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
+        'autogenerateAccountingCustomer': !exists(json, 'autogenerate_accounting_customer') ? undefined : json['autogenerate_accounting_customer'],
+        'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'measurementMappings': !exists(json, 'measurement_mappings') ? undefined : ((json['measurement_mappings'] as Array<any>).map(CustomerMeasurementMappingInputArgsFromJSON)),
+        'autogeneratePaymentGatewayCustomer': !exists(json, 'autogenerate_payment_gateway_customer') ? undefined : json['autogenerate_payment_gateway_customer'],
+        'customerMetadata': !exists(json, 'customer_metadata') ? undefined : ((json['customer_metadata'] as Array<any>).map(CustomerMetadataInputFromJSON)),
+        'name': !exists(json, 'name') ? undefined : json['name'],
     };
 }
 
@@ -133,17 +146,18 @@ export function CreateCustomerArgsToJSON(value?: CreateCustomerArgs | null): any
     }
     return {
         
-        'autogenerate_accounting_customer': value.autogenerateAccountingCustomer,
+        'price_plan_name': value.pricePlanName,
+        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
         'vendor_id': value.vendorId,
-        'autogenerate_payment_gateway_customer': value.autogeneratePaymentGatewayCustomer,
         'display_name': value.displayName,
-        'tags': value.tags,
         'price_plan_tag': value.pricePlanTag,
         'contact_info': ContactInfoInputArgsToJSON(value.contactInfo),
-        'created_at': value.createdAt === undefined ? undefined : (value.createdAt.toISOString()),
-        'name': value.name,
-        'price_plan_name': value.pricePlanName,
+        'autogenerate_accounting_customer': value.autogenerateAccountingCustomer,
+        'tags': value.tags,
         'measurement_mappings': value.measurementMappings === undefined ? undefined : ((value.measurementMappings as Array<any>).map(CustomerMeasurementMappingInputArgsToJSON)),
+        'autogenerate_payment_gateway_customer': value.autogeneratePaymentGatewayCustomer,
+        'customer_metadata': value.customerMetadata === undefined ? undefined : ((value.customerMetadata as Array<any>).map(CustomerMetadataInputToJSON)),
+        'name': value.name,
     };
 }
 

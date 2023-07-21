@@ -99,7 +99,7 @@ export interface PricePlan {
      */
     basePriceDescription?: string | null;
     /**
-     * Time period that defines the length of a price plan cycle. One of `day`, `week`, `month`, `quarter`, or `year`.
+     * Time period that defines the length of a price plan cycle. One of `month`, `quarter`, or `year`.
      * @type {string}
      * @memberof PricePlan
      */

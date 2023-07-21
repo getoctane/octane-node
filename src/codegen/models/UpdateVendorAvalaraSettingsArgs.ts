@@ -20,17 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateVendorAvalaraSettingsArgs {
     /**
-     * The Avalara company code string to associate the Octane vendor with.
-     * @type {string}
+     * Enable/Disable the Avalara integration.
+     * @type {boolean}
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
-    companyCode?: string;
-    /**
-     * The item description to use to represent all the lines on the Octane invoice.
-     * @type {string}
-     * @memberof UpdateVendorAvalaraSettingsArgs
-     */
-    itemDescription?: string;
+    enableIntegration?: boolean;
     /**
      * The Avalara item code to use to represent all the line items on the Octane invoice.
      * @type {string}
@@ -38,11 +32,17 @@ export interface UpdateVendorAvalaraSettingsArgs {
      */
     itemCode?: string;
     /**
-     * True if the documents generated in Avalara should be committed, false otherwise.
-     * @type {boolean}
+     * The item description to use to represent all the lines on the Octane invoice.
+     * @type {string}
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
-    commitDocuments?: boolean;
+    itemDescription?: string;
+    /**
+     * The Avalara company code string to associate the Octane vendor with.
+     * @type {string}
+     * @memberof UpdateVendorAvalaraSettingsArgs
+     */
+    companyCode?: string;
     /**
      * True if enabling logging for Avalara calls, false otherwise.
      * @type {boolean}
@@ -56,11 +56,11 @@ export interface UpdateVendorAvalaraSettingsArgs {
      */
     taxCode?: string;
     /**
-     * Enable/Disable the Avalara integration.
+     * True if the documents generated in Avalara should be committed, false otherwise.
      * @type {boolean}
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
-    enableIntegration?: boolean;
+    commitDocuments?: boolean;
 }
 
 export function UpdateVendorAvalaraSettingsArgsFromJSON(json: any): UpdateVendorAvalaraSettingsArgs {
@@ -73,13 +73,13 @@ export function UpdateVendorAvalaraSettingsArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
-        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
         'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
-        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
+        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'enableLogging': !exists(json, 'enable_logging') ? undefined : json['enable_logging'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
-        'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
+        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
     };
 }
 
@@ -92,13 +92,13 @@ export function UpdateVendorAvalaraSettingsArgsToJSON(value?: UpdateVendorAvalar
     }
     return {
         
-        'company_code': value.companyCode,
-        'item_description': value.itemDescription,
+        'enable_integration': value.enableIntegration,
         'item_code': value.itemCode,
-        'commit_documents': value.commitDocuments,
+        'item_description': value.itemDescription,
+        'company_code': value.companyCode,
         'enable_logging': value.enableLogging,
         'tax_code': value.taxCode,
-        'enable_integration': value.enableIntegration,
+        'commit_documents': value.commitDocuments,
     };
 }
 

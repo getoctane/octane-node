@@ -14,6 +14,12 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    CreditPlan,
+    CreditPlanFromJSON,
+    CreditPlanFromJSONTyped,
+    CreditPlanToJSON,
+} from './CreditPlan';
+import {
     Discount,
     DiscountFromJSON,
     DiscountFromJSONTyped,
@@ -51,6 +57,12 @@ import {
  */
 export interface Subscription {
     /**
+     * 
+     * @type {string}
+     * @memberof Subscription
+     */
+    uuid: string;
+    /**
      * Unique name identifier of a customer
      * @type {any}
      * @memberof Subscription
@@ -62,6 +74,12 @@ export interface Subscription {
      * @memberof Subscription
      */
     readonly pricePlanName: any | null;
+    /**
+     * External facing unique identifier of a price plan
+     * @type {any}
+     * @memberof Subscription
+     */
+    readonly pricePlanUuid: any | null;
     /**
      * Price plan associated with this subscription.
      * @type {PricePlan}
@@ -122,6 +140,12 @@ export interface Subscription {
      * @memberof Subscription
      */
     expiredAt?: Date | null;
+    /**
+     * Credit plan associated with this subscription.
+     * @type {CreditPlan}
+     * @memberof Subscription
+     */
+    creditPlan?: CreditPlan | null;
 }
 
 export function SubscriptionFromJSON(json: any): Subscription {
@@ -134,8 +158,10 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
+        'uuid': json['uuid'],
         'customerName': json['customer_name'],
         'pricePlanName': json['price_plan_name'],
+        'pricePlanUuid': json['price_plan_uuid'],
         'pricePlan': !exists(json, 'price_plan') ? undefined : PricePlanFromJSON(json['price_plan']),
         'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
         'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountFromJSON)),
@@ -146,6 +172,7 @@ export function SubscriptionFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'limitsOverride': !exists(json, 'limits_override') ? undefined : ((json['limits_override'] as Array<any>).map(LimitFromJSON)),
         'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
         'expiredAt': !exists(json, 'expired_at') ? undefined : (json['expired_at'] === null ? null : new Date(json['expired_at'])),
+        'creditPlan': !exists(json, 'credit_plan') ? undefined : CreditPlanFromJSON(json['credit_plan']),
     };
 }
 
@@ -158,6 +185,7 @@ export function SubscriptionToJSON(value?: Subscription | null): any {
     }
     return {
         
+        'uuid': value.uuid,
         'customer_name': value.customerName,
         'price_plan': PricePlanToJSON(value.pricePlan),
         'align_to_calendar': value.alignToCalendar,
@@ -168,6 +196,7 @@ export function SubscriptionToJSON(value?: Subscription | null): any {
         'limits_override': value.limitsOverride === undefined ? undefined : ((value.limitsOverride as Array<any>).map(LimitToJSON)),
         'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
         'expired_at': value.expiredAt === undefined ? undefined : (value.expiredAt === null ? null : value.expiredAt.toISOString()),
+        'credit_plan': CreditPlanToJSON(value.creditPlan),
     };
 }
 

@@ -59,13 +59,13 @@ export interface PricePlansMeteredComponentsUuidUpdateLimitsPostRequest {
 }
 
 export interface PricePlansPaginateGetRequest {
-    sortColumn?: string;
-    names?: Array<string>;
+    forwardSortOffset?: string;
     limit?: number;
     tags?: Array<string>;
-    forwardSecondarySortOffset?: string;
+    sortColumn?: string;
     sortDirection?: string;
-    forwardSortOffset?: string;
+    forwardSecondarySortOffset?: string;
+    names?: Array<string>;
 }
 
 export interface PricePlansPostRequest {
@@ -90,8 +90,8 @@ export interface PricePlansPricePlanNamePutRequest {
 }
 
 export interface PricePlansPricePlanNameTagGetRequest {
-    tag: string;
     pricePlanName: string;
+    tag: string;
 }
 
 export interface PricePlansSelfServePostRequest {
@@ -104,8 +104,8 @@ export interface PricePlansUpdateInPlacePricePlanNamePostRequest {
 }
 
 export interface PricePlansUpdateInPlacePricePlanNameTagPostRequest {
-    tag: string;
     pricePlanName: string;
+    tag: string;
     updatePricePlanInPlaceArgs: UpdatePricePlanInPlaceArgs;
 }
 
@@ -224,12 +224,8 @@ export class PricePlansApi extends runtime.BaseAPI {
     async pricePlansPaginateGetRaw(requestParameters: PricePlansPaginateGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ListPricePlans>> {
         const queryParameters: any = {};
 
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
-        }
-
-        if (requestParameters.names) {
-            queryParameters['names'] = requestParameters.names;
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         if (requestParameters.limit !== undefined) {
@@ -240,16 +236,20 @@ export class PricePlansApi extends runtime.BaseAPI {
             queryParameters['tags'] = requestParameters.tags;
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         if (requestParameters.sortDirection !== undefined) {
             queryParameters['sort_direction'] = requestParameters.sortDirection;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        }
+
+        if (requestParameters.names) {
+            queryParameters['names'] = requestParameters.names;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -494,12 +494,12 @@ export class PricePlansApi extends runtime.BaseAPI {
      * Get a Price Plan
      */
     async pricePlansPricePlanNameTagGetRaw(requestParameters: PricePlansPricePlanNameTagGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
-        if (requestParameters.tag === null || requestParameters.tag === undefined) {
-            throw new runtime.RequiredError('tag','Required parameter requestParameters.tag was null or undefined when calling pricePlansPricePlanNameTagGet.');
-        }
-
         if (requestParameters.pricePlanName === null || requestParameters.pricePlanName === undefined) {
             throw new runtime.RequiredError('pricePlanName','Required parameter requestParameters.pricePlanName was null or undefined when calling pricePlansPricePlanNameTagGet.');
+        }
+
+        if (requestParameters.tag === null || requestParameters.tag === undefined) {
+            throw new runtime.RequiredError('tag','Required parameter requestParameters.tag was null or undefined when calling pricePlansPricePlanNameTagGet.');
         }
 
         const queryParameters: any = {};
@@ -515,7 +515,7 @@ export class PricePlansApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/price_plans/{price_plan_name}/{tag}`.replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters.tag))).replace(`{${"price_plan_name"}}`, encodeURIComponent(String(requestParameters.pricePlanName))),
+            path: `/price_plans/{price_plan_name}/{tag}`.replace(`{${"price_plan_name"}}`, encodeURIComponent(String(requestParameters.pricePlanName))).replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters.tag))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -663,12 +663,12 @@ export class PricePlansApi extends runtime.BaseAPI {
      * Update Price Plan In Place
      */
     async pricePlansUpdateInPlacePricePlanNameTagPostRaw(requestParameters: PricePlansUpdateInPlacePricePlanNameTagPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PricePlan>> {
-        if (requestParameters.tag === null || requestParameters.tag === undefined) {
-            throw new runtime.RequiredError('tag','Required parameter requestParameters.tag was null or undefined when calling pricePlansUpdateInPlacePricePlanNameTagPost.');
-        }
-
         if (requestParameters.pricePlanName === null || requestParameters.pricePlanName === undefined) {
             throw new runtime.RequiredError('pricePlanName','Required parameter requestParameters.pricePlanName was null or undefined when calling pricePlansUpdateInPlacePricePlanNameTagPost.');
+        }
+
+        if (requestParameters.tag === null || requestParameters.tag === undefined) {
+            throw new runtime.RequiredError('tag','Required parameter requestParameters.tag was null or undefined when calling pricePlansUpdateInPlacePricePlanNameTagPost.');
         }
 
         if (requestParameters.updatePricePlanInPlaceArgs === null || requestParameters.updatePricePlanInPlaceArgs === undefined) {
@@ -690,7 +690,7 @@ export class PricePlansApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/price_plans/update_in_place/{price_plan_name}/{tag}`.replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters.tag))).replace(`{${"price_plan_name"}}`, encodeURIComponent(String(requestParameters.pricePlanName))),
+            path: `/price_plans/update_in_place/{price_plan_name}/{tag}`.replace(`{${"price_plan_name"}}`, encodeURIComponent(String(requestParameters.pricePlanName))).replace(`{${"tag"}}`, encodeURIComponent(String(requestParameters.tag))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

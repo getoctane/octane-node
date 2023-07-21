@@ -20,11 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateVendorAvalaraSettingsArgs {
     /**
-     * Password of the Avalara account.
+     * True if enabling logging for Avalara calls, false otherwise. Defaults to False.
+     * @type {boolean}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    enableLogging?: boolean;
+    /**
+     * Enable/Disable the Avalara integration.
+     * @type {boolean}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    enableIntegration: boolean;
+    /**
+     * The Avalara item code to use to represent all the line items on the Octane invoice.
      * @type {string}
      * @memberof CreateVendorAvalaraSettingsArgs
      */
-    password: string;
+    itemCode?: string;
+    /**
+     * Username of the Avalara account.
+     * @type {string}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    username: string;
     /**
      * The Avalara company code string to associate the Octane vendor with.
      * @type {string}
@@ -38,35 +56,11 @@ export interface CreateVendorAvalaraSettingsArgs {
      */
     itemDescription?: string;
     /**
-     * Username of the Avalara account.
+     * Password of the Avalara account.
      * @type {string}
      * @memberof CreateVendorAvalaraSettingsArgs
      */
-    username: string;
-    /**
-     * The Avalara item code to use to represent all the line items on the Octane invoice.
-     * @type {string}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    itemCode?: string;
-    /**
-     * True if the documents generated in Avalara should be committed, false otherwise. Defaults to False.
-     * @type {boolean}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    commitDocuments?: boolean;
-    /**
-     * True if enabling logging for Avalara calls, false otherwise. Defaults to False.
-     * @type {boolean}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    enableLogging?: boolean;
-    /**
-     * The tax code to associate with the item that is representing the Octane invoice.
-     * @type {string}
-     * @memberof CreateVendorAvalaraSettingsArgs
-     */
-    taxCode?: string;
+    password: string;
     /**
      * True if connecting to Avalara sandbox account, false otherwise.
      * @type {boolean}
@@ -74,11 +68,17 @@ export interface CreateVendorAvalaraSettingsArgs {
      */
     sandboxMode: boolean;
     /**
-     * Enable/Disable the Avalara integration.
+     * The tax code to associate with the item that is representing the Octane invoice.
+     * @type {string}
+     * @memberof CreateVendorAvalaraSettingsArgs
+     */
+    taxCode?: string;
+    /**
+     * True if the documents generated in Avalara should be committed, false otherwise. Defaults to False.
      * @type {boolean}
      * @memberof CreateVendorAvalaraSettingsArgs
      */
-    enableIntegration: boolean;
+    commitDocuments?: boolean;
 }
 
 export function CreateVendorAvalaraSettingsArgsFromJSON(json: any): CreateVendorAvalaraSettingsArgs {
@@ -91,16 +91,16 @@ export function CreateVendorAvalaraSettingsArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'password': json['password'],
+        'enableLogging': !exists(json, 'enable_logging') ? undefined : json['enable_logging'],
+        'enableIntegration': json['enable_integration'],
+        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
+        'username': json['username'],
         'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
-        'username': json['username'],
-        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
-        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
-        'enableLogging': !exists(json, 'enable_logging') ? undefined : json['enable_logging'],
-        'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
+        'password': json['password'],
         'sandboxMode': json['sandbox_mode'],
-        'enableIntegration': json['enable_integration'],
+        'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
+        'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
     };
 }
 
@@ -113,16 +113,16 @@ export function CreateVendorAvalaraSettingsArgsToJSON(value?: CreateVendorAvalar
     }
     return {
         
-        'password': value.password,
+        'enable_logging': value.enableLogging,
+        'enable_integration': value.enableIntegration,
+        'item_code': value.itemCode,
+        'username': value.username,
         'company_code': value.companyCode,
         'item_description': value.itemDescription,
-        'username': value.username,
-        'item_code': value.itemCode,
-        'commit_documents': value.commitDocuments,
-        'enable_logging': value.enableLogging,
-        'tax_code': value.taxCode,
+        'password': value.password,
         'sandbox_mode': value.sandboxMode,
-        'enable_integration': value.enableIntegration,
+        'tax_code': value.taxCode,
+        'commit_documents': value.commitDocuments,
     };
 }
 

@@ -24,13 +24,13 @@ export interface UpdateCustomerPortalSettingsInputArgs {
      * @type {string}
      * @memberof UpdateCustomerPortalSettingsInputArgs
      */
-    pricePlanTagsFilter?: string;
+    pricePlanNamesFilter?: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateCustomerPortalSettingsInputArgs
      */
-    pricePlanNamesFilter?: string;
+    pricePlanTagsFilter?: string;
     /**
      * 
      * @type {number}
@@ -49,8 +49,8 @@ export function UpdateCustomerPortalSettingsInputArgsFromJSONTyped(json: any, ig
     }
     return {
         
-        'pricePlanTagsFilter': !exists(json, 'price_plan_tags_filter') ? undefined : json['price_plan_tags_filter'],
         'pricePlanNamesFilter': !exists(json, 'price_plan_names_filter') ? undefined : json['price_plan_names_filter'],
+        'pricePlanTagsFilter': !exists(json, 'price_plan_tags_filter') ? undefined : json['price_plan_tags_filter'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
     };
 }
@@ -64,8 +64,8 @@ export function UpdateCustomerPortalSettingsInputArgsToJSON(value?: UpdateCustom
     }
     return {
         
-        'price_plan_tags_filter': value.pricePlanTagsFilter,
         'price_plan_names_filter': value.pricePlanNamesFilter,
+        'price_plan_tags_filter': value.pricePlanTagsFilter,
         'vendor_id': value.vendorId,
     };
 }

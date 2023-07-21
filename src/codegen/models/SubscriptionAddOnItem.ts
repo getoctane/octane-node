@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface SubscriptionAddOnItem {
     /**
-     * 
-     * @type {Date}
+     * Quantity represents how many of this add on you want to attach to the subscription. Can be positive forincreasing the number of this add on or negative for decreasing.
+     * @type {number}
      * @memberof SubscriptionAddOnItem
      */
-    effectiveAt?: Date;
+    quantity?: number;
     /**
      * Boolean that indicates whether to update the subscription add on at the start of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_end` are set, will return an error.
      * @type {boolean}
@@ -32,23 +32,23 @@ export interface SubscriptionAddOnItem {
      */
     atCycleStart?: boolean;
     /**
-     * Boolean that indicates whether to update the subscription add on at the end of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_start` are set, will return an error.
-     * @type {boolean}
-     * @memberof SubscriptionAddOnItem
-     */
-    atCycleEnd?: boolean;
-    /**
      * 
      * @type {string}
      * @memberof SubscriptionAddOnItem
      */
     featureName?: string;
     /**
-     * Quantity represents how many of this add on you want to attach to the subscription. Can be positive forincreasing the number of this add on or negative for decreasing.
-     * @type {number}
+     * 
+     * @type {Date}
      * @memberof SubscriptionAddOnItem
      */
-    quantity?: number;
+    effectiveAt?: Date;
+    /**
+     * Boolean that indicates whether to update the subscription add on at the end of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_start` are set, will return an error.
+     * @type {boolean}
+     * @memberof SubscriptionAddOnItem
+     */
+    atCycleEnd?: boolean;
 }
 
 export function SubscriptionAddOnItemFromJSON(json: any): SubscriptionAddOnItem {
@@ -61,11 +61,11 @@ export function SubscriptionAddOnItemFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
-        'atCycleStart': !exists(json, 'at_cycle_start') ? undefined : json['at_cycle_start'],
-        'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
-        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'atCycleStart': !exists(json, 'at_cycle_start') ? undefined : json['at_cycle_start'],
+        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
+        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
+        'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
     };
 }
 
@@ -78,11 +78,11 @@ export function SubscriptionAddOnItemToJSON(value?: SubscriptionAddOnItem | null
     }
     return {
         
-        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
-        'at_cycle_start': value.atCycleStart,
-        'at_cycle_end': value.atCycleEnd,
-        'feature_name': value.featureName,
         'quantity': value.quantity,
+        'at_cycle_start': value.atCycleStart,
+        'feature_name': value.featureName,
+        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
+        'at_cycle_end': value.atCycleEnd,
     };
 }
 
