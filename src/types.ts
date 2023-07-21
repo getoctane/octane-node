@@ -9,8 +9,9 @@ import {
   UpdateSubscriptionArgs,
   DeleteSubscriptionArgs,
   Subscription,
+  ActiveSubscription,
   Measurement,
-  MeterInputArgs,
+  CreateMeterArgs,
   UpdateMeterArgs,
   Meter,
   CreatePricePlanArgs,
@@ -18,6 +19,8 @@ import {
   PricePlan,
   CustomerFeature,
   CustomerUsage,
+  CustomerBillingSettingsInputArgs,
+  BillingSettings,
 } from './codegen';
 
 /**
@@ -43,8 +46,9 @@ export {
   UpdateSubscriptionArgs,
   DeleteSubscriptionArgs,
   Subscription,
+  ActiveSubscription,
   Measurement,
-  MeterInputArgs,
+  CreateMeterArgs,
   UpdateMeterArgs,
   Meter,
   CreatePricePlanArgs,
@@ -52,4 +56,6 @@ export {
   PricePlan,
   CustomerFeature,
   CustomerUsage,
+  CustomerBillingSettingsInputArgs,
+  BillingSettings,
 };
