@@ -19,6 +19,7 @@ import {
   CustomersCustomerNameScheduledSubscriptionsGetRequest,
   CustomerBillingSettingsInputArgs,
   BillingSettings,
+  SubscriptionAddOnItem,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -185,6 +186,20 @@ class Customers extends BaseResource {
   ): Promise<void> {
     return this.api.customersCustomerNameSubscriptionDelete(
       { customerName, deleteSubscriptionArgs },
+      overrides,
+    );
+  }
+
+  /**
+   * Modify subscription add ons.
+   */
+  public modifySubscriptionAddOns(
+    customerName: string,
+    subscriptionAddOnItems: Array<SubscriptionAddOnItem>,
+    overrides?: RequestInit,
+  ): Promise<void> {
+    return this.api.customersCustomerNameSubscriptionAddOnsPost(
+      { customerName, subscriptionAddOnItem: subscriptionAddOnItems },
       overrides,
     );
   }
