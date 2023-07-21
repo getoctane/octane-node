@@ -5,7 +5,7 @@ exports[`Measurements resource makes create requests with either dates or ISO st
   [
     "https://api.made.up.host:1337/measurements/",
     {
-      "body": "{"meter_name":"someMeter","time":"2021-09-10T12:36:59.663Z","value":9001}",
+      "body": "{"time":"2021-09-10T12:36:59.663Z","value":9001,"meter_name":"someMeter"}",
       "credentials": undefined,
       "headers": {
         "Authorization": "Bearer 867-5309",
@@ -17,7 +17,7 @@ exports[`Measurements resource makes create requests with either dates or ISO st
   [
     "https://api.made.up.host:1337/measurements/",
     {
-      "body": "{"meter_name":"someMeter","time":"2021-09-10T12:36:59.663Z","value":9001}",
+      "body": "{"time":"2021-09-10T12:36:59.663Z","value":9001,"meter_name":"someMeter"}",
       "credentials": undefined,
       "headers": {
         "Authorization": "Bearer 867-5309",
