@@ -33,6 +33,12 @@ export interface CustomerPortalAccruedRevenue {
      */
     startTime?: Date;
     /**
+     * Total accrued revenue for the period in cents
+     * @type {number}
+     * @memberof CustomerPortalAccruedRevenue
+     */
+    totalAccruedRevenue?: number;
+    /**
      * The end time within the billing cycle for which this accrued revenue is computed
      * @type {Date}
      * @memberof CustomerPortalAccruedRevenue
@@ -44,12 +50,6 @@ export interface CustomerPortalAccruedRevenue {
      * @memberof CustomerPortalAccruedRevenue
      */
     lineItems?: Array<CustomerPortalAccruedRevenueLineItem>;
-    /**
-     * Total accrued revenue for the period in cents
-     * @type {number}
-     * @memberof CustomerPortalAccruedRevenue
-     */
-    totalAccruedRevenue?: number;
 }
 
 export function CustomerPortalAccruedRevenueFromJSON(json: any): CustomerPortalAccruedRevenue {
@@ -63,9 +63,9 @@ export function CustomerPortalAccruedRevenueFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
+        'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
         'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(CustomerPortalAccruedRevenueLineItemFromJSON)),
-        'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
     };
 }
 
@@ -79,9 +79,9 @@ export function CustomerPortalAccruedRevenueToJSON(value?: CustomerPortalAccrued
     return {
         
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
+        'total_accrued_revenue': value.totalAccruedRevenue,
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
         'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(CustomerPortalAccruedRevenueLineItemToJSON)),
-        'total_accrued_revenue': value.totalAccruedRevenue,
     };
 }
 

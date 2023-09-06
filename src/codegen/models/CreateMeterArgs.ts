@@ -20,47 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateMeterArgs {
     /**
-     * Name of the events to associate with this meter. Defaults to meter name.
+     * Type of meter. One of `COUNTER`, `GAUGE`
      * @type {string}
      * @memberof CreateMeterArgs
      */
-    eventName?: string;
+    meterType?: CreateMeterArgsMeterTypeEnum;
     /**
-     * The unit that the measurement values are reported in.
-     * @type {string}
-     * @memberof CreateMeterArgs
-     */
-    unitName?: string;
-    /**
-     * Human-friendly name used for display in UI
-     * @type {string}
-     * @memberof CreateMeterArgs
-     */
-    displayName?: string;
-    /**
-     * List of primary label keys
-     * @type {Array<string>}
-     * @memberof CreateMeterArgs
-     */
-    primaryLabels?: Array<string>;
-    /**
-     * COMING SOON: We are replacing meter_type with data_type and aggregation fields to allow more flexible metering. The aggregation type to apply to measurements. One of `TIME_WEIGHTED_SUM`, `MAX`, `SUM`.
+     * COMING SOON: We are replacing meter_type with data_type and aggregation fields to allow more flexible metering. The aggregation type to apply to measurements. One of `MAX`, `SUM`, `TIME_WEIGHTED_SUM`.
      * @type {string}
      * @memberof CreateMeterArgs
      */
     aggregation?: CreateMeterArgsAggregationEnum;
     /**
-     * DEPRECATED: List of expected label keys
-     * @type {Array<string>}
-     * @memberof CreateMeterArgs
-     */
-    expectedLabels?: Array<string>;
-    /**
-     * Description of the meter
+     * Unique name identifier
      * @type {string}
      * @memberof CreateMeterArgs
      */
-    description?: string;
+    name?: string;
+    /**
+     * Name of the events to associate with this meter. Defaults to meter name.
+     * @type {string}
+     * @memberof CreateMeterArgs
+     */
+    eventName?: string;
     /**
      * COMING SOON: We are replacing meter_type with data_type and aggregation fields to allow more flexible metering. The type of data represented by the meter. One of `CONTINUOUS`, `DISCRETE`.
      * @type {string}
@@ -68,32 +50,57 @@ export interface CreateMeterArgs {
      */
     dataType?: CreateMeterArgsDataTypeEnum;
     /**
-     * COMING SOON: We are replacing is_incremental with reporting_method field. Whether measurement values are reporting the incremental change or the total. One of `DELTA`, `TOTAL`.
-     * @type {string}
-     * @memberof CreateMeterArgs
-     */
-    reportingMethod?: CreateMeterArgsReportingMethodEnum;
-    /**
-     * Type of meter. One of `COUNTER`, `GAUGE`
-     * @type {string}
-     * @memberof CreateMeterArgs
-     */
-    meterType?: CreateMeterArgsMeterTypeEnum;
-    /**
      * Whether measurement values are to be considered to be the incremental change or the total.
      * @type {boolean}
      * @memberof CreateMeterArgs
      */
     isIncremental?: boolean;
     /**
-     * Unique name identifier
+     * Description of the meter
      * @type {string}
      * @memberof CreateMeterArgs
      */
-    name?: string;
+    description?: string;
+    /**
+     * COMING SOON: We are replacing is_incremental with reporting_method field. Whether measurement values are reporting the incremental change or the total. One of `DELTA`, `TOTAL`.
+     * @type {string}
+     * @memberof CreateMeterArgs
+     */
+    reportingMethod?: CreateMeterArgsReportingMethodEnum;
+    /**
+     * The unit that the measurement values are reported in.
+     * @type {string}
+     * @memberof CreateMeterArgs
+     */
+    unitName?: string;
+    /**
+     * List of primary label keys
+     * @type {Array<string>}
+     * @memberof CreateMeterArgs
+     */
+    primaryLabels?: Array<string>;
+    /**
+     * DEPRECATED: List of expected label keys
+     * @type {Array<string>}
+     * @memberof CreateMeterArgs
+     */
+    expectedLabels?: Array<string>;
+    /**
+     * Human-friendly name used for display in UI
+     * @type {string}
+     * @memberof CreateMeterArgs
+     */
+    displayName?: string;
 }
 
 /**
+* @export
+* @enum {string}
+*/
+export enum CreateMeterArgsMeterTypeEnum {
+    Counter = 'COUNTER',
+    Gauge = 'GAUGE'
+}/**
 * @export
 * @enum {string}
 */
@@ -119,13 +126,6 @@ export enum CreateMeterArgsDataTypeEnum {
 export enum CreateMeterArgsReportingMethodEnum {
     Delta = 'DELTA',
     Total = 'TOTAL'
-}/**
-* @export
-* @enum {string}
-*/
-export enum CreateMeterArgsMeterTypeEnum {
-    Counter = 'COUNTER',
-    Gauge = 'GAUGE'
 }
 
 export function CreateMeterArgsFromJSON(json: any): CreateMeterArgs {
@@ -138,18 +138,18 @@ export function CreateMeterArgsFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'eventName': !exists(json, 'event_name') ? undefined : json['event_name'],
-        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
-        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
-        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
-        'reportingMethod': !exists(json, 'reporting_method') ? undefined : json['reporting_method'],
         'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'isIncremental': !exists(json, 'is_incremental') ? undefined : json['is_incremental'],
+        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'eventName': !exists(json, 'event_name') ? undefined : json['event_name'],
+        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
+        'isIncremental': !exists(json, 'is_incremental') ? undefined : json['is_incremental'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'reportingMethod': !exists(json, 'reporting_method') ? undefined : json['reporting_method'],
+        'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
+        'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
     };
 }
 
@@ -162,18 +162,18 @@ export function CreateMeterArgsToJSON(value?: CreateMeterArgs | null): any {
     }
     return {
         
-        'event_name': value.eventName,
-        'unit_name': value.unitName,
-        'display_name': value.displayName,
-        'primary_labels': value.primaryLabels,
-        'aggregation': value.aggregation,
-        'expected_labels': value.expectedLabels,
-        'description': value.description,
-        'data_type': value.dataType,
-        'reporting_method': value.reportingMethod,
         'meter_type': value.meterType,
-        'is_incremental': value.isIncremental,
+        'aggregation': value.aggregation,
         'name': value.name,
+        'event_name': value.eventName,
+        'data_type': value.dataType,
+        'is_incremental': value.isIncremental,
+        'description': value.description,
+        'reporting_method': value.reportingMethod,
+        'unit_name': value.unitName,
+        'primary_labels': value.primaryLabels,
+        'expected_labels': value.expectedLabels,
+        'display_name': value.displayName,
     };
 }
 

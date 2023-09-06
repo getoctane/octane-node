@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface EntityUseCode {
     /**
-     * A list of countries where this use code is valid.
-     * @type {Array<string>}
-     * @memberof EntityUseCode
-     */
-    validCountries?: Array<string>;
-    /**
-     * Text describing the meaning of this use code.
-     * @type {string}
-     * @memberof EntityUseCode
-     */
-    description?: string;
-    /**
      * The Avalara-recognized entity use code for this definition.
      * @type {string}
      * @memberof EntityUseCode
@@ -43,6 +31,18 @@ export interface EntityUseCode {
      * @memberof EntityUseCode
      */
     name?: string;
+    /**
+     * A list of countries where this use code is valid.
+     * @type {Array<string>}
+     * @memberof EntityUseCode
+     */
+    validCountries?: Array<string>;
+    /**
+     * Text describing the meaning of this use code.
+     * @type {string}
+     * @memberof EntityUseCode
+     */
+    description?: string;
 }
 
 export function EntityUseCodeFromJSON(json: any): EntityUseCode {
@@ -55,10 +55,10 @@ export function EntityUseCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
         'code': !exists(json, 'code') ? undefined : json['code'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -71,10 +71,10 @@ export function EntityUseCodeToJSON(value?: EntityUseCode | null): any {
     }
     return {
         
-        'valid_countries': value.validCountries,
-        'description': value.description,
         'code': value.code,
         'name': value.name,
+        'valid_countries': value.validCountries,
+        'description': value.description,
     };
 }
 

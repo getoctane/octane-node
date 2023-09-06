@@ -20,11 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditPlanInputArgs {
     /**
-     * Duration unit before each credit grant expires. Null for no expiration.
-     * @type {string}
+     * Interval, in billing cycles, between each credit grant. Null for single grant plans.
+     * @type {number}
      * @memberof CreditPlanInputArgs
      */
-    grantExpirationUnit?: string;
+    intervalBetweenGrants?: number;
+    /**
+     * Price for the grant, in lowest denomination (i.e cents). Defaults to $1 (100 cents) per credit if not specified
+     * @type {number}
+     * @memberof CreditPlanInputArgs
+     */
+    price?: number;
     /**
      * Amount of credits that are granted in a single grant.
      * @type {number}
@@ -32,17 +38,11 @@ export interface CreditPlanInputArgs {
      */
     amount: number;
     /**
-     * Duration length before each credit grant expires. Null for no expiration.
-     * @type {number}
+     * Duration unit before each credit grant expires. Null for no expiration.
+     * @type {string}
      * @memberof CreditPlanInputArgs
      */
-    grantExpirationLength?: number;
-    /**
-     * Price for the grant, in lowest denomination (i.e cents). Defaults to $1 (100 cents) per credit if not specified
-     * @type {number}
-     * @memberof CreditPlanInputArgs
-     */
-    price?: number;
+    grantExpirationUnit?: string;
     /**
      * A description that will be used on the invoice line items.
      * @type {string}
@@ -62,11 +62,11 @@ export interface CreditPlanInputArgs {
      */
     intervalBetweenPayments?: number;
     /**
-     * Interval, in billing cycles, between each credit grant. Null for single grant plans.
+     * Duration length before each credit grant expires. Null for no expiration.
      * @type {number}
      * @memberof CreditPlanInputArgs
      */
-    intervalBetweenGrants?: number;
+    grantExpirationLength?: number;
 }
 
 export function CreditPlanInputArgsFromJSON(json: any): CreditPlanInputArgs {
@@ -79,14 +79,14 @@ export function CreditPlanInputArgsFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'grantExpirationUnit': !exists(json, 'grant_expiration_unit') ? undefined : json['grant_expiration_unit'],
-        'amount': json['amount'],
-        'grantExpirationLength': !exists(json, 'grant_expiration_length') ? undefined : json['grant_expiration_length'],
+        'intervalBetweenGrants': !exists(json, 'interval_between_grants') ? undefined : json['interval_between_grants'],
         'price': !exists(json, 'price') ? undefined : json['price'],
+        'amount': json['amount'],
+        'grantExpirationUnit': !exists(json, 'grant_expiration_unit') ? undefined : json['grant_expiration_unit'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'paymentsPerGrant': !exists(json, 'payments_per_grant') ? undefined : json['payments_per_grant'],
         'intervalBetweenPayments': !exists(json, 'interval_between_payments') ? undefined : json['interval_between_payments'],
-        'intervalBetweenGrants': !exists(json, 'interval_between_grants') ? undefined : json['interval_between_grants'],
+        'grantExpirationLength': !exists(json, 'grant_expiration_length') ? undefined : json['grant_expiration_length'],
     };
 }
 
@@ -99,14 +99,14 @@ export function CreditPlanInputArgsToJSON(value?: CreditPlanInputArgs | null): a
     }
     return {
         
-        'grant_expiration_unit': value.grantExpirationUnit,
-        'amount': value.amount,
-        'grant_expiration_length': value.grantExpirationLength,
+        'interval_between_grants': value.intervalBetweenGrants,
         'price': value.price,
+        'amount': value.amount,
+        'grant_expiration_unit': value.grantExpirationUnit,
         'description': value.description,
         'payments_per_grant': value.paymentsPerGrant,
         'interval_between_payments': value.intervalBetweenPayments,
-        'interval_between_grants': value.intervalBetweenGrants,
+        'grant_expiration_length': value.grantExpirationLength,
     };
 }
 

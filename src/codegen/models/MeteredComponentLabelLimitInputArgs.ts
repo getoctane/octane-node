@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface MeteredComponentLabelLimitInputArgs {
     /**
-     * Numeric limit to set on customer usage for the meter with the given labels.
-     * @type {number}
-     * @memberof MeteredComponentLabelLimitInputArgs
-     */
-    limit: number;
-    /**
      * Dictionary of labels (key: value) to which the limit applies. A value of 'any' will apply the limit to any single value of the field.
      * @type {{ [key: string]: string; }}
      * @memberof MeteredComponentLabelLimitInputArgs
      */
     labels: { [key: string]: string; };
+    /**
+     * Numeric limit to set on customer usage for the meter with the given labels.
+     * @type {number}
+     * @memberof MeteredComponentLabelLimitInputArgs
+     */
+    limit: number;
 }
 
 export function MeteredComponentLabelLimitInputArgsFromJSON(json: any): MeteredComponentLabelLimitInputArgs {
@@ -43,8 +43,8 @@ export function MeteredComponentLabelLimitInputArgsFromJSONTyped(json: any, igno
     }
     return {
         
-        'limit': json['limit'],
         'labels': json['labels'],
+        'limit': json['limit'],
     };
 }
 
@@ -57,8 +57,8 @@ export function MeteredComponentLabelLimitInputArgsToJSON(value?: MeteredCompone
     }
     return {
         
-        'limit': value.limit,
         'labels': value.labels,
+        'limit': value.limit,
     };
 }
 

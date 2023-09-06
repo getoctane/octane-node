@@ -20,24 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface BankAccountInfo {
     /**
-     * 
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    externalId?: string;
-    /**
-     * Country the bank account is in.
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    country?: string;
-    /**
-     * Bank account type. E.g. Savings/Checking
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    accountType?: string;
-    /**
      * Last 4 digits of the bank account number.
      * @type {string}
      * @memberof BankAccountInfo
@@ -50,11 +32,29 @@ export interface BankAccountInfo {
      */
     bankName?: string;
     /**
+     * 
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    externalId?: string;
+    /**
      * Routing number for the bank accopunt
      * @type {number}
      * @memberof BankAccountInfo
      */
     routingNumber?: number;
+    /**
+     * Bank account type. E.g. Savings/Checking
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    accountType?: string;
+    /**
+     * Country the bank account is in.
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    country?: string;
 }
 
 export function BankAccountInfoFromJSON(json: any): BankAccountInfo {
@@ -67,12 +67,12 @@ export function BankAccountInfoFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'accountType': !exists(json, 'account_type') ? undefined : json['account_type'],
         'last4': !exists(json, 'last4') ? undefined : json['last4'],
         'bankName': !exists(json, 'bank_name') ? undefined : json['bank_name'],
+        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
         'routingNumber': !exists(json, 'routing_number') ? undefined : json['routing_number'],
+        'accountType': !exists(json, 'account_type') ? undefined : json['account_type'],
+        'country': !exists(json, 'country') ? undefined : json['country'],
     };
 }
 
@@ -85,12 +85,12 @@ export function BankAccountInfoToJSON(value?: BankAccountInfo | null): any {
     }
     return {
         
-        'external_id': value.externalId,
-        'country': value.country,
-        'account_type': value.accountType,
         'last4': value.last4,
         'bank_name': value.bankName,
+        'external_id': value.externalId,
         'routing_number': value.routingNumber,
+        'account_type': value.accountType,
+        'country': value.country,
     };
 }
 

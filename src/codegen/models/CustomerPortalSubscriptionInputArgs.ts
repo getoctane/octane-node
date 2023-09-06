@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalSubscriptionInputArgs {
     /**
-     * Customer name. Required only if using vendor API Key for authentication.
-     * @type {string}
-     * @memberof CustomerPortalSubscriptionInputArgs
-     */
-    customerName?: string;
-    /**
      * Price plan name to subscribe to.
      * @type {string}
      * @memberof CustomerPortalSubscriptionInputArgs
      */
     pricePlanName?: string;
+    /**
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
+     * @memberof CustomerPortalSubscriptionInputArgs
+     */
+    customerName?: string;
 }
 
 export function CustomerPortalSubscriptionInputArgsFromJSON(json: any): CustomerPortalSubscriptionInputArgs {
@@ -43,8 +43,8 @@ export function CustomerPortalSubscriptionInputArgsFromJSONTyped(json: any, igno
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerPortalSubscriptionInputArgsToJSON(value?: CustomerPortal
     }
     return {
         
-        'customer_name': value.customerName,
         'price_plan_name': value.pricePlanName,
+        'customer_name': value.customerName,
     };
 }
 

@@ -20,17 +20,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateCustomerAvalaraSettingsArgs {
     /**
-     * Entity code describing this customer.
-     * @type {string}
-     * @memberof UpdateCustomerAvalaraSettingsArgs
-     */
-    entityUseCode?: string;
-    /**
      * True if Avalara integration should be enabled for this customer, False otherwise.
      * @type {boolean}
      * @memberof UpdateCustomerAvalaraSettingsArgs
      */
     enableIntegration?: boolean;
+    /**
+     * VAT business identification number specific to this customer
+     * @type {string}
+     * @memberof UpdateCustomerAvalaraSettingsArgs
+     */
+    businessIdentificationNumber?: string;
+    /**
+     * Entity code describing this customer.
+     * @type {string}
+     * @memberof UpdateCustomerAvalaraSettingsArgs
+     */
+    entityUseCode?: string;
     /**
      * Tax exemption number specific to this customer
      * @type {string}
@@ -49,8 +55,9 @@ export function UpdateCustomerAvalaraSettingsArgsFromJSONTyped(json: any, ignore
     }
     return {
         
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
+        'businessIdentificationNumber': !exists(json, 'business_identification_number') ? undefined : json['business_identification_number'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'exemptionNumber': !exists(json, 'exemption_number') ? undefined : json['exemption_number'],
     };
 }
@@ -64,8 +71,9 @@ export function UpdateCustomerAvalaraSettingsArgsToJSON(value?: UpdateCustomerAv
     }
     return {
         
-        'entity_use_code': value.entityUseCode,
         'enable_integration': value.enableIntegration,
+        'business_identification_number': value.businessIdentificationNumber,
+        'entity_use_code': value.entityUseCode,
         'exemption_number': value.exemptionNumber,
     };
 }

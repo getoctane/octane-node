@@ -20,6 +20,18 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalAccruedRevenueLineItem {
     /**
+     * Accrued revenue for this line item in cents
+     * @type {number}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    revenue?: number;
+    /**
+     * Type of item. One of: METERED_COMPONENT, BASE_PRICE, DISCOUNT, ADD_ON, MINIMUM_CHARGE, METERED_COMPONENT_MINIMUM_CHARGE
+     * @type {string}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    itemType?: string;
+    /**
      * 
      *         The identifier of the item being returned. 
      *         For metered component will be meter name, 
@@ -33,24 +45,12 @@ export interface CustomerPortalAccruedRevenueLineItem {
      */
     itemIdentifier?: string;
     /**
-     * Accrued revenue for this line item in cents
-     * @type {number}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    revenue?: number;
-    /**
      * Any extra metadata associated with the item. 
      *         Will include the labels for metered components and metered component minimum charges when applicable
      * @type {{ [key: string]: string; }}
      * @memberof CustomerPortalAccruedRevenueLineItem
      */
     metadata?: { [key: string]: string; };
-    /**
-     * Type of item. One of: METERED_COMPONENT, BASE_PRICE, DISCOUNT, ADD_ON, MINIMUM_CHARGE, METERED_COMPONENT_MINIMUM_CHARGE
-     * @type {string}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    itemType?: string;
 }
 
 export function CustomerPortalAccruedRevenueLineItemFromJSON(json: any): CustomerPortalAccruedRevenueLineItem {
@@ -63,10 +63,10 @@ export function CustomerPortalAccruedRevenueLineItemFromJSONTyped(json: any, ign
     }
     return {
         
-        'itemIdentifier': !exists(json, 'item_identifier') ? undefined : json['item_identifier'],
         'revenue': !exists(json, 'revenue') ? undefined : json['revenue'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'itemType': !exists(json, 'item_type') ? undefined : json['item_type'],
+        'itemIdentifier': !exists(json, 'item_identifier') ? undefined : json['item_identifier'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 
@@ -79,10 +79,10 @@ export function CustomerPortalAccruedRevenueLineItemToJSON(value?: CustomerPorta
     }
     return {
         
-        'item_identifier': value.itemIdentifier,
         'revenue': value.revenue,
-        'metadata': value.metadata,
         'item_type': value.itemType,
+        'item_identifier': value.itemIdentifier,
+        'metadata': value.metadata,
     };
 }
 

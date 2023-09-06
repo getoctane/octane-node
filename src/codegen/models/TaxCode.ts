@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TaxCode {
     /**
-     * The type of this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    taxCodeTypeId?: string;
-    /**
      * The Avalara Entity Use Code represented by this tax code.
      * @type {string}
      * @memberof TaxCode
      */
     entityUseCode?: string;
+    /**
+     * The type of this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    taxCodeTypeId?: string;
     /**
      * A friendly description of this tax code.
      * @type {string}
@@ -61,8 +61,8 @@ export function TaxCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     }
     return {
         
-        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
         'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
+        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
@@ -78,8 +78,8 @@ export function TaxCodeToJSON(value?: TaxCode | null): any {
     }
     return {
         
-        'tax_code_type_id': value.taxCodeTypeId,
         'entity_use_code': value.entityUseCode,
+        'tax_code_type_id': value.taxCodeTypeId,
         'description': value.description,
         'id': value.id,
         'tax_code': value.taxCode,

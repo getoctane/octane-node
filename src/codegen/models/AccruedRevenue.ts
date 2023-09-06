@@ -33,6 +33,12 @@ export interface AccruedRevenue {
      */
     startTime?: Date;
     /**
+     * Total accrued revenue for the period in cents
+     * @type {number}
+     * @memberof AccruedRevenue
+     */
+    totalAccruedRevenue?: number;
+    /**
      * The end time within the billing cycle for which this accrued revenue is computed
      * @type {Date}
      * @memberof AccruedRevenue
@@ -44,12 +50,6 @@ export interface AccruedRevenue {
      * @memberof AccruedRevenue
      */
     lineItems?: Array<AccruedRevenueLineItem>;
-    /**
-     * Total accrued revenue for the period in cents
-     * @type {number}
-     * @memberof AccruedRevenue
-     */
-    totalAccruedRevenue?: number;
 }
 
 export function AccruedRevenueFromJSON(json: any): AccruedRevenue {
@@ -63,9 +63,9 @@ export function AccruedRevenueFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
+        'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
         'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
-        'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
     };
 }
 
@@ -79,9 +79,9 @@ export function AccruedRevenueToJSON(value?: AccruedRevenue | null): any {
     return {
         
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
+        'total_accrued_revenue': value.totalAccruedRevenue,
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
         'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
-        'total_accrued_revenue': value.totalAccruedRevenue,
     };
 }
 

@@ -32,11 +32,11 @@ export interface Company {
      */
     isDefault?: boolean;
     /**
-     * The name of this company, as shown to customers.
+     * A unique code that references this company within your account.
      * @type {string}
      * @memberof Company
      */
-    companyName?: string;
+    companyCode?: string;
     /**
      * The unique ID number of this company.
      * @type {string}
@@ -44,11 +44,11 @@ export interface Company {
      */
     id?: string;
     /**
-     * A unique code that references this company within your account.
+     * The name of this company, as shown to customers.
      * @type {string}
      * @memberof Company
      */
-    companyCode?: string;
+    companyName?: string;
 }
 
 export function CompanyFromJSON(json: any): Company {
@@ -63,9 +63,9 @@ export function CompanyFromJSONTyped(json: any, ignoreDiscriminator: boolean): C
         
         'isActive': !exists(json, 'is_active') ? undefined : json['is_active'],
         'isDefault': !exists(json, 'is_default') ? undefined : json['is_default'],
-        'companyName': !exists(json, 'company_name') ? undefined : json['company_name'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'companyName': !exists(json, 'company_name') ? undefined : json['company_name'],
     };
 }
 
@@ -80,9 +80,9 @@ export function CompanyToJSON(value?: Company | null): any {
         
         'is_active': value.isActive,
         'is_default': value.isDefault,
-        'company_name': value.companyName,
-        'id': value.id,
         'company_code': value.companyCode,
+        'id': value.id,
+        'company_name': value.companyName,
     };
 }
 

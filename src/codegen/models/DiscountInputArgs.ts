@@ -21,34 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface DiscountInputArgs {
     /**
      * 
-     * @type {string}
-     * @memberof DiscountInputArgs
-     */
-    discountType?: DiscountInputArgsDiscountTypeEnum;
-    /**
-     * 
      * @type {number}
      * @memberof DiscountInputArgs
      */
     amount?: number;
     /**
-     * The scope that this discount covers. One of 'INVOICE_TOTAL', 'ADD_ON', 'METERED_COMPONENT'.
+     * 
      * @type {string}
      * @memberof DiscountInputArgs
      */
-    scope?: DiscountInputArgsScopeEnum;
-    /**
-     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
-     * @type {string}
-     * @memberof DiscountInputArgs
-     */
-    meteredComponentUuid?: string;
-    /**
-     * For ADD_ON scoped discounts: the name of the add on that the discount covers.
-     * @type {string}
-     * @memberof DiscountInputArgs
-     */
-    addOnName?: string;
+    discountType?: DiscountInputArgsDiscountTypeEnum;
     /**
      * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
      * @type {{ [key: string]: string; }}
@@ -62,11 +44,29 @@ export interface DiscountInputArgs {
      */
     billingCycleStartOffset?: number;
     /**
+     * The scope that this discount covers. One of 'INVOICE_TOTAL', 'ADD_ON', 'METERED_COMPONENT'.
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    scope?: DiscountInputArgsScopeEnum;
+    /**
+     * For ADD_ON scoped discounts: the name of the add on that the discount covers.
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    addOnName?: string;
+    /**
      * Length, in billing cycles, that this discount will be active.
      * @type {number}
      * @memberof DiscountInputArgs
      */
     billingCycleDuration?: number;
+    /**
+     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
+     * @type {string}
+     * @memberof DiscountInputArgs
+     */
+    meteredComponentUuid?: string;
 }
 
 /**
@@ -96,14 +96,14 @@ export function DiscountInputArgsFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'scope': !exists(json, 'scope') ? undefined : json['scope'],
-        'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
-        'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
+        'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'billingCycleStartOffset': !exists(json, 'billing_cycle_start_offset') ? undefined : json['billing_cycle_start_offset'],
+        'scope': !exists(json, 'scope') ? undefined : json['scope'],
+        'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
         'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
+        'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
     };
 }
 
@@ -116,14 +116,14 @@ export function DiscountInputArgsToJSON(value?: DiscountInputArgs | null): any {
     }
     return {
         
-        'discount_type': value.discountType,
         'amount': value.amount,
-        'scope': value.scope,
-        'metered_component_uuid': value.meteredComponentUuid,
-        'add_on_name': value.addOnName,
+        'discount_type': value.discountType,
         'labels': value.labels,
         'billing_cycle_start_offset': value.billingCycleStartOffset,
+        'scope': value.scope,
+        'add_on_name': value.addOnName,
         'billing_cycle_duration': value.billingCycleDuration,
+        'metered_component_uuid': value.meteredComponentUuid,
     };
 }
 

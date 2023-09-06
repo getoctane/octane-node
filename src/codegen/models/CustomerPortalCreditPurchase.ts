@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalCreditPurchase {
     /**
-     * Customer name. Required only if using vendor API Key for authentication.
-     * @type {string}
-     * @memberof CustomerPortalCreditPurchase
-     */
-    customerName?: string;
-    /**
      * Number of credits to purchase.
      * @type {number}
      * @memberof CustomerPortalCreditPurchase
      */
     amount: number;
+    /**
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
+     * @memberof CustomerPortalCreditPurchase
+     */
+    customerName?: string;
 }
 
 export function CustomerPortalCreditPurchaseFromJSON(json: any): CustomerPortalCreditPurchase {
@@ -43,8 +43,8 @@ export function CustomerPortalCreditPurchaseFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'amount': json['amount'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerPortalCreditPurchaseToJSON(value?: CustomerPortalCreditP
     }
     return {
         
-        'customer_name': value.customerName,
         'amount': value.amount,
+        'customer_name': value.customerName,
     };
 }
 

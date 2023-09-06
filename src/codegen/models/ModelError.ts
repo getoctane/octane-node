@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ModelError {
     /**
-     * Error name
-     * @type {string}
-     * @memberof ModelError
-     */
-    status?: string;
-    /**
-     * Error message
-     * @type {string}
-     * @memberof ModelError
-     */
-    message?: string;
-    /**
      * Errors
      * @type {object}
      * @memberof ModelError
@@ -43,6 +31,18 @@ export interface ModelError {
      * @memberof ModelError
      */
     code?: number;
+    /**
+     * Error name
+     * @type {string}
+     * @memberof ModelError
+     */
+    status?: string;
+    /**
+     * Error message
+     * @type {string}
+     * @memberof ModelError
+     */
+    message?: string;
 }
 
 export function ModelErrorFromJSON(json: any): ModelError {
@@ -55,10 +55,10 @@ export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'status': !exists(json, 'status') ? undefined : json['status'],
-        'message': !exists(json, 'message') ? undefined : json['message'],
         'errors': !exists(json, 'errors') ? undefined : json['errors'],
         'code': !exists(json, 'code') ? undefined : json['code'],
+        'status': !exists(json, 'status') ? undefined : json['status'],
+        'message': !exists(json, 'message') ? undefined : json['message'],
     };
 }
 
@@ -71,10 +71,10 @@ export function ModelErrorToJSON(value?: ModelError | null): any {
     }
     return {
         
-        'status': value.status,
-        'message': value.message,
         'errors': value.errors,
         'code': value.code,
+        'status': value.status,
+        'message': value.message,
     };
 }
 

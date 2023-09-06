@@ -223,6 +223,36 @@ export interface BillingSettings {
      * @memberof BillingSettings
      */
     shouldMinimumChargeOverrideLineItems?: boolean | null;
+    /**
+     * Flag that controls whether to send receipts for paid invoices.
+     * @type {boolean}
+     * @memberof BillingSettings
+     */
+    sendReceipts?: boolean | null;
+    /**
+     * Flag that controls whether to communicate payment failures.
+     * @type {boolean}
+     * @memberof BillingSettings
+     */
+    communicatePaymentFailures?: boolean | null;
+    /**
+     * List of days before an invoice is due to communicate upcoming due notices.
+     * @type {any}
+     * @memberof BillingSettings
+     */
+    upcomingReminderDaysArray?: any | null;
+    /**
+     * List of days after an invoice is due to communicate past due notices.
+     * @type {any}
+     * @memberof BillingSettings
+     */
+    pastDueReminderDaysArray?: any | null;
+    /**
+     * Whether newly attached Stripe payment methods should be made the default for customers.
+     * @type {boolean}
+     * @memberof BillingSettings
+     */
+    autoUpdateStripeDefaultPaymentMethod?: boolean | null;
 }
 
 export function BillingSettingsFromJSON(json: any): BillingSettings {
@@ -269,6 +299,11 @@ export function BillingSettingsFromJSONTyped(json: any, ignoreDiscriminator: boo
         'stripeImmediateFinalization': !exists(json, 'stripe_immediate_finalization') ? undefined : json['stripe_immediate_finalization'],
         'alternateSendgridTemplateId': !exists(json, 'alternate_sendgrid_template_id') ? undefined : json['alternate_sendgrid_template_id'],
         'shouldMinimumChargeOverrideLineItems': !exists(json, 'should_minimum_charge_override_line_items') ? undefined : json['should_minimum_charge_override_line_items'],
+        'sendReceipts': !exists(json, 'send_receipts') ? undefined : json['send_receipts'],
+        'communicatePaymentFailures': !exists(json, 'communicate_payment_failures') ? undefined : json['communicate_payment_failures'],
+        'upcomingReminderDaysArray': !exists(json, 'upcoming_reminder_days_array') ? undefined : json['upcoming_reminder_days_array'],
+        'pastDueReminderDaysArray': !exists(json, 'past_due_reminder_days_array') ? undefined : json['past_due_reminder_days_array'],
+        'autoUpdateStripeDefaultPaymentMethod': !exists(json, 'auto_update_stripe_default_payment_method') ? undefined : json['auto_update_stripe_default_payment_method'],
     };
 }
 
@@ -314,6 +349,11 @@ export function BillingSettingsToJSON(value?: BillingSettings | null): any {
         'stripe_immediate_finalization': value.stripeImmediateFinalization,
         'alternate_sendgrid_template_id': value.alternateSendgridTemplateId,
         'should_minimum_charge_override_line_items': value.shouldMinimumChargeOverrideLineItems,
+        'send_receipts': value.sendReceipts,
+        'communicate_payment_failures': value.communicatePaymentFailures,
+        'upcoming_reminder_days_array': value.upcomingReminderDaysArray,
+        'past_due_reminder_days_array': value.pastDueReminderDaysArray,
+        'auto_update_stripe_default_payment_method': value.autoUpdateStripeDefaultPaymentMethod,
     };
 }
 

@@ -27,17 +27,17 @@ import {
  */
 export interface CustomerPortalMeterLabelsWithDisplayName {
     /**
-     * Primary label key and prettified version of the key
-     * @type {CustomerPortalLabelDisplayName}
-     * @memberof CustomerPortalMeterLabelsWithDisplayName
-     */
-    key?: CustomerPortalLabelDisplayName | null;
-    /**
      * Primary label values associated with the key
      * @type {Array<CustomerPortalLabelDisplayName>}
      * @memberof CustomerPortalMeterLabelsWithDisplayName
      */
     values?: Array<CustomerPortalLabelDisplayName>;
+    /**
+     * Primary label key and prettified version of the key
+     * @type {CustomerPortalLabelDisplayName}
+     * @memberof CustomerPortalMeterLabelsWithDisplayName
+     */
+    key?: CustomerPortalLabelDisplayName | null;
 }
 
 export function CustomerPortalMeterLabelsWithDisplayNameFromJSON(json: any): CustomerPortalMeterLabelsWithDisplayName {
@@ -50,8 +50,8 @@ export function CustomerPortalMeterLabelsWithDisplayNameFromJSONTyped(json: any,
     }
     return {
         
-        'key': !exists(json, 'key') ? undefined : CustomerPortalLabelDisplayNameFromJSON(json['key']),
         'values': !exists(json, 'values') ? undefined : ((json['values'] as Array<any>).map(CustomerPortalLabelDisplayNameFromJSON)),
+        'key': !exists(json, 'key') ? undefined : CustomerPortalLabelDisplayNameFromJSON(json['key']),
     };
 }
 
@@ -64,8 +64,8 @@ export function CustomerPortalMeterLabelsWithDisplayNameToJSON(value?: CustomerP
     }
     return {
         
-        'key': CustomerPortalLabelDisplayNameToJSON(value.key),
         'values': value.values === undefined ? undefined : ((value.values as Array<any>).map(CustomerPortalLabelDisplayNameToJSON)),
+        'key': CustomerPortalLabelDisplayNameToJSON(value.key),
     };
 }
 

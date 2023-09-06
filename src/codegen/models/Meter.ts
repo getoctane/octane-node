@@ -56,7 +56,7 @@ export interface Meter {
      */
     dataType: string;
     /**
-     * The aggregation applied to the measurement values. One of `TIME_WEIGHTED_SUM`, `MAX`, `SUM`.
+     * The aggregation applied to the measurement values. One of `MAX`, `SUM`, `TIME_WEIGHTED_SUM`.
      * @type {string}
      * @memberof Meter
      */

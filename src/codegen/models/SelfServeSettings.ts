@@ -50,6 +50,12 @@ export interface SelfServeSettings {
      */
     switchPricePlans: boolean;
     /**
+     * True if payment form should have fields for shipping address info. Defaults to False.
+     * @type {boolean}
+     * @memberof SelfServeSettings
+     */
+    enableAddressFields?: boolean;
+    /**
      * True if the vendor has enabled customization for their customer portal.
      * @type {boolean}
      * @memberof SelfServeSettings
@@ -72,6 +78,7 @@ export function SelfServeSettingsFromJSONTyped(json: any, ignoreDiscriminator: b
         'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
         'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'switchPricePlans': json['switch_price_plans'],
+        'enableAddressFields': !exists(json, 'enable_address_fields') ? undefined : json['enable_address_fields'],
         'customization': !exists(json, 'customization') ? undefined : json['customization'],
     };
 }
@@ -90,6 +97,7 @@ export function SelfServeSettingsToJSON(value?: SelfServeSettings | null): any {
         'credits_expiration_unit': value.creditsExpirationUnit,
         'price_per_credit_cents': value.pricePerCreditCents,
         'switch_price_plans': value.switchPricePlans,
+        'enable_address_fields': value.enableAddressFields,
         'customization': value.customization,
     };
 }

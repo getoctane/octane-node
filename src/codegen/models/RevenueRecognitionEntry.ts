@@ -32,17 +32,17 @@ export interface RevenueRecognitionEntry {
      */
     month?: Date;
     /**
-     * The change in recognized revenue this month (in cents).
-     * @type {number}
-     * @memberof RevenueRecognitionEntry
-     */
-    recognized?: number;
-    /**
      * The change in deferred revenue this month (in cents).
      * @type {number}
      * @memberof RevenueRecognitionEntry
      */
     deferred?: number;
+    /**
+     * The change in recognized revenue this month (in cents).
+     * @type {number}
+     * @memberof RevenueRecognitionEntry
+     */
+    recognized?: number;
 }
 
 export function RevenueRecognitionEntryFromJSON(json: any): RevenueRecognitionEntry {
@@ -57,8 +57,8 @@ export function RevenueRecognitionEntryFromJSONTyped(json: any, ignoreDiscrimina
         
         'booked': !exists(json, 'booked') ? undefined : json['booked'],
         'month': !exists(json, 'month') ? undefined : (new Date(json['month'])),
-        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
         'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
+        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
     };
 }
 
@@ -73,8 +73,8 @@ export function RevenueRecognitionEntryToJSON(value?: RevenueRecognitionEntry | 
         
         'booked': value.booked,
         'month': value.month === undefined ? undefined : (value.month.toISOString()),
-        'recognized': value.recognized,
         'deferred': value.deferred,
+        'recognized': value.recognized,
     };
 }
 

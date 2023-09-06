@@ -33,6 +33,36 @@ import {
  */
 export interface CustomerPortalMeter {
     /**
+     * Type of the meter. E.g. COUNTER or GAUGE.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    meterType?: string;
+    /**
+     * Aggregation of meter. E.g. SUM, TIME_WEIGHTED_SUM, MAX, or LATEST.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    aggregation?: string;
+    /**
+     * Display name of the meter.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    meterDisplayName?: string;
+    /**
+     * Type of meter data. E.g. DISCRETE or CONTINUOUS.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    dataType?: string;
+    /**
+     * The raw and prettified label keys and values
+     * @type {Array<CustomerPortalMeterLabelsWithDisplayName>}
+     * @memberof CustomerPortalMeter
+     */
+    labelsWithDisplayNames?: Array<CustomerPortalMeterLabelsWithDisplayName>;
+    /**
      * Name of the unit the meter uses.
      * @type {string}
      * @memberof CustomerPortalMeter
@@ -45,41 +75,11 @@ export interface CustomerPortalMeter {
      */
     meterName?: string;
     /**
-     * Aggregation of meter. E.g. SUM, TIME_WEIGHTED_SUM, MAX, or LATEST.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    aggregation?: string;
-    /**
-     * The raw and prettified label keys and values
-     * @type {Array<CustomerPortalMeterLabelsWithDisplayName>}
-     * @memberof CustomerPortalMeter
-     */
-    labelsWithDisplayNames?: Array<CustomerPortalMeterLabelsWithDisplayName>;
-    /**
-     * Type of meter data. E.g. DISCRETE or CONTINUOUS.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    dataType?: string;
-    /**
      * Primary labels with keys and values
      * @type {Array<CustomerPortalMeterLabels>}
      * @memberof CustomerPortalMeter
      */
     labels?: Array<CustomerPortalMeterLabels>;
-    /**
-     * Type of the meter. E.g. COUNTER or GAUGE.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    meterType?: string;
-    /**
-     * Display name of the meter.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    meterDisplayName?: string;
 }
 
 export function CustomerPortalMeterFromJSON(json: any): CustomerPortalMeter {
@@ -92,14 +92,14 @@ export function CustomerPortalMeterFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
+        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
+        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
+        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
+        'labelsWithDisplayNames': !exists(json, 'labels_with_display_names') ? undefined : ((json['labels_with_display_names'] as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameFromJSON)),
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
-        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
-        'labelsWithDisplayNames': !exists(json, 'labels_with_display_names') ? undefined : ((json['labels_with_display_names'] as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameFromJSON)),
-        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
         'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
     };
 }
 
@@ -112,14 +112,14 @@ export function CustomerPortalMeterToJSON(value?: CustomerPortalMeter | null): a
     }
     return {
         
+        'meter_type': value.meterType,
+        'aggregation': value.aggregation,
+        'meter_display_name': value.meterDisplayName,
+        'data_type': value.dataType,
+        'labels_with_display_names': value.labelsWithDisplayNames === undefined ? undefined : ((value.labelsWithDisplayNames as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameToJSON)),
         'unit_name': value.unitName,
         'meter_name': value.meterName,
-        'aggregation': value.aggregation,
-        'labels_with_display_names': value.labelsWithDisplayNames === undefined ? undefined : ((value.labelsWithDisplayNames as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameToJSON)),
-        'data_type': value.dataType,
         'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
-        'meter_type': value.meterType,
-        'meter_display_name': value.meterDisplayName,
     };
 }
 

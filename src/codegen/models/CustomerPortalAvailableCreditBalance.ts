@@ -26,17 +26,17 @@ export interface CustomerPortalAvailableCreditBalance {
      */
     startTime?: Date;
     /**
-     * The end_time used for calculating this available balance.
-     * @type {Date}
-     * @memberof CustomerPortalAvailableCreditBalance
-     */
-    endTime?: Date;
-    /**
      * Available credit balance.
      * @type {number}
      * @memberof CustomerPortalAvailableCreditBalance
      */
     availableBalance?: number;
+    /**
+     * The end_time used for calculating this available balance.
+     * @type {Date}
+     * @memberof CustomerPortalAvailableCreditBalance
+     */
+    endTime?: Date;
 }
 
 export function CustomerPortalAvailableCreditBalanceFromJSON(json: any): CustomerPortalAvailableCreditBalance {
@@ -50,8 +50,8 @@ export function CustomerPortalAvailableCreditBalanceFromJSONTyped(json: any, ign
     return {
         
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
         'availableBalance': !exists(json, 'available_balance') ? undefined : json['available_balance'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
     };
 }
 
@@ -65,8 +65,8 @@ export function CustomerPortalAvailableCreditBalanceToJSON(value?: CustomerPorta
     return {
         
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
         'available_balance': value.availableBalance,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
     };
 }
 

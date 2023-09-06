@@ -20,23 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CardInfo {
     /**
-     * 
+     * Last 4 digits of the card.
      * @type {string}
      * @memberof CardInfo
      */
-    externalId?: string;
-    /**
-     * Country of the card
-     * @type {string}
-     * @memberof CardInfo
-     */
-    country?: string;
-    /**
-     * Year the card expires
-     * @type {number}
-     * @memberof CardInfo
-     */
-    expYear?: number;
+    last4?: string;
     /**
      * Brand of card. E.g. Amex, Visa, etc.
      * @type {string}
@@ -44,11 +32,23 @@ export interface CardInfo {
      */
     brand?: string;
     /**
-     * Last 4 digits of the card.
+     * 
      * @type {string}
      * @memberof CardInfo
      */
-    last4?: string;
+    externalId?: string;
+    /**
+     * Year the card expires
+     * @type {number}
+     * @memberof CardInfo
+     */
+    expYear?: number;
+    /**
+     * Country of the card
+     * @type {string}
+     * @memberof CardInfo
+     */
+    country?: string;
     /**
      * Month the card expires
      * @type {number}
@@ -67,11 +67,11 @@ export function CardInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
-        'country': !exists(json, 'country') ? undefined : json['country'],
-        'expYear': !exists(json, 'exp_year') ? undefined : json['exp_year'],
-        'brand': !exists(json, 'brand') ? undefined : json['brand'],
         'last4': !exists(json, 'last4') ? undefined : json['last4'],
+        'brand': !exists(json, 'brand') ? undefined : json['brand'],
+        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
+        'expYear': !exists(json, 'exp_year') ? undefined : json['exp_year'],
+        'country': !exists(json, 'country') ? undefined : json['country'],
         'expMonth': !exists(json, 'exp_month') ? undefined : json['exp_month'],
     };
 }
@@ -85,11 +85,11 @@ export function CardInfoToJSON(value?: CardInfo | null): any {
     }
     return {
         
-        'external_id': value.externalId,
-        'country': value.country,
-        'exp_year': value.expYear,
-        'brand': value.brand,
         'last4': value.last4,
+        'brand': value.brand,
+        'external_id': value.externalId,
+        'exp_year': value.expYear,
+        'country': value.country,
         'exp_month': value.expMonth,
     };
 }

@@ -33,12 +33,6 @@ import {
  */
 export interface CustomerPortalPaymentMethod {
     /**
-     * Info about the customer's card, if that is their payment method.
-     * @type {CardInfo}
-     * @memberof CustomerPortalPaymentMethod
-     */
-    cardInfo?: CardInfo | null;
-    /**
      * Type of payment method for the customer.
      * @type {string}
      * @memberof CustomerPortalPaymentMethod
@@ -50,6 +44,12 @@ export interface CustomerPortalPaymentMethod {
      * @memberof CustomerPortalPaymentMethod
      */
     bankAccountInfo?: BankAccountInfo | null;
+    /**
+     * Info about the customer's card, if that is their payment method.
+     * @type {CardInfo}
+     * @memberof CustomerPortalPaymentMethod
+     */
+    cardInfo?: CardInfo | null;
 }
 
 export function CustomerPortalPaymentMethodFromJSON(json: any): CustomerPortalPaymentMethod {
@@ -62,9 +62,9 @@ export function CustomerPortalPaymentMethodFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'cardInfo': !exists(json, 'card_info') ? undefined : CardInfoFromJSON(json['card_info']),
         'paymentMethodType': !exists(json, 'payment_method_type') ? undefined : json['payment_method_type'],
         'bankAccountInfo': !exists(json, 'bank_account_info') ? undefined : BankAccountInfoFromJSON(json['bank_account_info']),
+        'cardInfo': !exists(json, 'card_info') ? undefined : CardInfoFromJSON(json['card_info']),
     };
 }
 
@@ -77,9 +77,9 @@ export function CustomerPortalPaymentMethodToJSON(value?: CustomerPortalPaymentM
     }
     return {
         
-        'card_info': CardInfoToJSON(value.cardInfo),
         'payment_method_type': value.paymentMethodType,
         'bank_account_info': BankAccountInfoToJSON(value.bankAccountInfo),
+        'card_info': CardInfoToJSON(value.cardInfo),
     };
 }
 

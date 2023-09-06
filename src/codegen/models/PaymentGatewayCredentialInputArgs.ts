@@ -24,13 +24,13 @@ export interface PaymentGatewayCredentialInputArgs {
      * @type {string}
      * @memberof PaymentGatewayCredentialInputArgs
      */
-    authToken?: string;
+    paymentGateway?: string;
     /**
      * 
      * @type {string}
      * @memberof PaymentGatewayCredentialInputArgs
      */
-    paymentGateway?: string;
+    authToken?: string;
     /**
      * 
      * @type {string}
@@ -49,8 +49,8 @@ export function PaymentGatewayCredentialInputArgsFromJSONTyped(json: any, ignore
     }
     return {
         
-        'authToken': !exists(json, 'auth_token') ? undefined : json['auth_token'],
         'paymentGateway': !exists(json, 'payment_gateway') ? undefined : json['payment_gateway'],
+        'authToken': !exists(json, 'auth_token') ? undefined : json['auth_token'],
         'accountId': !exists(json, 'account_id') ? undefined : json['account_id'],
     };
 }
@@ -64,8 +64,8 @@ export function PaymentGatewayCredentialInputArgsToJSON(value?: PaymentGatewayCr
     }
     return {
         
-        'auth_token': value.authToken,
         'payment_gateway': value.paymentGateway,
+        'auth_token': value.authToken,
         'account_id': value.accountId,
     };
 }
