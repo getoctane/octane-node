@@ -20,19 +20,40 @@ import {
   CustomerBillingSettingsInputArgs,
   BillingSettings,
   SubscriptionAddOnItem,
+  CustomerStatus,
+  RevenueResponse,
+  CustomersCustomerNameRevenueGetRequest,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
 
 dayjs.extend(utc);
 
-// Extend the generated args for retrieveUsage so we can optionally convert date
+type DateArgs = {
+  startTime?: Date;
+  endTime?: Date;
+};
+
+// Extend the generated args, so we can optionally convert date
 // objects into strings.
-interface RetrieveUsageArgs
-  extends Omit<CustomersCustomerNameUsageGetRequest, 'startTime' | 'endTime'> {
+type ArgsWithDate<T extends DateArgs> = Omit<T, 'startTime' | 'endTime'> & {
   startTime?: Date | string;
   endTime?: Date | string;
-}
+};
+
+type RetrieveUsageArgs = ArgsWithDate<CustomersCustomerNameUsageGetRequest>;
+type RetrieveRevenueArgs = ArgsWithDate<CustomersCustomerNameRevenueGetRequest>;
+
+/**
+ * Returns a date object if the input is a string, otherwise returns the input.
+ */
+const transformDate = (date?: Date | string) => {
+  if (!date) {
+    return undefined;
+  }
+
+  return date instanceof Date ? date : dayjs(date).utc(true).toDate();
+};
 
 class Customers extends BaseResource {
   private api: CustomersApi;
@@ -211,22 +232,10 @@ class Customers extends BaseResource {
     { startTime, endTime, ...rest }: RetrieveUsageArgs,
     overrides?: RequestInit,
   ): Promise<CustomerUsage> {
-    let startTimeAsDate: Date | undefined;
-    if (startTime) {
-      startTimeAsDate =
-        startTime instanceof Date
-          ? startTime
-          : dayjs(startTime).utc(true).toDate();
-    }
-    let endTimeAsDate: Date | undefined;
-    if (endTime) {
-      endTimeAsDate =
-        endTime instanceof Date ? endTime : dayjs(endTime).utc(true).toDate();
-    }
     return this.api.customersCustomerNameUsageGet(
       {
-        startTime: startTimeAsDate,
-        endTime: endTimeAsDate,
+        startTime: transformDate(startTime),
+        endTime: transformDate(endTime),
         ...rest,
       },
       overrides,
@@ -309,6 +318,33 @@ class Customers extends BaseResource {
   ): Promise<void> {
     return this.api.customersCustomerNameBillingSettingsDelete(
       { customerName },
+      overrides,
+    );
+  }
+
+  /**
+   * Get Customer's status.
+   */
+  public getCustomerStatus(
+    customerName: string,
+    overrides?: RequestInit,
+  ): Promise<CustomerStatus> {
+    return this.api.customersCustomerNameStatusGet({ customerName }, overrides);
+  }
+
+  /**
+   * Get Customer's status.
+   */
+  public getCustomerRevenue(
+    { startTime, endTime, ...rest }: RetrieveRevenueArgs,
+    overrides?: RequestInit,
+  ): Promise<RevenueResponse> {
+    return this.api.customersCustomerNameRevenueGet(
+      {
+        ...rest,
+        startTime: transformDate(startTime),
+        endTime: transformDate(endTime),
+      },
       overrides,
     );
   }
