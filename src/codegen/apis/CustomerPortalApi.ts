@@ -482,7 +482,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
 
     /**
      * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
-     * Compute Filtered Daily Usage
+     * Get Daily Usage For Meter
      */
     async ecpFilteredUsagePostRaw(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsage>> {
         if (requestParameters.customerPortalMeterLabelFilter === null || requestParameters.customerPortalMeterLabelFilter === undefined) {
@@ -516,7 +516,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
 
     /**
      * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
-     * Compute Filtered Daily Usage
+     * Get Daily Usage For Meter
      */
     async ecpFilteredUsagePost(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsage> {
         const response = await this.ecpFilteredUsagePostRaw(requestParameters, initOverrides);
@@ -1037,42 +1037,6 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      */
     async ecpTotalAccruedRevenueGet(initOverrides?: RequestInit): Promise<CustomerPortalAccruedRevenue> {
         const response = await this.ecpTotalAccruedRevenueGetRaw(initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * [DEPRECATED] Please use /ecp/filtered_usage instead.
-     * Get Daily Usage
-     */
-    async ecpUsageGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalUsage>>> {
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("BearerApiKeyAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/ecp/usage`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomerPortalUsageFromJSON));
-    }
-
-    /**
-     * [DEPRECATED] Please use /ecp/filtered_usage instead.
-     * Get Daily Usage
-     */
-    async ecpUsageGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalUsage>> {
-        const response = await this.ecpUsageGetRaw(initOverrides);
         return await response.value();
     }
 

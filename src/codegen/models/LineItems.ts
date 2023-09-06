@@ -21,22 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface LineItems {
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof LineItems
      */
-    quantity?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItems
-     */
-    quantityUnit?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof LineItems
-     */
-    metadata?: { [key: string]: string; };
+    startTime?: Date;
     /**
      * 
      * @type {string}
@@ -48,7 +36,13 @@ export interface LineItems {
      * @type {string}
      * @memberof LineItems
      */
-    description?: string;
+    name?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LineItems
+     */
+    quantity?: number;
     /**
      * 
      * @type {number}
@@ -57,16 +51,10 @@ export interface LineItems {
     priceInt?: number;
     /**
      * 
-     * @type {Date}
-     * @memberof LineItems
-     */
-    startTime?: Date;
-    /**
-     * 
      * @type {string}
      * @memberof LineItems
      */
-    id?: string;
+    description?: string;
     /**
      * 
      * @type {Date}
@@ -78,7 +66,19 @@ export interface LineItems {
      * @type {string}
      * @memberof LineItems
      */
-    name?: string;
+    quantityUnit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof LineItems
+     */
+    id?: string;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof LineItems
+     */
+    metadata?: { [key: string]: string; };
 }
 
 export function LineItemsFromJSON(json: any): LineItems {
@@ -91,16 +91,16 @@ export function LineItemsFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
-        'quantityUnit': !exists(json, 'quantity_unit') ? undefined : json['quantity_unit'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'price': !exists(json, 'price') ? undefined : json['price'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'priceInt': !exists(json, 'price_int') ? undefined : json['price_int'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'quantityUnit': !exists(json, 'quantity_unit') ? undefined : json['quantity_unit'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
     };
 }
 
@@ -113,16 +113,16 @@ export function LineItemsToJSON(value?: LineItems | null): any {
     }
     return {
         
-        'quantity': value.quantity,
-        'quantity_unit': value.quantityUnit,
-        'metadata': value.metadata,
-        'price': value.price,
-        'description': value.description,
-        'price_int': value.priceInt,
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'id': value.id,
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'price': value.price,
         'name': value.name,
+        'quantity': value.quantity,
+        'price_int': value.priceInt,
+        'description': value.description,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'quantity_unit': value.quantityUnit,
+        'id': value.id,
+        'metadata': value.metadata,
     };
 }
 

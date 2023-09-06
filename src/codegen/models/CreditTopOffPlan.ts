@@ -61,6 +61,12 @@ export interface CreditTopOffPlan {
      * @memberof CreditTopOffPlan
      */
     description?: string | null;
+    /**
+     * Whether to charge the customer immediately when the top off is triggered.
+     * @type {boolean}
+     * @memberof CreditTopOffPlan
+     */
+    chargeImmediately?: boolean;
 }
 
 export function CreditTopOffPlanFromJSON(json: any): CreditTopOffPlan {
@@ -80,6 +86,7 @@ export function CreditTopOffPlanFromJSONTyped(json: any, ignoreDiscriminator: bo
         'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
     };
 }
 
@@ -99,6 +106,7 @@ export function CreditTopOffPlanToJSON(value?: CreditTopOffPlan | null): any {
         'expiration_length': value.expirationLength,
         'expiration_unit': value.expirationUnit,
         'description': value.description,
+        'charge_immediately': value.chargeImmediately,
     };
 }
 

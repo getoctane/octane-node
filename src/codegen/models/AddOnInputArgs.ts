@@ -33,41 +33,23 @@ import {
  */
 export interface AddOnInputArgs {
     /**
-     * 
-     * @type {boolean}
-     * @memberof AddOnInputArgs
-     */
-    quantityEnabled?: boolean;
-    /**
      * This field indicates whether or not we should cut an invoice immediately upon attaching this add on to a price plan.
      * @type {boolean}
      * @memberof AddOnInputArgs
      */
     immediatelyCharge?: boolean;
     /**
-     * Whether this add on can only be used & charged once.
-     * @type {boolean}
-     * @memberof AddOnInputArgs
-     */
-    singleUse?: boolean;
-    /**
-     * 
+     * DEPRECATED. Use price_scheme_type and prices instead.
      * @type {number}
      * @memberof AddOnInputArgs
      */
-    limit?: number;
+    price?: number;
     /**
      * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
      * @type {Array<PriceInputArgs>}
      * @memberof AddOnInputArgs
      */
     prices?: Array<PriceInputArgs>;
-    /**
-     * DEPRECATED. Use price_scheme_type and prices instead.
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    price?: number;
     /**
      * The frequency at which to charge this add on. Currently the only values supported are price_frequency or 1.
      * @type {number}
@@ -76,10 +58,28 @@ export interface AddOnInputArgs {
     chargeFrequency?: number;
     /**
      * 
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    limit?: number;
+    /**
+     * Whether this add on can only be used & charged once.
+     * @type {boolean}
+     * @memberof AddOnInputArgs
+     */
+    singleUse?: boolean;
+    /**
+     * 
      * @type {FeatureInputArgs}
      * @memberof AddOnInputArgs
      */
     feature: FeatureInputArgs;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof AddOnInputArgs
+     */
+    quantityEnabled?: boolean;
     /**
      * The frequency at which to price this add on.
      * @type {number}
@@ -113,14 +113,14 @@ export function AddOnInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
         'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
-        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
         'price': !exists(json, 'price') ? undefined : json['price'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
         'chargeFrequency': !exists(json, 'charge_frequency') ? undefined : json['charge_frequency'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
         'feature': FeatureInputArgsFromJSON(json['feature']),
+        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
         'priceFrequency': !exists(json, 'price_frequency') ? undefined : json['price_frequency'],
         'priceSchemeType': !exists(json, 'price_scheme_type') ? undefined : json['price_scheme_type'],
     };
@@ -135,14 +135,14 @@ export function AddOnInputArgsToJSON(value?: AddOnInputArgs | null): any {
     }
     return {
         
-        'quantity_enabled': value.quantityEnabled,
         'immediately_charge': value.immediatelyCharge,
-        'single_use': value.singleUse,
-        'limit': value.limit,
-        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
         'price': value.price,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
         'charge_frequency': value.chargeFrequency,
+        'limit': value.limit,
+        'single_use': value.singleUse,
         'feature': FeatureInputArgsToJSON(value.feature),
+        'quantity_enabled': value.quantityEnabled,
         'price_frequency': value.priceFrequency,
         'price_scheme_type': value.priceSchemeType,
     };

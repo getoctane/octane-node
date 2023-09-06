@@ -26,11 +26,11 @@ export interface DailyUsage {
      */
     time?: Date;
     /**
-     * Total usage during this window.
-     * @type {number}
+     * [DEPRECATED] Please use labels field instead.
+     * @type {string}
      * @memberof DailyUsage
      */
-    usage?: number;
+    labelValue?: string;
     /**
      * [DEPRECATED] Please use labels field instead.
      * @type {string}
@@ -44,11 +44,11 @@ export interface DailyUsage {
      */
     labels?: { [key: string]: string; };
     /**
-     * [DEPRECATED] Please use labels field instead.
-     * @type {string}
+     * Total usage during this window.
+     * @type {number}
      * @memberof DailyUsage
      */
-    labelValue?: string;
+    usage?: number;
 }
 
 export function DailyUsageFromJSON(json: any): DailyUsage {
@@ -62,10 +62,10 @@ export function DailyUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
-        'usage': !exists(json, 'usage') ? undefined : json['usage'],
+        'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
         'labelKey': !exists(json, 'label_key') ? undefined : json['label_key'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
+        'usage': !exists(json, 'usage') ? undefined : json['usage'],
     };
 }
 
@@ -79,10 +79,10 @@ export function DailyUsageToJSON(value?: DailyUsage | null): any {
     return {
         
         'time': value.time === undefined ? undefined : (value.time.toISOString()),
-        'usage': value.usage,
+        'label_value': value.labelValue,
         'label_key': value.labelKey,
         'labels': value.labels,
-        'label_value': value.labelValue,
+        'usage': value.usage,
     };
 }
 

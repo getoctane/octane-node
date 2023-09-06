@@ -27,29 +27,11 @@ import {
  */
 export interface CustomerPortalMeterLabelFilter {
     /**
-     * The aggregate function to use for the meter.
-     * @type {string}
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalLabelFilter>}
      * @memberof CustomerPortalMeterLabelFilter
      */
-    aggregate?: CustomerPortalMeterLabelFilterAggregateEnum;
-    /**
-     * Name of the meter.
-     * @type {string}
-     * @memberof CustomerPortalMeterLabelFilter
-     */
-    meterName: string;
-    /**
-     * A list of primary label keys to group results by.
-     * @type {Array<string>}
-     * @memberof CustomerPortalMeterLabelFilter
-     */
-    labelGroupByKeys?: Array<string>;
-    /**
-     * Customer name. Required only if using vendor API Key for authentication.
-     * @type {string}
-     * @memberof CustomerPortalMeterLabelFilter
-     */
-    customerName?: string;
+    labelFilters?: Array<CustomerPortalLabelFilter>;
     /**
      * [DEPRECATED] Please use label_group_by_keys instead.
      * @type {string}
@@ -57,11 +39,29 @@ export interface CustomerPortalMeterLabelFilter {
      */
     labelGroupBy?: string;
     /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalLabelFilter>}
+     * A list of primary label keys to group results by.
+     * @type {Array<string>}
      * @memberof CustomerPortalMeterLabelFilter
      */
-    labelFilters?: Array<CustomerPortalLabelFilter>;
+    labelGroupByKeys?: Array<string>;
+    /**
+     * Name of the meter.
+     * @type {string}
+     * @memberof CustomerPortalMeterLabelFilter
+     */
+    meterName: string;
+    /**
+     * The aggregate function to use for the meter.
+     * @type {string}
+     * @memberof CustomerPortalMeterLabelFilter
+     */
+    aggregate?: CustomerPortalMeterLabelFilterAggregateEnum;
+    /**
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
+     * @memberof CustomerPortalMeterLabelFilter
+     */
+    customerName?: string;
 }
 
 /**
@@ -85,12 +85,12 @@ export function CustomerPortalMeterLabelFilterFromJSONTyped(json: any, ignoreDis
     }
     return {
         
-        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
-        'meterName': json['meter_name'],
-        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'labelGroupBy': !exists(json, 'label_group_by') ? undefined : json['label_group_by'],
         'labelFilters': !exists(json, 'label_filters') ? undefined : ((json['label_filters'] as Array<any>).map(CustomerPortalLabelFilterFromJSON)),
+        'labelGroupBy': !exists(json, 'label_group_by') ? undefined : json['label_group_by'],
+        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
+        'meterName': json['meter_name'],
+        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
     };
 }
 
@@ -103,12 +103,12 @@ export function CustomerPortalMeterLabelFilterToJSON(value?: CustomerPortalMeter
     }
     return {
         
-        'aggregate': value.aggregate,
-        'meter_name': value.meterName,
-        'label_group_by_keys': value.labelGroupByKeys,
-        'customer_name': value.customerName,
-        'label_group_by': value.labelGroupBy,
         'label_filters': value.labelFilters === undefined ? undefined : ((value.labelFilters as Array<any>).map(CustomerPortalLabelFilterToJSON)),
+        'label_group_by': value.labelGroupBy,
+        'label_group_by_keys': value.labelGroupByKeys,
+        'meter_name': value.meterName,
+        'aggregate': value.aggregate,
+        'customer_name': value.customerName,
     };
 }
 

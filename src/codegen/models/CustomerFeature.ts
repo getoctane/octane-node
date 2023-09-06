@@ -40,10 +40,10 @@ export interface CustomerFeature {
     quantity?: number;
     /**
      * 
-     * @type {number}
+     * @type {Array<CustomerLabelLimit>}
      * @memberof CustomerFeature
      */
-    limit?: number;
+    labelLimits?: Array<CustomerLabelLimit>;
     /**
      * 
      * @type {string}
@@ -52,10 +52,10 @@ export interface CustomerFeature {
     featureName?: string;
     /**
      * 
-     * @type {Array<CustomerLabelLimit>}
+     * @type {number}
      * @memberof CustomerFeature
      */
-    labelLimits?: Array<CustomerLabelLimit>;
+    limit?: number;
 }
 
 export function CustomerFeatureFromJSON(json: any): CustomerFeature {
@@ -70,9 +70,9 @@ export function CustomerFeatureFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
         'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(CustomerLabelLimitFromJSON)),
+        'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
     };
 }
 
@@ -87,9 +87,9 @@ export function CustomerFeatureToJSON(value?: CustomerFeature | null): any {
         
         'enabled': value.enabled,
         'quantity': value.quantity,
-        'limit': value.limit,
-        'feature_name': value.featureName,
         'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(CustomerLabelLimitToJSON)),
+        'feature_name': value.featureName,
+        'limit': value.limit,
     };
 }
 

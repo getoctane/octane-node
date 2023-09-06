@@ -27,17 +27,11 @@ import {
  */
 export interface CustomerPortalVendor {
     /**
-     * Vendor's current payment gateway.
+     * Unique name identifier of a Vendor
      * @type {string}
      * @memberof CustomerPortalVendor
      */
-    paymentGateway?: string;
-    /**
-     * Display name for the Vendor
-     * @type {string}
-     * @memberof CustomerPortalVendor
-     */
-    displayName?: string;
+    name?: string;
     /**
      * Full contact info for the Vendor
      * @type {ContactInfo}
@@ -51,11 +45,17 @@ export interface CustomerPortalVendor {
      */
     currency?: string;
     /**
-     * Unique name identifier of a Vendor
+     * Vendor's current payment gateway.
      * @type {string}
      * @memberof CustomerPortalVendor
      */
-    name?: string;
+    paymentGateway?: string;
+    /**
+     * Display name for the Vendor
+     * @type {string}
+     * @memberof CustomerPortalVendor
+     */
+    displayName?: string;
 }
 
 export function CustomerPortalVendorFromJSON(json: any): CustomerPortalVendor {
@@ -68,11 +68,11 @@ export function CustomerPortalVendorFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'paymentGateway': !exists(json, 'payment_gateway') ? undefined : json['payment_gateway'],
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
         'contactInfo': !exists(json, 'contact_info') ? undefined : ContactInfoFromJSON(json['contact_info']),
         'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
+        'paymentGateway': !exists(json, 'payment_gateway') ? undefined : json['payment_gateway'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerPortalVendorToJSON(value?: CustomerPortalVendor | null):
     }
     return {
         
-        'payment_gateway': value.paymentGateway,
-        'display_name': value.displayName,
+        'name': value.name,
         'contact_info': ContactInfoToJSON(value.contactInfo),
         'currency': value.currency,
-        'name': value.name,
+        'payment_gateway': value.paymentGateway,
+        'display_name': value.displayName,
     };
 }
 

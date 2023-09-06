@@ -30,14 +30,14 @@ import {
 } from '../models';
 
 export interface InvoicesGetRequest {
-    forwardSortOffset?: string;
-    limit?: number;
-    sortColumn?: string;
-    customerName?: string;
-    status?: string;
+    startTime?: Date;
     sortDirection?: string;
     forwardSecondarySortOffset?: string;
-    startTime?: Date;
+    limit?: number;
+    forwardSortOffset?: string;
+    status?: string;
+    customerName?: string;
+    sortColumn?: string;
 }
 
 export interface InvoicesInvoiceUuidDeleteRequest {
@@ -74,24 +74,8 @@ export class InvoicesApi extends runtime.BaseAPI {
     async invoicesGetRaw(requestParameters: InvoicesGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PastInvoices>> {
         const queryParameters: any = {};
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.sortColumn !== undefined) {
-            queryParameters['sort_column'] = requestParameters.sortColumn;
-        }
-
-        if (requestParameters.customerName !== undefined) {
-            queryParameters['customer_name'] = requestParameters.customerName;
-        }
-
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
         }
 
         if (requestParameters.sortDirection !== undefined) {
@@ -102,8 +86,24 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
         }
 
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.customerName !== undefined) {
+            queryParameters['customer_name'] = requestParameters.customerName;
+        }
+
+        if (requestParameters.sortColumn !== undefined) {
+            queryParameters['sort_column'] = requestParameters.sortColumn;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

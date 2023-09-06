@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateRefundArgs {
     /**
-     * Invoice that the refund should be against
-     * @type {number}
-     * @memberof CreateRefundArgs
-     */
-    invoiceId?: number;
-    /**
      * Amount to be refunded
      * @type {number}
      * @memberof CreateRefundArgs
@@ -37,6 +31,12 @@ export interface CreateRefundArgs {
      * @memberof CreateRefundArgs
      */
     invoiceUuid?: string;
+    /**
+     * Invoice that the refund should be against
+     * @type {number}
+     * @memberof CreateRefundArgs
+     */
+    invoiceId?: number;
 }
 
 export function CreateRefundArgsFromJSON(json: any): CreateRefundArgs {
@@ -49,9 +49,9 @@ export function CreateRefundArgsFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'invoiceId': !exists(json, 'invoice_id') ? undefined : json['invoice_id'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'invoiceUuid': !exists(json, 'invoice_uuid') ? undefined : json['invoice_uuid'],
+        'invoiceId': !exists(json, 'invoice_id') ? undefined : json['invoice_id'],
     };
 }
 
@@ -64,9 +64,9 @@ export function CreateRefundArgsToJSON(value?: CreateRefundArgs | null): any {
     }
     return {
         
-        'invoice_id': value.invoiceId,
         'amount': value.amount,
         'invoice_uuid': value.invoiceUuid,
+        'invoice_id': value.invoiceId,
     };
 }
 

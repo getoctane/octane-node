@@ -30,6 +30,9 @@ import {
     ListCreditGrantsArgs,
     ListCreditGrantsArgsFromJSON,
     ListCreditGrantsArgsToJSON,
+    VoidCreditGrantArgs,
+    VoidCreditGrantArgsFromJSON,
+    VoidCreditGrantArgsToJSON,
 } from '../models';
 
 export interface CreditsGrantGetRequest {
@@ -38,6 +41,7 @@ export interface CreditsGrantGetRequest {
 
 export interface CreditsGrantGrantUuidVoidPostRequest {
     grantUuid: string;
+    voidCreditGrantArgs?: VoidCreditGrantArgs;
 }
 
 export interface CreditsGrantPostRequest {
@@ -45,8 +49,8 @@ export interface CreditsGrantPostRequest {
 }
 
 export interface CreditsLedgerCustomerNameAsOfStrGetRequest {
-    customerName: string;
     asOfStr: string;
+    customerName: string;
 }
 
 export interface CreditsLedgerCustomerNameGetRequest {
@@ -114,6 +118,8 @@ export class CreditsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+        headerParameters['Content-Type'] = 'application/json';
+
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
             const tokenString = await token("BearerApiKeyAuth", []);
@@ -127,6 +133,7 @@ export class CreditsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
+            body: VoidCreditGrantArgsToJSON(requestParameters.voidCreditGrantArgs),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -188,12 +195,12 @@ export class CreditsApi extends runtime.BaseAPI {
      * Fetch a Credit Ledger
      */
     async creditsLedgerCustomerNameAsOfStrGetRaw(requestParameters: CreditsLedgerCustomerNameAsOfStrGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CreditLedger>>> {
-        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
-            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
-        }
-
         if (requestParameters.asOfStr === null || requestParameters.asOfStr === undefined) {
             throw new runtime.RequiredError('asOfStr','Required parameter requestParameters.asOfStr was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
+        }
+
+        if (requestParameters.customerName === null || requestParameters.customerName === undefined) {
+            throw new runtime.RequiredError('customerName','Required parameter requestParameters.customerName was null or undefined when calling creditsLedgerCustomerNameAsOfStrGet.');
         }
 
         const queryParameters: any = {};
@@ -209,7 +216,7 @@ export class CreditsApi extends runtime.BaseAPI {
             }
         }
         const response = await this.request({
-            path: `/credits/ledger/{customer_name}/{as_of_str}`.replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))).replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))),
+            path: `/credits/ledger/{customer_name}/{as_of_str}`.replace(`{${"as_of_str"}}`, encodeURIComponent(String(requestParameters.asOfStr))).replace(`{${"customer_name"}}`, encodeURIComponent(String(requestParameters.customerName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

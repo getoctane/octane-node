@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalLabelDisplayName {
     /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalLabelDisplayName
-     */
-    displayName?: string;
-    /**
      * The raw value of the label data
      * @type {string}
      * @memberof CustomerPortalLabelDisplayName
      */
     name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalLabelDisplayName
+     */
+    displayName?: string;
 }
 
 export function CustomerPortalLabelDisplayNameFromJSON(json: any): CustomerPortalLabelDisplayName {
@@ -43,8 +43,8 @@ export function CustomerPortalLabelDisplayNameFromJSONTyped(json: any, ignoreDis
     }
     return {
         
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerPortalLabelDisplayNameToJSON(value?: CustomerPortalLabel
     }
     return {
         
-        'display_name': value.displayName,
         'name': value.name,
+        'display_name': value.displayName,
     };
 }
 
