@@ -9,6 +9,7 @@ import {
   CustomerFeature,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
+  CustomerPortalApi,
   CustomerUsage,
   DeleteSubscriptionArgs,
   PaymentGatewayCredential,
@@ -21,8 +22,8 @@ import {
   BillingSettings,
   SubscriptionAddOnItem,
   CustomerStatus,
-  RevenueResponse,
-  CustomersCustomerNameRevenueGetRequest,
+  CustomerPortalInvoice,
+  CustomerPortalAccruedRevenue,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -40,9 +41,7 @@ type ArgsWithDate<T extends DateArgs> = Omit<T, 'startTime' | 'endTime'> & {
   startTime?: Date | string;
   endTime?: Date | string;
 };
-
 type RetrieveUsageArgs = ArgsWithDate<CustomersCustomerNameUsageGetRequest>;
-type RetrieveRevenueArgs = ArgsWithDate<CustomersCustomerNameRevenueGetRequest>;
 
 /**
  * Returns a date object if the input is a string, otherwise returns the input.
@@ -58,9 +57,12 @@ const transformDate = (date?: Date | string) => {
 class Customers extends BaseResource {
   private api: CustomersApi;
 
+  private ecpApi: CustomerPortalApi;
+
   constructor(apiConfig: APIConfiguration) {
     super(apiConfig);
     this.api = new CustomersApi(apiConfig);
+    this.ecpApi = new CustomerPortalApi(apiConfig);
   }
 
   /**
@@ -332,21 +334,16 @@ class Customers extends BaseResource {
     return this.api.customersCustomerNameStatusGet({ customerName }, overrides);
   }
 
-  /**
-   * Get Customer's status.
-   */
-  public getCustomerRevenue(
-    { startTime, endTime, ...rest }: RetrieveRevenueArgs,
+  public getCustomerInvoices(
     overrides?: RequestInit,
-  ): Promise<RevenueResponse> {
-    return this.api.customersCustomerNameRevenueGet(
-      {
-        ...rest,
-        startTime: transformDate(startTime),
-        endTime: transformDate(endTime),
-      },
-      overrides,
-    );
+  ): Promise<CustomerPortalInvoice[]> {
+    return this.ecpApi.ecpInvoicesGet(overrides);
+  }
+
+  public getTotalAccrueRevenue(
+    overrides?: RequestInit,
+  ): Promise<CustomerPortalAccruedRevenue> {
+    return this.ecpApi.ecpTotalAccruedRevenueGet(overrides);
   }
 }
 
