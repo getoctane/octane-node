@@ -9,7 +9,6 @@ import {
   CustomerFeature,
   CustomerPaymentGatewayCredentialInputArgs,
   CustomersApi,
-  CustomerPortalApi,
   CustomerUsage,
   DeleteSubscriptionArgs,
   PaymentGatewayCredential,
@@ -22,8 +21,8 @@ import {
   BillingSettings,
   SubscriptionAddOnItem,
   CustomerStatus,
-  CustomerPortalInvoice,
-  CustomerPortalAccruedRevenue,
+  Invoice,
+  AccruedRevenue,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -57,12 +56,9 @@ const transformDate = (date?: Date | string) => {
 class Customers extends BaseResource {
   private api: CustomersApi;
 
-  private ecpApi: CustomerPortalApi;
-
   constructor(apiConfig: APIConfiguration) {
     super(apiConfig);
     this.api = new CustomersApi(apiConfig);
-    this.ecpApi = new CustomerPortalApi(apiConfig);
   }
 
   /**
@@ -335,15 +331,23 @@ class Customers extends BaseResource {
   }
 
   public getCustomerInvoices(
+    customerName: string,
     overrides?: RequestInit,
-  ): Promise<CustomerPortalInvoice[]> {
-    return this.ecpApi.ecpInvoicesGet(overrides);
+  ): Promise<Invoice[]> {
+    return this.api.customersCustomerNameInvoicesGet(
+      { customerName },
+      overrides,
+    );
   }
 
   public getTotalAccrueRevenue(
+    customerName: string,
     overrides?: RequestInit,
-  ): Promise<CustomerPortalAccruedRevenue> {
-    return this.ecpApi.ecpTotalAccruedRevenueGet(overrides);
+  ): Promise<AccruedRevenue> {
+    return this.api.customersCustomerNameTotalAccruedRevenueGet(
+      { customerName },
+      overrides,
+    );
   }
 }
 
