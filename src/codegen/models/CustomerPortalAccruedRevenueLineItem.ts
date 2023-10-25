@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalAccruedRevenueLineItem {
     /**
-     * Accrued revenue for this line item in cents
-     * @type {number}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    revenue?: number;
-    /**
-     * Type of item. One of: METERED_COMPONENT, BASE_PRICE, DISCOUNT, ADD_ON, MINIMUM_CHARGE, METERED_COMPONENT_MINIMUM_CHARGE
-     * @type {string}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    itemType?: string;
-    /**
      * 
      *         The identifier of the item being returned. 
      *         For metered component will be meter name, 
@@ -45,12 +33,36 @@ export interface CustomerPortalAccruedRevenueLineItem {
      */
     itemIdentifier?: string;
     /**
+     * Accrued revenue for this line item in cents
+     * @type {number}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    revenue?: number;
+    /**
+     * Type of item. One of: METERED_COMPONENT, BASE_PRICE, DISCOUNT, ADD_ON, MINIMUM_CHARGE, METERED_COMPONENT_MINIMUM_CHARGE
+     * @type {string}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    itemType?: string;
+    /**
+     * Unit name for the usage. Only applicable for metered components.
+     * @type {string}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    usageUnitName?: string;
+    /**
      * Any extra metadata associated with the item. 
      *         Will include the labels for metered components and metered component minimum charges when applicable
      * @type {{ [key: string]: string; }}
      * @memberof CustomerPortalAccruedRevenueLineItem
      */
     metadata?: { [key: string]: string; };
+    /**
+     * Usage for this line item. Only applicable for metered components.
+     * @type {number}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    usage?: number;
 }
 
 export function CustomerPortalAccruedRevenueLineItemFromJSON(json: any): CustomerPortalAccruedRevenueLineItem {
@@ -63,10 +75,12 @@ export function CustomerPortalAccruedRevenueLineItemFromJSONTyped(json: any, ign
     }
     return {
         
+        'itemIdentifier': !exists(json, 'item_identifier') ? undefined : json['item_identifier'],
         'revenue': !exists(json, 'revenue') ? undefined : json['revenue'],
         'itemType': !exists(json, 'item_type') ? undefined : json['item_type'],
-        'itemIdentifier': !exists(json, 'item_identifier') ? undefined : json['item_identifier'],
+        'usageUnitName': !exists(json, 'usage_unit_name') ? undefined : json['usage_unit_name'],
         'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
+        'usage': !exists(json, 'usage') ? undefined : json['usage'],
     };
 }
 
@@ -79,10 +93,12 @@ export function CustomerPortalAccruedRevenueLineItemToJSON(value?: CustomerPorta
     }
     return {
         
+        'item_identifier': value.itemIdentifier,
         'revenue': value.revenue,
         'item_type': value.itemType,
-        'item_identifier': value.itemIdentifier,
+        'usage_unit_name': value.usageUnitName,
         'metadata': value.metadata,
+        'usage': value.usage,
     };
 }
 

@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalAvailableCreditBalance {
     /**
-     * The start_time used for calculating this available balance.
+     * The end_time used for calculating this available balance.
      * @type {Date}
      * @memberof CustomerPortalAvailableCreditBalance
      */
-    startTime?: Date;
+    endTime?: Date;
     /**
      * Available credit balance.
      * @type {number}
@@ -32,11 +32,11 @@ export interface CustomerPortalAvailableCreditBalance {
      */
     availableBalance?: number;
     /**
-     * The end_time used for calculating this available balance.
+     * The start_time used for calculating this available balance.
      * @type {Date}
      * @memberof CustomerPortalAvailableCreditBalance
      */
-    endTime?: Date;
+    startTime?: Date;
 }
 
 export function CustomerPortalAvailableCreditBalanceFromJSON(json: any): CustomerPortalAvailableCreditBalance {
@@ -49,9 +49,9 @@ export function CustomerPortalAvailableCreditBalanceFromJSONTyped(json: any, ign
     }
     return {
         
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'availableBalance': !exists(json, 'available_balance') ? undefined : json['available_balance'],
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'availableBalance': !exists(json, 'available_balance') ? undefined : json['available_balance'],
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
     };
 }
 
@@ -64,9 +64,9 @@ export function CustomerPortalAvailableCreditBalanceToJSON(value?: CustomerPorta
     }
     return {
         
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'available_balance': value.availableBalance,
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'available_balance': value.availableBalance,
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
     };
 }
 

@@ -24,6 +24,9 @@ import {
     CreditLedger,
     CreditLedgerFromJSON,
     CreditLedgerToJSON,
+    CreditTopOffPlan,
+    CreditTopOffPlanFromJSON,
+    CreditTopOffPlanToJSON,
     CustomerPaymentMethodStatus,
     CustomerPaymentMethodStatusFromJSON,
     CustomerPaymentMethodStatusToJSON,
@@ -36,12 +39,18 @@ import {
     CustomerPortalActiveSubscriptionInputArgs,
     CustomerPortalActiveSubscriptionInputArgsFromJSON,
     CustomerPortalActiveSubscriptionInputArgsToJSON,
+    CustomerPortalAddOnInputArgs,
+    CustomerPortalAddOnInputArgsFromJSON,
+    CustomerPortalAddOnInputArgsToJSON,
     CustomerPortalAvailableCreditBalance,
     CustomerPortalAvailableCreditBalanceFromJSON,
     CustomerPortalAvailableCreditBalanceToJSON,
     CustomerPortalContactInfoInputArgs,
     CustomerPortalContactInfoInputArgsFromJSON,
     CustomerPortalContactInfoInputArgsToJSON,
+    CustomerPortalCreditGrant,
+    CustomerPortalCreditGrantFromJSON,
+    CustomerPortalCreditGrantToJSON,
     CustomerPortalCreditPurchase,
     CustomerPortalCreditPurchaseFromJSON,
     CustomerPortalCreditPurchaseToJSON,
@@ -60,6 +69,12 @@ import {
     CustomerPortalPaymentMethod,
     CustomerPortalPaymentMethodFromJSON,
     CustomerPortalPaymentMethodToJSON,
+    CustomerPortalSpendByTime,
+    CustomerPortalSpendByTimeFromJSON,
+    CustomerPortalSpendByTimeToJSON,
+    CustomerPortalSpendByTimeInput,
+    CustomerPortalSpendByTimeInputFromJSON,
+    CustomerPortalSpendByTimeInputToJSON,
     CustomerPortalStripeCredential,
     CustomerPortalStripeCredentialFromJSON,
     CustomerPortalStripeCredentialToJSON,
@@ -81,6 +96,12 @@ import {
     CustomerPortalUsage,
     CustomerPortalUsageFromJSON,
     CustomerPortalUsageToJSON,
+    CustomerPortalUsageByTime,
+    CustomerPortalUsageByTimeFromJSON,
+    CustomerPortalUsageByTimeToJSON,
+    CustomerPortalUsageByTimeInput,
+    CustomerPortalUsageByTimeInputFromJSON,
+    CustomerPortalUsageByTimeInputToJSON,
     CustomerPortalVendor,
     CustomerPortalVendorFromJSON,
     CustomerPortalVendorToJSON,
@@ -94,6 +115,10 @@ import {
     SelfServeSettingsFromJSON,
     SelfServeSettingsToJSON,
 } from '../models';
+
+export interface EcpActiveSubscriptionAddOnsPostRequest {
+    customerPortalAddOnInputArgs: CustomerPortalAddOnInputArgs;
+}
 
 export interface EcpActiveSubscriptionPostRequest {
     customerPortalActiveSubscriptionInputArgs: CustomerPortalActiveSubscriptionInputArgs;
@@ -115,6 +140,10 @@ export interface EcpFilteredUsagePostRequest {
     customerPortalMeterLabelFilter: CustomerPortalMeterLabelFilter;
 }
 
+export interface EcpSpendByTimePostRequest {
+    customerPortalSpendByTimeInput: CustomerPortalSpendByTimeInput;
+}
+
 export interface EcpSubscriptionPostRequest {
     customerPortalSubscriptionInputArgs: CustomerPortalSubscriptionInputArgs;
 }
@@ -123,10 +152,56 @@ export interface EcpTokenPostRequest {
     customerPortalTokenInputArgs: CustomerPortalTokenInputArgs;
 }
 
+export interface EcpUsageByTimePostRequest {
+    customerPortalUsageByTimeInput: CustomerPortalUsageByTimeInput;
+}
+
 /**
  * 
  */
 export class CustomerPortalApi extends runtime.BaseAPI {
+
+    /**
+     * Add or remove add ons from the current subscription.
+     * Modify Add Ons on Subscription
+     */
+    async ecpActiveSubscriptionAddOnsPostRaw(requestParameters: EcpActiveSubscriptionAddOnsPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.customerPortalAddOnInputArgs === null || requestParameters.customerPortalAddOnInputArgs === undefined) {
+            throw new runtime.RequiredError('customerPortalAddOnInputArgs','Required parameter requestParameters.customerPortalAddOnInputArgs was null or undefined when calling ecpActiveSubscriptionAddOnsPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/active_subscription/add_ons`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CustomerPortalAddOnInputArgsToJSON(requestParameters.customerPortalAddOnInputArgs),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Add or remove add ons from the current subscription.
+     * Modify Add Ons on Subscription
+     */
+    async ecpActiveSubscriptionAddOnsPost(requestParameters: EcpActiveSubscriptionAddOnsPostRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.ecpActiveSubscriptionAddOnsPostRaw(requestParameters, initOverrides);
+    }
 
     /**
      * Fetch the customer\'s active subscription and related information if they exists. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
@@ -323,6 +398,42 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns the customer\'s list of credit grants. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Fetch the Credit Grants
+     */
+    async ecpCreditGrantsGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalCreditGrant>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/credit_grants`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomerPortalCreditGrantFromJSON));
+    }
+
+    /**
+     * Returns the customer\'s list of credit grants. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Fetch the Credit Grants
+     */
+    async ecpCreditGrantsGet(initOverrides?: RequestInit): Promise<Array<CustomerPortalCreditGrant>> {
+        const response = await this.ecpCreditGrantsGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Returns the customer entire credit ledger. This can be used to compute the current and available credit balance. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Fetch the Credit Ledger
      */
@@ -398,6 +509,42 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      */
     async ecpCreditPurchasePost(requestParameters: EcpCreditPurchasePostRequest, initOverrides?: RequestInit): Promise<CreditGrant> {
         const response = await this.ecpCreditPurchasePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Returns the customer\'s top-off plan (if configured). This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Fetch the Credit Top Off Plan
+     */
+    async ecpCreditTopOffPlanGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CreditTopOffPlan>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/credit_top_off_plan`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreditTopOffPlanFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns the customer\'s top-off plan (if configured). This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Fetch the Credit Top Off Plan
+     */
+    async ecpCreditTopOffPlanGet(initOverrides?: RequestInit): Promise<CreditTopOffPlan> {
+        const response = await this.ecpCreditTopOffPlanGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -481,8 +628,8 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
-     * Get Daily Usage For Meter
+     * Get the customer\'s daily usage for current and previous billing cycles, filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
+     * Get Daily Usage By Billing Cycle For Meter
      */
     async ecpFilteredUsagePostRaw(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsage>> {
         if (requestParameters.customerPortalMeterLabelFilter === null || requestParameters.customerPortalMeterLabelFilter === undefined) {
@@ -515,8 +662,8 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get the customer\'s daily usage filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
-     * Get Daily Usage For Meter
+     * Get the customer\'s daily usage for current and previous billing cycles, filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
+     * Get Daily Usage By Billing Cycle For Meter
      */
     async ecpFilteredUsagePost(requestParameters: EcpFilteredUsagePostRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsage> {
         const response = await this.ecpFilteredUsagePostRaw(requestParameters, initOverrides);
@@ -848,6 +995,49 @@ export class CustomerPortalApi extends runtime.BaseAPI {
     }
 
     /**
+     * Gets the spend for the customer broken down by line item and the given time bucket for the given start and end time. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Spend By Time
+     */
+    async ecpSpendByTimePostRaw(requestParameters: EcpSpendByTimePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<CustomerPortalSpendByTime>>> {
+        if (requestParameters.customerPortalSpendByTimeInput === null || requestParameters.customerPortalSpendByTimeInput === undefined) {
+            throw new runtime.RequiredError('customerPortalSpendByTimeInput','Required parameter requestParameters.customerPortalSpendByTimeInput was null or undefined when calling ecpSpendByTimePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/spend_by_time`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CustomerPortalSpendByTimeInputToJSON(requestParameters.customerPortalSpendByTimeInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CustomerPortalSpendByTimeFromJSON));
+    }
+
+    /**
+     * Gets the spend for the customer broken down by line item and the given time bucket for the given start and end time. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
+     * Spend By Time
+     */
+    async ecpSpendByTimePost(requestParameters: EcpSpendByTimePostRequest, initOverrides?: RequestInit): Promise<Array<CustomerPortalSpendByTime>> {
+        const response = await this.ecpSpendByTimePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Cancel the customer\'s subscription. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Cancel Subscription
      */
@@ -1037,6 +1227,49 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      */
     async ecpTotalAccruedRevenueGet(initOverrides?: RequestInit): Promise<CustomerPortalAccruedRevenue> {
         const response = await this.ecpTotalAccruedRevenueGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get the customer\'s usage over time filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
+     * Usage By Time For Meter
+     */
+    async ecpUsageByTimePostRaw(requestParameters: EcpUsageByTimePostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUsageByTime>> {
+        if (requestParameters.customerPortalUsageByTimeInput === null || requestParameters.customerPortalUsageByTimeInput === undefined) {
+            throw new runtime.RequiredError('customerPortalUsageByTimeInput','Required parameter requestParameters.customerPortalUsageByTimeInput was null or undefined when calling ecpUsageByTimePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/ecp/usage_by_time`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CustomerPortalUsageByTimeInputToJSON(requestParameters.customerPortalUsageByTimeInput),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomerPortalUsageByTimeFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the customer\'s usage over time filtered by the inputted meter and labels. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name in the request body.
+     * Usage By Time For Meter
+     */
+    async ecpUsageByTimePost(requestParameters: EcpUsageByTimePostRequest, initOverrides?: RequestInit): Promise<CustomerPortalUsageByTime> {
+        const response = await this.ecpUsageByTimePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

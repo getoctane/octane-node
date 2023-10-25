@@ -20,29 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateCreditTopOffPlanInputArgs {
     /**
-     * Price for the grant, in lowest denomination (i.e cents).
-     * @type {number}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    price: number;
-    /**
-     * Whether to charge the customer immediately when the top off is triggered.
-     * @type {boolean}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    chargeImmediately?: boolean;
-    /**
-     * Amount of credits that are granted in a single top off.
-     * @type {number}
-     * @memberof CreateCreditTopOffPlanInputArgs
-     */
-    grantAmount: number;
-    /**
-     * A description that will be used on the invoice line items.
+     * Time length unit for the default expiration for credits granted in a top off.
      * @type {string}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
-    description?: string | null;
+    expirationUnit?: string;
     /**
      * The threshold in amount of credits at which the balance will be topped off.
      * @type {number}
@@ -50,17 +32,35 @@ export interface CreateCreditTopOffPlanInputArgs {
      */
     triggerAmount: number;
     /**
+     * Amount of credits that are granted in a single top off.
+     * @type {number}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    grantAmount: number;
+    /**
+     * Whether to charge the customer immediately when the top off is triggered.
+     * @type {boolean}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    chargeImmediately?: boolean;
+    /**
+     * Price for the grant, in lowest denomination (i.e cents).
+     * @type {number}
+     * @memberof CreateCreditTopOffPlanInputArgs
+     */
+    price: number;
+    /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
     expirationLength?: number;
     /**
-     * Time length unit for the default expiration for credits granted in a top off.
+     * A description that will be used on the invoice line items.
      * @type {string}
      * @memberof CreateCreditTopOffPlanInputArgs
      */
-    expirationUnit?: string;
+    description?: string | null;
 }
 
 export function CreateCreditTopOffPlanInputArgsFromJSON(json: any): CreateCreditTopOffPlanInputArgs {
@@ -73,13 +73,13 @@ export function CreateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'price': json['price'],
-        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
-        'grantAmount': json['grant_amount'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'triggerAmount': json['trigger_amount'],
-        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
+        'triggerAmount': json['trigger_amount'],
+        'grantAmount': json['grant_amount'],
+        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
+        'price': json['price'],
+        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -92,13 +92,13 @@ export function CreateCreditTopOffPlanInputArgsToJSON(value?: CreateCreditTopOff
     }
     return {
         
-        'price': value.price,
-        'charge_immediately': value.chargeImmediately,
-        'grant_amount': value.grantAmount,
-        'description': value.description,
-        'trigger_amount': value.triggerAmount,
-        'expiration_length': value.expirationLength,
         'expiration_unit': value.expirationUnit,
+        'trigger_amount': value.triggerAmount,
+        'grant_amount': value.grantAmount,
+        'charge_immediately': value.chargeImmediately,
+        'price': value.price,
+        'expiration_length': value.expirationLength,
+        'description': value.description,
     };
 }
 

@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface EntityUseCode {
     /**
-     * The Avalara-recognized entity use code for this definition.
-     * @type {string}
-     * @memberof EntityUseCode
-     */
-    code?: string;
-    /**
-     * The name of this entity use code.
-     * @type {string}
-     * @memberof EntityUseCode
-     */
-    name?: string;
-    /**
      * A list of countries where this use code is valid.
      * @type {Array<string>}
      * @memberof EntityUseCode
@@ -43,6 +31,18 @@ export interface EntityUseCode {
      * @memberof EntityUseCode
      */
     description?: string;
+    /**
+     * The name of this entity use code.
+     * @type {string}
+     * @memberof EntityUseCode
+     */
+    name?: string;
+    /**
+     * The Avalara-recognized entity use code for this definition.
+     * @type {string}
+     * @memberof EntityUseCode
+     */
+    code?: string;
 }
 
 export function EntityUseCodeFromJSON(json: any): EntityUseCode {
@@ -55,10 +55,10 @@ export function EntityUseCodeFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'code': !exists(json, 'code') ? undefined : json['code'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
         'validCountries': !exists(json, 'valid_countries') ? undefined : json['valid_countries'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'code': !exists(json, 'code') ? undefined : json['code'],
     };
 }
 
@@ -71,10 +71,10 @@ export function EntityUseCodeToJSON(value?: EntityUseCode | null): any {
     }
     return {
         
-        'code': value.code,
-        'name': value.name,
         'valid_countries': value.validCountries,
         'description': value.description,
+        'name': value.name,
+        'code': value.code,
     };
 }
 

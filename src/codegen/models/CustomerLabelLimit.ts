@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface CustomerLabelLimit {
     /**
      * 
-     * @type {{ [key: string]: string; }}
-     * @memberof CustomerLabelLimit
-     */
-    labels?: { [key: string]: string; };
-    /**
-     * 
      * @type {number}
      * @memberof CustomerLabelLimit
      */
     limit?: number;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof CustomerLabelLimit
+     */
+    labels?: { [key: string]: string; };
 }
 
 export function CustomerLabelLimitFromJSON(json: any): CustomerLabelLimit {
@@ -43,8 +43,8 @@ export function CustomerLabelLimitFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerLabelLimitToJSON(value?: CustomerLabelLimit | null): any
     }
     return {
         
-        'labels': value.labels,
         'limit': value.limit,
+        'labels': value.labels,
     };
 }
 

@@ -59,13 +59,13 @@ export interface PricePlansMeteredComponentsUuidUpdateLimitsPostRequest {
 }
 
 export interface PricePlansPaginateGetRequest {
-    names?: Array<string>;
-    sortDirection?: string;
-    tags?: Array<string>;
     forwardSecondarySortOffset?: string;
+    tags?: Array<string>;
+    names?: Array<string>;
     limit?: number;
-    forwardSortOffset?: string;
     sortColumn?: string;
+    sortDirection?: string;
+    forwardSortOffset?: string;
 }
 
 export interface PricePlansPostRequest {
@@ -224,32 +224,32 @@ export class PricePlansApi extends runtime.BaseAPI {
     async pricePlansPaginateGetRaw(requestParameters: PricePlansPaginateGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<ListPricePlans>> {
         const queryParameters: any = {};
 
-        if (requestParameters.names) {
-            queryParameters['names'] = requestParameters.names;
-        }
-
-        if (requestParameters.sortDirection !== undefined) {
-            queryParameters['sort_direction'] = requestParameters.sortDirection;
+        if (requestParameters.forwardSecondarySortOffset !== undefined) {
+            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
         }
 
         if (requestParameters.tags) {
             queryParameters['tags'] = requestParameters.tags;
         }
 
-        if (requestParameters.forwardSecondarySortOffset !== undefined) {
-            queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
+        if (requestParameters.names) {
+            queryParameters['names'] = requestParameters.names;
         }
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
-        }
-
         if (requestParameters.sortColumn !== undefined) {
             queryParameters['sort_column'] = requestParameters.sortColumn;
+        }
+
+        if (requestParameters.sortDirection !== undefined) {
+            queryParameters['sort_direction'] = requestParameters.sortDirection;
+        }
+
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

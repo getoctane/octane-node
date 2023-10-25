@@ -24,13 +24,13 @@ export interface UpdateMeterArgs {
      * @type {string}
      * @memberof UpdateMeterArgs
      */
-    displayName?: string;
+    description?: string;
     /**
      * 
      * @type {string}
      * @memberof UpdateMeterArgs
      */
-    description?: string;
+    displayName?: string;
 }
 
 export function UpdateMeterArgsFromJSON(json: any): UpdateMeterArgs {
@@ -43,8 +43,8 @@ export function UpdateMeterArgsFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
     };
 }
 
@@ -57,8 +57,8 @@ export function UpdateMeterArgsToJSON(value?: UpdateMeterArgs | null): any {
     }
     return {
         
-        'display_name': value.displayName,
         'description': value.description,
+        'display_name': value.displayName,
     };
 }
 

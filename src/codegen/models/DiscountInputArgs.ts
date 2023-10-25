@@ -21,28 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface DiscountInputArgs {
     /**
      * 
-     * @type {number}
-     * @memberof DiscountInputArgs
-     */
-    amount?: number;
-    /**
-     * 
      * @type {string}
      * @memberof DiscountInputArgs
      */
     discountType?: DiscountInputArgsDiscountTypeEnum;
     /**
-     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
-     * @type {{ [key: string]: string; }}
+     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
+     * @type {string}
      * @memberof DiscountInputArgs
      */
-    labels?: { [key: string]: string; };
-    /**
-     * Offset, in number of billing cycles, for when this discount will apply. If set to 0, the discount will start applying from the current billing cycle. If set to 1, the discount will start applying from the next billing cycle, etc. For scheduled subscriptions, the offset starts from the initial billing cycle.
-     * @type {number}
-     * @memberof DiscountInputArgs
-     */
-    billingCycleStartOffset?: number;
+    meteredComponentUuid?: string;
     /**
      * The scope that this discount covers. One of 'INVOICE_TOTAL', 'ADD_ON', 'METERED_COMPONENT'.
      * @type {string}
@@ -50,11 +38,11 @@ export interface DiscountInputArgs {
      */
     scope?: DiscountInputArgsScopeEnum;
     /**
-     * For ADD_ON scoped discounts: the name of the add on that the discount covers.
-     * @type {string}
+     * 
+     * @type {number}
      * @memberof DiscountInputArgs
      */
-    addOnName?: string;
+    amount?: number;
     /**
      * Length, in billing cycles, that this discount will be active.
      * @type {number}
@@ -62,11 +50,23 @@ export interface DiscountInputArgs {
      */
     billingCycleDuration?: number;
     /**
-     * For METERED_COMPONENT scoped discounts: the UUID of the metered component that the discount covers.
+     * Offset, in number of billing cycles, for when this discount will apply. If set to 0, the discount will start applying from the current billing cycle. If set to 1, the discount will start applying from the next billing cycle, etc. For scheduled subscriptions, the offset starts from the initial billing cycle.
+     * @type {number}
+     * @memberof DiscountInputArgs
+     */
+    billingCycleStartOffset?: number;
+    /**
+     * For ADD_ON scoped discounts: the name of the add on that the discount covers.
      * @type {string}
      * @memberof DiscountInputArgs
      */
-    meteredComponentUuid?: string;
+    addOnName?: string;
+    /**
+     * For METERED_COMPONENT scoped discounts: Dictionary of labels (key: value) that the discount covers. The entire set of labels must be provided.
+     * @type {{ [key: string]: string; }}
+     * @memberof DiscountInputArgs
+     */
+    labels?: { [key: string]: string; };
 }
 
 /**
@@ -96,14 +96,14 @@ export function DiscountInputArgsFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'discountType': !exists(json, 'discount_type') ? undefined : json['discount_type'],
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'billingCycleStartOffset': !exists(json, 'billing_cycle_start_offset') ? undefined : json['billing_cycle_start_offset'],
-        'scope': !exists(json, 'scope') ? undefined : json['scope'],
-        'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
-        'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
         'meteredComponentUuid': !exists(json, 'metered_component_uuid') ? undefined : json['metered_component_uuid'],
+        'scope': !exists(json, 'scope') ? undefined : json['scope'],
+        'amount': !exists(json, 'amount') ? undefined : json['amount'],
+        'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
+        'billingCycleStartOffset': !exists(json, 'billing_cycle_start_offset') ? undefined : json['billing_cycle_start_offset'],
+        'addOnName': !exists(json, 'add_on_name') ? undefined : json['add_on_name'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -116,14 +116,14 @@ export function DiscountInputArgsToJSON(value?: DiscountInputArgs | null): any {
     }
     return {
         
-        'amount': value.amount,
         'discount_type': value.discountType,
-        'labels': value.labels,
-        'billing_cycle_start_offset': value.billingCycleStartOffset,
-        'scope': value.scope,
-        'add_on_name': value.addOnName,
-        'billing_cycle_duration': value.billingCycleDuration,
         'metered_component_uuid': value.meteredComponentUuid,
+        'scope': value.scope,
+        'amount': value.amount,
+        'billing_cycle_duration': value.billingCycleDuration,
+        'billing_cycle_start_offset': value.billingCycleStartOffset,
+        'add_on_name': value.addOnName,
+        'labels': value.labels,
     };
 }
 

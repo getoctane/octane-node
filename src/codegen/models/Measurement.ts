@@ -26,6 +26,18 @@ export interface Measurement {
      */
     value: number;
     /**
+     * Applies to incremental meters and resets the total current value to this new value.
+     * @type {boolean}
+     * @memberof Measurement
+     */
+    resetTotal?: boolean;
+    /**
+     * The name of the customer to associate the measurement with.
+     * @type {string}
+     * @memberof Measurement
+     */
+    customerName?: string;
+    /**
      * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
      * @type {Date}
      * @memberof Measurement
@@ -38,11 +50,11 @@ export interface Measurement {
      */
     eventName?: string;
     /**
-     * Applies to incremental meters and resets the total current value to this new value.
-     * @type {boolean}
+     * An ID that is unique for the set of labels and meter_name
+     * @type {string}
      * @memberof Measurement
      */
-    resetTotal?: boolean;
+    id?: string;
     /**
      * The unique name of the meter associated with this measurement
      * @type {string}
@@ -55,18 +67,6 @@ export interface Measurement {
      * @memberof Measurement
      */
     labels?: { [key: string]: string; };
-    /**
-     * The name of the customer to associate the measurement with.
-     * @type {string}
-     * @memberof Measurement
-     */
-    customerName?: string;
-    /**
-     * An ID that is unique for the set of labels and meter_name
-     * @type {string}
-     * @memberof Measurement
-     */
-    id?: string;
 }
 
 export function MeasurementFromJSON(json: any): Measurement {
@@ -80,13 +80,13 @@ export function MeasurementFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'value': json['value'],
+        'resetTotal': !exists(json, 'reset_total') ? undefined : json['reset_total'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'eventName': !exists(json, 'event_name') ? undefined : json['event_name'],
-        'resetTotal': !exists(json, 'reset_total') ? undefined : json['reset_total'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
@@ -100,13 +100,13 @@ export function MeasurementToJSON(value?: Measurement | null): any {
     return {
         
         'value': value.value,
+        'reset_total': value.resetTotal,
+        'customer_name': value.customerName,
         'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'event_name': value.eventName,
-        'reset_total': value.resetTotal,
+        'id': value.id,
         'meter_name': value.meterName,
         'labels': value.labels,
-        'customer_name': value.customerName,
-        'id': value.id,
     };
 }
 

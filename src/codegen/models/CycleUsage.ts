@@ -33,23 +33,23 @@ export interface CycleUsage {
      */
     cycleStart?: Date;
     /**
+     * The end of the billing cycle in UTC.
+     * @type {Date}
+     * @memberof CycleUsage
+     */
+    cycleEnd?: Date;
+    /**
      * 
      * @type {Array<DailyUsage>}
      * @memberof CycleUsage
      */
     usageByTime?: Array<DailyUsage>;
     /**
-     * Total usage in the cycle.
+     * Total usage in the cycle. Rounded to 6 decimal places.
      * @type {number}
      * @memberof CycleUsage
      */
     totalUsage?: number;
-    /**
-     * The end of the billing cycle in UTC.
-     * @type {Date}
-     * @memberof CycleUsage
-     */
-    cycleEnd?: Date;
 }
 
 export function CycleUsageFromJSON(json: any): CycleUsage {
@@ -63,9 +63,9 @@ export function CycleUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'cycleStart': !exists(json, 'cycle_start') ? undefined : (new Date(json['cycle_start'])),
+        'cycleEnd': !exists(json, 'cycle_end') ? undefined : (new Date(json['cycle_end'])),
         'usageByTime': !exists(json, 'usage_by_time') ? undefined : ((json['usage_by_time'] as Array<any>).map(DailyUsageFromJSON)),
         'totalUsage': !exists(json, 'total_usage') ? undefined : json['total_usage'],
-        'cycleEnd': !exists(json, 'cycle_end') ? undefined : (new Date(json['cycle_end'])),
     };
 }
 
@@ -79,9 +79,9 @@ export function CycleUsageToJSON(value?: CycleUsage | null): any {
     return {
         
         'cycle_start': value.cycleStart === undefined ? undefined : (value.cycleStart.toISOString()),
+        'cycle_end': value.cycleEnd === undefined ? undefined : (value.cycleEnd.toISOString()),
         'usage_by_time': value.usageByTime === undefined ? undefined : ((value.usageByTime as Array<any>).map(DailyUsageToJSON)),
         'total_usage': value.totalUsage,
-        'cycle_end': value.cycleEnd === undefined ? undefined : (value.cycleEnd.toISOString()),
     };
 }
 

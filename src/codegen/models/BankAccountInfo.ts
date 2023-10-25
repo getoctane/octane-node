@@ -20,23 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface BankAccountInfo {
     /**
-     * Last 4 digits of the bank account number.
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    last4?: string;
-    /**
      * Name of the bank
      * @type {string}
      * @memberof BankAccountInfo
      */
     bankName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    externalId?: string;
     /**
      * Routing number for the bank accopunt
      * @type {number}
@@ -55,6 +43,18 @@ export interface BankAccountInfo {
      * @memberof BankAccountInfo
      */
     country?: string;
+    /**
+     * Last 4 digits of the bank account number.
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    last4?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    externalId?: string;
 }
 
 export function BankAccountInfoFromJSON(json: any): BankAccountInfo {
@@ -67,12 +67,12 @@ export function BankAccountInfoFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
-        'last4': !exists(json, 'last4') ? undefined : json['last4'],
         'bankName': !exists(json, 'bank_name') ? undefined : json['bank_name'],
-        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
         'routingNumber': !exists(json, 'routing_number') ? undefined : json['routing_number'],
         'accountType': !exists(json, 'account_type') ? undefined : json['account_type'],
         'country': !exists(json, 'country') ? undefined : json['country'],
+        'last4': !exists(json, 'last4') ? undefined : json['last4'],
+        'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
     };
 }
 
@@ -85,12 +85,12 @@ export function BankAccountInfoToJSON(value?: BankAccountInfo | null): any {
     }
     return {
         
-        'last4': value.last4,
         'bank_name': value.bankName,
-        'external_id': value.externalId,
         'routing_number': value.routingNumber,
         'account_type': value.accountType,
         'country': value.country,
+        'last4': value.last4,
+        'external_id': value.externalId,
     };
 }
 

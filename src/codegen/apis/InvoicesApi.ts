@@ -30,14 +30,14 @@ import {
 } from '../models';
 
 export interface InvoicesGetRequest {
-    startTime?: Date;
-    sortDirection?: string;
     forwardSecondarySortOffset?: string;
-    limit?: number;
-    forwardSortOffset?: string;
-    status?: string;
     customerName?: string;
+    startTime?: Date;
+    limit?: number;
     sortColumn?: string;
+    sortDirection?: string;
+    status?: string;
+    forwardSortOffset?: string;
 }
 
 export interface InvoicesInvoiceUuidDeleteRequest {
@@ -74,36 +74,36 @@ export class InvoicesApi extends runtime.BaseAPI {
     async invoicesGetRaw(requestParameters: InvoicesGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<PastInvoices>> {
         const queryParameters: any = {};
 
-        if (requestParameters.startTime !== undefined) {
-            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
-        }
-
-        if (requestParameters.sortDirection !== undefined) {
-            queryParameters['sort_direction'] = requestParameters.sortDirection;
-        }
-
         if (requestParameters.forwardSecondarySortOffset !== undefined) {
             queryParameters['forward_secondary_sort_offset'] = requestParameters.forwardSecondarySortOffset;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.forwardSortOffset !== undefined) {
-            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
-        }
-
-        if (requestParameters.status !== undefined) {
-            queryParameters['status'] = requestParameters.status;
         }
 
         if (requestParameters.customerName !== undefined) {
             queryParameters['customer_name'] = requestParameters.customerName;
         }
 
+        if (requestParameters.startTime !== undefined) {
+            queryParameters['start_time'] = (requestParameters.startTime as any).toISOString();
+        }
+
+        if (requestParameters.limit !== undefined) {
+            queryParameters['limit'] = requestParameters.limit;
+        }
+
         if (requestParameters.sortColumn !== undefined) {
             queryParameters['sort_column'] = requestParameters.sortColumn;
+        }
+
+        if (requestParameters.sortDirection !== undefined) {
+            queryParameters['sort_direction'] = requestParameters.sortDirection;
+        }
+
+        if (requestParameters.status !== undefined) {
+            queryParameters['status'] = requestParameters.status;
+        }
+
+        if (requestParameters.forwardSortOffset !== undefined) {
+            queryParameters['forward_sort_offset'] = requestParameters.forwardSortOffset;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

@@ -32,11 +32,11 @@ export interface TaxCode {
      */
     taxCodeTypeId?: string;
     /**
-     * A friendly description of this tax code.
+     * A code string that identifies this tax code.
      * @type {string}
      * @memberof TaxCode
      */
-    description?: string;
+    taxCode?: string;
     /**
      * The unique ID number of this tax code.
      * @type {string}
@@ -44,11 +44,11 @@ export interface TaxCode {
      */
     id?: string;
     /**
-     * A code string that identifies this tax code.
+     * A friendly description of this tax code.
      * @type {string}
      * @memberof TaxCode
      */
-    taxCode?: string;
+    description?: string;
 }
 
 export function TaxCodeFromJSON(json: any): TaxCode {
@@ -63,9 +63,9 @@ export function TaxCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
         
         'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -80,9 +80,9 @@ export function TaxCodeToJSON(value?: TaxCode | null): any {
         
         'entity_use_code': value.entityUseCode,
         'tax_code_type_id': value.taxCodeTypeId,
-        'description': value.description,
-        'id': value.id,
         'tax_code': value.taxCode,
+        'id': value.id,
+        'description': value.description,
     };
 }
 

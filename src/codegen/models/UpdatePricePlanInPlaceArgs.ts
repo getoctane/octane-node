@@ -46,16 +46,22 @@ import {
 export interface UpdatePricePlanInPlaceArgs {
     /**
      * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    features?: Array<FeatureInputArgs>;
-    /**
-     * 
      * @type {Array<LimitInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
     limits?: Array<LimitInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {Array<MeteredComponentInputArgs>}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    meteredComponents?: Array<MeteredComponentInputArgs>;
     /**
      * Custom invoice description for the base price line item.
      * @type {string}
@@ -76,16 +82,10 @@ export interface UpdatePricePlanInPlaceArgs {
     addOns?: Array<AddOnInputArgs>;
     /**
      * 
-     * @type {Array<MeteredComponentInputArgs>}
+     * @type {Array<FeatureInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
-    meteredComponents?: Array<MeteredComponentInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    displayName?: string;
+    features?: Array<FeatureInputArgs>;
 }
 
 export function UpdatePricePlanInPlaceArgsFromJSON(json: any): UpdatePricePlanInPlaceArgs {
@@ -98,13 +98,13 @@ export function UpdatePricePlanInPlaceArgsFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
         'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
         'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
-        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
     };
 }
 
@@ -117,13 +117,13 @@ export function UpdatePricePlanInPlaceArgsToJSON(value?: UpdatePricePlanInPlaceA
     }
     return {
         
-        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
         'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
+        'display_name': value.displayName,
+        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
         'base_price_description': value.basePriceDescription,
         'description': value.description,
         'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
-        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
-        'display_name': value.displayName,
+        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
     };
 }
 

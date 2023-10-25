@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface SelfServeCustomization {
     /**
      * Dictionary of customization settings as key value pairs.
-     * @type {{ [key: string]: string; }}
+     * @type {object}
      * @memberof SelfServeCustomization
      */
-    settings: { [key: string]: string; };
+    settings: object;
 }
 
 export function SelfServeCustomizationFromJSON(json: any): SelfServeCustomization {

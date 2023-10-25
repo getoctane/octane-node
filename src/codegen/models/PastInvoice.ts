@@ -27,22 +27,16 @@ export interface PastInvoice {
     customerName?: string;
     /**
      * 
-     * @type {string}
+     * @type {Date}
      * @memberof PastInvoice
      */
-    exportUrl?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PastInvoice
-     */
-    status?: string;
+    dueDate?: Date;
     /**
      * 
      * @type {Date}
      * @memberof PastInvoice
      */
-    dueDate?: Date;
+    issueDate?: Date;
     /**
      * 
      * @type {string}
@@ -51,22 +45,28 @@ export interface PastInvoice {
     statusDescription?: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof PastInvoice
      */
-    amountDue?: number;
-    /**
-     * 
-     * @type {Date}
-     * @memberof PastInvoice
-     */
-    issueDate?: Date;
+    exportUrl?: string;
     /**
      * External unique 'uuid' identifier for this Invoice.
      * @type {string}
      * @memberof PastInvoice
      */
     id?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PastInvoice
+     */
+    amountDue?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PastInvoice
+     */
+    status?: string;
 }
 
 export function PastInvoiceFromJSON(json: any): PastInvoice {
@@ -80,13 +80,13 @@ export function PastInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'exportUrl': !exists(json, 'export_url') ? undefined : json['export_url'],
-        'status': !exists(json, 'status') ? undefined : json['status'],
         'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
-        'statusDescription': !exists(json, 'status_description') ? undefined : json['status_description'],
-        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
         'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
+        'statusDescription': !exists(json, 'status_description') ? undefined : json['status_description'],
+        'exportUrl': !exists(json, 'export_url') ? undefined : json['export_url'],
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
+        'status': !exists(json, 'status') ? undefined : json['status'],
     };
 }
 
@@ -100,13 +100,13 @@ export function PastInvoiceToJSON(value?: PastInvoice | null): any {
     return {
         
         'customer_name': value.customerName,
-        'export_url': value.exportUrl,
-        'status': value.status,
         'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
-        'status_description': value.statusDescription,
-        'amount_due': value.amountDue,
         'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
+        'status_description': value.statusDescription,
+        'export_url': value.exportUrl,
         'id': value.id,
+        'amount_due': value.amountDue,
+        'status': value.status,
     };
 }
 

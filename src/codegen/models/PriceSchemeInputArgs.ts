@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    PriceInputArgs1,
-    PriceInputArgs1FromJSON,
-    PriceInputArgs1FromJSONTyped,
-    PriceInputArgs1ToJSON,
-} from './PriceInputArgs1';
+    PriceInputArgs,
+    PriceInputArgsFromJSON,
+    PriceInputArgsFromJSONTyped,
+    PriceInputArgsToJSON,
+} from './PriceInputArgs';
 
 /**
  * 
@@ -33,17 +33,29 @@ export interface PriceSchemeInputArgs {
      */
     schemeType: string;
     /**
+     * Array of (key, value) meter labels to price on & the price tiers that should be used against those labels
+     * @type {Array<object>}
+     * @memberof PriceSchemeInputArgs
+     */
+    priceList?: Array<object>;
+    /**
      * Size of the unit batch to use for the prices. Can only be set if scheme_type='FLAT' or 'TIERED'. E.g. To charge $10 per 100 API Requests, set batch_size to 100.
      * @type {number}
      * @memberof PriceSchemeInputArgs
      */
     batchSize?: number;
     /**
-     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
-     * @type {Array<PriceInputArgs1>}
+     * The % increase/decrease in price after the minimum charge is reached (e.g., 25.5 -> 25.5% increase).
+     * @type {number}
      * @memberof PriceSchemeInputArgs
      */
-    prices?: Array<PriceInputArgs1>;
+    postMinimumChargePercentageChange?: number;
+    /**
+     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
+     * @type {Array<PriceInputArgs>}
+     * @memberof PriceSchemeInputArgs
+     */
+    prices?: Array<PriceInputArgs>;
     /**
      * The time unit for the metered component (e.g., month or hour)
      * @type {string}
@@ -56,18 +68,6 @@ export interface PriceSchemeInputArgs {
      * @memberof PriceSchemeInputArgs
      */
     unitName?: string;
-    /**
-     * Array of (key, value) meter labels to price on & the price tiers that should be used against those labels
-     * @type {Array<object>}
-     * @memberof PriceSchemeInputArgs
-     */
-    priceList?: Array<object>;
-    /**
-     * The % increase/decrease in price after the minimum charge is reached (e.g., 25.5 -> 25.5% increase).
-     * @type {number}
-     * @memberof PriceSchemeInputArgs
-     */
-    postMinimumChargePercentageChange?: number;
 }
 
 export function PriceSchemeInputArgsFromJSON(json: any): PriceSchemeInputArgs {
@@ -81,12 +81,12 @@ export function PriceSchemeInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'schemeType': json['scheme_type'],
+        'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
         'batchSize': !exists(json, 'batch_size') ? undefined : json['batch_size'],
-        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgs1FromJSON)),
+        'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
         'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
-        'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
-        'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
     };
 }
 
@@ -100,12 +100,12 @@ export function PriceSchemeInputArgsToJSON(value?: PriceSchemeInputArgs | null):
     return {
         
         'scheme_type': value.schemeType,
+        'price_list': value.priceList,
         'batch_size': value.batchSize,
-        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgs1ToJSON)),
+        'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
         'time_unit_name': value.timeUnitName,
         'unit_name': value.unitName,
-        'price_list': value.priceList,
-        'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
     };
 }
 
