@@ -21,6 +21,12 @@ import { exists, mapValues } from '../runtime';
 export interface UpdateCustomerPortalSettingsInputArgs {
     /**
      * 
+     * @type {string}
+     * @memberof UpdateCustomerPortalSettingsInputArgs
+     */
+    pricePlanNamesFilter?: string;
+    /**
+     * 
      * @type {number}
      * @memberof UpdateCustomerPortalSettingsInputArgs
      */
@@ -31,12 +37,6 @@ export interface UpdateCustomerPortalSettingsInputArgs {
      * @memberof UpdateCustomerPortalSettingsInputArgs
      */
     pricePlanTagsFilter?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateCustomerPortalSettingsInputArgs
-     */
-    pricePlanNamesFilter?: string;
 }
 
 export function UpdateCustomerPortalSettingsInputArgsFromJSON(json: any): UpdateCustomerPortalSettingsInputArgs {
@@ -49,9 +49,9 @@ export function UpdateCustomerPortalSettingsInputArgsFromJSONTyped(json: any, ig
     }
     return {
         
+        'pricePlanNamesFilter': !exists(json, 'price_plan_names_filter') ? undefined : json['price_plan_names_filter'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
         'pricePlanTagsFilter': !exists(json, 'price_plan_tags_filter') ? undefined : json['price_plan_tags_filter'],
-        'pricePlanNamesFilter': !exists(json, 'price_plan_names_filter') ? undefined : json['price_plan_names_filter'],
     };
 }
 
@@ -64,9 +64,9 @@ export function UpdateCustomerPortalSettingsInputArgsToJSON(value?: UpdateCustom
     }
     return {
         
+        'price_plan_names_filter': value.pricePlanNamesFilter,
         'vendor_id': value.vendorId,
         'price_plan_tags_filter': value.pricePlanTagsFilter,
-        'price_plan_names_filter': value.pricePlanNamesFilter,
     };
 }
 

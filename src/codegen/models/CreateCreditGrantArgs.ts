@@ -20,41 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateCreditGrantArgs {
     /**
-     * The date at which the grant is effective
-     * @type {Date}
-     * @memberof CreateCreditGrantArgs
-     */
-    effectiveAt?: Date;
-    /**
-     * Total price paid for the credits in cents. Defaults to $1 (100 cents) per credit if not specified
-     * @type {number}
-     * @memberof CreateCreditGrantArgs
-     */
-    price?: number;
-    /**
-     * Number of credits to grant
-     * @type {number}
-     * @memberof CreateCreditGrantArgs
-     */
-    amount: number;
-    /**
-     * Determines whether to synchronously create an invoice and charge the customer
-     * @type {boolean}
-     * @memberof CreateCreditGrantArgs
-     */
-    chargeImmediately?: boolean;
-    /**
-     * The date at which this grant expires
-     * @type {Date}
-     * @memberof CreateCreditGrantArgs
-     */
-    expiresAt?: Date;
-    /**
-     * Optional description. This is only viewable internally
+     * Time length unit for the default expiration for credits granted in a top off.
      * @type {string}
      * @memberof CreateCreditGrantArgs
      */
-    description?: string;
+    expirationUnit?: string;
     /**
      * Name of the customer receving the grant
      * @type {string}
@@ -62,17 +32,47 @@ export interface CreateCreditGrantArgs {
      */
     customerName: string;
     /**
+     * Number of credits to grant
+     * @type {number}
+     * @memberof CreateCreditGrantArgs
+     */
+    amount: number;
+    /**
+     * The date at which this grant expires
+     * @type {Date}
+     * @memberof CreateCreditGrantArgs
+     */
+    expiresAt?: Date;
+    /**
+     * Determines whether to synchronously create an invoice and charge the customer
+     * @type {boolean}
+     * @memberof CreateCreditGrantArgs
+     */
+    chargeImmediately?: boolean;
+    /**
+     * Total price paid for the credits in cents. Defaults to $1 (100 cents) per credit if not specified
+     * @type {number}
+     * @memberof CreateCreditGrantArgs
+     */
+    price?: number;
+    /**
+     * The date at which the grant is effective
+     * @type {Date}
+     * @memberof CreateCreditGrantArgs
+     */
+    effectiveAt?: Date;
+    /**
      * Time length of the default expiration for credits granted in a top off.
      * @type {number}
      * @memberof CreateCreditGrantArgs
      */
     expirationLength?: number;
     /**
-     * Time length unit for the default expiration for credits granted in a top off.
+     * Optional description. This is only viewable internally
      * @type {string}
      * @memberof CreateCreditGrantArgs
      */
-    expirationUnit?: string;
+    description?: string;
 }
 
 export function CreateCreditGrantArgsFromJSON(json: any): CreateCreditGrantArgs {
@@ -85,15 +85,15 @@ export function CreateCreditGrantArgsFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
-        'price': !exists(json, 'price') ? undefined : json['price'],
-        'amount': json['amount'],
-        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
-        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
-        'description': !exists(json, 'description') ? undefined : json['description'],
-        'customerName': json['customer_name'],
-        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
+        'customerName': json['customer_name'],
+        'amount': json['amount'],
+        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
+        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
+        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'description': !exists(json, 'description') ? undefined : json['description'],
     };
 }
 
@@ -106,15 +106,15 @@ export function CreateCreditGrantArgsToJSON(value?: CreateCreditGrantArgs | null
     }
     return {
         
-        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
-        'price': value.price,
-        'amount': value.amount,
-        'charge_immediately': value.chargeImmediately,
-        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
-        'description': value.description,
-        'customer_name': value.customerName,
-        'expiration_length': value.expirationLength,
         'expiration_unit': value.expirationUnit,
+        'customer_name': value.customerName,
+        'amount': value.amount,
+        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'charge_immediately': value.chargeImmediately,
+        'price': value.price,
+        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
+        'expiration_length': value.expirationLength,
+        'description': value.description,
     };
 }
 

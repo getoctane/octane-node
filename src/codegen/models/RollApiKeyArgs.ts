@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface RollApiKeyArgs {
     /**
-     * The API key you want to roll.
-     * @type {string}
-     * @memberof RollApiKeyArgs
-     */
-    apiKey: string;
-    /**
      * The date at which this API key will expire. Will default to 7 days.
      * @type {Date}
      * @memberof RollApiKeyArgs
      */
     expiresAt?: Date;
+    /**
+     * The API key you want to roll.
+     * @type {string}
+     * @memberof RollApiKeyArgs
+     */
+    apiKey: string;
 }
 
 export function RollApiKeyArgsFromJSON(json: any): RollApiKeyArgs {
@@ -43,8 +43,8 @@ export function RollApiKeyArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'apiKey': json['api_key'],
         'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'apiKey': json['api_key'],
     };
 }
 
@@ -57,8 +57,8 @@ export function RollApiKeyArgsToJSON(value?: RollApiKeyArgs | null): any {
     }
     return {
         
-        'api_key': value.apiKey,
         'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'api_key': value.apiKey,
     };
 }
 

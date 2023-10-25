@@ -20,59 +20,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerBillingSettingsInputArgs {
     /**
-     * Optional url of a custom image to include on invoices.
+     * Account number for ACH/Wire transfer instructions
      * @type {string}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    invoiceLogoUrl?: string | null;
+    achAccountNumber?: string | null;
     /**
-     * Time length of the grace period between the end of invoice generation and the actual charge. *NOTE*: The specified length is unitless. Unit is designated with the `payment_grace_period_unit` field.
+     * Sets the due date on invoices to the number of days after the invoice is sent
      * @type {number}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    paymentGracePeriodLength?: number | null;
+    daysUntilDue?: number | null;
     /**
-     * Default value for whether to align billing cycles to calendar on subscriptions
+     * Flag that controls whether or not to invoice/charge the base rate, add ons and other fixed price plan components at the beginning of the billing cycle.
      * @type {boolean}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    alignBillingCyclesToCalendar?: boolean | null;
-    /**
-     * Flag that controls whether to send receipts for paid invoices.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    sendReceipts?: boolean | null;
-    /**
-     * Flag that controls the number of retry attempts for invoicing/payments.
-     * @type {number}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    retryAttempts?: number | null;
-    /**
-     * If using Stripe, this field can be used to configure whether invoices should be finalized immediately when they are created.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    stripeImmediateFinalization?: boolean | null;
-    /**
-     * Time length after which to attempt invoice/payment retry.
-     * @type {number}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    retryFrequencyLength?: number | null;
-    /**
-     * Flag that controls whether to invoice through Octane or through payment provider
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    invoiceViaOctane?: boolean | null;
-    /**
-     * Bank name for ACH/Wire transfer instructions
-     * @type {string}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    achBankName?: string | null;
+    invoiceFixedComponentsAtStart?: boolean | null;
     /**
      * If using stripe, this field can be used to configure whether invoices should be auto advanced for collection
      * @type {boolean}
@@ -86,17 +50,29 @@ export interface CustomerBillingSettingsInputArgs {
      */
     autoApproveInvoices?: boolean | null;
     /**
-     * Account number for ACH/Wire transfer instructions
+     * Flag that controls the number of retry attempts for invoicing/payments.
+     * @type {number}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    retryAttempts?: number | null;
+    /**
+     * Flag that controls whether or not to invoice/charge gauge meters upfront according to their value at start of cycle. Only applies if invoice_fixed_components_at_start is enabled.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceMeteredComponentsAtStart?: boolean | null;
+    /**
+     * Flag that controls whether to invoice through Octane or through payment provider
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceViaOctane?: boolean | null;
+    /**
+     * Account name for ACH/Wire transfer instructions
      * @type {string}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    achAccountNumber?: string | null;
-    /**
-     * List of days after an invoice is due to communicate past due notices.
-     * @type {Array<number>}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    pastDueReminderDaysArray?: Array<number> | null;
+    achAccountName?: string | null;
     /**
      * Time length unit of the grace period between the end of invoice generation and actual charge. One of `minute`, `hour`, `day`.
      * @type {string}
@@ -104,11 +80,11 @@ export interface CustomerBillingSettingsInputArgs {
      */
     paymentGracePeriodUnit?: string | null;
     /**
-     * Optional description attached to the invoice
-     * @type {string}
+     * List of days before an invoice is due to communicate upcoming due notices.
+     * @type {Array<number>}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    invoiceMemo?: string | null;
+    upcomingReminderDaysArray?: Array<number> | null;
     /**
      * Whether newly attached Stripe payment methods should be made the default for customers.
      * @type {boolean}
@@ -116,29 +92,65 @@ export interface CustomerBillingSettingsInputArgs {
      */
     autoUpdateStripeDefaultPaymentMethod?: boolean | null;
     /**
-     * Swift code for ACH/Wire transfer instructions
-     * @type {string}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    achSwiftCode?: string | null;
-    /**
-     * Time length unit of the grace period between the end of a billing cycle and invoice generation. Must be `day`.
-     * @type {string}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    invoiceGracePeriodUnit?: CustomerBillingSettingsInputArgsInvoiceGracePeriodUnitEnum;
-    /**
-     * Sets the due date on invoices to the number of days after the invoice is sent
-     * @type {number}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    daysUntilDue?: number | null;
-    /**
-     * Flag determining whether ACH/Wire instructions should be included on invoices.
+     * Flag that controls whether or not invoices should be sent to customers.
      * @type {boolean}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    includeAchInstructions?: boolean | null;
+    shouldSendInvoiceToCustomers?: boolean | null;
+    /**
+     * The percentage tax rate to apply to invoices.
+     * @type {number}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    taxRate?: number | null;
+    /**
+     * List of days after an invoice is due to communicate past due notices.
+     * @type {Array<number>}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    pastDueReminderDaysArray?: Array<number> | null;
+    /**
+     * First line of bank address for ACH/Wire transfer instructions
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    achBankAddress1?: string | null;
+    /**
+     * Default value for whether to align billing cycles to calendar on subscriptions
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    alignBillingCyclesToCalendar?: boolean | null;
+    /**
+     * If set, a minimum charge line item will override any line items that contribute to the minimum (i.e., the minimum charge line item would be the only line item).
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    shouldMinimumChargeOverrideLineItems?: boolean | null;
+    /**
+     * Time length of the grace period between the end of a billing cycle and invoice generation in days.
+     * @type {number}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceGracePeriodLength?: number | null;
+    /**
+     * Flag that controls whether to send receipts for paid invoices.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    sendReceipts?: boolean | null;
+    /**
+     * Optional description attached to the invoice
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceMemo?: string | null;
+    /**
+     * Flag that controls whether or not to invoice/charge a true up for a billing cycle on the following invoice. Only applies if invoice_fixed_components_at_start is enabled.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceOverages?: boolean | null;
     /**
      * Time length unit after which to attempt invoice/payment retry.
      * @type {string}
@@ -152,71 +164,23 @@ export interface CustomerBillingSettingsInputArgs {
      */
     achRoutingNumber?: string | null;
     /**
-     * Flag that controls whether to communicate payment failures.
+     * If using Stripe, this field can be used to configure whether invoices should be finalized immediately when they are created.
      * @type {boolean}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    communicatePaymentFailures?: boolean | null;
+    stripeImmediateFinalization?: boolean | null;
     /**
-     * Time length of the grace period between the end of a billing cycle and invoice generation in days.
+     * Swift code for ACH/Wire transfer instructions
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    achSwiftCode?: string | null;
+    /**
+     * Time length after which to attempt invoice/payment retry.
      * @type {number}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    invoiceGracePeriodLength?: number | null;
-    /**
-     * Account name for ACH/Wire transfer instructions
-     * @type {string}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    achAccountName?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    customerInvoiceDetailLevel?: string;
-    /**
-     * Flag that controls whether or not invoices should be sent to customers.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    shouldSendInvoiceToCustomers?: boolean | null;
-    /**
-     * True if customer updates should be synced to Stripe.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    syncCustomerDataToPaymentGateway?: boolean | null;
-    /**
-     * Flag that controls whether to do automated taxes via payment provider
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    taxViaPaymentProvider?: boolean | null;
-    /**
-     * List of days before an invoice is due to communicate upcoming due notices.
-     * @type {Array<number>}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    upcomingReminderDaysArray?: Array<number> | null;
-    /**
-     * Flag that controls whether or not to invoice/charge gauge meters upfront according to their value at start of cycle. Only applies if invoice_fixed_components_at_start is enabled.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    invoiceMeteredComponentsAtStart?: boolean | null;
-    /**
-     * Flag that controls whether or not to invoice/charge the base rate, add ons and other fixed price plan components at the beginning of the billing cycle.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    invoiceFixedComponentsAtStart?: boolean | null;
-    /**
-     * Flag that controls whether or not to auto-charge the customer based on the invoice.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    chargesEnabled?: boolean | null;
+    retryFrequencyLength?: number | null;
     /**
      * Second line of bank address for ACH/Wire transfer instructions
      * @type {string}
@@ -224,29 +188,65 @@ export interface CustomerBillingSettingsInputArgs {
      */
     achBankAddress2?: string | null;
     /**
-     * The percentage tax rate to apply to invoices.
+     * Time length of the grace period between the end of invoice generation and the actual charge. *NOTE*: The specified length is unitless. Unit is designated with the `payment_grace_period_unit` field.
      * @type {number}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    taxRate?: number | null;
+    paymentGracePeriodLength?: number | null;
     /**
-     * If set, a minimum charge line item will override any line items that contribute to the minimum (i.e., the minimum charge line item would be the only line item).
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    shouldMinimumChargeOverrideLineItems?: boolean | null;
-    /**
-     * Flag that controls whether or not to invoice/charge a true up for a billing cycle on the following invoice. Only applies if invoice_fixed_components_at_start is enabled.
-     * @type {boolean}
-     * @memberof CustomerBillingSettingsInputArgs
-     */
-    invoiceOverages?: boolean | null;
-    /**
-     * First line of bank address for ACH/Wire transfer instructions
+     * 
      * @type {string}
      * @memberof CustomerBillingSettingsInputArgs
      */
-    achBankAddress1?: string | null;
+    customerInvoiceDetailLevel?: string;
+    /**
+     * Time length unit of the grace period between the end of a billing cycle and invoice generation. Must be `day`.
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceGracePeriodUnit?: CustomerBillingSettingsInputArgsInvoiceGracePeriodUnitEnum;
+    /**
+     * Flag that controls whether or not to auto-charge the customer based on the invoice.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    chargesEnabled?: boolean | null;
+    /**
+     * Flag that controls whether to do automated taxes via payment provider
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    taxViaPaymentProvider?: boolean | null;
+    /**
+     * Flag that controls whether to communicate payment failures.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    communicatePaymentFailures?: boolean | null;
+    /**
+     * True if customer updates should be synced to Stripe.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    syncCustomerDataToPaymentGateway?: boolean | null;
+    /**
+     * Optional url of a custom image to include on invoices.
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    invoiceLogoUrl?: string | null;
+    /**
+     * Bank name for ACH/Wire transfer instructions
+     * @type {string}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    achBankName?: string | null;
+    /**
+     * Flag determining whether ACH/Wire instructions should be included on invoices.
+     * @type {boolean}
+     * @memberof CustomerBillingSettingsInputArgs
+     */
+    includeAchInstructions?: boolean | null;
 }
 
 /**
@@ -267,44 +267,44 @@ export function CustomerBillingSettingsInputArgsFromJSONTyped(json: any, ignoreD
     }
     return {
         
-        'invoiceLogoUrl': !exists(json, 'invoice_logo_url') ? undefined : json['invoice_logo_url'],
-        'paymentGracePeriodLength': !exists(json, 'payment_grace_period_length') ? undefined : json['payment_grace_period_length'],
-        'alignBillingCyclesToCalendar': !exists(json, 'align_billing_cycles_to_calendar') ? undefined : json['align_billing_cycles_to_calendar'],
-        'sendReceipts': !exists(json, 'send_receipts') ? undefined : json['send_receipts'],
-        'retryAttempts': !exists(json, 'retry_attempts') ? undefined : json['retry_attempts'],
-        'stripeImmediateFinalization': !exists(json, 'stripe_immediate_finalization') ? undefined : json['stripe_immediate_finalization'],
-        'retryFrequencyLength': !exists(json, 'retry_frequency_length') ? undefined : json['retry_frequency_length'],
-        'invoiceViaOctane': !exists(json, 'invoice_via_octane') ? undefined : json['invoice_via_octane'],
-        'achBankName': !exists(json, 'ach_bank_name') ? undefined : json['ach_bank_name'],
+        'achAccountNumber': !exists(json, 'ach_account_number') ? undefined : json['ach_account_number'],
+        'daysUntilDue': !exists(json, 'days_until_due') ? undefined : json['days_until_due'],
+        'invoiceFixedComponentsAtStart': !exists(json, 'invoice_fixed_components_at_start') ? undefined : json['invoice_fixed_components_at_start'],
         'stripeAutoAdvance': !exists(json, 'stripe_auto_advance') ? undefined : json['stripe_auto_advance'],
         'autoApproveInvoices': !exists(json, 'auto_approve_invoices') ? undefined : json['auto_approve_invoices'],
-        'achAccountNumber': !exists(json, 'ach_account_number') ? undefined : json['ach_account_number'],
-        'pastDueReminderDaysArray': !exists(json, 'past_due_reminder_days_array') ? undefined : json['past_due_reminder_days_array'],
+        'retryAttempts': !exists(json, 'retry_attempts') ? undefined : json['retry_attempts'],
+        'invoiceMeteredComponentsAtStart': !exists(json, 'invoice_metered_components_at_start') ? undefined : json['invoice_metered_components_at_start'],
+        'invoiceViaOctane': !exists(json, 'invoice_via_octane') ? undefined : json['invoice_via_octane'],
+        'achAccountName': !exists(json, 'ach_account_name') ? undefined : json['ach_account_name'],
         'paymentGracePeriodUnit': !exists(json, 'payment_grace_period_unit') ? undefined : json['payment_grace_period_unit'],
-        'invoiceMemo': !exists(json, 'invoice_memo') ? undefined : json['invoice_memo'],
+        'upcomingReminderDaysArray': !exists(json, 'upcoming_reminder_days_array') ? undefined : json['upcoming_reminder_days_array'],
         'autoUpdateStripeDefaultPaymentMethod': !exists(json, 'auto_update_stripe_default_payment_method') ? undefined : json['auto_update_stripe_default_payment_method'],
-        'achSwiftCode': !exists(json, 'ach_swift_code') ? undefined : json['ach_swift_code'],
-        'invoiceGracePeriodUnit': !exists(json, 'invoice_grace_period_unit') ? undefined : json['invoice_grace_period_unit'],
-        'daysUntilDue': !exists(json, 'days_until_due') ? undefined : json['days_until_due'],
-        'includeAchInstructions': !exists(json, 'include_ach_instructions') ? undefined : json['include_ach_instructions'],
+        'shouldSendInvoiceToCustomers': !exists(json, 'should_send_invoice_to_customers') ? undefined : json['should_send_invoice_to_customers'],
+        'taxRate': !exists(json, 'tax_rate') ? undefined : json['tax_rate'],
+        'pastDueReminderDaysArray': !exists(json, 'past_due_reminder_days_array') ? undefined : json['past_due_reminder_days_array'],
+        'achBankAddress1': !exists(json, 'ach_bank_address_1') ? undefined : json['ach_bank_address_1'],
+        'alignBillingCyclesToCalendar': !exists(json, 'align_billing_cycles_to_calendar') ? undefined : json['align_billing_cycles_to_calendar'],
+        'shouldMinimumChargeOverrideLineItems': !exists(json, 'should_minimum_charge_override_line_items') ? undefined : json['should_minimum_charge_override_line_items'],
+        'invoiceGracePeriodLength': !exists(json, 'invoice_grace_period_length') ? undefined : json['invoice_grace_period_length'],
+        'sendReceipts': !exists(json, 'send_receipts') ? undefined : json['send_receipts'],
+        'invoiceMemo': !exists(json, 'invoice_memo') ? undefined : json['invoice_memo'],
+        'invoiceOverages': !exists(json, 'invoice_overages') ? undefined : json['invoice_overages'],
         'retryFrequencyUnit': !exists(json, 'retry_frequency_unit') ? undefined : json['retry_frequency_unit'],
         'achRoutingNumber': !exists(json, 'ach_routing_number') ? undefined : json['ach_routing_number'],
-        'communicatePaymentFailures': !exists(json, 'communicate_payment_failures') ? undefined : json['communicate_payment_failures'],
-        'invoiceGracePeriodLength': !exists(json, 'invoice_grace_period_length') ? undefined : json['invoice_grace_period_length'],
-        'achAccountName': !exists(json, 'ach_account_name') ? undefined : json['ach_account_name'],
-        'customerInvoiceDetailLevel': !exists(json, 'customer_invoice_detail_level') ? undefined : json['customer_invoice_detail_level'],
-        'shouldSendInvoiceToCustomers': !exists(json, 'should_send_invoice_to_customers') ? undefined : json['should_send_invoice_to_customers'],
-        'syncCustomerDataToPaymentGateway': !exists(json, 'sync_customer_data_to_payment_gateway') ? undefined : json['sync_customer_data_to_payment_gateway'],
-        'taxViaPaymentProvider': !exists(json, 'tax_via_payment_provider') ? undefined : json['tax_via_payment_provider'],
-        'upcomingReminderDaysArray': !exists(json, 'upcoming_reminder_days_array') ? undefined : json['upcoming_reminder_days_array'],
-        'invoiceMeteredComponentsAtStart': !exists(json, 'invoice_metered_components_at_start') ? undefined : json['invoice_metered_components_at_start'],
-        'invoiceFixedComponentsAtStart': !exists(json, 'invoice_fixed_components_at_start') ? undefined : json['invoice_fixed_components_at_start'],
-        'chargesEnabled': !exists(json, 'charges_enabled') ? undefined : json['charges_enabled'],
+        'stripeImmediateFinalization': !exists(json, 'stripe_immediate_finalization') ? undefined : json['stripe_immediate_finalization'],
+        'achSwiftCode': !exists(json, 'ach_swift_code') ? undefined : json['ach_swift_code'],
+        'retryFrequencyLength': !exists(json, 'retry_frequency_length') ? undefined : json['retry_frequency_length'],
         'achBankAddress2': !exists(json, 'ach_bank_address_2') ? undefined : json['ach_bank_address_2'],
-        'taxRate': !exists(json, 'tax_rate') ? undefined : json['tax_rate'],
-        'shouldMinimumChargeOverrideLineItems': !exists(json, 'should_minimum_charge_override_line_items') ? undefined : json['should_minimum_charge_override_line_items'],
-        'invoiceOverages': !exists(json, 'invoice_overages') ? undefined : json['invoice_overages'],
-        'achBankAddress1': !exists(json, 'ach_bank_address_1') ? undefined : json['ach_bank_address_1'],
+        'paymentGracePeriodLength': !exists(json, 'payment_grace_period_length') ? undefined : json['payment_grace_period_length'],
+        'customerInvoiceDetailLevel': !exists(json, 'customer_invoice_detail_level') ? undefined : json['customer_invoice_detail_level'],
+        'invoiceGracePeriodUnit': !exists(json, 'invoice_grace_period_unit') ? undefined : json['invoice_grace_period_unit'],
+        'chargesEnabled': !exists(json, 'charges_enabled') ? undefined : json['charges_enabled'],
+        'taxViaPaymentProvider': !exists(json, 'tax_via_payment_provider') ? undefined : json['tax_via_payment_provider'],
+        'communicatePaymentFailures': !exists(json, 'communicate_payment_failures') ? undefined : json['communicate_payment_failures'],
+        'syncCustomerDataToPaymentGateway': !exists(json, 'sync_customer_data_to_payment_gateway') ? undefined : json['sync_customer_data_to_payment_gateway'],
+        'invoiceLogoUrl': !exists(json, 'invoice_logo_url') ? undefined : json['invoice_logo_url'],
+        'achBankName': !exists(json, 'ach_bank_name') ? undefined : json['ach_bank_name'],
+        'includeAchInstructions': !exists(json, 'include_ach_instructions') ? undefined : json['include_ach_instructions'],
     };
 }
 
@@ -317,44 +317,44 @@ export function CustomerBillingSettingsInputArgsToJSON(value?: CustomerBillingSe
     }
     return {
         
-        'invoice_logo_url': value.invoiceLogoUrl,
-        'payment_grace_period_length': value.paymentGracePeriodLength,
-        'align_billing_cycles_to_calendar': value.alignBillingCyclesToCalendar,
-        'send_receipts': value.sendReceipts,
-        'retry_attempts': value.retryAttempts,
-        'stripe_immediate_finalization': value.stripeImmediateFinalization,
-        'retry_frequency_length': value.retryFrequencyLength,
-        'invoice_via_octane': value.invoiceViaOctane,
-        'ach_bank_name': value.achBankName,
+        'ach_account_number': value.achAccountNumber,
+        'days_until_due': value.daysUntilDue,
+        'invoice_fixed_components_at_start': value.invoiceFixedComponentsAtStart,
         'stripe_auto_advance': value.stripeAutoAdvance,
         'auto_approve_invoices': value.autoApproveInvoices,
-        'ach_account_number': value.achAccountNumber,
-        'past_due_reminder_days_array': value.pastDueReminderDaysArray,
+        'retry_attempts': value.retryAttempts,
+        'invoice_metered_components_at_start': value.invoiceMeteredComponentsAtStart,
+        'invoice_via_octane': value.invoiceViaOctane,
+        'ach_account_name': value.achAccountName,
         'payment_grace_period_unit': value.paymentGracePeriodUnit,
-        'invoice_memo': value.invoiceMemo,
+        'upcoming_reminder_days_array': value.upcomingReminderDaysArray,
         'auto_update_stripe_default_payment_method': value.autoUpdateStripeDefaultPaymentMethod,
-        'ach_swift_code': value.achSwiftCode,
-        'invoice_grace_period_unit': value.invoiceGracePeriodUnit,
-        'days_until_due': value.daysUntilDue,
-        'include_ach_instructions': value.includeAchInstructions,
+        'should_send_invoice_to_customers': value.shouldSendInvoiceToCustomers,
+        'tax_rate': value.taxRate,
+        'past_due_reminder_days_array': value.pastDueReminderDaysArray,
+        'ach_bank_address_1': value.achBankAddress1,
+        'align_billing_cycles_to_calendar': value.alignBillingCyclesToCalendar,
+        'should_minimum_charge_override_line_items': value.shouldMinimumChargeOverrideLineItems,
+        'invoice_grace_period_length': value.invoiceGracePeriodLength,
+        'send_receipts': value.sendReceipts,
+        'invoice_memo': value.invoiceMemo,
+        'invoice_overages': value.invoiceOverages,
         'retry_frequency_unit': value.retryFrequencyUnit,
         'ach_routing_number': value.achRoutingNumber,
-        'communicate_payment_failures': value.communicatePaymentFailures,
-        'invoice_grace_period_length': value.invoiceGracePeriodLength,
-        'ach_account_name': value.achAccountName,
-        'customer_invoice_detail_level': value.customerInvoiceDetailLevel,
-        'should_send_invoice_to_customers': value.shouldSendInvoiceToCustomers,
-        'sync_customer_data_to_payment_gateway': value.syncCustomerDataToPaymentGateway,
-        'tax_via_payment_provider': value.taxViaPaymentProvider,
-        'upcoming_reminder_days_array': value.upcomingReminderDaysArray,
-        'invoice_metered_components_at_start': value.invoiceMeteredComponentsAtStart,
-        'invoice_fixed_components_at_start': value.invoiceFixedComponentsAtStart,
-        'charges_enabled': value.chargesEnabled,
+        'stripe_immediate_finalization': value.stripeImmediateFinalization,
+        'ach_swift_code': value.achSwiftCode,
+        'retry_frequency_length': value.retryFrequencyLength,
         'ach_bank_address_2': value.achBankAddress2,
-        'tax_rate': value.taxRate,
-        'should_minimum_charge_override_line_items': value.shouldMinimumChargeOverrideLineItems,
-        'invoice_overages': value.invoiceOverages,
-        'ach_bank_address_1': value.achBankAddress1,
+        'payment_grace_period_length': value.paymentGracePeriodLength,
+        'customer_invoice_detail_level': value.customerInvoiceDetailLevel,
+        'invoice_grace_period_unit': value.invoiceGracePeriodUnit,
+        'charges_enabled': value.chargesEnabled,
+        'tax_via_payment_provider': value.taxViaPaymentProvider,
+        'communicate_payment_failures': value.communicatePaymentFailures,
+        'sync_customer_data_to_payment_gateway': value.syncCustomerDataToPaymentGateway,
+        'invoice_logo_url': value.invoiceLogoUrl,
+        'ach_bank_name': value.achBankName,
+        'include_ach_instructions': value.includeAchInstructions,
     };
 }
 

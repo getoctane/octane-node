@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface ApplyCouponInputArgs {
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    vendorId?: number;
+    customerName?: string;
     /**
      * 
      * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    name?: string;
+    code?: string;
     /**
      * 
      * @type {number}
@@ -42,13 +42,13 @@ export interface ApplyCouponInputArgs {
      * @type {string}
      * @memberof ApplyCouponInputArgs
      */
-    code?: string;
+    name?: string;
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof ApplyCouponInputArgs
      */
-    customerName?: string;
+    vendorId?: number;
 }
 
 export function ApplyCouponInputArgsFromJSON(json: any): ApplyCouponInputArgs {
@@ -61,11 +61,11 @@ export function ApplyCouponInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
-        'code': !exists(json, 'code') ? undefined : json['code'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'code': !exists(json, 'code') ? undefined : json['code'],
+        'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
+        'name': !exists(json, 'name') ? undefined : json['name'],
+        'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
     };
 }
 
@@ -78,11 +78,11 @@ export function ApplyCouponInputArgsToJSON(value?: ApplyCouponInputArgs | null):
     }
     return {
         
-        'vendor_id': value.vendorId,
-        'name': value.name,
-        'customer_id': value.customerId,
-        'code': value.code,
         'customer_name': value.customerName,
+        'code': value.code,
+        'customer_id': value.customerId,
+        'name': value.name,
+        'vendor_id': value.vendorId,
     };
 }
 

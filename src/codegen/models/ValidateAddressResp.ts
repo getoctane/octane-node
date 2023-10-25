@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ValidateAddressResp {
     /**
-     * Set if 'success' is True. The resolution quality of the geospatial coordinates.
+     * Set if 'success' is True. Geospatial latitude measurement, in Decimal Degrees (string).
      * @type {string}
      * @memberof ValidateAddressResp
      */
-    resolutionQuality?: string;
+    latitude?: string;
     /**
      * Set if 'success' is False. Contains the details of why the address is invalid.
      * @type {string}
@@ -32,23 +32,23 @@ export interface ValidateAddressResp {
      */
     invalidAddressError?: string;
     /**
-     * Set if 'success' is True. Geospatial latitude measurement, in Decimal Degrees (string).
+     * Set if 'success' is True. The resolution quality of the geospatial coordinates.
      * @type {string}
      * @memberof ValidateAddressResp
      */
-    latitude?: string;
-    /**
-     * Set if 'sucess' is True. Geospatial latitude measurement, in Decimal Degrees (string).
-     * @type {string}
-     * @memberof ValidateAddressResp
-     */
-    longitude?: string;
+    resolutionQuality?: string;
     /**
      * True if validation was successful, False address is invalid.
      * @type {boolean}
      * @memberof ValidateAddressResp
      */
     success?: boolean;
+    /**
+     * Set if 'sucess' is True. Geospatial latitude measurement, in Decimal Degrees (string).
+     * @type {string}
+     * @memberof ValidateAddressResp
+     */
+    longitude?: string;
 }
 
 export function ValidateAddressRespFromJSON(json: any): ValidateAddressResp {
@@ -61,11 +61,11 @@ export function ValidateAddressRespFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'resolutionQuality': !exists(json, 'resolution_quality') ? undefined : json['resolution_quality'],
-        'invalidAddressError': !exists(json, 'invalid_address_error') ? undefined : json['invalid_address_error'],
         'latitude': !exists(json, 'latitude') ? undefined : json['latitude'],
-        'longitude': !exists(json, 'longitude') ? undefined : json['longitude'],
+        'invalidAddressError': !exists(json, 'invalid_address_error') ? undefined : json['invalid_address_error'],
+        'resolutionQuality': !exists(json, 'resolution_quality') ? undefined : json['resolution_quality'],
         'success': !exists(json, 'success') ? undefined : json['success'],
+        'longitude': !exists(json, 'longitude') ? undefined : json['longitude'],
     };
 }
 
@@ -78,11 +78,11 @@ export function ValidateAddressRespToJSON(value?: ValidateAddressResp | null): a
     }
     return {
         
-        'resolution_quality': value.resolutionQuality,
-        'invalid_address_error': value.invalidAddressError,
         'latitude': value.latitude,
-        'longitude': value.longitude,
+        'invalid_address_error': value.invalidAddressError,
+        'resolution_quality': value.resolutionQuality,
         'success': value.success,
+        'longitude': value.longitude,
     };
 }
 

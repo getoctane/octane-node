@@ -23,6 +23,8 @@ import {
   CustomerStatus,
   Invoice,
   AccruedRevenue,
+  CustomerUsageByTime,
+  CustomerUsageByTimeInput,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -346,6 +348,17 @@ class Customers extends BaseResource {
   ): Promise<AccruedRevenue> {
     return this.api.customersCustomerNameTotalAccruedRevenueGet(
       { customerName },
+      overrides,
+    );
+  }
+
+  public getUsageByTime(
+    customerName: string,
+    customerUsageByTimeInput: CustomerUsageByTimeInput,
+    overrides?: RequestInit,
+  ): Promise<CustomerUsageByTime> {
+    return this.api.customersCustomerNameUsageByTimePost(
+      { customerName, customerUsageByTimeInput },
       overrides,
     );
   }

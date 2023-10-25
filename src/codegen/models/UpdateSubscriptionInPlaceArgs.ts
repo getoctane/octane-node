@@ -33,12 +33,6 @@ import {
  */
 export interface UpdateSubscriptionInPlaceArgs {
     /**
-     * DEPRECATED - use discounts field
-     * @type {DiscountInputArgs}
-     * @memberof UpdateSubscriptionInPlaceArgs
-     */
-    discountOverride?: DiscountInputArgs | null;
-    /**
      * 
      * @type {Array<SubscriptionAddOnInput>}
      * @memberof UpdateSubscriptionInPlaceArgs
@@ -50,6 +44,12 @@ export interface UpdateSubscriptionInPlaceArgs {
      * @memberof UpdateSubscriptionInPlaceArgs
      */
     discounts?: Array<DiscountInputArgs>;
+    /**
+     * DEPRECATED - use discounts field
+     * @type {DiscountInputArgs}
+     * @memberof UpdateSubscriptionInPlaceArgs
+     */
+    discountOverride?: DiscountInputArgs | null;
     /**
      * 
      * @type {string}
@@ -68,9 +68,9 @@ export function UpdateSubscriptionInPlaceArgsFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
-        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
         'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
         'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
+        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
         'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
     };
 }
@@ -84,9 +84,9 @@ export function UpdateSubscriptionInPlaceArgsToJSON(value?: UpdateSubscriptionIn
     }
     return {
         
-        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
         'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
         'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
+        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
         'coupon_override_name': value.couponOverrideName,
     };
 }

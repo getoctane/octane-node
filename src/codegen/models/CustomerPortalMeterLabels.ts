@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalMeterLabels {
     /**
-     * Primary label values associated with the key
-     * @type {Array<string>}
-     * @memberof CustomerPortalMeterLabels
-     */
-    values?: Array<string>;
-    /**
      * 
      * @type {string}
      * @memberof CustomerPortalMeterLabels
      */
     key?: string;
+    /**
+     * Primary label values associated with the key
+     * @type {Array<string>}
+     * @memberof CustomerPortalMeterLabels
+     */
+    values?: Array<string>;
 }
 
 export function CustomerPortalMeterLabelsFromJSON(json: any): CustomerPortalMeterLabels {
@@ -43,8 +43,8 @@ export function CustomerPortalMeterLabelsFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'values': !exists(json, 'values') ? undefined : json['values'],
         'key': !exists(json, 'key') ? undefined : json['key'],
+        'values': !exists(json, 'values') ? undefined : json['values'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerPortalMeterLabelsToJSON(value?: CustomerPortalMeterLabel
     }
     return {
         
-        'values': value.values,
         'key': value.key,
+        'values': value.values,
     };
 }
 

@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DailyUsage {
     /**
+     * Total usage during this window. Rounded to 6 decimal places.
+     * @type {number}
+     * @memberof DailyUsage
+     */
+    usage?: number;
+    /**
      * Start of the 24 hour time window in UTC.
      * @type {Date}
      * @memberof DailyUsage
@@ -30,25 +36,19 @@ export interface DailyUsage {
      * @type {string}
      * @memberof DailyUsage
      */
-    labelValue?: string;
+    labelKey?: string;
     /**
      * [DEPRECATED] Please use labels field instead.
      * @type {string}
      * @memberof DailyUsage
      */
-    labelKey?: string;
+    labelValue?: string;
     /**
      * Labels for this usage. Only present if label_group_by_keys is provided.
      * @type {{ [key: string]: string; }}
      * @memberof DailyUsage
      */
     labels?: { [key: string]: string; };
-    /**
-     * Total usage during this window.
-     * @type {number}
-     * @memberof DailyUsage
-     */
-    usage?: number;
 }
 
 export function DailyUsageFromJSON(json: any): DailyUsage {
@@ -61,11 +61,11 @@ export function DailyUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
-        'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
-        'labelKey': !exists(json, 'label_key') ? undefined : json['label_key'],
-        'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'usage': !exists(json, 'usage') ? undefined : json['usage'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
+        'labelKey': !exists(json, 'label_key') ? undefined : json['label_key'],
+        'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
+        'labels': !exists(json, 'labels') ? undefined : json['labels'],
     };
 }
 
@@ -78,11 +78,11 @@ export function DailyUsageToJSON(value?: DailyUsage | null): any {
     }
     return {
         
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
-        'label_value': value.labelValue,
-        'label_key': value.labelKey,
-        'labels': value.labels,
         'usage': value.usage,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
+        'label_key': value.labelKey,
+        'label_value': value.labelValue,
+        'labels': value.labels,
     };
 }
 

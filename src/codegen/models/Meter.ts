@@ -56,7 +56,7 @@ export interface Meter {
      */
     dataType: string;
     /**
-     * The aggregation applied to the measurement values. One of `MAX`, `SUM`, `TIME_WEIGHTED_SUM`.
+     * The aggregation applied to the measurement values. One of `MAX`, `TIME_WEIGHTED_SUM`, `SUM`.
      * @type {string}
      * @memberof Meter
      */
@@ -91,6 +91,12 @@ export interface Meter {
      * @memberof Meter
      */
     primaryLabels?: Array<any>;
+    /**
+     * The filter or expression of filters to apply to the event labels.
+     * @type {any}
+     * @memberof Meter
+     */
+    eventLabelFilter?: any | null;
 }
 
 export function MeterFromJSON(json: any): Meter {
@@ -115,6 +121,7 @@ export function MeterFromJSONTyped(json: any, ignoreDiscriminator: boolean): Met
         'reportingMethod': json['reporting_method'],
         'expectedLabels': !exists(json, 'expected_labels') ? undefined : json['expected_labels'],
         'primaryLabels': !exists(json, 'primary_labels') ? undefined : json['primary_labels'],
+        'eventLabelFilter': !exists(json, 'event_label_filter') ? undefined : json['event_label_filter'],
     };
 }
 
@@ -138,6 +145,7 @@ export function MeterToJSON(value?: Meter | null): any {
         'reporting_method': value.reportingMethod,
         'expected_labels': value.expectedLabels,
         'primary_labels': value.primaryLabels,
+        'event_label_filter': value.eventLabelFilter,
     };
 }
 

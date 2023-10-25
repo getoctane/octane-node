@@ -26,29 +26,17 @@ export interface UpdateVendorAvalaraSettingsArgs {
      */
     enableLogging?: boolean;
     /**
-     * he tax code to associate with the item that is representing the Octane invoice.
-     * @type {string}
+     * Enable/Disable the Avalara integration.
+     * @type {boolean}
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
-    taxCode?: string;
-    /**
-     * The Avalara item code to use to represent all the line items on the Octane invoice.
-     * @type {string}
-     * @memberof UpdateVendorAvalaraSettingsArgs
-     */
-    itemCode?: string;
+    enableIntegration?: boolean;
     /**
      * The Avalara company code string to associate the Octane vendor with.
      * @type {string}
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
     companyCode?: string;
-    /**
-     * Enable/Disable the Avalara integration.
-     * @type {boolean}
-     * @memberof UpdateVendorAvalaraSettingsArgs
-     */
-    enableIntegration?: boolean;
     /**
      * True if the documents generated in Avalara should be committed, false otherwise.
      * @type {boolean}
@@ -61,6 +49,18 @@ export interface UpdateVendorAvalaraSettingsArgs {
      * @memberof UpdateVendorAvalaraSettingsArgs
      */
     itemDescription?: string;
+    /**
+     * he tax code to associate with the item that is representing the Octane invoice.
+     * @type {string}
+     * @memberof UpdateVendorAvalaraSettingsArgs
+     */
+    taxCode?: string;
+    /**
+     * The Avalara item code to use to represent all the line items on the Octane invoice.
+     * @type {string}
+     * @memberof UpdateVendorAvalaraSettingsArgs
+     */
+    itemCode?: string;
 }
 
 export function UpdateVendorAvalaraSettingsArgsFromJSON(json: any): UpdateVendorAvalaraSettingsArgs {
@@ -74,12 +74,12 @@ export function UpdateVendorAvalaraSettingsArgsFromJSONTyped(json: any, ignoreDi
     return {
         
         'enableLogging': !exists(json, 'enable_logging') ? undefined : json['enable_logging'],
-        'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
-        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
-        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
+        'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
         'commitDocuments': !exists(json, 'commit_documents') ? undefined : json['commit_documents'],
         'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
+        'itemCode': !exists(json, 'item_code') ? undefined : json['item_code'],
     };
 }
 
@@ -93,12 +93,12 @@ export function UpdateVendorAvalaraSettingsArgsToJSON(value?: UpdateVendorAvalar
     return {
         
         'enable_logging': value.enableLogging,
-        'tax_code': value.taxCode,
-        'item_code': value.itemCode,
-        'company_code': value.companyCode,
         'enable_integration': value.enableIntegration,
+        'company_code': value.companyCode,
         'commit_documents': value.commitDocuments,
         'item_description': value.itemDescription,
+        'tax_code': value.taxCode,
+        'item_code': value.itemCode,
     };
 }
 

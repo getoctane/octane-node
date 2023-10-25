@@ -20,11 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateSelfServeSettingsArgs {
     /**
+     * Time length unit for the default expiration for credits bought in the customer portal.
+     * @type {string}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsExpirationUnit?: string | null;
+    /**
      * True if the vendor has enabled customization for their customer portal.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    enabled?: boolean;
+    customization?: boolean;
+    /**
+     * True if the customer can purchase credits via self serve. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    purchaseCredits?: boolean;
+    /**
+     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
+     * @type {number}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    pricePerCreditCents?: number;
     /**
      * True if payment form should have fields for shipping address info. Defaults to False.
      * @type {boolean}
@@ -38,35 +56,17 @@ export interface UpdateSelfServeSettingsArgs {
      */
     switchPricePlans?: boolean;
     /**
-     * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
-     * @type {number}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    pricePerCreditCents?: number;
-    /**
      * Time length of the default expiration for credits bought in the customer portal.
      * @type {number}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    creditsExpirationLength?: number;
-    /**
-     * True if the customer can purchase credits via self serve. Defaults to False.
-     * @type {boolean}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    purchaseCredits?: boolean;
+    creditsExpirationLength?: number | null;
     /**
      * True if the vendor has enabled customization for their customer portal.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    customization?: boolean;
-    /**
-     * Time length unit for the default expiration for credits bought in the customer portal.
-     * @type {string}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    creditsExpirationUnit?: string;
+    enabled?: boolean;
 }
 
 export function UpdateSelfServeSettingsArgsFromJSON(json: any): UpdateSelfServeSettingsArgs {
@@ -79,14 +79,14 @@ export function UpdateSelfServeSettingsArgsFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'customization': !exists(json, 'customization') ? undefined : json['customization'],
+        'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
+        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'enableAddressFields': !exists(json, 'enable_address_fields') ? undefined : json['enable_address_fields'],
         'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
-        'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
-        'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
-        'customization': !exists(json, 'customization') ? undefined : json['customization'],
-        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
     };
 }
 
@@ -99,14 +99,14 @@ export function UpdateSelfServeSettingsArgsToJSON(value?: UpdateSelfServeSetting
     }
     return {
         
-        'enabled': value.enabled,
+        'credits_expiration_unit': value.creditsExpirationUnit,
+        'customization': value.customization,
+        'purchase_credits': value.purchaseCredits,
+        'price_per_credit_cents': value.pricePerCreditCents,
         'enable_address_fields': value.enableAddressFields,
         'switch_price_plans': value.switchPricePlans,
-        'price_per_credit_cents': value.pricePerCreditCents,
         'credits_expiration_length': value.creditsExpirationLength,
-        'purchase_credits': value.purchaseCredits,
-        'customization': value.customization,
-        'credits_expiration_unit': value.creditsExpirationUnit,
+        'enabled': value.enabled,
     };
 }
 

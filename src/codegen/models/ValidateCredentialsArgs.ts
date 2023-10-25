@@ -26,17 +26,17 @@ export interface ValidateCredentialsArgs {
      */
     username: string;
     /**
-     * True if using a Avalara sandbox account, False otherwise
-     * @type {boolean}
-     * @memberof ValidateCredentialsArgs
-     */
-    sandboxMode: boolean;
-    /**
      * Password of the Avalara account
      * @type {string}
      * @memberof ValidateCredentialsArgs
      */
     password: string;
+    /**
+     * True if using a Avalara sandbox account, False otherwise
+     * @type {boolean}
+     * @memberof ValidateCredentialsArgs
+     */
+    sandboxMode: boolean;
 }
 
 export function ValidateCredentialsArgsFromJSON(json: any): ValidateCredentialsArgs {
@@ -50,8 +50,8 @@ export function ValidateCredentialsArgsFromJSONTyped(json: any, ignoreDiscrimina
     return {
         
         'username': json['username'],
-        'sandboxMode': json['sandbox_mode'],
         'password': json['password'],
+        'sandboxMode': json['sandbox_mode'],
     };
 }
 
@@ -65,8 +65,8 @@ export function ValidateCredentialsArgsToJSON(value?: ValidateCredentialsArgs | 
     return {
         
         'username': value.username,
-        'sandbox_mode': value.sandboxMode,
         'password': value.password,
+        'sandbox_mode': value.sandboxMode,
     };
 }
 

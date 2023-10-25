@@ -33,17 +33,17 @@ import {
  */
 export interface AddFeaturesToPricePlanInput {
     /**
-     * List of new features to add
-     * @type {Array<FeatureInputArgs>}
-     * @memberof AddFeaturesToPricePlanInput
-     */
-    features?: Array<FeatureInputArgs>;
-    /**
      * List of new limits to add
      * @type {Array<LimitInputArgs>}
      * @memberof AddFeaturesToPricePlanInput
      */
     limits?: Array<LimitInputArgs>;
+    /**
+     * List of new features to add
+     * @type {Array<FeatureInputArgs>}
+     * @memberof AddFeaturesToPricePlanInput
+     */
+    features?: Array<FeatureInputArgs>;
 }
 
 export function AddFeaturesToPricePlanInputFromJSON(json: any): AddFeaturesToPricePlanInput {
@@ -56,8 +56,8 @@ export function AddFeaturesToPricePlanInputFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
         'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
     };
 }
 
@@ -70,8 +70,8 @@ export function AddFeaturesToPricePlanInputToJSON(value?: AddFeaturesToPricePlan
     }
     return {
         
-        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
         'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
+        'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
     };
 }
 
