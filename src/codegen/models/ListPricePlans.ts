@@ -27,17 +27,11 @@ import {
  */
 export interface ListPricePlans {
     /**
-     * The unique offset to start at when paging forwards
+     * The sort column offset to start at when paging forwards
      * @type {string}
      * @memberof ListPricePlans
      */
-    forwardSecondarySortOffset?: string;
-    /**
-     * The number of items to fetch. Defaults to 10.
-     * @type {number}
-     * @memberof ListPricePlans
-     */
-    limit?: number;
+    forwardSortOffset?: string;
     /**
      * 
      * @type {string}
@@ -45,11 +39,17 @@ export interface ListPricePlans {
      */
     sortColumn?: string;
     /**
-     * 
+     * The number of items to fetch. Defaults to 10.
+     * @type {number}
+     * @memberof ListPricePlans
+     */
+    limit?: number;
+    /**
+     * The unique offset to start at when paging forwards
      * @type {string}
      * @memberof ListPricePlans
      */
-    sortDirection?: string;
+    forwardSecondarySortOffset?: string;
     /**
      * 
      * @type {Array<PricePlan>}
@@ -57,11 +57,11 @@ export interface ListPricePlans {
      */
     pricePlans?: Array<PricePlan>;
     /**
-     * The sort column offset to start at when paging forwards
+     * 
      * @type {string}
      * @memberof ListPricePlans
      */
-    forwardSortOffset?: string;
+    sortDirection?: string;
 }
 
 export function ListPricePlansFromJSON(json: any): ListPricePlans {
@@ -74,12 +74,12 @@ export function ListPricePlansFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
-        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
-        'pricePlans': !exists(json, 'price_plans') ? undefined : ((json['price_plans'] as Array<any>).map(PricePlanFromJSON)),
         'forwardSortOffset': !exists(json, 'forward_sort_offset') ? undefined : json['forward_sort_offset'],
+        'sortColumn': !exists(json, 'sort_column') ? undefined : json['sort_column'],
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'forwardSecondarySortOffset': !exists(json, 'forward_secondary_sort_offset') ? undefined : json['forward_secondary_sort_offset'],
+        'pricePlans': !exists(json, 'price_plans') ? undefined : ((json['price_plans'] as Array<any>).map(PricePlanFromJSON)),
+        'sortDirection': !exists(json, 'sort_direction') ? undefined : json['sort_direction'],
     };
 }
 
@@ -92,12 +92,12 @@ export function ListPricePlansToJSON(value?: ListPricePlans | null): any {
     }
     return {
         
-        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
-        'limit': value.limit,
-        'sort_column': value.sortColumn,
-        'sort_direction': value.sortDirection,
-        'price_plans': value.pricePlans === undefined ? undefined : ((value.pricePlans as Array<any>).map(PricePlanToJSON)),
         'forward_sort_offset': value.forwardSortOffset,
+        'sort_column': value.sortColumn,
+        'limit': value.limit,
+        'forward_secondary_sort_offset': value.forwardSecondarySortOffset,
+        'price_plans': value.pricePlans === undefined ? undefined : ((value.pricePlans as Array<any>).map(PricePlanToJSON)),
+        'sort_direction': value.sortDirection,
     };
 }
 

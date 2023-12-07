@@ -27,11 +27,11 @@ import {
  */
 export interface CustomerUsageByTimeInput {
     /**
-     * Start date to fetch usage from.
-     * @type {Date}
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalLabelFilter>}
      * @memberof CustomerUsageByTimeInput
      */
-    startTime: Date;
+    labelFilters?: Array<CustomerPortalLabelFilter>;
     /**
      * The time bucket to group usage by, one of 'hour' and 'day'. Defaults to 'day'.
      * @type {string}
@@ -39,29 +39,29 @@ export interface CustomerUsageByTimeInput {
      */
     timeBucket?: CustomerUsageByTimeInputTimeBucketEnum;
     /**
-     * A list of primary label keys to group results by.
-     * @type {Array<string>}
-     * @memberof CustomerUsageByTimeInput
-     */
-    labelGroupByKeys?: Array<string>;
-    /**
      * The aggregate function to use for the meter.
      * @type {string}
      * @memberof CustomerUsageByTimeInput
      */
     aggregate?: CustomerUsageByTimeInputAggregateEnum;
     /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalLabelFilter>}
+     * Start date to fetch usage from.
+     * @type {Date}
      * @memberof CustomerUsageByTimeInput
      */
-    labelFilters?: Array<CustomerPortalLabelFilter>;
+    startTime: Date;
     /**
      * Name of the meter.
      * @type {string}
      * @memberof CustomerUsageByTimeInput
      */
     meterName: string;
+    /**
+     * A list of primary label keys to group results by.
+     * @type {Array<string>}
+     * @memberof CustomerUsageByTimeInput
+     */
+    labelGroupByKeys?: Array<string>;
 }
 
 /**
@@ -92,12 +92,12 @@ export function CustomerUsageByTimeInputFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'startTime': (new Date(json['start_time'])),
-        'timeBucket': !exists(json, 'time_bucket') ? undefined : json['time_bucket'],
-        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
-        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
         'labelFilters': !exists(json, 'label_filters') ? undefined : ((json['label_filters'] as Array<any>).map(CustomerPortalLabelFilterFromJSON)),
+        'timeBucket': !exists(json, 'time_bucket') ? undefined : json['time_bucket'],
+        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
+        'startTime': (new Date(json['start_time'])),
         'meterName': json['meter_name'],
+        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
     };
 }
 
@@ -110,12 +110,12 @@ export function CustomerUsageByTimeInputToJSON(value?: CustomerUsageByTimeInput 
     }
     return {
         
-        'start_time': (value.startTime.toISOString()),
-        'time_bucket': value.timeBucket,
-        'label_group_by_keys': value.labelGroupByKeys,
-        'aggregate': value.aggregate,
         'label_filters': value.labelFilters === undefined ? undefined : ((value.labelFilters as Array<any>).map(CustomerPortalLabelFilterToJSON)),
+        'time_bucket': value.timeBucket,
+        'aggregate': value.aggregate,
+        'start_time': (value.startTime.toISOString()),
         'meter_name': value.meterName,
+        'label_group_by_keys': value.labelGroupByKeys,
     };
 }
 

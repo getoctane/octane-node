@@ -26,17 +26,17 @@ export interface CustomerPortalSpendByTimeInput {
      */
     timeBucket?: CustomerPortalSpendByTimeInputTimeBucketEnum;
     /**
-     * Customer name. Required only if using vendor API Key for authentication.
-     * @type {string}
-     * @memberof CustomerPortalSpendByTimeInput
-     */
-    customerName?: string;
-    /**
      * The start time of the billing cycle for which the spend is computed
      * @type {Date}
      * @memberof CustomerPortalSpendByTimeInput
      */
     startTime: Date;
+    /**
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
+     * @memberof CustomerPortalSpendByTimeInput
+     */
+    customerName?: string;
 }
 
 /**
@@ -59,8 +59,8 @@ export function CustomerPortalSpendByTimeInputFromJSONTyped(json: any, ignoreDis
     return {
         
         'timeBucket': !exists(json, 'time_bucket') ? undefined : json['time_bucket'],
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'startTime': (new Date(json['start_time'])),
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
     };
 }
 
@@ -74,8 +74,8 @@ export function CustomerPortalSpendByTimeInputToJSON(value?: CustomerPortalSpend
     return {
         
         'time_bucket': value.timeBucket,
-        'customer_name': value.customerName,
         'start_time': (value.startTime.toISOString()),
+        'customer_name': value.customerName,
     };
 }
 

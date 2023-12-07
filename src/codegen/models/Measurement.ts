@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Measurement {
     /**
-     * The raw value of the measurement
-     * @type {number}
-     * @memberof Measurement
-     */
-    value: number;
-    /**
      * Applies to incremental meters and resets the total current value to this new value.
      * @type {boolean}
      * @memberof Measurement
@@ -38,17 +32,11 @@ export interface Measurement {
      */
     customerName?: string;
     /**
-     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
-     * @type {Date}
-     * @memberof Measurement
-     */
-    time?: Date;
-    /**
-     * The name of the event associated with this measurement. Events allow for a 1 to many relationship between measurement and meters.
+     * The unique name of the meter associated with this measurement
      * @type {string}
      * @memberof Measurement
      */
-    eventName?: string;
+    meterName?: string;
     /**
      * An ID that is unique for the set of labels and meter_name
      * @type {string}
@@ -56,17 +44,29 @@ export interface Measurement {
      */
     id?: string;
     /**
-     * The unique name of the meter associated with this measurement
+     * The name of the event associated with this measurement. Events allow for a 1 to many relationship between measurement and meters.
      * @type {string}
      * @memberof Measurement
      */
-    meterName?: string;
+    eventName?: string;
+    /**
+     * All times are parsed as `ISO-8601` formatted, UTC-based timestamps
+     * @type {Date}
+     * @memberof Measurement
+     */
+    time?: Date;
     /**
      * A set of key:value label pairs to supplement a measurement. Each meter defines its own set of primary and/or expected labels.
      * @type {{ [key: string]: string; }}
      * @memberof Measurement
      */
     labels?: { [key: string]: string; };
+    /**
+     * The raw value of the measurement
+     * @type {number}
+     * @memberof Measurement
+     */
+    value: number;
 }
 
 export function MeasurementFromJSON(json: any): Measurement {
@@ -79,14 +79,14 @@ export function MeasurementFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'value': json['value'],
         'resetTotal': !exists(json, 'reset_total') ? undefined : json['reset_total'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
-        'eventName': !exists(json, 'event_name') ? undefined : json['event_name'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'eventName': !exists(json, 'event_name') ? undefined : json['event_name'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'value': json['value'],
     };
 }
 
@@ -99,14 +99,14 @@ export function MeasurementToJSON(value?: Measurement | null): any {
     }
     return {
         
-        'value': value.value,
         'reset_total': value.resetTotal,
         'customer_name': value.customerName,
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
-        'event_name': value.eventName,
-        'id': value.id,
         'meter_name': value.meterName,
+        'id': value.id,
+        'event_name': value.eventName,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'labels': value.labels,
+        'value': value.value,
     };
 }
 

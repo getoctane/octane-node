@@ -33,29 +33,11 @@ export interface CustomerUsageByTime {
      */
     meterDisplayName?: string;
     /**
-     * The start date in UTC.
-     * @type {Date}
-     * @memberof CustomerUsageByTime
-     */
-    startTime?: Date;
-    /**
-     * Total usage in date range.
-     * @type {number}
-     * @memberof CustomerUsageByTime
-     */
-    totalUsage?: number;
-    /**
      * 
      * @type {Array<CustomerDailyUsageByTime>}
      * @memberof CustomerUsageByTime
      */
     usageByTime?: Array<CustomerDailyUsageByTime>;
-    /**
-     * The end date in UTC.
-     * @type {Date}
-     * @memberof CustomerUsageByTime
-     */
-    endTime?: Date;
     /**
      * Name of the unit the meter uses.
      * @type {string}
@@ -63,11 +45,29 @@ export interface CustomerUsageByTime {
      */
     unitName?: string;
     /**
+     * The start date in UTC.
+     * @type {Date}
+     * @memberof CustomerUsageByTime
+     */
+    startTime?: Date;
+    /**
      * Name of the meter.
      * @type {string}
      * @memberof CustomerUsageByTime
      */
     meterName?: string;
+    /**
+     * The end date in UTC.
+     * @type {Date}
+     * @memberof CustomerUsageByTime
+     */
+    endTime?: Date;
+    /**
+     * Total usage in date range.
+     * @type {number}
+     * @memberof CustomerUsageByTime
+     */
+    totalUsage?: number;
 }
 
 export function CustomerUsageByTimeFromJSON(json: any): CustomerUsageByTime {
@@ -81,12 +81,12 @@ export function CustomerUsageByTimeFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'totalUsage': !exists(json, 'total_usage') ? undefined : json['total_usage'],
         'usageByTime': !exists(json, 'usage_by_time') ? undefined : ((json['usage_by_time'] as Array<any>).map(CustomerDailyUsageByTimeFromJSON)),
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'totalUsage': !exists(json, 'total_usage') ? undefined : json['total_usage'],
     };
 }
 
@@ -100,12 +100,12 @@ export function CustomerUsageByTimeToJSON(value?: CustomerUsageByTime | null): a
     return {
         
         'meter_display_name': value.meterDisplayName,
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'total_usage': value.totalUsage,
         'usage_by_time': value.usageByTime === undefined ? undefined : ((value.usageByTime as Array<any>).map(CustomerDailyUsageByTimeToJSON)),
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
         'unit_name': value.unitName,
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
         'meter_name': value.meterName,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'total_usage': value.totalUsage,
     };
 }
 

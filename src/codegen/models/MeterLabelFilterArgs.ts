@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface MeterLabelFilterArgs {
     /**
-     * The label key to filter on.
-     * @type {string}
-     * @memberof MeterLabelFilterArgs
-     */
-    key?: string;
-    /**
      * The operation to use for the filter.
      * @type {string}
      * @memberof MeterLabelFilterArgs
@@ -37,6 +31,12 @@ export interface MeterLabelFilterArgs {
      * @memberof MeterLabelFilterArgs
      */
     value?: string;
+    /**
+     * The label key to filter on.
+     * @type {string}
+     * @memberof MeterLabelFilterArgs
+     */
+    key?: string;
 }
 
 /**
@@ -58,9 +58,9 @@ export function MeterLabelFilterArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'key': !exists(json, 'key') ? undefined : json['key'],
         'operation': !exists(json, 'operation') ? undefined : json['operation'],
         'value': !exists(json, 'value') ? undefined : json['value'],
+        'key': !exists(json, 'key') ? undefined : json['key'],
     };
 }
 
@@ -73,9 +73,9 @@ export function MeterLabelFilterArgsToJSON(value?: MeterLabelFilterArgs | null):
     }
     return {
         
-        'key': value.key,
         'operation': value.operation,
         'value': value.value,
+        'key': value.key,
     };
 }
 

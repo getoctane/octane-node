@@ -20,11 +20,47 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerSpendThreshold {
     /**
+     * UUID of the customer spend threshold
+     * @type {string}
+     * @memberof CustomerSpendThreshold
+     */
+    uuid?: string;
+    /**
      * Amount, in cents, for the customer spend threshold. Alerts will be sent when 50, 70, 90, and 100% of this threshold is reached.
      * @type {number}
      * @memberof CustomerSpendThreshold
      */
-    thresholdAmount?: number | null;
+    thresholdAmount?: number;
+    /**
+     * Type of time window to use when computing spend. One of 'BILLING_CYCLE','CALENDAR', 'ONE_TIME', 'ROLLING_WINDOW'
+     * @type {string}
+     * @memberof CustomerSpendThreshold
+     */
+    alertType?: string;
+    /**
+     * Length of calendar to use when alert_type is CALENDAR. One of 'day', 'week', 'month', 'year'
+     * @type {string}
+     * @memberof CustomerSpendThreshold
+     */
+    calendarLength?: string;
+    /**
+     * Length of time window (in days) to use when alert_type is ROLLING_WINDOW
+     * @type {number}
+     * @memberof CustomerSpendThreshold
+     */
+    rollingWindowInterval?: number;
+    /**
+     * Date to use when alert_type is ONE_TIME
+     * @type {Date}
+     * @memberof CustomerSpendThreshold
+     */
+    oneTimeDate?: Date;
+    /**
+     * Date when the one time threshold expires. If the threshold is not hit by this date, it will not be triggered.
+     * @type {Date}
+     * @memberof CustomerSpendThreshold
+     */
+    expirationDate?: Date;
 }
 
 export function CustomerSpendThresholdFromJSON(json: any): CustomerSpendThreshold {
@@ -37,7 +73,13 @@ export function CustomerSpendThresholdFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'thresholdAmount': !exists(json, 'threshold_amount') ? undefined : json['threshold_amount'],
+        'alertType': !exists(json, 'alert_type') ? undefined : json['alert_type'],
+        'calendarLength': !exists(json, 'calendar_length') ? undefined : json['calendar_length'],
+        'rollingWindowInterval': !exists(json, 'rolling_window_interval') ? undefined : json['rolling_window_interval'],
+        'oneTimeDate': !exists(json, 'one_time_date') ? undefined : (new Date(json['one_time_date'])),
+        'expirationDate': !exists(json, 'expiration_date') ? undefined : (new Date(json['expiration_date'])),
     };
 }
 
@@ -50,7 +92,13 @@ export function CustomerSpendThresholdToJSON(value?: CustomerSpendThreshold | nu
     }
     return {
         
+        'uuid': value.uuid,
         'threshold_amount': value.thresholdAmount,
+        'alert_type': value.alertType,
+        'calendar_length': value.calendarLength,
+        'rolling_window_interval': value.rollingWindowInterval,
+        'one_time_date': value.oneTimeDate === undefined ? undefined : (value.oneTimeDate.toISOString()),
+        'expiration_date': value.expirationDate === undefined ? undefined : (value.expirationDate.toISOString()),
     };
 }
 

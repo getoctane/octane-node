@@ -20,12 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerAvalaraSettings {
     /**
-     * Entity code describing this customer.
-     * @type {string}
-     * @memberof CustomerAvalaraSettings
-     */
-    entityUseCode?: string;
-    /**
      * Tax exemption number specific to this customer
      * @type {string}
      * @memberof CustomerAvalaraSettings
@@ -37,6 +31,12 @@ export interface CustomerAvalaraSettings {
      * @memberof CustomerAvalaraSettings
      */
     enableIntegration?: boolean;
+    /**
+     * Entity code describing this customer.
+     * @type {string}
+     * @memberof CustomerAvalaraSettings
+     */
+    entityUseCode?: string;
     /**
      * VAT business identification number specific to this customer
      * @type {string}
@@ -55,9 +55,9 @@ export function CustomerAvalaraSettingsFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'exemptionNumber': !exists(json, 'exemption_number') ? undefined : json['exemption_number'],
         'enableIntegration': !exists(json, 'enable_integration') ? undefined : json['enable_integration'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'businessIdentificationNumber': !exists(json, 'business_identification_number') ? undefined : json['business_identification_number'],
     };
 }
@@ -71,9 +71,9 @@ export function CustomerAvalaraSettingsToJSON(value?: CustomerAvalaraSettings | 
     }
     return {
         
-        'entity_use_code': value.entityUseCode,
         'exemption_number': value.exemptionNumber,
         'enable_integration': value.enableIntegration,
+        'entity_use_code': value.entityUseCode,
         'business_identification_number': value.businessIdentificationNumber,
     };
 }

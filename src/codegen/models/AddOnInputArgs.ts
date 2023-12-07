@@ -20,11 +20,11 @@ import {
     FeatureInputArgsToJSON,
 } from './FeatureInputArgs';
 import {
-    PriceInputArgs1,
-    PriceInputArgs1FromJSON,
-    PriceInputArgs1FromJSONTyped,
-    PriceInputArgs1ToJSON,
-} from './PriceInputArgs1';
+    PriceInputArgs,
+    PriceInputArgsFromJSON,
+    PriceInputArgsFromJSONTyped,
+    PriceInputArgsToJSON,
+} from './PriceInputArgs';
 
 /**
  * 
@@ -33,6 +33,12 @@ import {
  */
 export interface AddOnInputArgs {
     /**
+     * DEPRECATED. Use price_scheme_type and prices instead.
+     * @type {number}
+     * @memberof AddOnInputArgs
+     */
+    price?: number;
+    /**
      * This field indicates whether or not we should cut an invoice immediately upon attaching this add on to a price plan.
      * @type {boolean}
      * @memberof AddOnInputArgs
@@ -40,22 +46,10 @@ export interface AddOnInputArgs {
     immediatelyCharge?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {FeatureInputArgs}
      * @memberof AddOnInputArgs
      */
-    quantityEnabled?: boolean;
-    /**
-     * Whether this add on can only be used & charged once.
-     * @type {boolean}
-     * @memberof AddOnInputArgs
-     */
-    singleUse?: boolean;
-    /**
-     * One of 'FLAT', 'TIERED'
-     * @type {string}
-     * @memberof AddOnInputArgs
-     */
-    priceSchemeType?: AddOnInputArgsPriceSchemeTypeEnum;
+    feature: FeatureInputArgs;
     /**
      * 
      * @type {number}
@@ -64,22 +58,10 @@ export interface AddOnInputArgs {
     limit?: number;
     /**
      * 
-     * @type {FeatureInputArgs}
+     * @type {boolean}
      * @memberof AddOnInputArgs
      */
-    feature: FeatureInputArgs;
-    /**
-     * The frequency at which to price this add on.
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    priceFrequency?: number;
-    /**
-     * DEPRECATED. Use price_scheme_type and prices instead.
-     * @type {number}
-     * @memberof AddOnInputArgs
-     */
-    price?: number;
+    quantityEnabled?: boolean;
     /**
      * The frequency at which to charge this add on. Currently the only values supported are price_frequency or 1.
      * @type {number}
@@ -87,11 +69,29 @@ export interface AddOnInputArgs {
      */
     chargeFrequency?: number;
     /**
-     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
-     * @type {Array<PriceInputArgs1>}
+     * The frequency at which to price this add on.
+     * @type {number}
      * @memberof AddOnInputArgs
      */
-    prices?: Array<PriceInputArgs1>;
+    priceFrequency?: number;
+    /**
+     * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
+     * @type {Array<PriceInputArgs>}
+     * @memberof AddOnInputArgs
+     */
+    prices?: Array<PriceInputArgs>;
+    /**
+     * One of 'FLAT', 'TIERED'
+     * @type {string}
+     * @memberof AddOnInputArgs
+     */
+    priceSchemeType?: AddOnInputArgsPriceSchemeTypeEnum;
+    /**
+     * Whether this add on can only be used & charged once.
+     * @type {boolean}
+     * @memberof AddOnInputArgs
+     */
+    singleUse?: boolean;
 }
 
 /**
@@ -113,16 +113,16 @@ export function AddOnInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
-        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
-        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
-        'priceSchemeType': !exists(json, 'price_scheme_type') ? undefined : json['price_scheme_type'],
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
-        'feature': FeatureInputArgsFromJSON(json['feature']),
-        'priceFrequency': !exists(json, 'price_frequency') ? undefined : json['price_frequency'],
         'price': !exists(json, 'price') ? undefined : json['price'],
+        'immediatelyCharge': !exists(json, 'immediately_charge') ? undefined : json['immediately_charge'],
+        'feature': FeatureInputArgsFromJSON(json['feature']),
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
+        'quantityEnabled': !exists(json, 'quantity_enabled') ? undefined : json['quantity_enabled'],
         'chargeFrequency': !exists(json, 'charge_frequency') ? undefined : json['charge_frequency'],
-        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgs1FromJSON)),
+        'priceFrequency': !exists(json, 'price_frequency') ? undefined : json['price_frequency'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
+        'priceSchemeType': !exists(json, 'price_scheme_type') ? undefined : json['price_scheme_type'],
+        'singleUse': !exists(json, 'single_use') ? undefined : json['single_use'],
     };
 }
 
@@ -135,16 +135,16 @@ export function AddOnInputArgsToJSON(value?: AddOnInputArgs | null): any {
     }
     return {
         
-        'immediately_charge': value.immediatelyCharge,
-        'quantity_enabled': value.quantityEnabled,
-        'single_use': value.singleUse,
-        'price_scheme_type': value.priceSchemeType,
-        'limit': value.limit,
-        'feature': FeatureInputArgsToJSON(value.feature),
-        'price_frequency': value.priceFrequency,
         'price': value.price,
+        'immediately_charge': value.immediatelyCharge,
+        'feature': FeatureInputArgsToJSON(value.feature),
+        'limit': value.limit,
+        'quantity_enabled': value.quantityEnabled,
         'charge_frequency': value.chargeFrequency,
-        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgs1ToJSON)),
+        'price_frequency': value.priceFrequency,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
+        'price_scheme_type': value.priceSchemeType,
+        'single_use': value.singleUse,
     };
 }
 

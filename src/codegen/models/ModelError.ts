@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ModelError {
     /**
+     * Error code
+     * @type {number}
+     * @memberof ModelError
+     */
+    code?: number;
+    /**
      * Error message
      * @type {string}
      * @memberof ModelError
@@ -31,12 +37,6 @@ export interface ModelError {
      * @memberof ModelError
      */
     errors?: object;
-    /**
-     * Error code
-     * @type {number}
-     * @memberof ModelError
-     */
-    code?: number;
     /**
      * Error name
      * @type {string}
@@ -55,9 +55,9 @@ export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     }
     return {
         
+        'code': !exists(json, 'code') ? undefined : json['code'],
         'message': !exists(json, 'message') ? undefined : json['message'],
         'errors': !exists(json, 'errors') ? undefined : json['errors'],
-        'code': !exists(json, 'code') ? undefined : json['code'],
         'status': !exists(json, 'status') ? undefined : json['status'],
     };
 }
@@ -71,9 +71,9 @@ export function ModelErrorToJSON(value?: ModelError | null): any {
     }
     return {
         
+        'code': value.code,
         'message': value.message,
         'errors': value.errors,
-        'code': value.code,
         'status': value.status,
     };
 }

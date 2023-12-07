@@ -27,12 +27,6 @@ export interface ApplyCouponInputArgs {
     customerName?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ApplyCouponInputArgs
-     */
-    code?: string;
-    /**
-     * 
      * @type {number}
      * @memberof ApplyCouponInputArgs
      */
@@ -43,6 +37,12 @@ export interface ApplyCouponInputArgs {
      * @memberof ApplyCouponInputArgs
      */
     name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApplyCouponInputArgs
+     */
+    code?: string;
     /**
      * 
      * @type {number}
@@ -62,9 +62,9 @@ export function ApplyCouponInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'code': !exists(json, 'code') ? undefined : json['code'],
         'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'code': !exists(json, 'code') ? undefined : json['code'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
     };
 }
@@ -79,9 +79,9 @@ export function ApplyCouponInputArgsToJSON(value?: ApplyCouponInputArgs | null):
     return {
         
         'customer_name': value.customerName,
-        'code': value.code,
         'customer_id': value.customerId,
         'name': value.name,
+        'code': value.code,
         'vendor_id': value.vendorId,
     };
 }

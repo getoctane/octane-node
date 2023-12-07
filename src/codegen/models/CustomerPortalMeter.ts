@@ -39,23 +39,11 @@ export interface CustomerPortalMeter {
      */
     meterDisplayName?: string;
     /**
-     * Aggregation of meter. E.g. SUM, TIME_WEIGHTED_SUM, MAX, or LATEST.
+     * Name of the unit the meter uses.
      * @type {string}
      * @memberof CustomerPortalMeter
      */
-    aggregation?: string;
-    /**
-     * The raw and prettified label keys and values
-     * @type {Array<CustomerPortalMeterLabelsWithDisplayName>}
-     * @memberof CustomerPortalMeter
-     */
-    labelsWithDisplayNames?: Array<CustomerPortalMeterLabelsWithDisplayName>;
-    /**
-     * Type of the meter. E.g. COUNTER or GAUGE.
-     * @type {string}
-     * @memberof CustomerPortalMeter
-     */
-    meterType?: string;
+    unitName?: string;
     /**
      * Type of meter data. E.g. DISCRETE or CONTINUOUS.
      * @type {string}
@@ -63,11 +51,11 @@ export interface CustomerPortalMeter {
      */
     dataType?: string;
     /**
-     * Name of the unit the meter uses.
+     * Aggregation of meter. E.g. SUM, TIME_WEIGHTED_SUM, MAX, or LATEST.
      * @type {string}
      * @memberof CustomerPortalMeter
      */
-    unitName?: string;
+    aggregation?: string;
     /**
      * Name of the meter.
      * @type {string}
@@ -80,6 +68,18 @@ export interface CustomerPortalMeter {
      * @memberof CustomerPortalMeter
      */
     labels?: Array<CustomerPortalMeterLabels>;
+    /**
+     * Type of the meter. E.g. COUNTER or GAUGE.
+     * @type {string}
+     * @memberof CustomerPortalMeter
+     */
+    meterType?: string;
+    /**
+     * The raw and prettified label keys and values
+     * @type {Array<CustomerPortalMeterLabelsWithDisplayName>}
+     * @memberof CustomerPortalMeter
+     */
+    labelsWithDisplayNames?: Array<CustomerPortalMeterLabelsWithDisplayName>;
 }
 
 export function CustomerPortalMeterFromJSON(json: any): CustomerPortalMeter {
@@ -93,13 +93,13 @@ export function CustomerPortalMeterFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'meterDisplayName': !exists(json, 'meter_display_name') ? undefined : json['meter_display_name'],
-        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
-        'labelsWithDisplayNames': !exists(json, 'labels_with_display_names') ? undefined : ((json['labels_with_display_names'] as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameFromJSON)),
-        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
-        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'dataType': !exists(json, 'data_type') ? undefined : json['data_type'],
+        'aggregation': !exists(json, 'aggregation') ? undefined : json['aggregation'],
         'meterName': !exists(json, 'meter_name') ? undefined : json['meter_name'],
         'labels': !exists(json, 'labels') ? undefined : ((json['labels'] as Array<any>).map(CustomerPortalMeterLabelsFromJSON)),
+        'meterType': !exists(json, 'meter_type') ? undefined : json['meter_type'],
+        'labelsWithDisplayNames': !exists(json, 'labels_with_display_names') ? undefined : ((json['labels_with_display_names'] as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameFromJSON)),
     };
 }
 
@@ -113,13 +113,13 @@ export function CustomerPortalMeterToJSON(value?: CustomerPortalMeter | null): a
     return {
         
         'meter_display_name': value.meterDisplayName,
-        'aggregation': value.aggregation,
-        'labels_with_display_names': value.labelsWithDisplayNames === undefined ? undefined : ((value.labelsWithDisplayNames as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameToJSON)),
-        'meter_type': value.meterType,
-        'data_type': value.dataType,
         'unit_name': value.unitName,
+        'data_type': value.dataType,
+        'aggregation': value.aggregation,
         'meter_name': value.meterName,
         'labels': value.labels === undefined ? undefined : ((value.labels as Array<any>).map(CustomerPortalMeterLabelsToJSON)),
+        'meter_type': value.meterType,
+        'labels_with_display_names': value.labelsWithDisplayNames === undefined ? undefined : ((value.labelsWithDisplayNames as Array<any>).map(CustomerPortalMeterLabelsWithDisplayNameToJSON)),
     };
 }
 

@@ -20,7 +20,33 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalAccruedRevenueLineItem {
     /**
-     * 
+     * A unique identifier for the item being returned.
+     * @type {string}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    itemId?: string;
+    /**
+     * Display name of the item being returned using a fallback logic. 
+     *         For metered component will be meterered component display name or meter display name or meter name, 
+     *         for add_ons will be feature display name or feature name, 
+     *         for base price will be base price description or price plan display name or price plan name,
+     *         for minimum charge will be price plan display name or price plan name combined with the words 'Minimum Charge',
+     *         for metered component minimum charge will be metered component display name or meter display name or meter name
+     *         combined with the worlds 'Minimum Charge'
+     *         for discount it will be scope of the discount combined with the word 'Discount'
+     *         
+     * @type {string}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    itemDisplayName?: string;
+    /**
+     * Usage for this line item. Only applicable for metered components.
+     * @type {number}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    usage?: number;
+    /**
+     *  DEPRECATED
      *         The identifier of the item being returned. 
      *         For metered component will be meter name, 
      *         for add_ons will be feature name, 
@@ -32,6 +58,13 @@ export interface CustomerPortalAccruedRevenueLineItem {
      * @memberof CustomerPortalAccruedRevenueLineItem
      */
     itemIdentifier?: string;
+    /**
+     * Any extra metadata associated with the item. 
+     *         Will include the labels for metered components and metered component minimum charges when applicable
+     * @type {{ [key: string]: string; }}
+     * @memberof CustomerPortalAccruedRevenueLineItem
+     */
+    metadata?: { [key: string]: string; };
     /**
      * Accrued revenue for this line item in cents
      * @type {number}
@@ -50,19 +83,6 @@ export interface CustomerPortalAccruedRevenueLineItem {
      * @memberof CustomerPortalAccruedRevenueLineItem
      */
     usageUnitName?: string;
-    /**
-     * Any extra metadata associated with the item. 
-     *         Will include the labels for metered components and metered component minimum charges when applicable
-     * @type {{ [key: string]: string; }}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    metadata?: { [key: string]: string; };
-    /**
-     * Usage for this line item. Only applicable for metered components.
-     * @type {number}
-     * @memberof CustomerPortalAccruedRevenueLineItem
-     */
-    usage?: number;
 }
 
 export function CustomerPortalAccruedRevenueLineItemFromJSON(json: any): CustomerPortalAccruedRevenueLineItem {
@@ -75,12 +95,14 @@ export function CustomerPortalAccruedRevenueLineItemFromJSONTyped(json: any, ign
     }
     return {
         
+        'itemId': !exists(json, 'item_id') ? undefined : json['item_id'],
+        'itemDisplayName': !exists(json, 'item_display_name') ? undefined : json['item_display_name'],
+        'usage': !exists(json, 'usage') ? undefined : json['usage'],
         'itemIdentifier': !exists(json, 'item_identifier') ? undefined : json['item_identifier'],
+        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
         'revenue': !exists(json, 'revenue') ? undefined : json['revenue'],
         'itemType': !exists(json, 'item_type') ? undefined : json['item_type'],
         'usageUnitName': !exists(json, 'usage_unit_name') ? undefined : json['usage_unit_name'],
-        'metadata': !exists(json, 'metadata') ? undefined : json['metadata'],
-        'usage': !exists(json, 'usage') ? undefined : json['usage'],
     };
 }
 
@@ -93,12 +115,14 @@ export function CustomerPortalAccruedRevenueLineItemToJSON(value?: CustomerPorta
     }
     return {
         
+        'item_id': value.itemId,
+        'item_display_name': value.itemDisplayName,
+        'usage': value.usage,
         'item_identifier': value.itemIdentifier,
+        'metadata': value.metadata,
         'revenue': value.revenue,
         'item_type': value.itemType,
         'usage_unit_name': value.usageUnitName,
-        'metadata': value.metadata,
-        'usage': value.usage,
     };
 }
 

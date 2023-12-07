@@ -45,24 +45,6 @@ import {
  */
 export interface UpdatePricePlanInPlaceArgs {
     /**
-     * 
-     * @type {Array<LimitInputArgs>}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    limits?: Array<LimitInputArgs>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    displayName?: string;
-    /**
-     * 
-     * @type {Array<MeteredComponentInputArgs>}
-     * @memberof UpdatePricePlanInPlaceArgs
-     */
-    meteredComponents?: Array<MeteredComponentInputArgs>;
-    /**
      * Custom invoice description for the base price line item.
      * @type {string}
      * @memberof UpdatePricePlanInPlaceArgs
@@ -70,10 +52,10 @@ export interface UpdatePricePlanInPlaceArgs {
     basePriceDescription?: string | null;
     /**
      * 
-     * @type {string}
+     * @type {Array<LimitInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
-    description?: string;
+    limits?: Array<LimitInputArgs>;
     /**
      * 
      * @type {Array<AddOnInputArgs>}
@@ -82,10 +64,28 @@ export interface UpdatePricePlanInPlaceArgs {
     addOns?: Array<AddOnInputArgs>;
     /**
      * 
+     * @type {string}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    description?: string;
+    /**
+     * 
      * @type {Array<FeatureInputArgs>}
      * @memberof UpdatePricePlanInPlaceArgs
      */
     features?: Array<FeatureInputArgs>;
+    /**
+     * 
+     * @type {Array<MeteredComponentInputArgs>}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    meteredComponents?: Array<MeteredComponentInputArgs>;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdatePricePlanInPlaceArgs
+     */
+    displayName?: string;
 }
 
 export function UpdatePricePlanInPlaceArgsFromJSON(json: any): UpdatePricePlanInPlaceArgs {
@@ -98,13 +98,13 @@ export function UpdatePricePlanInPlaceArgsFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
-        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
         'basePriceDescription': !exists(json, 'base_price_description') ? undefined : json['base_price_description'],
-        'description': !exists(json, 'description') ? undefined : json['description'],
+        'limits': !exists(json, 'limits') ? undefined : ((json['limits'] as Array<any>).map(LimitInputArgsFromJSON)),
         'addOns': !exists(json, 'add_ons') ? undefined : ((json['add_ons'] as Array<any>).map(AddOnInputArgsFromJSON)),
+        'description': !exists(json, 'description') ? undefined : json['description'],
         'features': !exists(json, 'features') ? undefined : ((json['features'] as Array<any>).map(FeatureInputArgsFromJSON)),
+        'meteredComponents': !exists(json, 'metered_components') ? undefined : ((json['metered_components'] as Array<any>).map(MeteredComponentInputArgsFromJSON)),
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
     };
 }
 
@@ -117,13 +117,13 @@ export function UpdatePricePlanInPlaceArgsToJSON(value?: UpdatePricePlanInPlaceA
     }
     return {
         
-        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
-        'display_name': value.displayName,
-        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
         'base_price_description': value.basePriceDescription,
-        'description': value.description,
+        'limits': value.limits === undefined ? undefined : ((value.limits as Array<any>).map(LimitInputArgsToJSON)),
         'add_ons': value.addOns === undefined ? undefined : ((value.addOns as Array<any>).map(AddOnInputArgsToJSON)),
+        'description': value.description,
         'features': value.features === undefined ? undefined : ((value.features as Array<any>).map(FeatureInputArgsToJSON)),
+        'metered_components': value.meteredComponents === undefined ? undefined : ((value.meteredComponents as Array<any>).map(MeteredComponentInputArgsToJSON)),
+        'display_name': value.displayName,
     };
 }
 

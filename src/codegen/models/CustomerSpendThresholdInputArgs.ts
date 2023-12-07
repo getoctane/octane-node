@@ -25,6 +25,30 @@ export interface CustomerSpendThresholdInputArgs {
      * @memberof CustomerSpendThresholdInputArgs
      */
     thresholdAmount: number;
+    /**
+     * Date to use when alert_type is ONE_TIME
+     * @type {Date}
+     * @memberof CustomerSpendThresholdInputArgs
+     */
+    oneTimeDate?: Date;
+    /**
+     * Length of time window (in days) to use when alert_type is ROLLING_WINDOW. Must be > 0. E.g. 2 indicates 2 days including the currently active day.
+     * @type {number}
+     * @memberof CustomerSpendThresholdInputArgs
+     */
+    rollingWindowInterval?: number;
+    /**
+     * Length of calendar to use when alert_type is CALENDAR. One of 'day', 'week', 'month', 'year'.
+     * @type {string}
+     * @memberof CustomerSpendThresholdInputArgs
+     */
+    calendarLength?: string;
+    /**
+     * Type of time window to use when computing spend. One of 'BILLING_CYCLE','CALENDAR', 'ONE_TIME', 'ROLLING_WINDOW'. If missing, defaults to BILLING_CYCLE.
+     * @type {string}
+     * @memberof CustomerSpendThresholdInputArgs
+     */
+    alertType?: string;
 }
 
 export function CustomerSpendThresholdInputArgsFromJSON(json: any): CustomerSpendThresholdInputArgs {
@@ -38,6 +62,10 @@ export function CustomerSpendThresholdInputArgsFromJSONTyped(json: any, ignoreDi
     return {
         
         'thresholdAmount': json['threshold_amount'],
+        'oneTimeDate': !exists(json, 'one_time_date') ? undefined : (new Date(json['one_time_date'])),
+        'rollingWindowInterval': !exists(json, 'rolling_window_interval') ? undefined : json['rolling_window_interval'],
+        'calendarLength': !exists(json, 'calendar_length') ? undefined : json['calendar_length'],
+        'alertType': !exists(json, 'alert_type') ? undefined : json['alert_type'],
     };
 }
 
@@ -51,6 +79,10 @@ export function CustomerSpendThresholdInputArgsToJSON(value?: CustomerSpendThres
     return {
         
         'threshold_amount': value.thresholdAmount,
+        'one_time_date': value.oneTimeDate === undefined ? undefined : (value.oneTimeDate.toISOString()),
+        'rolling_window_interval': value.rollingWindowInterval,
+        'calendar_length': value.calendarLength,
+        'alert_type': value.alertType,
     };
 }
 

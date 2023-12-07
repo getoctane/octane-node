@@ -27,17 +27,11 @@ import {
  */
 export interface CustomerPortalUsageByTimeInput {
     /**
-     * Customer name. Required only if using vendor API Key for authentication.
-     * @type {string}
+     * Primary labels with keys and values
+     * @type {Array<CustomerPortalLabelFilter>}
      * @memberof CustomerPortalUsageByTimeInput
      */
-    customerName?: string;
-    /**
-     * Start date to fetch usage from.
-     * @type {Date}
-     * @memberof CustomerPortalUsageByTimeInput
-     */
-    startTime: Date;
+    labelFilters?: Array<CustomerPortalLabelFilter>;
     /**
      * The time bucket to group usage by, one of 'hour' and 'day'. Defaults to 'day'.
      * @type {string}
@@ -45,11 +39,11 @@ export interface CustomerPortalUsageByTimeInput {
      */
     timeBucket?: CustomerPortalUsageByTimeInputTimeBucketEnum;
     /**
-     * A list of primary label keys to group results by.
-     * @type {Array<string>}
+     * Customer name. Required only if using vendor API Key for authentication.
+     * @type {string}
      * @memberof CustomerPortalUsageByTimeInput
      */
-    labelGroupByKeys?: Array<string>;
+    customerName?: string;
     /**
      * The aggregate function to use for the meter.
      * @type {string}
@@ -57,17 +51,23 @@ export interface CustomerPortalUsageByTimeInput {
      */
     aggregate?: CustomerPortalUsageByTimeInputAggregateEnum;
     /**
-     * Primary labels with keys and values
-     * @type {Array<CustomerPortalLabelFilter>}
+     * Start date to fetch usage from.
+     * @type {Date}
      * @memberof CustomerPortalUsageByTimeInput
      */
-    labelFilters?: Array<CustomerPortalLabelFilter>;
+    startTime: Date;
     /**
      * Name of the meter.
      * @type {string}
      * @memberof CustomerPortalUsageByTimeInput
      */
     meterName: string;
+    /**
+     * A list of primary label keys to group results by.
+     * @type {Array<string>}
+     * @memberof CustomerPortalUsageByTimeInput
+     */
+    labelGroupByKeys?: Array<string>;
 }
 
 /**
@@ -98,13 +98,13 @@ export function CustomerPortalUsageByTimeInputFromJSONTyped(json: any, ignoreDis
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
-        'startTime': (new Date(json['start_time'])),
-        'timeBucket': !exists(json, 'time_bucket') ? undefined : json['time_bucket'],
-        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
-        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
         'labelFilters': !exists(json, 'label_filters') ? undefined : ((json['label_filters'] as Array<any>).map(CustomerPortalLabelFilterFromJSON)),
+        'timeBucket': !exists(json, 'time_bucket') ? undefined : json['time_bucket'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'aggregate': !exists(json, 'aggregate') ? undefined : json['aggregate'],
+        'startTime': (new Date(json['start_time'])),
         'meterName': json['meter_name'],
+        'labelGroupByKeys': !exists(json, 'label_group_by_keys') ? undefined : json['label_group_by_keys'],
     };
 }
 
@@ -117,13 +117,13 @@ export function CustomerPortalUsageByTimeInputToJSON(value?: CustomerPortalUsage
     }
     return {
         
-        'customer_name': value.customerName,
-        'start_time': (value.startTime.toISOString()),
-        'time_bucket': value.timeBucket,
-        'label_group_by_keys': value.labelGroupByKeys,
-        'aggregate': value.aggregate,
         'label_filters': value.labelFilters === undefined ? undefined : ((value.labelFilters as Array<any>).map(CustomerPortalLabelFilterToJSON)),
+        'time_bucket': value.timeBucket,
+        'customer_name': value.customerName,
+        'aggregate': value.aggregate,
+        'start_time': (value.startTime.toISOString()),
         'meter_name': value.meterName,
+        'label_group_by_keys': value.labelGroupByKeys,
     };
 }
 

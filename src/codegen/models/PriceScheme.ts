@@ -80,6 +80,12 @@ export interface PriceScheme {
      * @memberof PriceScheme
      */
     postMinimumChargePercentageChange?: number | null;
+    /**
+     * The frequency at which the meter should be tiered, in months. For example, if set to 12, the usage over the full year will be included when computing the tier. Only available for TIERED and STAIRSTEP scheme_types with a SUM or TIME_WEIGHTED_SUM meter.
+     * @type {number}
+     * @memberof PriceScheme
+     */
+    frequency?: number;
 }
 
 export function PriceSchemeFromJSON(json: any): PriceScheme {
@@ -101,6 +107,7 @@ export function PriceSchemeFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
         'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
+        'frequency': !exists(json, 'frequency') ? undefined : json['frequency'],
     };
 }
 
@@ -121,6 +128,7 @@ export function PriceSchemeToJSON(value?: PriceScheme | null): any {
         'time_unit_name': value.timeUnitName,
         'unit_name': value.unitName,
         'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
+        'frequency': value.frequency,
     };
 }
 

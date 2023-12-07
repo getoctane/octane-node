@@ -38,6 +38,24 @@ export interface SelfServeSettings {
      */
     creditsExpirationUnit?: string | null;
     /**
+     * True if credits should be granted immediately upon purchase. Defaults to True if not set or if `credits_charge_immediately` is True.
+     * @type {boolean}
+     * @memberof SelfServeSettings
+     */
+    creditsGrantImmediately?: boolean;
+    /**
+     * True if credits should be charged immediately upon purchase. Defaults to False.
+     * @type {boolean}
+     * @memberof SelfServeSettings
+     */
+    creditsChargeImmediately?: boolean;
+    /**
+     * True if credits should be voided if the payment fails. Defaults to False.
+     * @type {boolean}
+     * @memberof SelfServeSettings
+     */
+    creditsVoidOnPaymentFailure?: boolean;
+    /**
      * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
      * @type {number}
      * @memberof SelfServeSettings
@@ -56,7 +74,7 @@ export interface SelfServeSettings {
      */
     enableAddressFields?: boolean;
     /**
-     * True if the vendor has enabled customization for their customer portal.
+     * DEPRECATED: Please use 'customization_settings' as needed.
      * @type {boolean}
      * @memberof SelfServeSettings
      */
@@ -76,6 +94,9 @@ export function SelfServeSettingsFromJSONTyped(json: any, ignoreDiscriminator: b
         'purchaseCredits': json['purchase_credits'],
         'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
         'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'creditsGrantImmediately': !exists(json, 'credits_grant_immediately') ? undefined : json['credits_grant_immediately'],
+        'creditsChargeImmediately': !exists(json, 'credits_charge_immediately') ? undefined : json['credits_charge_immediately'],
+        'creditsVoidOnPaymentFailure': !exists(json, 'credits_void_on_payment_failure') ? undefined : json['credits_void_on_payment_failure'],
         'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
         'switchPricePlans': json['switch_price_plans'],
         'enableAddressFields': !exists(json, 'enable_address_fields') ? undefined : json['enable_address_fields'],
@@ -95,6 +116,9 @@ export function SelfServeSettingsToJSON(value?: SelfServeSettings | null): any {
         'purchase_credits': value.purchaseCredits,
         'credits_expiration_length': value.creditsExpirationLength,
         'credits_expiration_unit': value.creditsExpirationUnit,
+        'credits_grant_immediately': value.creditsGrantImmediately,
+        'credits_charge_immediately': value.creditsChargeImmediately,
+        'credits_void_on_payment_failure': value.creditsVoidOnPaymentFailure,
         'price_per_credit_cents': value.pricePerCreditCents,
         'switch_price_plans': value.switchPricePlans,
         'enable_address_fields': value.enableAddressFields,

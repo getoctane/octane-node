@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface RollApiKeys {
     /**
-     * 
-     * @type {boolean}
-     * @memberof RollApiKeys
-     */
-    success?: boolean;
-    /**
      * The newly generated API Key.
      * @type {string}
      * @memberof RollApiKeys
      */
     apiKey?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RollApiKeys
+     */
+    success?: boolean;
 }
 
 export function RollApiKeysFromJSON(json: any): RollApiKeys {
@@ -43,8 +43,8 @@ export function RollApiKeysFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'success': !exists(json, 'success') ? undefined : json['success'],
         'apiKey': !exists(json, 'api_key') ? undefined : json['api_key'],
+        'success': !exists(json, 'success') ? undefined : json['success'],
     };
 }
 
@@ -57,8 +57,8 @@ export function RollApiKeysToJSON(value?: RollApiKeys | null): any {
     }
     return {
         
-        'success': value.success,
         'api_key': value.apiKey,
+        'success': value.success,
     };
 }
 

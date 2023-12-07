@@ -20,29 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateCreditTopOffPlanInputArgs {
     /**
-     * Time length unit for the default expiration for credits granted in a top off.
-     * @type {string}
-     * @memberof UpdateCreditTopOffPlanInputArgs
-     */
-    expirationUnit?: string;
-    /**
      * The threshold in amount of credits at which the balance will be topped off.
      * @type {number}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
     triggerAmount?: number;
     /**
-     * Amount of credits that are granted in a single top off.
-     * @type {number}
+     * Time length unit for the default expiration for credits granted in a top off.
+     * @type {string}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
-    grantAmount?: number;
-    /**
-     * Whether to charge the customer immediately when the top off is triggered.
-     * @type {boolean}
-     * @memberof UpdateCreditTopOffPlanInputArgs
-     */
-    chargeImmediately?: boolean;
+    expirationUnit?: string;
     /**
      * Price for the grant, in lowest denomination (i.e cents).
      * @type {number}
@@ -50,17 +38,35 @@ export interface UpdateCreditTopOffPlanInputArgs {
      */
     price?: number;
     /**
-     * Time length of the default expiration for credits granted in a top off.
+     * Amount of credits that are granted in a single top off.
      * @type {number}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
-    expirationLength?: number;
+    grantAmount?: number;
     /**
      * A description that will be used on the invoice line items.
      * @type {string}
      * @memberof UpdateCreditTopOffPlanInputArgs
      */
     description?: string | null;
+    /**
+     * Whether to charge the customer immediately when the top off is triggered.
+     * @type {boolean}
+     * @memberof UpdateCreditTopOffPlanInputArgs
+     */
+    chargeImmediately?: boolean;
+    /**
+     * Time length of the default expiration for credits granted in a top off.
+     * @type {number}
+     * @memberof UpdateCreditTopOffPlanInputArgs
+     */
+    expirationLength?: number;
+    /**
+     * Whether to add the grants immediately to the credit ledger or wait until either the corresponding invoice is paid or the grant is manually added to the ledger. When charge_immediately is true, this field has no impact since the credits will be granted only after successful payment. Defaults to true.
+     * @type {boolean}
+     * @memberof UpdateCreditTopOffPlanInputArgs
+     */
+    grantImmediately?: boolean;
 }
 
 export function UpdateCreditTopOffPlanInputArgsFromJSON(json: any): UpdateCreditTopOffPlanInputArgs {
@@ -73,13 +79,14 @@ export function UpdateCreditTopOffPlanInputArgsFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
         'triggerAmount': !exists(json, 'trigger_amount') ? undefined : json['trigger_amount'],
-        'grantAmount': !exists(json, 'grant_amount') ? undefined : json['grant_amount'],
-        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
+        'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
         'price': !exists(json, 'price') ? undefined : json['price'],
-        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'grantAmount': !exists(json, 'grant_amount') ? undefined : json['grant_amount'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
+        'expirationLength': !exists(json, 'expiration_length') ? undefined : json['expiration_length'],
+        'grantImmediately': !exists(json, 'grant_immediately') ? undefined : json['grant_immediately'],
     };
 }
 
@@ -92,13 +99,14 @@ export function UpdateCreditTopOffPlanInputArgsToJSON(value?: UpdateCreditTopOff
     }
     return {
         
-        'expiration_unit': value.expirationUnit,
         'trigger_amount': value.triggerAmount,
-        'grant_amount': value.grantAmount,
-        'charge_immediately': value.chargeImmediately,
+        'expiration_unit': value.expirationUnit,
         'price': value.price,
-        'expiration_length': value.expirationLength,
+        'grant_amount': value.grantAmount,
         'description': value.description,
+        'charge_immediately': value.chargeImmediately,
+        'expiration_length': value.expirationLength,
+        'grant_immediately': value.grantImmediately,
     };
 }
 

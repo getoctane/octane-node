@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface DeleteSubscriptionArgs {
     /**
      * 
-     * @type {Date}
+     * @type {number}
      * @memberof DeleteSubscriptionArgs
      */
-    expireAt?: Date;
+    customerId?: number;
     /**
      * 
      * @type {number}
      * @memberof DeleteSubscriptionArgs
      */
-    customerId?: number;
+    vendorId?: number;
     /**
      * Boolean that indicates whether to expire the subscription at the end of thebilling cycle. If 'true' and `expire_at` is set, will return an error.
      * @type {boolean}
@@ -39,10 +39,10 @@ export interface DeleteSubscriptionArgs {
     atCycleEnd?: boolean;
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof DeleteSubscriptionArgs
      */
-    vendorId?: number;
+    expireAt?: Date;
 }
 
 export function DeleteSubscriptionArgsFromJSON(json: any): DeleteSubscriptionArgs {
@@ -55,10 +55,10 @@ export function DeleteSubscriptionArgsFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'expireAt': !exists(json, 'expire_at') ? undefined : (new Date(json['expire_at'])),
         'customerId': !exists(json, 'customer_id') ? undefined : json['customer_id'],
-        'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
         'vendorId': !exists(json, 'vendor_id') ? undefined : json['vendor_id'],
+        'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
+        'expireAt': !exists(json, 'expire_at') ? undefined : (new Date(json['expire_at'])),
     };
 }
 
@@ -71,10 +71,10 @@ export function DeleteSubscriptionArgsToJSON(value?: DeleteSubscriptionArgs | nu
     }
     return {
         
-        'expire_at': value.expireAt === undefined ? undefined : (value.expireAt.toISOString()),
         'customer_id': value.customerId,
-        'at_cycle_end': value.atCycleEnd,
         'vendor_id': value.vendorId,
+        'at_cycle_end': value.atCycleEnd,
+        'expire_at': value.expireAt === undefined ? undefined : (value.expireAt.toISOString()),
     };
 }
 

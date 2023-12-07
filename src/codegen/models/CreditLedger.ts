@@ -20,29 +20,29 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditLedger {
     /**
-     * The change in numer of credits
-     * @type {number}
-     * @memberof CreditLedger
-     */
-    amount?: number;
-    /**
      * 
      * @type {boolean}
      * @memberof CreditLedger
      */
     pending?: boolean;
     /**
-     * Credit balance as of this change
-     * @type {number}
-     * @memberof CreditLedger
-     */
-    balance?: number;
-    /**
      * The time at which this credit balance change occurred.
      * @type {Date}
      * @memberof CreditLedger
      */
     timestamp?: Date;
+    /**
+     * The change in numer of credits
+     * @type {number}
+     * @memberof CreditLedger
+     */
+    amount?: number;
+    /**
+     * Credit balance as of this change
+     * @type {number}
+     * @memberof CreditLedger
+     */
+    balance?: number;
 }
 
 export function CreditLedgerFromJSON(json: any): CreditLedger {
@@ -55,10 +55,10 @@ export function CreditLedgerFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'pending': !exists(json, 'pending') ? undefined : json['pending'],
-        'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'timestamp': !exists(json, 'timestamp') ? undefined : (new Date(json['timestamp'])),
+        'amount': !exists(json, 'amount') ? undefined : json['amount'],
+        'balance': !exists(json, 'balance') ? undefined : json['balance'],
     };
 }
 
@@ -71,10 +71,10 @@ export function CreditLedgerToJSON(value?: CreditLedger | null): any {
     }
     return {
         
-        'amount': value.amount,
         'pending': value.pending,
-        'balance': value.balance,
         'timestamp': value.timestamp === undefined ? undefined : (value.timestamp.toISOString()),
+        'amount': value.amount,
+        'balance': value.balance,
     };
 }
 

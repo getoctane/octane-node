@@ -20,29 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalCreditGrant {
     /**
-     * Number of unused credits still remaining in grant
-     * @type {number}
-     * @memberof CustomerPortalCreditGrant
-     */
-    amountRemaining: number;
-    /**
      * Number of credits granted
      * @type {number}
      * @memberof CustomerPortalCreditGrant
      */
     amount: number;
-    /**
-     * The source of the grant.
-     * @type {string}
-     * @memberof CustomerPortalCreditGrant
-     */
-    source: string;
-    /**
-     * The date at which this grant expires
-     * @type {Date}
-     * @memberof CustomerPortalCreditGrant
-     */
-    expiresAt?: Date;
     /**
      * Total price for the credits, in cents
      * @type {number}
@@ -50,17 +32,29 @@ export interface CustomerPortalCreditGrant {
      */
     price: number;
     /**
+     * A unique identifier for this grant
+     * @type {string}
+     * @memberof CustomerPortalCreditGrant
+     */
+    uuid: string;
+    /**
      * Amount already invoiced for the price of the grant, in cents
      * @type {number}
      * @memberof CustomerPortalCreditGrant
      */
     amountPaid: number;
     /**
-     * A unique identifier for this grant
+     * Optional description. This is only viewable internally
      * @type {string}
      * @memberof CustomerPortalCreditGrant
      */
-    uuid: string;
+    description?: string;
+    /**
+     * The source of the grant.
+     * @type {string}
+     * @memberof CustomerPortalCreditGrant
+     */
+    source: string;
     /**
      * The date at which this grant is effective
      * @type {Date}
@@ -68,11 +62,17 @@ export interface CustomerPortalCreditGrant {
      */
     effectiveAt: Date;
     /**
-     * Optional description. This is only viewable internally
-     * @type {string}
+     * The date at which this grant expires
+     * @type {Date}
      * @memberof CustomerPortalCreditGrant
      */
-    description?: string;
+    expiresAt?: Date;
+    /**
+     * Number of unused credits still remaining in grant
+     * @type {number}
+     * @memberof CustomerPortalCreditGrant
+     */
+    amountRemaining: number;
 }
 
 export function CustomerPortalCreditGrantFromJSON(json: any): CustomerPortalCreditGrant {
@@ -85,15 +85,15 @@ export function CustomerPortalCreditGrantFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'amountRemaining': json['amount_remaining'],
         'amount': json['amount'],
-        'source': json['source'],
-        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
         'price': json['price'],
-        'amountPaid': json['amount_paid'],
         'uuid': json['uuid'],
-        'effectiveAt': (new Date(json['effective_at'])),
+        'amountPaid': json['amount_paid'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'source': json['source'],
+        'effectiveAt': (new Date(json['effective_at'])),
+        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'amountRemaining': json['amount_remaining'],
     };
 }
 
@@ -106,15 +106,15 @@ export function CustomerPortalCreditGrantToJSON(value?: CustomerPortalCreditGran
     }
     return {
         
-        'amount_remaining': value.amountRemaining,
         'amount': value.amount,
-        'source': value.source,
-        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
         'price': value.price,
-        'amount_paid': value.amountPaid,
         'uuid': value.uuid,
-        'effective_at': (value.effectiveAt.toISOString()),
+        'amount_paid': value.amountPaid,
         'description': value.description,
+        'source': value.source,
+        'effective_at': (value.effectiveAt.toISOString()),
+        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'amount_remaining': value.amountRemaining,
     };
 }
 

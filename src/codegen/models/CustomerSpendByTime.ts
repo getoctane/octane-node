@@ -27,17 +27,11 @@ import {
  */
 export interface CustomerSpendByTime {
     /**
-     * 
-     * @type {Array<AccruedRevenueLineItem>}
-     * @memberof CustomerSpendByTime
-     */
-    lineItems?: Array<AccruedRevenueLineItem>;
-    /**
-     * The end time of this time period till when the spend is computed
+     * The start time of this time period for which the spend is computed
      * @type {Date}
      * @memberof CustomerSpendByTime
      */
-    endTime?: Date;
+    startTime?: Date;
     /**
      * Total spend for the time period in cents.
      * @type {number}
@@ -45,11 +39,17 @@ export interface CustomerSpendByTime {
      */
     totalSpend?: number;
     /**
-     * The start time of this time period for which the spend is computed
+     * The end time of this time period till when the spend is computed
      * @type {Date}
      * @memberof CustomerSpendByTime
      */
-    startTime?: Date;
+    endTime?: Date;
+    /**
+     * 
+     * @type {Array<AccruedRevenueLineItem>}
+     * @memberof CustomerSpendByTime
+     */
+    lineItems?: Array<AccruedRevenueLineItem>;
 }
 
 export function CustomerSpendByTimeFromJSON(json: any): CustomerSpendByTime {
@@ -62,10 +62,10 @@ export function CustomerSpendByTimeFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
-        'totalSpend': !exists(json, 'total_spend') ? undefined : json['total_spend'],
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
+        'totalSpend': !exists(json, 'total_spend') ? undefined : json['total_spend'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
     };
 }
 
@@ -78,10 +78,10 @@ export function CustomerSpendByTimeToJSON(value?: CustomerSpendByTime | null): a
     }
     return {
         
-        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
-        'total_spend': value.totalSpend,
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
+        'total_spend': value.totalSpend,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
     };
 }
 

@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalLabelFilter {
     /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalLabelFilter
-     */
-    key: string;
-    /**
      * Primary label value associated with the key
      * @type {string}
      * @memberof CustomerPortalLabelFilter
      */
     value: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalLabelFilter
+     */
+    key: string;
 }
 
 export function CustomerPortalLabelFilterFromJSON(json: any): CustomerPortalLabelFilter {
@@ -43,8 +43,8 @@ export function CustomerPortalLabelFilterFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'key': json['key'],
         'value': json['value'],
+        'key': json['key'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerPortalLabelFilterToJSON(value?: CustomerPortalLabelFilte
     }
     return {
         
-        'key': value.key,
         'value': value.value,
+        'key': value.key,
     };
 }
 

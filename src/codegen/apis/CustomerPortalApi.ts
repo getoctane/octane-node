@@ -54,6 +54,9 @@ import {
     CustomerPortalCreditPurchase,
     CustomerPortalCreditPurchaseFromJSON,
     CustomerPortalCreditPurchaseToJSON,
+    CustomerPortalCustomerPortalUrlInputArgs,
+    CustomerPortalCustomerPortalUrlInputArgsFromJSON,
+    CustomerPortalCustomerPortalUrlInputArgsToJSON,
     CustomerPortalDailyAccruedRevenue,
     CustomerPortalDailyAccruedRevenueFromJSON,
     CustomerPortalDailyAccruedRevenueToJSON,
@@ -133,11 +136,15 @@ export interface EcpCreditPurchasePostRequest {
 }
 
 export interface EcpCustomerPortalUrlPostRequest {
-    customerPortalTokenInputArgs: CustomerPortalTokenInputArgs;
+    customerPortalCustomerPortalUrlInputArgs: CustomerPortalCustomerPortalUrlInputArgs;
 }
 
 export interface EcpFilteredUsagePostRequest {
     customerPortalMeterLabelFilter: CustomerPortalMeterLabelFilter;
+}
+
+export interface EcpPortalUrlGetRequest {
+    isFrame?: boolean;
 }
 
 export interface EcpSpendByTimePostRequest {
@@ -553,8 +560,8 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      * Generate Customer Portal Url
      */
     async ecpCustomerPortalUrlPostRaw(requestParameters: EcpCustomerPortalUrlPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUrl>> {
-        if (requestParameters.customerPortalTokenInputArgs === null || requestParameters.customerPortalTokenInputArgs === undefined) {
-            throw new runtime.RequiredError('customerPortalTokenInputArgs','Required parameter requestParameters.customerPortalTokenInputArgs was null or undefined when calling ecpCustomerPortalUrlPost.');
+        if (requestParameters.customerPortalCustomerPortalUrlInputArgs === null || requestParameters.customerPortalCustomerPortalUrlInputArgs === undefined) {
+            throw new runtime.RequiredError('customerPortalCustomerPortalUrlInputArgs','Required parameter requestParameters.customerPortalCustomerPortalUrlInputArgs was null or undefined when calling ecpCustomerPortalUrlPost.');
         }
 
         const queryParameters: any = {};
@@ -576,7 +583,7 @@ export class CustomerPortalApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: CustomerPortalTokenInputArgsToJSON(requestParameters.customerPortalTokenInputArgs),
+            body: CustomerPortalCustomerPortalUrlInputArgsToJSON(requestParameters.customerPortalCustomerPortalUrlInputArgs),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => CustomerPortalUrlFromJSON(jsonValue));
@@ -818,8 +825,12 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get the Customer Portal Url
      */
-    async ecpPortalUrlGetRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUrl>> {
+    async ecpPortalUrlGetRaw(requestParameters: EcpPortalUrlGetRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<CustomerPortalUrl>> {
         const queryParameters: any = {};
+
+        if (requestParameters.isFrame !== undefined) {
+            queryParameters['is_frame'] = requestParameters.isFrame;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -845,8 +856,8 @@ export class CustomerPortalApi extends runtime.BaseAPI {
      * Get the url to the customer portal. This endpoint expects the customer-scoped token for authentication. If using vendor api key, you must also provide the customer name as a url parameter.
      * Get the Customer Portal Url
      */
-    async ecpPortalUrlGet(initOverrides?: RequestInit): Promise<CustomerPortalUrl> {
-        const response = await this.ecpPortalUrlGetRaw(initOverrides);
+    async ecpPortalUrlGet(requestParameters: EcpPortalUrlGetRequest = {}, initOverrides?: RequestInit): Promise<CustomerPortalUrl> {
+        const response = await this.ecpPortalUrlGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

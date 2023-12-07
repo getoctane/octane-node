@@ -57,47 +57,17 @@ import {
  */
 export interface UpdateSubscriptionArgs {
     /**
-     * Boolean that indicates whether to update the subscription at the start of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_end` are set, will return an error.
+     * Boolean that indicates whether to update the subscription at the end of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_start` are set, will return an error.
      * @type {boolean}
      * @memberof UpdateSubscriptionArgs
      */
-    atCycleStart?: boolean;
+    atCycleEnd?: boolean;
     /**
      * 
-     * @type {Array<FeatureInputArgs>}
-     * @memberof UpdateSubscriptionArgs
-     */
-    featuresOverride?: Array<FeatureInputArgs> | null;
-    /**
-     * 
-     * @type {Array<DiscountInputArgs>}
-     * @memberof UpdateSubscriptionArgs
-     */
-    discounts?: Array<DiscountInputArgs>;
-    /**
-     * 
-     * @type {TrialInputArgs}
-     * @memberof UpdateSubscriptionArgs
-     */
-    trialOverride?: TrialInputArgs | null;
-    /**
-     * The name of the price plan to subscribe customer to. Either provide price plan UUID or name/tag but not both.
      * @type {string}
      * @memberof UpdateSubscriptionArgs
      */
-    pricePlanName?: string;
-    /**
-     * The tag of the specific price plan version for the given price_plan_name. Should only be set if identifying price plan by name.
-     * @type {string}
-     * @memberof UpdateSubscriptionArgs
-     */
-    pricePlanTag?: string;
-    /**
-     * The UUID of the specific price plan version to subscribe customer to. Either provide price plan UUID or name/tag but not both.
-     * @type {string}
-     * @memberof UpdateSubscriptionArgs
-     */
-    pricePlanUuid?: string;
+    couponOverrideName?: string;
     /**
      * DEPRECATED - use discounts field
      * @type {DiscountInputArgs}
@@ -106,10 +76,28 @@ export interface UpdateSubscriptionArgs {
     discountOverride?: DiscountInputArgs | null;
     /**
      * 
-     * @type {Array<LimitInputArgs>}
+     * @type {Array<DiscountInputArgs>}
      * @memberof UpdateSubscriptionArgs
      */
-    limitsOverride?: Array<LimitInputArgs> | null;
+    discounts?: Array<DiscountInputArgs>;
+    /**
+     * Boolean that indicates whether to update the subscription at the start of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_end` are set, will return an error.
+     * @type {boolean}
+     * @memberof UpdateSubscriptionArgs
+     */
+    atCycleStart?: boolean;
+    /**
+     * The UUID of the specific price plan version to subscribe customer to. Either provide price plan UUID or name/tag but not both.
+     * @type {string}
+     * @memberof UpdateSubscriptionArgs
+     */
+    pricePlanUuid?: string;
+    /**
+     * 
+     * @type {Array<FeatureInputArgs>}
+     * @memberof UpdateSubscriptionArgs
+     */
+    featuresOverride?: Array<FeatureInputArgs> | null;
     /**
      * 
      * @type {Array<SubscriptionAddOnInput>}
@@ -117,11 +105,35 @@ export interface UpdateSubscriptionArgs {
      */
     addOns?: Array<SubscriptionAddOnInput> | null;
     /**
-     * Boolean that indicates whether to update the subscription at the end of the billing cycle. If 'true' and either of `effective_at` or `at_cycle_start` are set, will return an error.
+     * The tag of the specific price plan version for the given price_plan_name. Should only be set if identifying price plan by name.
+     * @type {string}
+     * @memberof UpdateSubscriptionArgs
+     */
+    pricePlanTag?: string;
+    /**
+     * 
+     * @type {Array<LimitInputArgs>}
+     * @memberof UpdateSubscriptionArgs
+     */
+    limitsOverride?: Array<LimitInputArgs> | null;
+    /**
+     * The name of the price plan to subscribe customer to. Either provide price plan UUID or name/tag but not both.
+     * @type {string}
+     * @memberof UpdateSubscriptionArgs
+     */
+    pricePlanName?: string;
+    /**
+     * 
+     * @type {TrialInputArgs}
+     * @memberof UpdateSubscriptionArgs
+     */
+    trialOverride?: TrialInputArgs | null;
+    /**
+     * Whether to align this subscripton's billing cycles to calendar boundaries (e.g., begining of every month). If the subscripiton is effective as of the middle of the month, the first cycle will be prorated appropriately.
      * @type {boolean}
      * @memberof UpdateSubscriptionArgs
      */
-    atCycleEnd?: boolean;
+    alignToCalendar?: boolean;
     /**
      * 
      * @type {Date}
@@ -134,18 +146,6 @@ export interface UpdateSubscriptionArgs {
      * @memberof UpdateSubscriptionArgs
      */
     creditPlan?: CreditPlanInputArgs | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateSubscriptionArgs
-     */
-    couponOverrideName?: string;
-    /**
-     * Whether to align this subscripton's billing cycles to calendar boundaries (e.g., begining of every month). If the subscripiton is effective as of the middle of the month, the first cycle will be prorated appropriately.
-     * @type {boolean}
-     * @memberof UpdateSubscriptionArgs
-     */
-    alignToCalendar?: boolean;
 }
 
 export function UpdateSubscriptionArgsFromJSON(json: any): UpdateSubscriptionArgs {
@@ -158,21 +158,21 @@ export function UpdateSubscriptionArgsFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'atCycleStart': !exists(json, 'at_cycle_start') ? undefined : json['at_cycle_start'],
-        'featuresOverride': !exists(json, 'features_override') ? undefined : (json['features_override'] === null ? null : (json['features_override'] as Array<any>).map(FeatureInputArgsFromJSON)),
-        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
-        'trialOverride': !exists(json, 'trial_override') ? undefined : TrialInputArgsFromJSON(json['trial_override']),
-        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
-        'pricePlanTag': !exists(json, 'price_plan_tag') ? undefined : json['price_plan_tag'],
-        'pricePlanUuid': !exists(json, 'price_plan_uuid') ? undefined : json['price_plan_uuid'],
-        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
-        'limitsOverride': !exists(json, 'limits_override') ? undefined : (json['limits_override'] === null ? null : (json['limits_override'] as Array<any>).map(LimitInputArgsFromJSON)),
-        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
         'atCycleEnd': !exists(json, 'at_cycle_end') ? undefined : json['at_cycle_end'],
+        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
+        'discountOverride': !exists(json, 'discount_override') ? undefined : DiscountInputArgsFromJSON(json['discount_override']),
+        'discounts': !exists(json, 'discounts') ? undefined : ((json['discounts'] as Array<any>).map(DiscountInputArgsFromJSON)),
+        'atCycleStart': !exists(json, 'at_cycle_start') ? undefined : json['at_cycle_start'],
+        'pricePlanUuid': !exists(json, 'price_plan_uuid') ? undefined : json['price_plan_uuid'],
+        'featuresOverride': !exists(json, 'features_override') ? undefined : (json['features_override'] === null ? null : (json['features_override'] as Array<any>).map(FeatureInputArgsFromJSON)),
+        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
+        'pricePlanTag': !exists(json, 'price_plan_tag') ? undefined : json['price_plan_tag'],
+        'limitsOverride': !exists(json, 'limits_override') ? undefined : (json['limits_override'] === null ? null : (json['limits_override'] as Array<any>).map(LimitInputArgsFromJSON)),
+        'pricePlanName': !exists(json, 'price_plan_name') ? undefined : json['price_plan_name'],
+        'trialOverride': !exists(json, 'trial_override') ? undefined : TrialInputArgsFromJSON(json['trial_override']),
+        'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
         'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
         'creditPlan': !exists(json, 'credit_plan') ? undefined : CreditPlanInputArgsFromJSON(json['credit_plan']),
-        'couponOverrideName': !exists(json, 'coupon_override_name') ? undefined : json['coupon_override_name'],
-        'alignToCalendar': !exists(json, 'align_to_calendar') ? undefined : json['align_to_calendar'],
     };
 }
 
@@ -185,21 +185,21 @@ export function UpdateSubscriptionArgsToJSON(value?: UpdateSubscriptionArgs | nu
     }
     return {
         
-        'at_cycle_start': value.atCycleStart,
-        'features_override': value.featuresOverride === undefined ? undefined : (value.featuresOverride === null ? null : (value.featuresOverride as Array<any>).map(FeatureInputArgsToJSON)),
-        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
-        'trial_override': TrialInputArgsToJSON(value.trialOverride),
-        'price_plan_name': value.pricePlanName,
-        'price_plan_tag': value.pricePlanTag,
-        'price_plan_uuid': value.pricePlanUuid,
-        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
-        'limits_override': value.limitsOverride === undefined ? undefined : (value.limitsOverride === null ? null : (value.limitsOverride as Array<any>).map(LimitInputArgsToJSON)),
-        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
         'at_cycle_end': value.atCycleEnd,
+        'coupon_override_name': value.couponOverrideName,
+        'discount_override': DiscountInputArgsToJSON(value.discountOverride),
+        'discounts': value.discounts === undefined ? undefined : ((value.discounts as Array<any>).map(DiscountInputArgsToJSON)),
+        'at_cycle_start': value.atCycleStart,
+        'price_plan_uuid': value.pricePlanUuid,
+        'features_override': value.featuresOverride === undefined ? undefined : (value.featuresOverride === null ? null : (value.featuresOverride as Array<any>).map(FeatureInputArgsToJSON)),
+        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
+        'price_plan_tag': value.pricePlanTag,
+        'limits_override': value.limitsOverride === undefined ? undefined : (value.limitsOverride === null ? null : (value.limitsOverride as Array<any>).map(LimitInputArgsToJSON)),
+        'price_plan_name': value.pricePlanName,
+        'trial_override': TrialInputArgsToJSON(value.trialOverride),
+        'align_to_calendar': value.alignToCalendar,
         'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
         'credit_plan': CreditPlanInputArgsToJSON(value.creditPlan),
-        'coupon_override_name': value.couponOverrideName,
-        'align_to_calendar': value.alignToCalendar,
     };
 }
 

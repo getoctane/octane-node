@@ -20,13 +20,43 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UpdateSelfServeSettingsArgs {
     /**
-     * Time length unit for the default expiration for credits bought in the customer portal.
-     * @type {string}
+     * True if the vendor has enabled customization for their customer portal.
+     * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
-    creditsExpirationUnit?: string | null;
+    enabled?: boolean;
     /**
-     * True if the vendor has enabled customization for their customer portal.
+     * True if credits should be voided if the payment fails. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsVoidOnPaymentFailure?: boolean;
+    /**
+     * True if credits should be charged immediately upon purchase. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsChargeImmediately?: boolean;
+    /**
+     * True if payment form should have fields for shipping address info. Defaults to False.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    enableAddressFields?: boolean;
+    /**
+     * True if credits should be granted immediately upon purchase. Defaults to True. No impact if `credits_charge_immediately` is True.
+     * @type {boolean}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsGrantImmediately?: boolean;
+    /**
+     * Time length of the default expiration for credits bought in the customer portal.
+     * @type {number}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsExpirationLength?: number | null;
+    /**
+     * DEPRECATED: Please use 'customization_settings' as needed.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
@@ -38,35 +68,23 @@ export interface UpdateSelfServeSettingsArgs {
      */
     purchaseCredits?: boolean;
     /**
+     * Time length unit for the default expiration for credits bought in the customer portal.
+     * @type {string}
+     * @memberof UpdateSelfServeSettingsArgs
+     */
+    creditsExpirationUnit?: string | null;
+    /**
      * Price per credit, in cents, that the customer is charged for buying credits through the customer portal
      * @type {number}
      * @memberof UpdateSelfServeSettingsArgs
      */
     pricePerCreditCents?: number;
     /**
-     * True if payment form should have fields for shipping address info. Defaults to False.
-     * @type {boolean}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    enableAddressFields?: boolean;
-    /**
      * True if the customer can switch their current price plan via self serve. Defaults to False.
      * @type {boolean}
      * @memberof UpdateSelfServeSettingsArgs
      */
     switchPricePlans?: boolean;
-    /**
-     * Time length of the default expiration for credits bought in the customer portal.
-     * @type {number}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    creditsExpirationLength?: number | null;
-    /**
-     * True if the vendor has enabled customization for their customer portal.
-     * @type {boolean}
-     * @memberof UpdateSelfServeSettingsArgs
-     */
-    enabled?: boolean;
 }
 
 export function UpdateSelfServeSettingsArgsFromJSON(json: any): UpdateSelfServeSettingsArgs {
@@ -79,14 +97,17 @@ export function UpdateSelfServeSettingsArgsFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
+        'creditsVoidOnPaymentFailure': !exists(json, 'credits_void_on_payment_failure') ? undefined : json['credits_void_on_payment_failure'],
+        'creditsChargeImmediately': !exists(json, 'credits_charge_immediately') ? undefined : json['credits_charge_immediately'],
+        'enableAddressFields': !exists(json, 'enable_address_fields') ? undefined : json['enable_address_fields'],
+        'creditsGrantImmediately': !exists(json, 'credits_grant_immediately') ? undefined : json['credits_grant_immediately'],
+        'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
         'customization': !exists(json, 'customization') ? undefined : json['customization'],
         'purchaseCredits': !exists(json, 'purchase_credits') ? undefined : json['purchase_credits'],
+        'creditsExpirationUnit': !exists(json, 'credits_expiration_unit') ? undefined : json['credits_expiration_unit'],
         'pricePerCreditCents': !exists(json, 'price_per_credit_cents') ? undefined : json['price_per_credit_cents'],
-        'enableAddressFields': !exists(json, 'enable_address_fields') ? undefined : json['enable_address_fields'],
         'switchPricePlans': !exists(json, 'switch_price_plans') ? undefined : json['switch_price_plans'],
-        'creditsExpirationLength': !exists(json, 'credits_expiration_length') ? undefined : json['credits_expiration_length'],
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
     };
 }
 
@@ -99,14 +120,17 @@ export function UpdateSelfServeSettingsArgsToJSON(value?: UpdateSelfServeSetting
     }
     return {
         
-        'credits_expiration_unit': value.creditsExpirationUnit,
+        'enabled': value.enabled,
+        'credits_void_on_payment_failure': value.creditsVoidOnPaymentFailure,
+        'credits_charge_immediately': value.creditsChargeImmediately,
+        'enable_address_fields': value.enableAddressFields,
+        'credits_grant_immediately': value.creditsGrantImmediately,
+        'credits_expiration_length': value.creditsExpirationLength,
         'customization': value.customization,
         'purchase_credits': value.purchaseCredits,
+        'credits_expiration_unit': value.creditsExpirationUnit,
         'price_per_credit_cents': value.pricePerCreditCents,
-        'enable_address_fields': value.enableAddressFields,
         'switch_price_plans': value.switchPricePlans,
-        'credits_expiration_length': value.creditsExpirationLength,
-        'enabled': value.enabled,
     };
 }
 

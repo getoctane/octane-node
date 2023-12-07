@@ -24,13 +24,25 @@ export interface CustomerPortalContactInfoInputArgs {
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
+    zipcode?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalContactInfoInputArgs
+     */
+    legalName?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalContactInfoInputArgs
+     */
     state?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
-    vatId?: string | null;
+    phone?: string | null;
     /**
      * Customer name. Required only if using vendor API Key for authentication.
      * @type {string}
@@ -48,19 +60,19 @@ export interface CustomerPortalContactInfoInputArgs {
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
+    email?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalContactInfoInputArgs
+     */
+    vatId?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomerPortalContactInfoInputArgs
+     */
     city?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalContactInfoInputArgs
-     */
-    url?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalContactInfoInputArgs
-     */
-    addressLine2?: string | null;
     /**
      * 
      * @type {string}
@@ -72,13 +84,13 @@ export interface CustomerPortalContactInfoInputArgs {
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
-    zipcode?: string | null;
+    addressLine2?: string | null;
     /**
      * 
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
-    phone?: string | null;
+    addressLine1?: string | null;
     /**
      * List of secondary contact emails (all email communication will also be sent to these emails).
      * @type {Array<string>}
@@ -90,19 +102,7 @@ export interface CustomerPortalContactInfoInputArgs {
      * @type {string}
      * @memberof CustomerPortalContactInfoInputArgs
      */
-    addressLine1?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalContactInfoInputArgs
-     */
-    email?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomerPortalContactInfoInputArgs
-     */
-    legalName?: string | null;
+    url?: string | null;
 }
 
 export function CustomerPortalContactInfoInputArgsFromJSON(json: any): CustomerPortalContactInfoInputArgs {
@@ -115,20 +115,20 @@ export function CustomerPortalContactInfoInputArgsFromJSONTyped(json: any, ignor
     }
     return {
         
+        'zipcode': !exists(json, 'zipcode') ? undefined : json['zipcode'],
+        'legalName': !exists(json, 'legal_name') ? undefined : json['legal_name'],
         'state': !exists(json, 'state') ? undefined : json['state'],
-        'vatId': !exists(json, 'vat_id') ? undefined : json['vat_id'],
+        'phone': !exists(json, 'phone') ? undefined : json['phone'],
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'country': !exists(json, 'country') ? undefined : json['country'],
-        'city': !exists(json, 'city') ? undefined : json['city'],
-        'url': !exists(json, 'url') ? undefined : json['url'],
-        'addressLine2': !exists(json, 'address_line_2') ? undefined : json['address_line_2'],
-        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
-        'zipcode': !exists(json, 'zipcode') ? undefined : json['zipcode'],
-        'phone': !exists(json, 'phone') ? undefined : json['phone'],
-        'secondaryEmails': !exists(json, 'secondary_emails') ? undefined : json['secondary_emails'],
-        'addressLine1': !exists(json, 'address_line_1') ? undefined : json['address_line_1'],
         'email': !exists(json, 'email') ? undefined : json['email'],
-        'legalName': !exists(json, 'legal_name') ? undefined : json['legal_name'],
+        'vatId': !exists(json, 'vat_id') ? undefined : json['vat_id'],
+        'city': !exists(json, 'city') ? undefined : json['city'],
+        'logoUrl': !exists(json, 'logo_url') ? undefined : json['logo_url'],
+        'addressLine2': !exists(json, 'address_line_2') ? undefined : json['address_line_2'],
+        'addressLine1': !exists(json, 'address_line_1') ? undefined : json['address_line_1'],
+        'secondaryEmails': !exists(json, 'secondary_emails') ? undefined : json['secondary_emails'],
+        'url': !exists(json, 'url') ? undefined : json['url'],
     };
 }
 
@@ -141,20 +141,20 @@ export function CustomerPortalContactInfoInputArgsToJSON(value?: CustomerPortalC
     }
     return {
         
+        'zipcode': value.zipcode,
+        'legal_name': value.legalName,
         'state': value.state,
-        'vat_id': value.vatId,
+        'phone': value.phone,
         'customer_name': value.customerName,
         'country': value.country,
-        'city': value.city,
-        'url': value.url,
-        'address_line_2': value.addressLine2,
-        'logo_url': value.logoUrl,
-        'zipcode': value.zipcode,
-        'phone': value.phone,
-        'secondary_emails': value.secondaryEmails,
-        'address_line_1': value.addressLine1,
         'email': value.email,
-        'legal_name': value.legalName,
+        'vat_id': value.vatId,
+        'city': value.city,
+        'logo_url': value.logoUrl,
+        'address_line_2': value.addressLine2,
+        'address_line_1': value.addressLine1,
+        'secondary_emails': value.secondaryEmails,
+        'url': value.url,
     };
 }
 

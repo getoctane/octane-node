@@ -20,11 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreateAdhocChargeArgs {
     /**
-     * The total price for this adhoc charge
-     * @type {number}
+     * The time when this adhoc charge was made. Should be within an uninvoiced billing cycle.
+     * @type {Date}
      * @memberof CreateAdhocChargeArgs
      */
-    totalPrice: number;
+    chargeTime: Date;
+    /**
+     * The invoice item display name associated with this adhoc charge
+     * @type {string}
+     * @memberof CreateAdhocChargeArgs
+     */
+    itemDisplayName?: string;
     /**
      * The quantity associated with this adhoc charge
      * @type {number}
@@ -32,29 +38,23 @@ export interface CreateAdhocChargeArgs {
      */
     quantity: number;
     /**
+     * The total price for this adhoc charge
+     * @type {number}
+     * @memberof CreateAdhocChargeArgs
+     */
+    totalPrice: number;
+    /**
      * The invoice item description associated with this adhoc charge
      * @type {string}
      * @memberof CreateAdhocChargeArgs
      */
     itemDescription?: string;
     /**
-     * The time when this adhoc charge was made. Should be within an uninvoiced billing cycle.
-     * @type {Date}
-     * @memberof CreateAdhocChargeArgs
-     */
-    chargeTime: Date;
-    /**
      * The item name associated with this adhoc charge
      * @type {string}
      * @memberof CreateAdhocChargeArgs
      */
     itemName: string;
-    /**
-     * The invoice item display name associated with this adhoc charge
-     * @type {string}
-     * @memberof CreateAdhocChargeArgs
-     */
-    itemDisplayName?: string;
 }
 
 export function CreateAdhocChargeArgsFromJSON(json: any): CreateAdhocChargeArgs {
@@ -67,12 +67,12 @@ export function CreateAdhocChargeArgsFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'totalPrice': json['total_price'],
-        'quantity': json['quantity'],
-        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
         'chargeTime': (new Date(json['charge_time'])),
-        'itemName': json['item_name'],
         'itemDisplayName': !exists(json, 'item_display_name') ? undefined : json['item_display_name'],
+        'quantity': json['quantity'],
+        'totalPrice': json['total_price'],
+        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'itemName': json['item_name'],
     };
 }
 
@@ -85,12 +85,12 @@ export function CreateAdhocChargeArgsToJSON(value?: CreateAdhocChargeArgs | null
     }
     return {
         
-        'total_price': value.totalPrice,
-        'quantity': value.quantity,
-        'item_description': value.itemDescription,
         'charge_time': (value.chargeTime.toISOString()),
-        'item_name': value.itemName,
         'item_display_name': value.itemDisplayName,
+        'quantity': value.quantity,
+        'total_price': value.totalPrice,
+        'item_description': value.itemDescription,
+        'item_name': value.itemName,
     };
 }
 

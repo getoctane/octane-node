@@ -20,11 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerPortalTokenInputArgs {
     /**
-     * 
+     * Customer name.
      * @type {string}
      * @memberof CustomerPortalTokenInputArgs
      */
-    customerName?: string;
+    customerName: string;
 }
 
 export function CustomerPortalTokenInputArgsFromJSON(json: any): CustomerPortalTokenInputArgs {
@@ -37,7 +37,7 @@ export function CustomerPortalTokenInputArgsFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'customerName': json['customer_name'],
     };
 }
 

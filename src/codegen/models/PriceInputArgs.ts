@@ -20,23 +20,23 @@ import { exists, mapValues } from '../runtime';
  */
 export interface PriceInputArgs {
     /**
-     * 
+     * The cap for which the price applies until. If not set, the price always applies.
      * @type {number}
      * @memberof PriceInputArgs
      */
     cap?: number;
     /**
-     * 
-     * @type {number}
-     * @memberof PriceInputArgs
-     */
-    price?: number;
-    /**
-     * 
+     * Optional description.
      * @type {string}
      * @memberof PriceInputArgs
      */
     description?: string;
+    /**
+     * The price for the tier.
+     * @type {number}
+     * @memberof PriceInputArgs
+     */
+    price?: number;
 }
 
 export function PriceInputArgsFromJSON(json: any): PriceInputArgs {
@@ -50,8 +50,8 @@ export function PriceInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'cap': !exists(json, 'cap') ? undefined : json['cap'],
-        'price': !exists(json, 'price') ? undefined : json['price'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'price': !exists(json, 'price') ? undefined : json['price'],
     };
 }
 
@@ -65,8 +65,8 @@ export function PriceInputArgsToJSON(value?: PriceInputArgs | null): any {
     return {
         
         'cap': value.cap,
-        'price': value.price,
         'description': value.description,
+        'price': value.price,
     };
 }
 

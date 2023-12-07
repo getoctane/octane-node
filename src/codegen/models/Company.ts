@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Company {
     /**
-     * The name of this company, as shown to customers.
-     * @type {string}
-     * @memberof Company
-     */
-    companyName?: string;
-    /**
      * A unique code that references this company within your account.
      * @type {string}
      * @memberof Company
      */
     companyCode?: string;
+    /**
+     * The unique ID number of this company.
+     * @type {string}
+     * @memberof Company
+     */
+    id?: string;
     /**
      * This flag is true if this company is the default company for this account.
      * @type {boolean}
@@ -44,11 +44,11 @@ export interface Company {
      */
     isActive?: boolean;
     /**
-     * The unique ID number of this company.
+     * The name of this company, as shown to customers.
      * @type {string}
      * @memberof Company
      */
-    id?: string;
+    companyName?: string;
 }
 
 export function CompanyFromJSON(json: any): Company {
@@ -61,11 +61,11 @@ export function CompanyFromJSONTyped(json: any, ignoreDiscriminator: boolean): C
     }
     return {
         
-        'companyName': !exists(json, 'company_name') ? undefined : json['company_name'],
         'companyCode': !exists(json, 'company_code') ? undefined : json['company_code'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'isDefault': !exists(json, 'is_default') ? undefined : json['is_default'],
         'isActive': !exists(json, 'is_active') ? undefined : json['is_active'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'companyName': !exists(json, 'company_name') ? undefined : json['company_name'],
     };
 }
 
@@ -78,11 +78,11 @@ export function CompanyToJSON(value?: Company | null): any {
     }
     return {
         
-        'company_name': value.companyName,
         'company_code': value.companyCode,
+        'id': value.id,
         'is_default': value.isDefault,
         'is_active': value.isActive,
-        'id': value.id,
+        'company_name': value.companyName,
     };
 }
 

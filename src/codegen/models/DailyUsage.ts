@@ -26,12 +26,6 @@ export interface DailyUsage {
      */
     usage?: number;
     /**
-     * Start of the 24 hour time window in UTC.
-     * @type {Date}
-     * @memberof DailyUsage
-     */
-    time?: Date;
-    /**
      * [DEPRECATED] Please use labels field instead.
      * @type {string}
      * @memberof DailyUsage
@@ -49,6 +43,12 @@ export interface DailyUsage {
      * @memberof DailyUsage
      */
     labels?: { [key: string]: string; };
+    /**
+     * Start of the 24 hour time window in UTC.
+     * @type {Date}
+     * @memberof DailyUsage
+     */
+    time?: Date;
 }
 
 export function DailyUsageFromJSON(json: any): DailyUsage {
@@ -62,10 +62,10 @@ export function DailyUsageFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'usage': !exists(json, 'usage') ? undefined : json['usage'],
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'labelKey': !exists(json, 'label_key') ? undefined : json['label_key'],
         'labelValue': !exists(json, 'label_value') ? undefined : json['label_value'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
     };
 }
 
@@ -79,10 +79,10 @@ export function DailyUsageToJSON(value?: DailyUsage | null): any {
     return {
         
         'usage': value.usage,
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'label_key': value.labelKey,
         'label_value': value.labelValue,
         'labels': value.labels,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
     };
 }
 
