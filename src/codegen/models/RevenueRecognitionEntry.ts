@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface RevenueRecognitionEntry {
     /**
-     * The change in recognized revenue this month (in cents).
-     * @type {number}
-     * @memberof RevenueRecognitionEntry
-     */
-    recognized?: number;
-    /**
-     * The change in deferred revenue this month (in cents).
-     * @type {number}
-     * @memberof RevenueRecognitionEntry
-     */
-    deferred?: number;
-    /**
      * The month in which the revenue is booked and(or) recognized.
      * @type {Date}
      * @memberof RevenueRecognitionEntry
@@ -43,6 +31,18 @@ export interface RevenueRecognitionEntry {
      * @memberof RevenueRecognitionEntry
      */
     booked?: number;
+    /**
+     * The change in deferred revenue this month (in cents).
+     * @type {number}
+     * @memberof RevenueRecognitionEntry
+     */
+    deferred?: number;
+    /**
+     * The change in recognized revenue this month (in cents).
+     * @type {number}
+     * @memberof RevenueRecognitionEntry
+     */
+    recognized?: number;
 }
 
 export function RevenueRecognitionEntryFromJSON(json: any): RevenueRecognitionEntry {
@@ -55,10 +55,10 @@ export function RevenueRecognitionEntryFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
-        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
         'month': !exists(json, 'month') ? undefined : (new Date(json['month'])),
         'booked': !exists(json, 'booked') ? undefined : json['booked'],
+        'deferred': !exists(json, 'deferred') ? undefined : json['deferred'],
+        'recognized': !exists(json, 'recognized') ? undefined : json['recognized'],
     };
 }
 
@@ -71,10 +71,10 @@ export function RevenueRecognitionEntryToJSON(value?: RevenueRecognitionEntry | 
     }
     return {
         
-        'recognized': value.recognized,
-        'deferred': value.deferred,
         'month': value.month === undefined ? undefined : (value.month.toISOString()),
         'booked': value.booked,
+        'deferred': value.deferred,
+        'recognized': value.recognized,
     };
 }
 

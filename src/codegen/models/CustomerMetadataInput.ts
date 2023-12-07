@@ -24,13 +24,13 @@ export interface CustomerMetadataInput {
      * @type {string}
      * @memberof CustomerMetadataInput
      */
-    value?: string | null;
+    property?: string;
     /**
      * 
      * @type {string}
      * @memberof CustomerMetadataInput
      */
-    property?: string;
+    value?: string | null;
 }
 
 export function CustomerMetadataInputFromJSON(json: any): CustomerMetadataInput {
@@ -43,8 +43,8 @@ export function CustomerMetadataInputFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'value': !exists(json, 'value') ? undefined : json['value'],
         'property': !exists(json, 'property') ? undefined : json['property'],
+        'value': !exists(json, 'value') ? undefined : json['value'],
     };
 }
 
@@ -57,8 +57,8 @@ export function CustomerMetadataInputToJSON(value?: CustomerMetadataInput | null
     }
     return {
         
-        'value': value.value,
         'property': value.property,
+        'value': value.value,
     };
 }
 

@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CustomerDailyUsageByTime {
     /**
-     * Start of the time window in UTC.
-     * @type {Date}
-     * @memberof CustomerDailyUsageByTime
-     */
-    time?: Date;
-    /**
      * Labels for this usage. Only present if label_group_by_keys is provided.
      * @type {{ [key: string]: string; }}
      * @memberof CustomerDailyUsageByTime
      */
     labels?: { [key: string]: string; };
+    /**
+     * Start of the time window in UTC.
+     * @type {Date}
+     * @memberof CustomerDailyUsageByTime
+     */
+    time?: Date;
     /**
      * Total usage during this window.
      * @type {number}
@@ -49,8 +49,8 @@ export function CustomerDailyUsageByTimeFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
+        'time': !exists(json, 'time') ? undefined : (new Date(json['time'])),
         'usage': !exists(json, 'usage') ? undefined : json['usage'],
     };
 }
@@ -64,8 +64,8 @@ export function CustomerDailyUsageByTimeToJSON(value?: CustomerDailyUsageByTime 
     }
     return {
         
-        'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'labels': value.labels,
+        'time': value.time === undefined ? undefined : (value.time.toISOString()),
         'usage': value.usage,
     };
 }

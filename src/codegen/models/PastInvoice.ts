@@ -27,16 +27,16 @@ export interface PastInvoice {
     customerName?: string;
     /**
      * 
-     * @type {Date}
+     * @type {number}
      * @memberof PastInvoice
      */
-    dueDate?: Date;
+    amountDue?: number;
     /**
      * 
      * @type {Date}
      * @memberof PastInvoice
      */
-    issueDate?: Date;
+    dueDate?: Date;
     /**
      * 
      * @type {string}
@@ -57,16 +57,16 @@ export interface PastInvoice {
     id?: string;
     /**
      * 
-     * @type {number}
-     * @memberof PastInvoice
-     */
-    amountDue?: number;
-    /**
-     * 
      * @type {string}
      * @memberof PastInvoice
      */
     status?: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof PastInvoice
+     */
+    issueDate?: Date;
 }
 
 export function PastInvoiceFromJSON(json: any): PastInvoice {
@@ -80,13 +80,13 @@ export function PastInvoiceFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
         'dueDate': !exists(json, 'due_date') ? undefined : (new Date(json['due_date'])),
-        'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
         'statusDescription': !exists(json, 'status_description') ? undefined : json['status_description'],
         'exportUrl': !exists(json, 'export_url') ? undefined : json['export_url'],
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'amountDue': !exists(json, 'amount_due') ? undefined : json['amount_due'],
         'status': !exists(json, 'status') ? undefined : json['status'],
+        'issueDate': !exists(json, 'issue_date') ? undefined : (new Date(json['issue_date'])),
     };
 }
 
@@ -100,13 +100,13 @@ export function PastInvoiceToJSON(value?: PastInvoice | null): any {
     return {
         
         'customer_name': value.customerName,
+        'amount_due': value.amountDue,
         'due_date': value.dueDate === undefined ? undefined : (value.dueDate.toISOString()),
-        'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
         'status_description': value.statusDescription,
         'export_url': value.exportUrl,
         'id': value.id,
-        'amount_due': value.amountDue,
         'status': value.status,
+        'issue_date': value.issueDate === undefined ? undefined : (value.issueDate.toISOString()),
     };
 }
 

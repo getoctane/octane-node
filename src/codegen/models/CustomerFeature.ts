@@ -28,6 +28,12 @@ import {
 export interface CustomerFeature {
     /**
      * 
+     * @type {boolean}
+     * @memberof CustomerFeature
+     */
+    enabled?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof CustomerFeature
      */
@@ -50,12 +56,6 @@ export interface CustomerFeature {
      * @memberof CustomerFeature
      */
     featureName?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CustomerFeature
-     */
-    enabled?: boolean;
 }
 
 export function CustomerFeatureFromJSON(json: any): CustomerFeature {
@@ -68,11 +68,11 @@ export function CustomerFeatureFromJSONTyped(json: any, ignoreDiscriminator: boo
     }
     return {
         
+        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
         'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'labelLimits': !exists(json, 'label_limits') ? undefined : ((json['label_limits'] as Array<any>).map(CustomerLabelLimitFromJSON)),
         'featureName': !exists(json, 'feature_name') ? undefined : json['feature_name'],
-        'enabled': !exists(json, 'enabled') ? undefined : json['enabled'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerFeatureToJSON(value?: CustomerFeature | null): any {
     }
     return {
         
+        'enabled': value.enabled,
         'limit': value.limit,
         'quantity': value.quantity,
         'label_limits': value.labelLimits === undefined ? undefined : ((value.labelLimits as Array<any>).map(CustomerLabelLimitToJSON)),
         'feature_name': value.featureName,
-        'enabled': value.enabled,
     };
 }
 

@@ -27,29 +27,29 @@ import {
  */
 export interface MeterLabelFilterOrExpressionArgs {
     /**
-     * If true, will wrap this filter/expression with a NOT.
-     * @type {boolean}
-     * @memberof MeterLabelFilterOrExpressionArgs
-     */
-    notFilter?: boolean;
-    /**
      * The logical operator to apply to the list of filters or expressions. Should be set if `is_expression` is True.
      * @type {string}
      * @memberof MeterLabelFilterOrExpressionArgs
      */
     expressionOperator?: MeterLabelFilterOrExpressionArgsExpressionOperatorEnum;
     /**
-     * Whether this is a filter or an expression.
+     * If true, will wrap this filter/expression with a NOT.
      * @type {boolean}
      * @memberof MeterLabelFilterOrExpressionArgs
      */
-    isExpression?: boolean;
+    notFilter?: boolean;
     /**
      * The filter to apply. Should be set if `is_expression` is False.
      * @type {MeterLabelFilterArgs}
      * @memberof MeterLabelFilterOrExpressionArgs
      */
     filter?: MeterLabelFilterArgs | null;
+    /**
+     * Whether this is a filter or an expression.
+     * @type {boolean}
+     * @memberof MeterLabelFilterOrExpressionArgs
+     */
+    isExpression?: boolean;
     /**
      * The list of filters or expressions to apply. Should be set if `is_expression` is True.
      * @type {Array<MeterLabelFilterOrExpressionArgs>}
@@ -77,10 +77,10 @@ export function MeterLabelFilterOrExpressionArgsFromJSONTyped(json: any, ignoreD
     }
     return {
         
-        'notFilter': !exists(json, 'not_filter') ? undefined : json['not_filter'],
         'expressionOperator': !exists(json, 'expression_operator') ? undefined : json['expression_operator'],
-        'isExpression': !exists(json, 'is_expression') ? undefined : json['is_expression'],
+        'notFilter': !exists(json, 'not_filter') ? undefined : json['not_filter'],
         'filter': !exists(json, 'filter') ? undefined : MeterLabelFilterArgsFromJSON(json['filter']),
+        'isExpression': !exists(json, 'is_expression') ? undefined : json['is_expression'],
         'filters': !exists(json, 'filters') ? undefined : ((json['filters'] as Array<any>).map(MeterLabelFilterOrExpressionArgsFromJSON)),
     };
 }
@@ -94,10 +94,10 @@ export function MeterLabelFilterOrExpressionArgsToJSON(value?: MeterLabelFilterO
     }
     return {
         
-        'not_filter': value.notFilter,
         'expression_operator': value.expressionOperator,
-        'is_expression': value.isExpression,
+        'not_filter': value.notFilter,
         'filter': MeterLabelFilterArgsToJSON(value.filter),
+        'is_expression': value.isExpression,
         'filters': value.filters === undefined ? undefined : ((value.filters as Array<any>).map(MeterLabelFilterOrExpressionArgsToJSON)),
     };
 }

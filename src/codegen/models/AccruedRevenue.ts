@@ -27,11 +27,11 @@ import {
  */
 export interface AccruedRevenue {
     /**
-     * 
-     * @type {Array<AccruedRevenueLineItem>}
+     * The cycle start of the billing cycle for which the accrued revenue is computed
+     * @type {Date}
      * @memberof AccruedRevenue
      */
-    lineItems?: Array<AccruedRevenueLineItem>;
+    startTime?: Date;
     /**
      * Total accrued revenue for the period in cents
      * @type {number}
@@ -45,11 +45,11 @@ export interface AccruedRevenue {
      */
     endTime?: Date;
     /**
-     * The cycle start of the billing cycle for which the accrued revenue is computed
-     * @type {Date}
+     * 
+     * @type {Array<AccruedRevenueLineItem>}
      * @memberof AccruedRevenue
      */
-    startTime?: Date;
+    lineItems?: Array<AccruedRevenueLineItem>;
 }
 
 export function AccruedRevenueFromJSON(json: any): AccruedRevenue {
@@ -62,10 +62,10 @@ export function AccruedRevenueFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
         'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
+        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
     };
 }
 
@@ -78,10 +78,10 @@ export function AccruedRevenueToJSON(value?: AccruedRevenue | null): any {
     }
     return {
         
-        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
         'total_accrued_revenue': value.totalAccruedRevenue,
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
+        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
     };
 }
 

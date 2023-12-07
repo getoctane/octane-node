@@ -39,6 +39,10 @@ export interface CreditsGrantGetRequest {
     listCreditGrantsArgs: ListCreditGrantsArgs;
 }
 
+export interface CreditsGrantGrantUuidGrantPostRequest {
+    grantUuid: string;
+}
+
 export interface CreditsGrantGrantUuidVoidPostRequest {
     grantUuid: string;
     voidCreditGrantArgs?: VoidCreditGrantArgs;
@@ -103,6 +107,45 @@ export class CreditsApi extends runtime.BaseAPI {
     async creditsGrantGet(requestParameters: CreditsGrantGetRequest, initOverrides?: RequestInit): Promise<ListCreditGrants> {
         const response = await this.creditsGrantGetRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Adds a credit grant to the ledger with the given grant UUID, if it was not immediately granted on creation.
+     * Add Credit Grant to Ledger
+     */
+    async creditsGrantGrantUuidGrantPostRaw(requestParameters: CreditsGrantGrantUuidGrantPostRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.grantUuid === null || requestParameters.grantUuid === undefined) {
+            throw new runtime.RequiredError('grantUuid','Required parameter requestParameters.grantUuid was null or undefined when calling creditsGrantGrantUuidGrantPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("BearerApiKeyAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/credits/grant/{grant_uuid}/grant`.replace(`{${"grant_uuid"}}`, encodeURIComponent(String(requestParameters.grantUuid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Adds a credit grant to the ledger with the given grant UUID, if it was not immediately granted on creation.
+     * Add Credit Grant to Ledger
+     */
+    async creditsGrantGrantUuidGrantPost(requestParameters: CreditsGrantGrantUuidGrantPostRequest, initOverrides?: RequestInit): Promise<void> {
+        await this.creditsGrantGrantUuidGrantPostRaw(requestParameters, initOverrides);
     }
 
     /**

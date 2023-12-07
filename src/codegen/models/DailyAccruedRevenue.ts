@@ -27,23 +27,23 @@ import {
  */
 export interface DailyAccruedRevenue {
     /**
+     * The date for which this accrued revenue is computed
+     * @type {Date}
+     * @memberof DailyAccruedRevenue
+     */
+    date?: Date;
+    /**
      * The start time of the billing cycle for which the accrued revenue is computed
      * @type {Date}
      * @memberof DailyAccruedRevenue
      */
     startTime?: Date;
     /**
-     * 
-     * @type {Array<AccruedRevenueLineItem>}
+     * Total accrued revenue for the day in cents
+     * @type {number}
      * @memberof DailyAccruedRevenue
      */
-    lineItems?: Array<AccruedRevenueLineItem>;
-    /**
-     * The date for which this accrued revenue is computed
-     * @type {Date}
-     * @memberof DailyAccruedRevenue
-     */
-    date?: Date;
+    totalAccruedRevenue?: number;
     /**
      * The end time till when the accrued revenue is computed
      * @type {Date}
@@ -51,11 +51,11 @@ export interface DailyAccruedRevenue {
      */
     endTime?: Date;
     /**
-     * Total accrued revenue for the day in cents
-     * @type {number}
+     * 
+     * @type {Array<AccruedRevenueLineItem>}
      * @memberof DailyAccruedRevenue
      */
-    totalAccruedRevenue?: number;
+    lineItems?: Array<AccruedRevenueLineItem>;
 }
 
 export function DailyAccruedRevenueFromJSON(json: any): DailyAccruedRevenue {
@@ -68,11 +68,11 @@ export function DailyAccruedRevenueFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
-        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
         'date': !exists(json, 'date') ? undefined : (new Date(json['date'])),
-        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
         'totalAccruedRevenue': !exists(json, 'total_accrued_revenue') ? undefined : json['total_accrued_revenue'],
+        'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
+        'lineItems': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(AccruedRevenueLineItemFromJSON)),
     };
 }
 
@@ -85,11 +85,11 @@ export function DailyAccruedRevenueToJSON(value?: DailyAccruedRevenue | null): a
     }
     return {
         
-        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
-        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
         'date': value.date === undefined ? undefined : (value.date.toISOString()),
-        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
         'total_accrued_revenue': value.totalAccruedRevenue,
+        'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),
+        'line_items': value.lineItems === undefined ? undefined : ((value.lineItems as Array<any>).map(AccruedRevenueLineItemToJSON)),
     };
 }
 

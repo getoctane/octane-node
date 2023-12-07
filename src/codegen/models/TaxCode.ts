@@ -20,18 +20,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface TaxCode {
     /**
-     * The Avalara Entity Use Code represented by this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    entityUseCode?: string;
-    /**
-     * The type of this tax code.
-     * @type {string}
-     * @memberof TaxCode
-     */
-    taxCodeTypeId?: string;
-    /**
      * A code string that identifies this tax code.
      * @type {string}
      * @memberof TaxCode
@@ -44,11 +32,23 @@ export interface TaxCode {
      */
     id?: string;
     /**
+     * The Avalara Entity Use Code represented by this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    entityUseCode?: string;
+    /**
      * A friendly description of this tax code.
      * @type {string}
      * @memberof TaxCode
      */
     description?: string;
+    /**
+     * The type of this tax code.
+     * @type {string}
+     * @memberof TaxCode
+     */
+    taxCodeTypeId?: string;
 }
 
 export function TaxCodeFromJSON(json: any): TaxCode {
@@ -61,11 +61,11 @@ export function TaxCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     }
     return {
         
-        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
-        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
         'taxCode': !exists(json, 'tax_code') ? undefined : json['tax_code'],
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'entityUseCode': !exists(json, 'entity_use_code') ? undefined : json['entity_use_code'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'taxCodeTypeId': !exists(json, 'tax_code_type_id') ? undefined : json['tax_code_type_id'],
     };
 }
 
@@ -78,11 +78,11 @@ export function TaxCodeToJSON(value?: TaxCode | null): any {
     }
     return {
         
-        'entity_use_code': value.entityUseCode,
-        'tax_code_type_id': value.taxCodeTypeId,
         'tax_code': value.taxCode,
         'id': value.id,
+        'entity_use_code': value.entityUseCode,
         'description': value.description,
+        'tax_code_type_id': value.taxCodeTypeId,
     };
 }
 

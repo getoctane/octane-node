@@ -28,16 +28,16 @@ import {
 export interface LimitInputArgs {
     /**
      * 
-     * @type {number}
-     * @memberof LimitInputArgs
-     */
-    limit?: number;
-    /**
-     * 
      * @type {FeatureInputArgs}
      * @memberof LimitInputArgs
      */
     feature: FeatureInputArgs;
+    /**
+     * 
+     * @type {number}
+     * @memberof LimitInputArgs
+     */
+    limit?: number;
 }
 
 export function LimitInputArgsFromJSON(json: any): LimitInputArgs {
@@ -50,8 +50,8 @@ export function LimitInputArgsFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'limit': !exists(json, 'limit') ? undefined : json['limit'],
         'feature': FeatureInputArgsFromJSON(json['feature']),
+        'limit': !exists(json, 'limit') ? undefined : json['limit'],
     };
 }
 
@@ -64,8 +64,8 @@ export function LimitInputArgsToJSON(value?: LimitInputArgs | null): any {
     }
     return {
         
-        'limit': value.limit,
         'feature': FeatureInputArgsToJSON(value.feature),
+        'limit': value.limit,
     };
 }
 

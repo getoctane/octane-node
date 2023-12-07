@@ -20,29 +20,11 @@ import { exists, mapValues } from '../runtime';
  */
 export interface AdhocCharge {
     /**
-     * The user provided total price of the adhoc charge
-     * @type {number}
-     * @memberof AdhocCharge
-     */
-    totalPrice?: number;
-    /**
-     * The user provided item name of the adhoc charge
-     * @type {string}
-     * @memberof AdhocCharge
-     */
-    itemName?: string;
-    /**
      * Indicates if the adhoc charge has been charged on an invoice
      * @type {string}
      * @memberof AdhocCharge
      */
     charged?: string;
-    /**
-     * The user provided quantity of the adhoc charge
-     * @type {number}
-     * @memberof AdhocCharge
-     */
-    quantity?: number;
     /**
      * The user provided charge time of the adhoc charge
      * @type {Date}
@@ -50,11 +32,11 @@ export interface AdhocCharge {
      */
     chargeTime?: Date;
     /**
-     * The user provided item description of the adhoc charge
+     * The user provided item display name of the adhoc charge
      * @type {string}
      * @memberof AdhocCharge
      */
-    itemDescription?: string;
+    itemDisplayName?: string;
     /**
      * The uuid of the adhoc charge
      * @type {string}
@@ -62,11 +44,29 @@ export interface AdhocCharge {
      */
     uuid?: string;
     /**
-     * The user provided item display name of the adhoc charge
+     * The user provided quantity of the adhoc charge
+     * @type {number}
+     * @memberof AdhocCharge
+     */
+    quantity?: number;
+    /**
+     * The user provided total price of the adhoc charge
+     * @type {number}
+     * @memberof AdhocCharge
+     */
+    totalPrice?: number;
+    /**
+     * The user provided item description of the adhoc charge
      * @type {string}
      * @memberof AdhocCharge
      */
-    itemDisplayName?: string;
+    itemDescription?: string;
+    /**
+     * The user provided item name of the adhoc charge
+     * @type {string}
+     * @memberof AdhocCharge
+     */
+    itemName?: string;
 }
 
 export function AdhocChargeFromJSON(json: any): AdhocCharge {
@@ -79,14 +79,14 @@ export function AdhocChargeFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'totalPrice': !exists(json, 'total_price') ? undefined : json['total_price'],
-        'itemName': !exists(json, 'item_name') ? undefined : json['item_name'],
         'charged': !exists(json, 'charged') ? undefined : json['charged'],
-        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'chargeTime': !exists(json, 'charge_time') ? undefined : (new Date(json['charge_time'])),
-        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
-        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
         'itemDisplayName': !exists(json, 'item_display_name') ? undefined : json['item_display_name'],
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
+        'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
+        'totalPrice': !exists(json, 'total_price') ? undefined : json['total_price'],
+        'itemDescription': !exists(json, 'item_description') ? undefined : json['item_description'],
+        'itemName': !exists(json, 'item_name') ? undefined : json['item_name'],
     };
 }
 
@@ -99,14 +99,14 @@ export function AdhocChargeToJSON(value?: AdhocCharge | null): any {
     }
     return {
         
-        'total_price': value.totalPrice,
-        'item_name': value.itemName,
         'charged': value.charged,
-        'quantity': value.quantity,
         'charge_time': value.chargeTime === undefined ? undefined : (value.chargeTime.toISOString()),
-        'item_description': value.itemDescription,
-        'uuid': value.uuid,
         'item_display_name': value.itemDisplayName,
+        'uuid': value.uuid,
+        'quantity': value.quantity,
+        'total_price': value.totalPrice,
+        'item_description': value.itemDescription,
+        'item_name': value.itemName,
     };
 }
 

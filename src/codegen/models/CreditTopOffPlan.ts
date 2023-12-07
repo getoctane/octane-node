@@ -67,6 +67,12 @@ export interface CreditTopOffPlan {
      * @memberof CreditTopOffPlan
      */
     chargeImmediately?: boolean;
+    /**
+     * Whether to add the grants immediately to the credit ledger or wait until either the corresponding invoice is paid or the grant is manually added to the ledger. When charge_immediately is true, this field has no impact since the credits will be granted only after successful payment.
+     * @type {boolean}
+     * @memberof CreditTopOffPlan
+     */
+    grantImmediately?: boolean;
 }
 
 export function CreditTopOffPlanFromJSON(json: any): CreditTopOffPlan {
@@ -87,6 +93,7 @@ export function CreditTopOffPlanFromJSONTyped(json: any, ignoreDiscriminator: bo
         'expirationUnit': !exists(json, 'expiration_unit') ? undefined : json['expiration_unit'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'chargeImmediately': !exists(json, 'charge_immediately') ? undefined : json['charge_immediately'],
+        'grantImmediately': !exists(json, 'grant_immediately') ? undefined : json['grant_immediately'],
     };
 }
 
@@ -107,6 +114,7 @@ export function CreditTopOffPlanToJSON(value?: CreditTopOffPlan | null): any {
         'expiration_unit': value.expirationUnit,
         'description': value.description,
         'charge_immediately': value.chargeImmediately,
+        'grant_immediately': value.grantImmediately,
     };
 }
 

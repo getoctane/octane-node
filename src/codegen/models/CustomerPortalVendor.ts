@@ -27,11 +27,11 @@ import {
  */
 export interface CustomerPortalVendor {
     /**
-     * Currency preference of the Vendor.
+     * Display name for the Vendor
      * @type {string}
      * @memberof CustomerPortalVendor
      */
-    currency?: string;
+    displayName?: string;
     /**
      * Unique name identifier of a Vendor
      * @type {string}
@@ -51,11 +51,11 @@ export interface CustomerPortalVendor {
      */
     paymentGateway?: string;
     /**
-     * Display name for the Vendor
+     * Currency preference of the Vendor.
      * @type {string}
      * @memberof CustomerPortalVendor
      */
-    displayName?: string;
+    currency?: string;
 }
 
 export function CustomerPortalVendorFromJSON(json: any): CustomerPortalVendor {
@@ -68,11 +68,11 @@ export function CustomerPortalVendorFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'currency': !exists(json, 'currency') ? undefined : json['currency'],
+        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'contactInfo': !exists(json, 'contact_info') ? undefined : ContactInfoFromJSON(json['contact_info']),
         'paymentGateway': !exists(json, 'payment_gateway') ? undefined : json['payment_gateway'],
-        'displayName': !exists(json, 'display_name') ? undefined : json['display_name'],
+        'currency': !exists(json, 'currency') ? undefined : json['currency'],
     };
 }
 
@@ -85,11 +85,11 @@ export function CustomerPortalVendorToJSON(value?: CustomerPortalVendor | null):
     }
     return {
         
-        'currency': value.currency,
+        'display_name': value.displayName,
         'name': value.name,
         'contact_info': ContactInfoToJSON(value.contactInfo),
         'payment_gateway': value.paymentGateway,
-        'display_name': value.displayName,
+        'currency': value.currency,
     };
 }
 

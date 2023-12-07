@@ -14,11 +14,11 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    PriceInputArgs,
-    PriceInputArgsFromJSON,
-    PriceInputArgsFromJSONTyped,
-    PriceInputArgsToJSON,
-} from './PriceInputArgs';
+    PriceInputArgs1,
+    PriceInputArgs1FromJSON,
+    PriceInputArgs1FromJSONTyped,
+    PriceInputArgs1ToJSON,
+} from './PriceInputArgs1';
 
 /**
  * 
@@ -27,11 +27,17 @@ import {
  */
 export interface PriceSchemeInputArgs {
     /**
-     * One of 'FLAT', 'TIERED', or 'STAIRSTEP'
+     * The name of the unit used for this metered component (e.g., gigabyte)
      * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    schemeType: string;
+    unitName?: string;
+    /**
+     * The frequency at which the meter should be tiered, in months. For example, if set to 12, the usage over the full year will be included when computing the tier. Only available for TIERED and STAIRSTEP scheme_types with a SUM or TIME_WEIGHTED_SUM meter.
+     * @type {number}
+     * @memberof PriceSchemeInputArgs
+     */
+    frequency?: number;
     /**
      * Array of (key, value) meter labels to price on & the price tiers that should be used against those labels
      * @type {Array<object>}
@@ -39,11 +45,11 @@ export interface PriceSchemeInputArgs {
      */
     priceList?: Array<object>;
     /**
-     * Size of the unit batch to use for the prices. Can only be set if scheme_type='FLAT' or 'TIERED'. E.g. To charge $10 per 100 API Requests, set batch_size to 100.
-     * @type {number}
+     * One of 'FLAT', 'TIERED', or 'STAIRSTEP'
+     * @type {string}
      * @memberof PriceSchemeInputArgs
      */
-    batchSize?: number;
+    schemeType: string;
     /**
      * The % increase/decrease in price after the minimum charge is reached (e.g., 25.5 -> 25.5% increase).
      * @type {number}
@@ -52,10 +58,10 @@ export interface PriceSchemeInputArgs {
     postMinimumChargePercentageChange?: number;
     /**
      * Array of price tiers, each of which consists of `price` and `cap` key:value pairs
-     * @type {Array<PriceInputArgs>}
+     * @type {Array<PriceInputArgs1>}
      * @memberof PriceSchemeInputArgs
      */
-    prices?: Array<PriceInputArgs>;
+    prices?: Array<PriceInputArgs1>;
     /**
      * The time unit for the metered component (e.g., month or hour)
      * @type {string}
@@ -63,11 +69,11 @@ export interface PriceSchemeInputArgs {
      */
     timeUnitName?: string;
     /**
-     * The name of the unit used for this metered component (e.g., gigabyte)
-     * @type {string}
+     * Size of the unit batch to use for the prices. Can only be set if scheme_type='FLAT' or 'TIERED'. E.g. To charge $10 per 100 API Requests, set batch_size to 100.
+     * @type {number}
      * @memberof PriceSchemeInputArgs
      */
-    unitName?: string;
+    batchSize?: number;
 }
 
 export function PriceSchemeInputArgsFromJSON(json: any): PriceSchemeInputArgs {
@@ -80,13 +86,14 @@ export function PriceSchemeInputArgsFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
         
-        'schemeType': json['scheme_type'],
-        'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
-        'batchSize': !exists(json, 'batch_size') ? undefined : json['batch_size'],
-        'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
-        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgsFromJSON)),
-        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
         'unitName': !exists(json, 'unit_name') ? undefined : json['unit_name'],
+        'frequency': !exists(json, 'frequency') ? undefined : json['frequency'],
+        'priceList': !exists(json, 'price_list') ? undefined : json['price_list'],
+        'schemeType': json['scheme_type'],
+        'postMinimumChargePercentageChange': !exists(json, 'post_minimum_charge_percentage_change') ? undefined : json['post_minimum_charge_percentage_change'],
+        'prices': !exists(json, 'prices') ? undefined : ((json['prices'] as Array<any>).map(PriceInputArgs1FromJSON)),
+        'timeUnitName': !exists(json, 'time_unit_name') ? undefined : json['time_unit_name'],
+        'batchSize': !exists(json, 'batch_size') ? undefined : json['batch_size'],
     };
 }
 
@@ -99,13 +106,14 @@ export function PriceSchemeInputArgsToJSON(value?: PriceSchemeInputArgs | null):
     }
     return {
         
-        'scheme_type': value.schemeType,
-        'price_list': value.priceList,
-        'batch_size': value.batchSize,
-        'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
-        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgsToJSON)),
-        'time_unit_name': value.timeUnitName,
         'unit_name': value.unitName,
+        'frequency': value.frequency,
+        'price_list': value.priceList,
+        'scheme_type': value.schemeType,
+        'post_minimum_charge_percentage_change': value.postMinimumChargePercentageChange,
+        'prices': value.prices === undefined ? undefined : ((value.prices as Array<any>).map(PriceInputArgs1ToJSON)),
+        'time_unit_name': value.timeUnitName,
+        'batch_size': value.batchSize,
     };
 }
 

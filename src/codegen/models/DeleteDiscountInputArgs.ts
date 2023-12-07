@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface DeleteDiscountInputArgs {
     /**
-     * External UUID representing the discount to be deleted.
-     * @type {string}
-     * @memberof DeleteDiscountInputArgs
-     */
-    discountUuid: string;
-    /**
      * Number of billing cycles that the discount should expire in. Defaults to 0 (start of current billing cycle). If the inputted discount is scheduled, it is the number of billing cycles relative to the scheduled start. You can only shorten a discount, it is not possible to extend it.
      * @type {number}
      * @memberof DeleteDiscountInputArgs
      */
     billingCycleDuration?: number;
+    /**
+     * External UUID representing the discount to be deleted.
+     * @type {string}
+     * @memberof DeleteDiscountInputArgs
+     */
+    discountUuid: string;
 }
 
 export function DeleteDiscountInputArgsFromJSON(json: any): DeleteDiscountInputArgs {
@@ -43,8 +43,8 @@ export function DeleteDiscountInputArgsFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'discountUuid': json['discount_uuid'],
         'billingCycleDuration': !exists(json, 'billing_cycle_duration') ? undefined : json['billing_cycle_duration'],
+        'discountUuid': json['discount_uuid'],
     };
 }
 
@@ -57,8 +57,8 @@ export function DeleteDiscountInputArgsToJSON(value?: DeleteDiscountInputArgs | 
     }
     return {
         
-        'discount_uuid': value.discountUuid,
         'billing_cycle_duration': value.billingCycleDuration,
+        'discount_uuid': value.discountUuid,
     };
 }
 

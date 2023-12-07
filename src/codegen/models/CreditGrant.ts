@@ -20,35 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface CreditGrant {
     /**
-     * Name of the customer who received the grant
-     * @type {string}
-     * @memberof CreditGrant
-     */
-    customerName?: string;
-    /**
      * Number of credits granted
      * @type {number}
      * @memberof CreditGrant
      */
     amount?: number;
     /**
-     * A unique identifier for this grant
+     * Name of the customer who received the grant
      * @type {string}
      * @memberof CreditGrant
      */
-    uuid?: string;
-    /**
-     * The source of the grant.
-     * @type {string}
-     * @memberof CreditGrant
-     */
-    source?: string;
-    /**
-     * The date at which this grant expires
-     * @type {Date}
-     * @memberof CreditGrant
-     */
-    expiresAt?: Date;
+    customerName?: string;
     /**
      * Total price paid for the credits, in cents
      * @type {number}
@@ -56,17 +38,47 @@ export interface CreditGrant {
      */
     price?: number;
     /**
-     * The date at which this grant is effective
-     * @type {Date}
+     * A unique identifier for this grant
+     * @type {string}
      * @memberof CreditGrant
      */
-    effectiveAt?: Date;
+    uuid?: string;
+    /**
+     * Whether the grant has been voided
+     * @type {boolean}
+     * @memberof CreditGrant
+     */
+    voided?: boolean;
+    /**
+     * Whether the grant has been added to the ledger
+     * @type {boolean}
+     * @memberof CreditGrant
+     */
+    granted?: boolean;
     /**
      * Optional description. This is only viewable internally
      * @type {string}
      * @memberof CreditGrant
      */
     description?: string;
+    /**
+     * The source of the grant.
+     * @type {string}
+     * @memberof CreditGrant
+     */
+    source?: string;
+    /**
+     * The date at which this grant is effective
+     * @type {Date}
+     * @memberof CreditGrant
+     */
+    effectiveAt?: Date;
+    /**
+     * The date at which this grant expires
+     * @type {Date}
+     * @memberof CreditGrant
+     */
+    expiresAt?: Date;
 }
 
 export function CreditGrantFromJSON(json: any): CreditGrant {
@@ -79,14 +91,16 @@ export function CreditGrantFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
-        'source': !exists(json, 'source') ? undefined : json['source'],
-        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'price': !exists(json, 'price') ? undefined : json['price'],
-        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
+        'uuid': !exists(json, 'uuid') ? undefined : json['uuid'],
+        'voided': !exists(json, 'voided') ? undefined : json['voided'],
+        'granted': !exists(json, 'granted') ? undefined : json['granted'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'source': !exists(json, 'source') ? undefined : json['source'],
+        'effectiveAt': !exists(json, 'effective_at') ? undefined : (new Date(json['effective_at'])),
+        'expiresAt': !exists(json, 'expires_at') ? undefined : (new Date(json['expires_at'])),
     };
 }
 
@@ -99,14 +113,16 @@ export function CreditGrantToJSON(value?: CreditGrant | null): any {
     }
     return {
         
-        'customer_name': value.customerName,
         'amount': value.amount,
-        'uuid': value.uuid,
-        'source': value.source,
-        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
+        'customer_name': value.customerName,
         'price': value.price,
-        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
+        'uuid': value.uuid,
+        'voided': value.voided,
+        'granted': value.granted,
         'description': value.description,
+        'source': value.source,
+        'effective_at': value.effectiveAt === undefined ? undefined : (value.effectiveAt.toISOString()),
+        'expires_at': value.expiresAt === undefined ? undefined : (value.expiresAt.toISOString()),
     };
 }
 

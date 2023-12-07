@@ -20,6 +20,12 @@ import { exists, mapValues } from '../runtime';
  */
 export interface ValidateCredentialsArgs {
     /**
+     * True if using a Avalara sandbox account, False otherwise
+     * @type {boolean}
+     * @memberof ValidateCredentialsArgs
+     */
+    sandboxMode: boolean;
+    /**
      * Username of the Avalara account
      * @type {string}
      * @memberof ValidateCredentialsArgs
@@ -31,12 +37,6 @@ export interface ValidateCredentialsArgs {
      * @memberof ValidateCredentialsArgs
      */
     password: string;
-    /**
-     * True if using a Avalara sandbox account, False otherwise
-     * @type {boolean}
-     * @memberof ValidateCredentialsArgs
-     */
-    sandboxMode: boolean;
 }
 
 export function ValidateCredentialsArgsFromJSON(json: any): ValidateCredentialsArgs {
@@ -49,9 +49,9 @@ export function ValidateCredentialsArgsFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
+        'sandboxMode': json['sandbox_mode'],
         'username': json['username'],
         'password': json['password'],
-        'sandboxMode': json['sandbox_mode'],
     };
 }
 
@@ -64,9 +64,9 @@ export function ValidateCredentialsArgsToJSON(value?: ValidateCredentialsArgs | 
     }
     return {
         
+        'sandbox_mode': value.sandboxMode,
         'username': value.username,
         'password': value.password,
-        'sandbox_mode': value.sandboxMode,
     };
 }
 

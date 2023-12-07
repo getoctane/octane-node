@@ -27,11 +27,11 @@ import {
  */
 export interface CustomerPortalActiveSubscriptionInputArgs {
     /**
-     * Add ons to include in subscription.
-     * @type {Array<SubscriptionAddOnInput>}
+     * Price plan uuid to subscribe to.
+     * @type {string}
      * @memberof CustomerPortalActiveSubscriptionInputArgs
      */
-    addOns?: Array<SubscriptionAddOnInput> | null;
+    pricePlanUuid?: string;
     /**
      * Customer name. Required only if using vendor API Key for authentication.
      * @type {string}
@@ -39,11 +39,11 @@ export interface CustomerPortalActiveSubscriptionInputArgs {
      */
     customerName?: string;
     /**
-     * Price plan uuid to subscribe to.
-     * @type {string}
+     * Add ons to include in subscription.
+     * @type {Array<SubscriptionAddOnInput>}
      * @memberof CustomerPortalActiveSubscriptionInputArgs
      */
-    pricePlanUuid?: string;
+    addOns?: Array<SubscriptionAddOnInput> | null;
 }
 
 export function CustomerPortalActiveSubscriptionInputArgsFromJSON(json: any): CustomerPortalActiveSubscriptionInputArgs {
@@ -56,9 +56,9 @@ export function CustomerPortalActiveSubscriptionInputArgsFromJSONTyped(json: any
     }
     return {
         
-        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
-        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
         'pricePlanUuid': !exists(json, 'price_plan_uuid') ? undefined : json['price_plan_uuid'],
+        'customerName': !exists(json, 'customer_name') ? undefined : json['customer_name'],
+        'addOns': !exists(json, 'add_ons') ? undefined : (json['add_ons'] === null ? null : (json['add_ons'] as Array<any>).map(SubscriptionAddOnInputFromJSON)),
     };
 }
 
@@ -71,9 +71,9 @@ export function CustomerPortalActiveSubscriptionInputArgsToJSON(value?: Customer
     }
     return {
         
-        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
-        'customer_name': value.customerName,
         'price_plan_uuid': value.pricePlanUuid,
+        'customer_name': value.customerName,
+        'add_ons': value.addOns === undefined ? undefined : (value.addOns === null ? null : (value.addOns as Array<any>).map(SubscriptionAddOnInputToJSON)),
     };
 }
 

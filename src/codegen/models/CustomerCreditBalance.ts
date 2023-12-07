@@ -16,46 +16,53 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface CustomerPortalAvailableCreditBalance
+ * @interface CustomerCreditBalance
  */
-export interface CustomerPortalAvailableCreditBalance {
+export interface CustomerCreditBalance {
+    /**
+     * Ledger credit balance (i.e., excludes accrued revenue that has not yet been invoiced).
+     * @type {number}
+     * @memberof CustomerCreditBalance
+     */
+    ledgerBalance?: number;
     /**
      * Available credit balance.
      * @type {number}
-     * @memberof CustomerPortalAvailableCreditBalance
+     * @memberof CustomerCreditBalance
      */
     availableBalance?: number;
     /**
-     * The start_time used for calculating this available balance.
+     * The cycle start of the billing cycle for which the accrued revenue is computed
      * @type {Date}
-     * @memberof CustomerPortalAvailableCreditBalance
+     * @memberof CustomerCreditBalance
      */
     startTime?: Date;
     /**
-     * The end_time used for calculating this available balance.
+     * The end time within the billing cycle for which this accrued revenue is computed
      * @type {Date}
-     * @memberof CustomerPortalAvailableCreditBalance
+     * @memberof CustomerCreditBalance
      */
     endTime?: Date;
 }
 
-export function CustomerPortalAvailableCreditBalanceFromJSON(json: any): CustomerPortalAvailableCreditBalance {
-    return CustomerPortalAvailableCreditBalanceFromJSONTyped(json, false);
+export function CustomerCreditBalanceFromJSON(json: any): CustomerCreditBalance {
+    return CustomerCreditBalanceFromJSONTyped(json, false);
 }
 
-export function CustomerPortalAvailableCreditBalanceFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomerPortalAvailableCreditBalance {
+export function CustomerCreditBalanceFromJSONTyped(json: any, ignoreDiscriminator: boolean): CustomerCreditBalance {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
+        'ledgerBalance': !exists(json, 'ledger_balance') ? undefined : json['ledger_balance'],
         'availableBalance': !exists(json, 'available_balance') ? undefined : json['available_balance'],
         'startTime': !exists(json, 'start_time') ? undefined : (new Date(json['start_time'])),
         'endTime': !exists(json, 'end_time') ? undefined : (new Date(json['end_time'])),
     };
 }
 
-export function CustomerPortalAvailableCreditBalanceToJSON(value?: CustomerPortalAvailableCreditBalance | null): any {
+export function CustomerCreditBalanceToJSON(value?: CustomerCreditBalance | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,6 +71,7 @@ export function CustomerPortalAvailableCreditBalanceToJSON(value?: CustomerPorta
     }
     return {
         
+        'ledger_balance': value.ledgerBalance,
         'available_balance': value.availableBalance,
         'start_time': value.startTime === undefined ? undefined : (value.startTime.toISOString()),
         'end_time': value.endTime === undefined ? undefined : (value.endTime.toISOString()),

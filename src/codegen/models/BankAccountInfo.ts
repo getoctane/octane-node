@@ -44,17 +44,17 @@ export interface BankAccountInfo {
      */
     country?: string;
     /**
-     * Last 4 digits of the bank account number.
-     * @type {string}
-     * @memberof BankAccountInfo
-     */
-    last4?: string;
-    /**
      * 
      * @type {string}
      * @memberof BankAccountInfo
      */
     externalId?: string;
+    /**
+     * Last 4 digits of the bank account number.
+     * @type {string}
+     * @memberof BankAccountInfo
+     */
+    last4?: string;
 }
 
 export function BankAccountInfoFromJSON(json: any): BankAccountInfo {
@@ -71,8 +71,8 @@ export function BankAccountInfoFromJSONTyped(json: any, ignoreDiscriminator: boo
         'routingNumber': !exists(json, 'routing_number') ? undefined : json['routing_number'],
         'accountType': !exists(json, 'account_type') ? undefined : json['account_type'],
         'country': !exists(json, 'country') ? undefined : json['country'],
-        'last4': !exists(json, 'last4') ? undefined : json['last4'],
         'externalId': !exists(json, 'external_id') ? undefined : json['external_id'],
+        'last4': !exists(json, 'last4') ? undefined : json['last4'],
     };
 }
 
@@ -89,8 +89,8 @@ export function BankAccountInfoToJSON(value?: BankAccountInfo | null): any {
         'routing_number': value.routingNumber,
         'account_type': value.accountType,
         'country': value.country,
-        'last4': value.last4,
         'external_id': value.externalId,
+        'last4': value.last4,
     };
 }
 
