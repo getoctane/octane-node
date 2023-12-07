@@ -25,6 +25,7 @@ import {
   AccruedRevenue,
   CustomerUsageByTime,
   CustomerUsageByTimeInput,
+  CustomersCustomerNameInvoicesGetRequest,
 } from '../codegen';
 import { Configuration as APIConfiguration } from '../codegen/runtime';
 import { BaseResource } from './base';
@@ -332,6 +333,10 @@ class Customers extends BaseResource {
     return this.api.customersCustomerNameStatusGet({ customerName }, overrides);
   }
 
+  /**
+   * @deprecated Use `getCustomerInvoicesByName()` to fetch customer's invoices.
+   * This method doesn't accept parameters to filter invoices and will be removed in the next major version.
+   */
   public getCustomerInvoices(
     customerName: string,
     overrides?: RequestInit,
@@ -340,6 +345,16 @@ class Customers extends BaseResource {
       { customerName },
       overrides,
     );
+  }
+
+  /**
+   * Get Customer's invoices.
+   */
+  public getCustomerInvoicesByName(
+    input: CustomersCustomerNameInvoicesGetRequest,
+    overrides?: RequestInit,
+  ): Promise<Invoice[]> {
+    return this.api.customersCustomerNameInvoicesGet(input, overrides);
   }
 
   public getTotalAccrueRevenue(
