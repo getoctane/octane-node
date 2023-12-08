@@ -334,7 +334,7 @@ class Customers extends BaseResource {
   }
 
   /**
-   * @deprecated Use `getCustomerInvoicesByName()` to fetch customer's invoices.
+   * @deprecated Use `getInvoices()` to fetch customer's invoices.
    * This method doesn't accept parameters to filter invoices and will be removed in the next major version.
    */
   public getCustomerInvoices(
@@ -350,7 +350,7 @@ class Customers extends BaseResource {
   /**
    * Get Customer's invoices.
    */
-  public getCustomerInvoicesByName(
+  public getInvoices(
     input: CustomersCustomerNameInvoicesGetRequest,
     overrides?: RequestInit,
   ): Promise<Invoice[]> {
